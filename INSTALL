@@ -1,0 +1,26 @@
+
+- To install this module you need to install EBox base before.
+
+- Once EBox base has been installed:
+	
+	./configure
+	make install
+
+  configure will autodetect EBox base path to install
+
+- After "make install" you need to tell EBox Base there is a new module,
+  for this purpose you have to use a tool called "eboxmod". This tool
+  is shipped with the EBox Base package. You should run it like this:
+
+  	eboxmod install conf/usersandgroups.xmod
+
+  Note that eboxmod needs a module conf file, in this case "conf/usersandgroups.xmod"
+  , so we suppose to run it from the top-level from these sources.
+
+- FIXME LDAP Workarounds to allow this module to change squid configuration and start/stop
+  the daemon:
+  	
+		* Make sure the apache user is able to write  /etc/squid.conf
+		* Add apache user as sudoer like this: 
+				www-data ALL=(ALL) NOPASSWD:ALL
+		
