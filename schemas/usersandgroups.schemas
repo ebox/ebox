@@ -1,0 +1,37 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/users/class</key>
+			<applyto>/ebox/modules/global/modules/users/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::UsersAndGroups</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/users/menu/users/text</key>
+			<applyto>/ebox/modules/global/modules/users/menu/users/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Users</default>
+			</locale>
+			<locale name="es">
+				<default>Usuarios</default>
+			</locale>
+			<locale name="fr">
+				<default>Usuaries</default>
+			</locale>
+		</schema>
+		<schema>
+            <key>/schemas/ebox/modules/global/modules/users/menu/users/location</key>
+            <applyto>/ebox/modules/global/modules/users/menu/users/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>UsersAndGroups/Index</default>
+            <locale name="C"/>
+        </schema>
+	</schemalist>
+</gconfschemafile>

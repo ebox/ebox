@@ -1,4 +1,4 @@
-package EBox::CGI::UsersAndGroups::AddGroup;
+package EBox::CGI::UsersAndGroups::DelUserFromGroup;
 
 use strict;
 use warnings;
@@ -14,7 +14,7 @@ sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new('title' => 'Users and Groups',
 				      @_);
-
+#        $self->{redirect} = "UsersAndGroups/Group";
 	bless($self, $class);
 	return $self;
 }
@@ -26,17 +26,20 @@ sub _process($) {
 
 	my @args = ();
 
-	$self->_requireParam('groupname', __('group name'));
+	$self->_requireParam('deluser', __('user'));
+	$self->_requireParam('group' , __('group'));
 	
-	my $group = $self->param('groupname');
-	my $comment = $self->param('groupname');
+	my @users = $self->param('deluser');
+	my $group = $self->param('group');
 	
-
-	$usersandgroups->addGroup($group, $comment);
+	foreach my $us (@users){
+		$usersandgroups->delUserFromGroup($us, $group);
+	}
 
 	# FIXME Is there a better way to pass parameters to redirect/chain
-	# cgi's
+        # cgi's
         $self->{redirect} = "UsersAndGroups/Group?group=$group";
+
 }
 
 

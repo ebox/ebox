@@ -17,6 +17,26 @@
   Note that eboxmod needs a module conf file, in this case "conf/usersandgroups.xmod"
   , so we suppose to run it from the top-level from these sources.
 
+
+- LDAP Server installation
+
+	To install OpenLDAP:
+
+        # aptitude install slapd
+
+
+	When asked by debconf, set 'ebox' as domain and 'exus' as organization.
+
+	Set an administrative password (needed to add users), and disable support for LDAP v2.
+
+
+	Permission bits must be set over /var/run/ldapi to access via a UNIX Domain Socket, writing in /etc/default/slapd:
+
+	SLAPD_SERVICES="ldapi:///????x-mod=777"
+
+	(A better approach consists of slapd running as a non root user and setting socket ownership accordingly)
+
+
 - FIXME LDAP Workarounds to allow this module to change squid configuration and start/stop
   the daemon:
   	

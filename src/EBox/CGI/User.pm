@@ -1,4 +1,4 @@
-package EBox::CGI::UsersAndGroups::AddGroup;
+package EBox::CGI::UsersAndGroups::User;
 
 use strict;
 use warnings;
@@ -13,8 +13,8 @@ use EBox::Gettext;
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new('title' => 'Users and Groups',
+				      'template' => '/usersandgroups/user.mas',
 				      @_);
-
 	bless($self, $class);
 	return $self;
 }
@@ -26,17 +26,15 @@ sub _process($) {
 
 	my @args = ();
 
-	$self->_requireParam('groupname', __('group name'));
-	
-	my $group = $self->param('groupname');
-	my $comment = $self->param('groupname');
-	
+	$self->_requireParam("user", __('user'));
 
-	$usersandgroups->addGroup($group, $comment);
+	my $user = $self->param('user');
+	my $userinfo = $usersandgroups->getUserInfo($user);
+		
+	push(@args, 'user' => $userinfo);
 
-	# FIXME Is there a better way to pass parameters to redirect/chain
-	# cgi's
-        $self->{redirect} = "UsersAndGroups/Group?group=$group";
+
+	$self->{params} = \@args;
 }
 
 

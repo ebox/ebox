@@ -1,0 +1,46 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<%args>
+	$group
+	@groupusers
+	@remainusers
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<h3><% __('Administration of group ') %><% $group %></h3>
+
+%   if(@groupusers) {
+    <p>
+    <form action='DelUserFromGroup' method='post'>
+    <% __('Users in group') %>:
+        <select name='deluser' multiple>
+%           foreach my $user (@groupusers){
+                <option value='<% $user %>'>
+                    <% $user %>
+                </option>
+%           }
+        </select>
+        <input class='inputButton' type='submit' value="<% __('Remove') %>" name='delfromgroup' />
+		<input type="hidden" name="group" value="<% $group %>">
+    </form>
+    </p>
+%   }
+
+%   if(@remainusers) {
+    <p>
+    <form action='AddUserToGroup' method='post'>
+    <% __('Users not in group') %>:
+        <select name='adduser' multiple>
+%           foreach my $user (@remainusers){
+                <option value='<% $user %>'>
+                    <% $user %>
+                </option>
+%           }
+        </select>
+        <input class='inputButton' type='submit' value="<% __('Add') %>" name='addtogroup' />
+		<input type="hidden" name="group" value="<% $group %>">
+    </form>
+    </p>
+%   }
+

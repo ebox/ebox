@@ -32,42 +32,46 @@ use Net::LDAP::Constant;
 use Net::LDAP::Message;
 use Net::LDAP::Search;
 use Net::LDAP::LDIF;
+use Net::LDAP qw(LDAP_SUCCESS);
 
-use EBox::Exceptions::DataInUse;
-use EBox::Exceptions::Unknown;
+use EBox::Exceptions::DataExists;
+use EBox::Exceptions::Internal;
 use EBox::Exceptions::DataNotFound;
 use EBox::Exceptions::Internal;
-
-use EBox::Debug;
+use EBox::Gettext;
+use Data::Dumper;
 
 
 # FIXME To throw exceptions only is needed
 #  But for testing purposes, an qw(:try) is added to allow using try catch
 use Error qw(:try);
 
-
+use constant DN => "dc=foo,dc=org";
+use constant LDAPI => "127.0.0.1";
 =head1 METHODS
 
 =cut
+
 
 sub new {
 	my $class = shift;
 	my $self = {};
 
 	# Auth DN where users hang
-	$self->{authdn} = 'ou=People,dc=ebox'; 
+	$self->{authdn} = 'ou=People,' . DN; 
 	
 	# Users and groups DNs
-	$self->{usersdn} = 'ou=People,dc=ebox';
-	$self->{groupsdn} = 'ou=Group,dc=ebox';
+	$self->{usersdn} = 'ou=People,' . DN;
+	$self->{groupsdn} = 'ou=Group,' . DN;
 	
 	# Root DN and password
-	use constant ROOTDN => 'cn=admin,dc=ebox';
-	use constant ROOTPW => 'lala';
+	use constant ROOTDN => 'cn=admin,' . DN;
+	use constant ROOTPW => 'foobar';
 
 	# LDAP bind
-	$self->{ldap} = Net::LDAP->new ("ldapi://%2fvar%2frun%2fldapi") or
-		throw EBox::Exceptions::Internal("Can't create ldapi connection");
+	#$self->{ldap} = Net::LDAP->new ("ldapi://%2fvar%2frun%2fldapi") or
+	$self->{ldap} = Net::LDAP->new (LDAPI)
+			or throw EBox::Exceptions::Internal( "Can't create ldapi connection");
 	$self->{ldap}->bind(ROOTDN, password=>ROOTPW);
 
 	# FIXME, unbind must be done when object is destroyed
@@ -77,6 +81,16 @@ sub new {
 	return $self;
 }
 
+
+sub errorOnLDAP(@){
+	my $result = shift;
+	my $mesg;
+	$mesg = "LDAP operation failed with code " . $result->{resultCode} .
+		" and message " . $result->{errorMessage} . "\n";
+	print STDERR $mesg; #DEBUG
+	print Dumper($result); #DEBUG
+	return $result->{resultCode};
+}
 
 =head2 auth (user,password)
 
@@ -108,6 +122,250 @@ sub auth ($$$) {
 }
 
 
+# TODO: Redefining LDAP schemas can move gid and uid checks to ldap library
+
+sub gidExists($$) {
+	my $self = shift;
+
+	my $gid = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{groupsdn},
+		filter => "&(objectclass=*)(gidNumber=$gid)",
+		scope => 'one');
+
+	return $result->count > 0;
+}
+
+sub groupExists($$) {
+	my $self = shift;
+
+	my $group = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{groupsdn},
+		filter => "&(objectclass=*)(cn=$group)",
+		scope => 'one');
+
+	return $result->count > 0;
+}
+
+sub uidExists($$) {
+	my $self = shift;
+
+	my $uid = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(uidNumber=$uid)",
+		scope => 'one');
+
+	return $result->count > 0;
+}
+
+sub userExists($$) {
+	my $self = shift;
+
+	my $user = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(cn=$user)",
+		scope => 'one');
+
+	return $result->count > 0;
+}
+
+sub getGroupGid($$) {
+
+	my $self = shift;
+
+	my $groupname = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{groupsdn},
+		filter => "&(objectclass=*)(cn=$groupname)",
+		scope => 'one',
+		attr => ['gidNumber']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getGroupGid: " . 
+			$result->error);
+	}
+
+	# If search result is null group doesnt exists
+	if ($result->count == 0) {
+		throw EBox::Exceptions::DataNotFound(
+			'data' => "Group", 'value' => $groupname);
+	}
+
+	return $result->entry(0)->get_value('gidNumber');
+
+}
+
+
+sub getGidGroup($$) {
+	my $self = shift;
+
+	my $gid = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{groupsdn},
+		filter => "&(objectclass=*)(gidNumber=$gid)",
+		scope => 'one',
+		attr => ['cn']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getGidGroup: " . 
+			$result->error);
+	}
+
+	# If search result is null group doesnt exists
+	if ($result->count == 0) {
+		throw EBox::Exceptions::DataNotFound(
+			'data' => "Gid", 'value' => $gid);
+	}
+
+	return $result->entry(0)->get_value('cn');
+
+}
+
+
+sub groupHaveUsers($$) {
+	my $self = shift;
+
+	my $gid = shift;
+
+
+	my $ldap = $self->{ldap};
+	
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(gidNumber=$gid)",
+		scope => 'one');
+
+	return $result->count > 0;
+}
+
+
+sub getGroupUsers ($$) {
+	my $self = shift;
+
+	my $groupname = shift;
+
+	my $ldap = $self->{ldap};
+
+	my $gid = $self->getGroupGid($groupname);
+
+	my $result = $ldap->search(
+		base => $self->{groupsdn},
+		filter => "&(objectclass=*)(gidNumber=$gid)",
+		scope => 'one',
+		attrs => ['memberUid']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getGroupUsers: " . 
+			$result->error);
+	}
+
+	# Construct return array
+	my @users= ();
+	foreach ($result->sorted('memberUid'))
+	{
+		@users = (@users, $_->get_value('memberUid'));
+	}
+
+	return @users;
+
+}
+
+
+sub getUserGroup ($$) {
+	my $self = shift;
+
+	my $username = shift;
+
+	my $ldap = $self->{ldap};
+
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(uid=$username)",
+		scope => 'one',
+		attrs => ['gidNumber']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getUserGroup: " . 
+			$result->error);
+	}
+
+	my $gid = $result->entry(0)->get_value('gidNumber');
+
+	return $self->getGidGroup($gid);
+
+}
+
+
+sub isLastUser($$) {
+	my $self = shift;
+
+	my $username = shift;
+
+	my $ldap = $self->{ldap};
+
+	# Find user group gid
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(uid=$username)",
+		scope => 'one',
+		attrs => ['gidNumber']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::isLastUser: " . 
+			$result->error);
+	}
+
+	my $gid = $result->entry(0)->get_value('gidNumber');
+
+
+	# Find users with this gid
+	$result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(gidNumber=$gid)",
+		scope => 'one');
+
+
+	return $result->count == 1;
+}
+
+
 =head2 addGroup (group)
 
 =head3 Returns nothing
@@ -134,21 +392,29 @@ LDAP description
 FIXME raised exceptions
 
 =cut
-sub addGroup ($$) {
+sub addGroup ($$$) {
 	my $self = shift;
 
 	my $group = shift;
+	my $comment = shift;
+	#FIXME
+	my $gid = $self->getLastGid + 1;
+	
+	# Verify GID
+	if ($self->gidExists($gid)){
+		throw EBox::Exceptions::DataExists('data' => 'gid',
+                                                  'value' => $gid);
+	}
+
 
 	my $ldap = $self->{ldap};
 
-	# TODO Assign gidNumbers automatically?
-
 	my $result = $ldap->add(
-		"cn=" . $group->{'name'} ."," . $self->{groupsdn},
+		"cn=" . $group ."," . $self->{groupsdn},
 		attr => [
-			'cn' => $group->{'name'},
-			'gidNumber' => $group->{'gid'},
-			'description' => $group->{'desc'},
+			'cn' => $group,
+			'gidNumber' => $gid,
+			'description' => $comment,
 			'objectclass' => ['posixGroup']
 		]);
 
@@ -157,10 +423,12 @@ sub addGroup ($$) {
 	if ($result->is_error) {
 		# Group to be added already exists
 		if ($result->error_name eq 'LDAP_ALREADY_EXISTS') {
-			throw EBox::Exceptions::DataInUse('data' => 'group',
-							  'value' => $_[0]);
+			throw EBox::Exceptions::DataExists('data' => 'group',
+							  'value' => $group);
 		} else {
-			throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::addGroup: " . $result->error);
+			throw EBox::Exceptions::Internal(
+				"Unknown error at Ebox::LDAP::addGroup: " . 
+				$result->error);
 		}
 	}
 
@@ -196,13 +464,69 @@ sub delGroup($$) {
 			throw EBox::Exceptions::DataNotFound(
 				'data' => "Group", 'value' => $_[0]);
 		} else {
-			throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::delGroup: " . $result->error);
+			throw EBox::Exceptions::Internal(
+				"Unknown error at Ebox::LDAP::delGroup: " . 
+				$result->error);
 		}
 	}
 
 }
 
+sub delUserFromGroup($$$) {
+	my $self = shift;
 
+	my $user = shift;
+	my $group = shift;
+
+	my $ldap = $self->{ldap};
+
+	my $dn = "cn=" . $group . "," . $self->{groupsdn};
+  
+  	my $result = $ldap->modify("$dn", delete => { memberUid => "$user"} );
+	
+	# Error handling
+	if ($result->is_error) {
+		# Group to be deleted doesn't exists
+		# FIXME Report if user does not exist
+		if ($result->error_name eq 'LDAP_NO_SUCH_OBJECT') {
+			throw EBox::Exceptions::DataNotFound(
+				'data' => "Group", 'value' => $group);
+		} else {
+			throw EBox::Exceptions::Internal(
+				"Unknown error at Ebox::LDAP::delGroup: " . 
+				$result->error);
+		}
+	}
+
+}
+
+sub addUserToGroup($$$) {
+	my $self = shift;
+
+	my $user = shift;
+	my $group = shift;
+
+	my $ldap = $self->{ldap};
+
+	my $dn = "cn=" . $group . "," . $self->{groupsdn};
+  
+  	my $result = $ldap->modify("$dn", add => { memberUid => "$user"} );
+	
+	# Error handling
+	if ($result->is_error) {
+		# Group to be deleted doesn't exists
+		# FIXME Report if user does not exist
+		if ($result->error_name eq 'LDAP_NO_SUCH_OBJECT') {
+			throw EBox::Exceptions::DataNotFound(
+				'data' => "Group", 'value' => $group);
+		} else {
+			throw EBox::Exceptions::Internal(
+				"Unknown error at Ebox::LDAP::delGroup: " . 
+				$result->error);
+		}
+	}
+
+}
 =head2 modifyGroup (group,newAttrs)
 
 =head3 Returns nothing
@@ -256,10 +580,12 @@ sub modifyGroup ($$$) {
 		if ($result->is_error) {
 			# Group to be added already exists
 			if ($result->error_name eq 'LDAP_ALREADY_EXISTS') {
-			throw EBox::Exceptions::DataInUse('data' => 'group',
+			throw EBox::Exceptions::DataExists('data' => 'group',
 							  'value' => $_[0]);
 			} else {
-				throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::modifyGroup: " . $result->error_name);
+				throw EBox::Exceptions::Internal(
+				  "Unknown error at Ebox::LDAP::modifyGroup: ".
+				  $result->error_name);
 			}
 		}
 
@@ -314,35 +640,79 @@ To call it, a reference to a hash must be passed: addUser(\%user)
 FIXME
 
 =cut
-sub addUser ($$) {
+sub addUser ($$$$$) {
 	my $self = shift;
-	
+
 	my $user = shift;
+	my $password = shift;
+	my $group = shift;
+	my $comment = shift;
+
+
+	# Verify user don't exists
+	if ($self->userExists($user)) {
+		throw EBox::Exceptions::DataExists('data' => __('user name'),
+                                                   'value' => $user);
+	}
+
+	# Verify group exists
+	unless ($self->groupExists($group)) {
+		throw EBox::Exceptions::DataNotFound('data' => __('group name'),
+                                                     'value' => $group);
+	}
 
 	my $ldap = $self->{ldap};
-	# TODO Check if group where user belong exists
-	# TODO Assign uidNumbers automatically?
 
+	my $uid = $self->getLastUid + 1;
+	my $gid = $self->getGroupGid($group);
+
+
+#	my $result = $ldap->add(
+#		"uid=" . $user . "," . $self->{usersdn},
+#		attr => [
+#			'uid' => $user,
+#			'userPassword' => $password,
+#			'cn' => $user,
+#			'homeDirectory' => "/home/foo",
+#			'uidNumber' => 2500,
+#			'gidNumber' => $gid,
+#			'description' => $comment,
+#			'objectclass' => [ 'person', 'posixAccount', 'shadowAccount']
+#		]);
 	my $result = $ldap->add(
-		"uid=" . $user->{'account'} . "," . $self->{usersdn},
+		"cn=" . $user . "," . $self->{usersdn},
 		attr => [
-			'uid' => $user->{'account'},
-			'cn' => $user->{'name'},
-			'sn' => $user->{'surname'},
-			'uidNumber' => $user->{'uid'},
-			'gidNumber' => $user->{'gid'},
-			'description' => $user->{'desc'},
-			'objectclass' => [ 'person', 'posixAccount', 'shadowAccount']
+			'cn' => $user,
+			'sn' => $user,
+			'uid' => $user,
+			'uidNumber' => $uid,
+			'gidNumber' => $gid,
+			'homeDirectory' => "/home/foo",		
+			'userPassword' => $password,
+			'description' => $comment,
+			'objectclass' => [ 'inetOrgPerson', 'posixAccount']
 		]);
 
 	# Error handling
 	if ($result->is_error) {
-		# User to be added already exists
-		if ($result->error_name eq 'LDAP_ALREADY_EXISTS') {
-			throw EBox::Exceptions::DataInUse('data' => 'user',
-							  'value' => $_[0]);
+		# Value with invalid syntax
+		if ($result->error_name eq 'LDAP_INVALID_SYNTAX') {
+			if ($result->error eq 'uidnumber: value #0 invalid per syntax') {
+				throw EBox::Exceptions::InvalidData('data' => 'uidNumber',
+							            'value' => $user);
+			} elsif ($result->error eq 'gidnumber: value #0 invalid per syntax') {
+				throw EBox::Exceptions::InvalidData('data' => 'gidNumber',
+				                                    'value' => $group);
+			} else {
+				throw EBox::Exceptions::Internal(
+			 	  "Unknown error at Ebox::LDAP::addUser: " . 
+				  $result->error);
+			}
+
 		} else {
-			throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::addUser: " . $result->error);
+			throw EBox::Exceptions::Internal(
+				"Unknown error at Ebox::LDAP::addUser: " . 
+				$result->error);
 		}
 	}
 
@@ -370,7 +740,8 @@ sub delUser($$) {
 	my $ldap = $self->{ldap};
 
 	my $result = $ldap->delete("uid=" . $user . "," . $self->{usersdn});
-
+	
+	print $result;
 	# Error handling
 	if ($result->is_error) {
 		# User to be deleted doesn't exists
@@ -378,7 +749,9 @@ sub delUser($$) {
 			throw EBox::Exceptions::DataNotFound(
 				'data' => "user", 'value' => $user);
 		} else {
-			throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::delUser: " . $result->error);
+			throw EBox::Exceptions::Internal(
+				"Unknown error at Ebox::LDAP::delUser: " . 
+				$result->error);
 		}
 	}
 
@@ -419,8 +792,9 @@ sub getGroups ($) {
 
 	# Error handling
 	if ($result->is_error) {
-		print "Error en EBox::LDAP::getGroups, codigo $result->error\n";
-		throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::getGroups: " . $result->error);
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getGroups: " . 
+			$result->error);
 	}
 
 	# Construct return array
@@ -430,12 +804,42 @@ sub getGroups ($) {
 		@groups = (@groups, {
 			'account' => $_->get_value('cn'),
 			'gid' => $_->get_value('gidNumber'),
-			'desc' => $_->get_value('description'),});
+			'desc' => $_->get_value('description')});
 	}
 
 	return @groups;
 }
 
+sub getLastGid($) {
+	my $self = shift;
+
+	my $ldap = $self->{ldap}; 
+
+	my $result = $ldap->search(
+		base => $self->{groupsdn},
+		filter => '(objectclass=posixAccount)',
+		scope => 'one', attrs => ['gidNumber']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getGroups: " . 
+			$result->error);
+	}
+
+	# Construct return array
+	my @groups = $result->sorted('gidNumber');
+
+	my $gid = -1;
+	foreach my $group (@groups) {
+		my $currgid = $group->get_value('gidNumber');
+		if ( $currgid > $gid){
+			$gid = $currgid;
+		}
+	}
+	
+	return $gid;
+}
 
 =head2 getUsers() 
 
@@ -474,11 +878,13 @@ sub getUsers ($) {
 		base => $self->{usersdn},
 		filter => '(objectclass=*)',
 		scope => 'one',
-		attrs => ['uid', 'cn', 'sn', 'uidNumber', 'gidNumber', 'description']);
+		attrs => ['uid', 'cn', 'sn', 'homeDirectory', 'uidNumber', 'gidNumber', 'description']);
 
 	# Error handling
 	if ($result->is_error) {
-		throw EBox::Exceptions::Unknown("Unknown error at Ebox::LDAP::getUsers: " . $result->error);
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getUsers: " . 
+			$result->error);
 	}
 
 	# Construct return array
@@ -489,6 +895,7 @@ sub getUsers ($) {
 			account => $_->get_value('uid'),
 			name => $_->get_value('cn'),
 			surname => $_->get_value('sn'),
+			homeDirectory => $_->get_value('homeDirectory'),
 			uid => $_->get_value('uidNumber'),
 			group => $_->get_value('gidNumber'),
 			desc => $_->get_value('description')});
@@ -498,8 +905,69 @@ sub getUsers ($) {
 
 }
 
+sub getUserInfo($$) {
+	my $self = shift;
+	my $user = shift;
+	
+	# Verify user don't exists
+	unless ($self->userExists($user)) {
+		throw EBox::Exceptions::DataExists('data' => __('user name'),
+                                                   'value' => $user);
+	}
+	
+	my $ldap = $self->{ldap};
 
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => "&(objectclass=*)(cn=$user)",
+		scope => 'one',
+		attrs => ['cn','description']);
+	
+	# Error handling
+	if ($result->is_error or $result->count != 1) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getUsers: " . 
+			$result->error);
+	}
 
+	my $userinfo = { 
+			username => $result->entry(0)->get_value('cn'), 
+			comment  => $result->entry(0)->get_value('description') 
+			};
+
+	return $userinfo;
+}
+
+sub getLastUid($) {
+	my $self = shift;
+
+	my $ldap = $self->{ldap}; 
+
+	my $result = $ldap->search(
+		base => $self->{usersdn},
+		filter => '(objectclass=posixAccount)',
+		scope => 'one', attrs => ['uidNumber']);
+
+	# Error handling
+	if ($result->is_error) {
+		throw EBox::Exceptions::Internal(
+			"Unknown error at Ebox::LDAP::getLastUid: " . 
+			$result->error);
+	}
+
+	# Construct return array
+	my @users = $result->sorted('uidNumber');
+
+	my $uid = -1;
+	foreach my $user (@users) {
+		my $curruid = $user->get_value('uidNumber');
+		if ( $curruid > $uid){
+			$uid = $curruid;
+		}
+	}
+	
+	return $uid;
+}
 
 
 
@@ -673,67 +1141,6 @@ sub import_ldif_entries ($@) {
 		};
 	}
 }
-
-
-
-
-
-
-
-
-###########################################
-
-# Some testing code to be removed
-# FIXME Remove code when library finished
-
-
-
-#print "Probando\n";
-#deleteGroup("putis");
-#addGroup("putis");
-#my %user = (
-#	'name' => 'Juan',
-#	'surname' => 'Caie',
-#	'userName' => 'juan',
-#	'uidNumber' => '2222',
-#	'gidNumber' => '3000'
-#	);
-#print "Antes ", %user,"\n";
-
-#try {
-#	print "getGroups()\n";
-#	my @groups = getGroups();
-#	print "getUsers()\n";
-#	my @users = getGroups();
-	
-	#my @users = getUsers();
-
-#	foreach (@users)
-#	{
-#		print "$_->{account}\n";
-#		print "$_->{name}\n";
-#		print "$_->{surname}\n";
-#		print "$_->{uid}\n";
-#		print "$_->{group}\n";
-#		print "$_->{desc}\n";
-#	}
-
-
-#	print @groups[0]->{'UNO'};
-#	print %groups->{UNO};
-#	print %groups{UNO};
-	
-#}
-#catch EBox::Exceptions::InvalidData with
-#{
-#	print "Error\n";
-#}
-#otherwise
-#{
-#	print "Otherwise\n";
-#};
-#addUser(\%user);
-#deleteUser("peo");
 
 
 1;

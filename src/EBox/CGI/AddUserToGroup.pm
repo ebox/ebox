@@ -1,4 +1,4 @@
-package EBox::CGI::UsersAndGroups::AddGroup;
+package EBox::CGI::UsersAndGroups::AddUserToGroup;
 
 use strict;
 use warnings;
@@ -26,13 +26,15 @@ sub _process($) {
 
 	my @args = ();
 
-	$self->_requireParam('groupname', __('group name'));
+	$self->_requireParam('adduser', __('user'));
+	$self->_requireParam('group' , __('group'));
 	
-	my $group = $self->param('groupname');
-	my $comment = $self->param('groupname');
+	my @users = $self->param('adduser');
+	my $group = $self->param('group');
 	
-
-	$usersandgroups->addGroup($group, $comment);
+	foreach my $us (@users){
+		$usersandgroups->addUserToGroup($us, $group);
+	}
 
 	# FIXME Is there a better way to pass parameters to redirect/chain
 	# cgi's

@@ -7,18 +7,22 @@ AM_INIT_AUTOMAKE([foreign])
 
 AM_MAINTAINER_MODE
 
-AM_GNU_GETTEXT
-
 AC_DEFINE_DIR(LIBDIR, libdir)
-
+AC_DEFINE_DIR(DATADIR, datadir)
 
 AC_CHECK_PROG(PERL, perl, perl, none)
+AC_CHECK_PROG(GCONFTOOL, gconftool-2, gconftool-2, none)
 
 if test "$PERL" = "none" ; then
 	AC_MSG_ERROR(perl not found)
 fi
+if test "$GCONFTOOL" = "none" ; then
+	AC_MSG_ERROR(gconftool not found)
+fi
 
-perlpath=`$PERL -e 'foreach (@INC) { print "$_\n";}' | grep "^$LIBDIR" | head -1`
+AM_GCONF_SOURCE_2
+
+perlpath=`$PERL -e 'foreach (@INC) { print "$_\n";}' | grep "^$DATADIR" | head -1`
 if test -z "$perlpath" ; then
 perlpath=`$PERL -e 'foreach (@INC) { print "$_\n";}' | grep "^$prefix" | head -1`
 fi
@@ -32,17 +36,6 @@ fi
 
 AC_DEFINE_DIR(PERLPATH, perlpath)
 
-AC_PROG_PERL_MODULES(HTML::Template, ,
-  AC_MSG_ERROR(Missing HTML::Template))
-
-AC_PROG_PERL_MODULES(HTML::Template::Expr, ,
-  AC_MSG_ERROR(Missing HTML::Template::Expr))
-
-AC_PROG_PERL_MODULES(Locale::gettext, ,
-  AC_MSG_ERROR(Missing Locale::gettext))
-
-AC_PROG_PERL_MODULES(Devel::StackTrace, ,
-  AC_MSG_ERROR(Missing Devel::StackTrace))
 
 AC_PROG_PERL_MODULES(Net::LDAP, ,
 	AC_MSG_ERROR(Missing Net::LDAP))
@@ -55,14 +48,12 @@ AC_PROG_PERL_MODULES(Net::LDAP::LDIF, ,
 
 AC_CONF_EBOX
 
-# FIXME Install preset slapd.conf 
-#AC_PROG_SQUID
-#AC_MSG_NOTICE(Configuration file for squid will be installed in $SQUIDCONF)
 
 AC_OUTPUT([
 src/Makefile
 src/EBox/Makefile
 src/EBox/CGI/Makefile
 src/templates/Makefile
+schemas/Makefile
 Makefile
 ])

@@ -1,0 +1,83 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<%args>
+	@users
+	@groups
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<h3><% __('Add User') %></h3>
+	<form action='AddUser' method='POST'>
+			<% __('User name') %>
+				<input type='text' class='inputText' name='username'>
+    			<p>
+			<% __('Comment') %>
+				<input type='text' class='inputText' name='comment'>
+    			<p>
+			<% __('Password') %>
+				<input type='password' class='inputText' name='password'>
+    			<p>
+			<% __('Retype password') %>
+				<input type='password' class='inputText' name='repassword'>
+    			<p>
+			<% __('Group') %>
+        		<select name='group'>
+%           foreach my $gr (@groups){
+                <option value='<% $gr->{'account'} %>'>
+                    <% $gr->{'account'} %>
+                </option>
+%           }
+        		</select>
+    			<p>
+				<input class='inputButton' type='submit' name='user' 
+					   value='<% __('Create') %>'
+					   alt='<% __('Create') %>'>
+	</form>
+
+<h3><% __('Edit User') %></h3>
+%   if(@groups) {
+    <p>
+    <form action='User' method='post'>
+    <% __('Edit a user') %>:
+        <select name='user'>
+%           foreach my $us (@users){
+                <option value='<% $us->{'account'} %>'>
+                    <% $us->{'account'}  %>
+                </option>
+%           }
+        </select>
+        <input class='inputButton' type='submit' value="<% __('Go') %>" name='configuser' />
+    </form>
+    </p>
+%   }
+
+<h3><% __('Add Group') %></h3>
+	<form action='AddGroup' method='POST'>
+			<% __('New group') %>
+				<input type='text' class='inputText' name='groupname'>
+			<% __('Comment') %>
+				<input type='text' class='inputText' name='comment'>
+				<input class='inputButton' type='submit' name='group' 
+					   value='<% __('Create') %>'
+					   alt='<% __('Create') %>'>
+
+	</form>
+
+<h3><% __('Edit Group') %></h3>
+%   if(@groups) {
+    <p>
+    <form action='Group' method='post'>
+    <% __('Edit a group of users') %>:
+        <select name='group'>
+%           foreach my $gr (@groups){
+                <option value='<% $gr->{'account'} %>'>
+                    <% $gr->{'account'} %>
+                </option>
+%           }
+        </select>
+        <input class='inputButton' type='submit' value="<% __('Go') %>" name='configgroup' />
+    </form>
+    </p>
+%   }
+
