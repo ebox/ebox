@@ -1,14 +1,11 @@
-<%args%>
-	$schemas
-	$dn
+<%args>
 	$rootdn
 	$rootpw
-	@acls
-</%args%>
-# Global Directives:
+	$dn
+        @acls
+	@schemas
+</%args>
 
-# Features to permit
-#allow bind_v2
 
 # Default schema and objectClass definitions
 include         /etc/ldap/schema/core.schema
@@ -17,78 +14,53 @@ include         /etc/ldap/schema/nis.schema
 include         /etc/ldap/schema/inetorgperson.schema
 
 # Schemas added by ebox
-<% $schemas %>
+% foreach my $schema (@schemas) {
+include 	<% $schema %>
+% }
 
-# Schema check allows for forcing entries to
-# match schemas for their objectClasses
 schemacheck     on
 
-# Where the pid file is put. The init.d script
-# will not stop the server if you change this.
 pidfile         /var/run/slapd/slapd.pid
 
 # List of arguments that were passed to the server
 argsfile        /var/run/slapd.args
 
-# Read slapd.conf(5) for possible values
-#loglevel       511 
 loglevel 	0
 
-# Where the dynamically loaded modules are stored
 modulepath	/usr/lib/ldap
-moduleload	back_ldbm
+moduleload	back_bdb
 
-#######################################################################
-# Specific Backend Directives for ldbm:
-# Backend specific directives apply to this backend until another
-# 'backend' directive occurs
-backend		ldbm
+backend		bdb
 
-#######################################################################
-# Specific Backend Directives for 'other':
-# Backend specific directives apply to this backend until another
-# 'backend' directive occurs
-#backend		<other>
+database        bdb
 
-#######################################################################
-# Specific Directives for database #1, of type ldbm:
-# Database specific directives apply to this databasse until another
-# 'database' directive occurs
-database        ldbm
-
-# The base of your directory in database #1
 suffix          "<% $dn %>"
 
-# Where the database file are physically stored for database #1
 directory       "/var/lib/ldap"
 
-# Indexing options for database #1
 index           objectClass eq
 
-# Save the time that the entry gets modified, for database #1
 lastmod         on
 
-rootdn  <% $rootdn %>	
+rootdn  "<% $rootdn %>"	
 rootpw 	<% $rootpw %>
-# Where to store the replica logs for database #1
-# replogfile	/var/lib/ldap/replog
 
-# The userPassword by default can be changed
-# by the entry owning it if they are authenticated.
-# Others should not be able to see it, except the
-# admin entry below
-# These access lines apply to database #1 only
 access to attribute=userPassword
         by dn="<% $rootdn %>" write
         by anonymous auth
         by self write
         by * none
 
+access to dn.base="" by * read
+
+access to *
+        by dn="<% $rootdn %>" write
+	        by * read
 
 # ACLs needed by ebox modules
 # 
 
-% foreach $acl (@acls) {
+% foreach my $acl (@acls) {
 	<% $acl %>
 % }
 

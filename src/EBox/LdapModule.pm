@@ -13,47 +13,26 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-package EBox::CGI::UsersAndGroups::AddGroup;
+package EBox::LdapModule;
 
 use strict;
 use warnings;
 
-use base 'EBox::CGI::Base';
-
-use EBox::Global;
-use EBox::UsersAndGroups;
 use EBox::Gettext;
+use EBox::Exceptions::NotImplemented;
 
-
-sub new {
+sub new
+{
 	my $class = shift;
-	my $self = $class->SUPER::new('title' => 'Users and Groups',
-				      @_);
-        $self->{domain} = 'ebox-usersandgroups';
+	my $self = {};
 	bless($self, $class);
-        $self->{errorchain} = "UsersAndGroups/Groups";
 	return $self;
 }
 
-
-sub _process($) {
-	my $self = shift;
-	my $usersandgroups = EBox::Global->modInstance('users');
-
-	my @args = ();
-
-	$self->_requireParam('groupname', __('group name'));
-	
-	my $group = $self->param('groupname');
-	my $comment = $self->param('comment');
-	
-
-	$usersandgroups->addGroup($group, $comment);
-
-	# FIXME Is there a better way to pass parameters to redirect/chain
-	# cgi's
-        $self->{redirect} = "UsersAndGroups/Group?group=$group";
+sub _ldapModImplementation 
+{
+	throw EBox::Exceptions::NotImplemented();	
 }
 
-
-1;
+1
+;

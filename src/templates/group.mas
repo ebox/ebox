@@ -1,46 +1,104 @@
-<!-- vim: ts=4 sw=4 nowrap
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
 -->
 <%args>
-	$group
+	$groupinfo
 	@groupusers
 	@remainusers
+	@components
 </%args>
 <%init>
 use EBox::Gettext;
 </%init>
-<h3><% __('Administration of group ') %><% $group %></h3>
+<h3><% __('Administration of group ') %> <% $groupinfo->{'groupname'} %></h3>
+% unless (@groupusers or @remainusers) {
+<div class='note'>
+    <% __("There are no users the moment. You need at least one  to manage this group properly")%>
+</div>
+<br />
+% }
 
-%   if(@groupusers) {
-    <p>
+<form action='ModifyGroup' method='POST'>
+	<span class="ftitle"><% __('Comment') %>: </span>
+	<input type="hidden" name="groupname" value="<% $groupinfo->{'groupname'} %>">
+	<input type='text' class='inputText' name='comment' value="<% $groupinfo->{'comment'} %>"> 
+	<input class='inputButton' type='submit' name='user' 
+					   value="<% __('Change') %>"
+					   alt="<% __('Change') %>">
+</form>
+
+<table>
+<thead>
+	<tr>
+		<th><% __("Users in group") %></th>
+		<th></th>
+		<th><% __("Users not in group") %></th>
+	</tr>
+</thead>
+<tbody>
+<tr>
+	<td>
     <form action='DelUserFromGroup' method='post'>
-    <% __('Users in group') %>:
-        <select name='deluser' multiple>
+        <select name='deluser' size='8' multiple>
+%   if(@groupusers) {
 %           foreach my $user (@groupusers){
                 <option value='<% $user %>'>
                     <% $user %>
                 </option>
 %           }
-        </select>
-        <input class='inputButton' type='submit' value="<% __('Remove') %>" name='delfromgroup' />
-		<input type="hidden" name="group" value="<% $group %>">
-    </form>
-    </p>
 %   }
+        </select>
+	</td>
 
-%   if(@remainusers) {
-    <p>
+	<td>
+		<input 	class='inputButton' type='image' name='delfromgroup'
+				value='<%__('Remove')%>'
+				src='/data/images/right.gif'
+				title='<%('Remove users from group')%>'
+				alt='<%__('Remove users from group')%>' />
+		<input 	type="hidden" name="group" 
+				value="<% $groupinfo->{'groupname'} %>"/>
+    </form>
+		<br />
+		<br />
     <form action='AddUserToGroup' method='post'>
-    <% __('Users not in group') %>:
-        <select name='adduser' multiple>
+		<input 	class='inputButton' type='image' name='addtogroup'
+				value='<%__('Add users to group')%>'
+				src='/data/images/left.gif'
+				title='<%('Add users to group')%>'
+				alt='<%__('Add users to group')%>' />
+	</td>
+
+	<td>
+        <select name='adduser' size='8' multiple>
+%   	if(@remainusers) {
 %           foreach my $user (@remainusers){
                 <option value='<% $user %>'>
                     <% $user %>
                 </option>
 %           }
+%   	}
         </select>
-        <input class='inputButton' type='submit' value="<% __('Add') %>" name='addtogroup' />
-		<input type="hidden" name="group" value="<% $group %>">
+		<input type="hidden" name="group" value="<% $groupinfo->{'groupname'} %>">
     </form>
-    </p>
-%   }
+	</td>
+</tr>
+</tbody>
+</table>
 
+<h3><% __("Delete group") %></h3>
+<div class='note'>
+	Si borra este grupo perdera todos los directorios que comparta el mismo.
+</div>
+<br />
+<form action='Del' method='POST'>
+		<input type="hidden" name="objectname" value="<% $groupinfo->{'groupname'} %>">
+				<input class='inputButton' type='submit' name='delgroup'
+					   value="<% __('Delete group') %>"
+					   alt="<% __('Delete group') %>">
+			<td>
+		</tr>
+</form>
+
+% foreach my $comp (@components) {
+      <& $comp->{'path'}, 'params' => $comp->{'params'}   &>
+% }

@@ -1,4 +1,4 @@
-AC_INIT([EBox-usersandgroups], [0.1-SVN])
+AC_INIT([EBox-usersandgroups], [0.5.1+svn])
 
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_SRCDIR([src/EBox/UsersAndGroups.pm])
@@ -9,6 +9,11 @@ AM_MAINTAINER_MODE
 
 AC_DEFINE_DIR(LIBDIR, libdir)
 AC_DEFINE_DIR(DATADIR, datadir)
+
+AC_ARG_ENABLE([runtime-tests],
+        [ --disable-runtime-tests       Do not try to test runtime dependencies],
+	,
+	enable_runtime_tests=yes)
 
 AC_CHECK_PROG(PERL, perl, perl, none)
 AC_CHECK_PROG(GCONFTOOL, gconftool-2, gconftool-2, none)
@@ -36,7 +41,7 @@ fi
 
 AC_DEFINE_DIR(PERLPATH, perlpath)
 
-
+if test "x$enable_runtime_tests" = "xyes" ; then
 AC_PROG_PERL_MODULES(Net::LDAP, ,
 	AC_MSG_ERROR(Missing Net::LDAP))
 
@@ -47,13 +52,20 @@ AC_PROG_PERL_MODULES(Net::LDAP::LDIF, ,
 	AC_MSG_ERROR(Missing Net::LDAP::LDIF))
 
 AC_CONF_EBOX
+fi
 
+AM_PO_SUBDIRS
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 src/Makefile
 src/EBox/Makefile
 src/EBox/CGI/Makefile
 src/templates/Makefile
 schemas/Makefile
+stubs/Makefile
+tools/Makefile
 Makefile
 ])
+
+AC_CONFIG_FILES([po/Makefile], [AM_POSTPROCESS_PO_MAKEFILE])
+AC_OUTPUT

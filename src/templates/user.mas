@@ -1,34 +1,85 @@
-<!-- vim: ts=4 sw=4 nowrap
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
 -->
 <%args>
 	$user
+	@components
 </%args>
 <%init>
 use EBox::Gettext;
 </%init>
-<h3><% __('Administration of user ') %><% $user->{'username'} %></h3>
-	<form action='EditUser' method='POST'>
-		<input type="hidden" name="user" value="<% $user->{'username'} %>">
-		<% __('Comment') %>
-		<input type='text' class='inputText' name='comment' value="<% $user->{'comment'} %>"> 
-		<input class='inputButton' type='submit' name='user' 
-			   value='<% __('Change') %>'
-			   alt='<% __('Change') %>'>
-		<% __('Password') %>
-		<input type='password' class='inputText' name='password'>
+<h3><% __('Administration of user') %> <span class='stitle'><% $user->{'username'} %></span></h3>
+		<form action='ModifyUser' method='POST'>
+		<input type="hidden" name="username" value="<% $user->{'username'} %>">
+		<table class='formTable'>
+		<tbody>
+			<tr>
+				<td class='tright'>
+					<span class='ftitle'>
+						<% __('Comment') %>:
+					</span>
+				</td>
+				<td>
+					<input type='text' class='inputText' name='comment' value="<% $user->{'comment'} %>"> 
+				</td>
+			</tr>
+			<tr>
+				<td class='tright'>
+					<span class='ftitle'>
+						<% __('Full name') %>:
+					</span>
+				</td>
+				<td>
+					<input type='text' class='inputText' name='fullname' value="<% $user->{'fullname'} %>"> 
+				</td>
+			</tr>
+			<tr>
+				<td class='tright'>
+					<span class='ftitle'>
+						<% __('Password') %>:
+					</span>
+				</td>
+				<td>
+					<input type='password' class='inputText' name='password'>
+				</td>
+			</tr>
+			<tr>
+				<td class='tright'>
+					<span class='ftitle'>
+						<% __('Retype password') %>:
+					</span>
+				</td>
+				<td>
+					<input type='password' class='inputText' name='repassword'>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+					<input class='inputButton' type='submit' name='user' 
+						   value="<% __('Change') %>"
+						   alt="<% __('Change') %>">
+					</form>	
+				<td>
+			</tr>
+		</tbody>
+		</table>
+		<h3><%__('Delete user')%></h3>
+		<div class='note'>
+			<%__('Esto eliminara el usuario y todas sus dependencias; por ejemplo, sus
+			cuentas de correo, datos de usuario...')%>
+		</div>
+		<form action='Del' method='POST'>
 		<p>
-		<% __('Retype password') %>
-		<input type='password' class='inputText' name='repassword'>
-		<p>
-		<input class='inputButton' type='submit' name='user' 
-			   value='<% __('Change password') %>'
-			   alt='<% __('Change password') %>'>
-		<p>
-		<input class='inputButton' type='submit' name='deluser'
-			   value='<% __('Delete user') %>'
-			   alt='<% __('Delete user') %>'>
+		<input type="hidden" name="objectname" value="<% $user->{'username'} %>">
+					<input class='inputButton' type='submit' name='deluser'
+						   value="<% __('Delete user') %>"
+						   alt="<% __('Delete user') %>">
+		</p>
+	    </form>
+% foreach my $comp (@components) {
+      <& $comp->{'path'}, 'params' => $comp->{'params'}   &>
+% }
 
-
-	</form>
 
 

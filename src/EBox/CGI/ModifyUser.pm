@@ -13,7 +13,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-package EBox::CGI::UsersAndGroups::AddUser;
+package EBox::CGI::UsersAndGroups::ModifyUser;
 
 use strict;
 use warnings;
@@ -29,49 +29,50 @@ sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new('title' => 'Users and Groups',
 				      @_);
-        $self->{domain} = 'ebox-usersandgroups';
-	bless($self, $class);
+
 	$self->{errorchain} = "UsersAndGroups/Users";
+	$self->{domain} = 'ebox-usersandgroups';
+	bless($self, $class);
 	return $self;
 }
 
-
 sub _process($) {
 	my $self = shift;
-	my $usersandgroups = EBox::Global->modInstance('users');
-
-	my @args = ();
-
-	$self->_requireParam('username', __('user name'));
-	$self->_requireParam('fullname', __('full name'));
-	$self->_requireParam('password', __('password'));
-	$self->_requireParam('repassword', __('retype password'));
-	$self->_requireParamAllowEmpty('comment', __('comment'));
-
-	my $user;
-	$user->{'user'} = $self->param('username');
-	$user->{'fullname'} = $self->param('fullname');
-	$user->{'password'} = $self->param('password');
-	$user->{'repassword'} = $self->param('repassword');
-	$user->{'group'} = $self->param('group');
-	$user->{'comment'} = $self->param('comment');
-
 	
-	if ($user->{'password'} ne $user->{'repassword'}){
-		 throw EBox::Exceptions::External(__('Passwords do'.
-                                                     ' not match.'));
+	$self->_requireParam('username', __('user name'));
+	my $user = $self->param('username');	
+	$self->{errorchain} = "UsersAndGroups/User";
+	$self->keepParam('username');
+	
+	$self->_requireParam('fullname', __('full name'));
+	$self->_requireParamAllowEmpty('comment', __('comment'));
+	$self->_requireParamAllowEmpty('password', __('password'));
+	$self->_requireParamAllowEmpty('repassword', __('confirm password'));
+	
+
+	my $userdata   = { 
+				'username' => $user,
+				'fullname' => $self->param('fullname'),
+				'comment'  => $self->param('comment')
+			 };
+	
+	# Change password if not empty		 
+	my $password = $self->param('password');
+	if ($password) {
+		my $repassword = $self->param('repassword');
+		if ($password ne $repassword){
+			 throw EBox::Exceptions::External(
+					__('Passwords do not match.'));
+		}
+		$userdata->{'password'} = $password;
 	}
 
+	my $usersandgroups = EBox::Global->modInstance('users');
+	$usersandgroups->modifyUser($userdata);
+	
+	$self->{redirect} = "UsersAndGroups/User?username=$user";
 
-	$usersandgroups->addUser($user);
-	if ($user->{'group'}) {
-		$usersandgroups->addUserToGroup($user->{'user'}, 
-						$user->{'group'});
-	}
 
-	# FIXME Is there a better way to pass parameters to redirect/chain
-	# cgi's
-        $self->{redirect} = "UsersAndGroups/User?username=" . $user->{'user'};
 }
 
 

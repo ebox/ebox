@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+
+use strict;
+
+use EBox::Global;
+
+EBox::Global::init();
+
+use constant DEFAULTGROUP    => '__USERS__';
+use constant DEFAULTGROUPGID => '2000';
+
+my $global = EBox::Global->getInstance(1);
+my $users = $global->modInstance('users');
+
+sub populate
+{
+	$users->{ldap}->ldapCon;
+	my $ldap = $users->{ldap}->{ldap};
+	my $dn = $users->usersDn;
+	my $result = $ldap->add($dn, attr => [
+                                        'ou' => 'Users',
+                                        'objectClass' => 'organizationalUnit'
+                                             ]);
+	($result->is_error) and warn "Cant initialize Users";
+
+	$dn = $users->groupsDn;
+	$result = $ldap->add($dn, attr => [
+                                        'ou' => 'Groups',
+                                        'objectClass' => 'organizationalUnit'
+                                          ]);
+
+	($result->is_error) and warn "Cant initialize Groups";
+	
+	$dn = 'cn=' . DEFAULTGROUP . ',' . $users->groupsDn;
+	$result = $ldap->add($dn, attr => [
+		                           'cn' => DEFAULTGROUP,
+                		           'gidNumber'   => DEFAULTGROUPGID,
+                              		   'description' => 'All users',
+                              		   'objectclass' => ['posixGroup']
+                                          ]);
+
+	($result->is_error) and warn "Cant create default group";
+
+}
+
+sub clean 
+{
+	# clean users
+	foreach my $user ($users->users){
+		my $username = $user->{'username'};
+		$users->delUser($username);		
+	}
+
+	# clean groups
+	foreach my $group ($users->groups){
+		my $groupname = $group->{'account'};
+		$users->delGroup($groupname);		
+	}
+}
+
+sub gen_config
+{
+	$users->_regenConfig;
+}
+
+sub usage
+{
+	print "Usage: $0 populate | genconfig\n";
+}
+
+#main 
+
+unless ($#ARGV == 0) {
+	usage();
+}
+
+if ($ARGV[0] eq 'populate') {
+	populate();
+} elsif ($ARGV[0] eq 'genconfig') {
+	gen_config();
+} elsif ($ARGV[0] eq 'clean') {
+	clean();
+} else {
+	usage();
+}

@@ -2,7 +2,7 @@
 
 templatedir = @TEMPLATESPATH@/usersandgroups
 
-template_DATA = index.mas group.mas user.mas
+template_DATA = users.mas groups.mas  group.mas user.mas del.mas
 
 EXTRA_DIST = $(template_DATA)
 

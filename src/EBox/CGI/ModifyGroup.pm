@@ -13,7 +13,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-package EBox::CGI::UsersAndGroups::AddUserToGroup;
+package EBox::CGI::UsersAndGroups::ModifyGroup;
 
 use strict;
 use warnings;
@@ -23,39 +23,38 @@ use base 'EBox::CGI::Base';
 use EBox::Global;
 use EBox::UsersAndGroups;
 use EBox::Gettext;
-
+use EBox::Exceptions::External;
 
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new('title' => 'Users and Groups',
 				      @_);
-        $self->{domain} = 'ebox-usersandgroups';
+	$self->{domain} = 'ebox-usersandgroups';
 	bless($self, $class);
 	return $self;
 }
 
-
 sub _process($) {
 	my $self = shift;
-	my $usersandgroups = EBox::Global->modInstance('users');
-
-	my @args = ();
 	
-	$self->_requireParam('group' , __('group'));
-	my $group = $self->param('group');
-	 $self->{errorchain} = "UsersAndGroups/Group";
+	$self->_requireParam('groupname', __('group name'));
+	my $group = $self->param('groupname');	
+	$self->{errorchain} = "UsersAndGroups/Group";
+	
+	$self->cgi()->param(-name=>'group', -value=>$group);
 	$self->keepParam('group');
-	
-	$self->_requireParam('adduser', __('user'));
-	my @users = $self->param('adduser');
-       
-	foreach my $us (@users){
-		$usersandgroups->addUserToGroup($us, $group);
-	}
 
-	# FIXME Is there a better way to pass parameters to redirect/chain
-	# cgi's
-        $self->{redirect} = "UsersAndGroups/Group?group=$group";
+	$self->_requireParamAllowEmpty('comment', __('comment'));
+	
+	my $groupdata   = { 
+				'groupname' => $group,
+				'comment'  => $self->param('comment')
+			 };
+	
+	my $usersandgroups = EBox::Global->modInstance('users');
+	$usersandgroups->modifyGroup($groupdata);
+	
+	$self->{redirect} = "UsersAndGroups/Group?group=$group";
 }
 
 

@@ -1,5 +1,16 @@
+DEPENDENCIES
+------------
 
-- To install this module you need to install EBox base before.
++ Debian packages:
+
+# apt-get install <package>
+	+ slapd
+	+ libnet-ldap-perl
+
++ To install this module you need to install EBox base before.
+
+INSTALLATION
+------------
 
 - Once EBox base has been installed:
 	
@@ -8,15 +19,7 @@
 
   configure will autodetect EBox base path to install
 
-- After "make install" you need to tell EBox Base there is a new module,
-  for this purpose you have to use a tool called "eboxmod". This tool
-  is shipped with the EBox Base package. You should run it like this:
-
-  	eboxmod install conf/usersandgroups.xmod
-
-  Note that eboxmod needs a module conf file, in this case "conf/usersandgroups.xmod"
-  , so we suppose to run it from the top-level from these sources.
-
+- Update your sudoers file with the ebox-sudoers command.
 
 - LDAP Server installation
 
@@ -24,23 +27,33 @@
 
         # aptitude install slapd
 
+	When asked by debconf, set 'ebox' as DNS domain name.
 
-	When asked by debconf, set 'ebox' as domain and 'exus' as organization.
-
-	Set an administrative password (needed to add users), and disable support for LDAP v2.
-
-
-	Permission bits must be set over /var/run/ldapi to access via a UNIX Domain Socket, writing in /etc/default/slapd:
+	Set the administration password
+	
+	Permission bits must be set over /var/run/ldapi to access 
+	via a UNIX Domain Socket, writing in /etc/default/slapd:
 
 	SLAPD_SERVICES="ldapi:///????x-mod=777"
 
-	(A better approach consists of slapd running as a non root user and setting socket ownership accordingly)
+	(A better approach consists of slapd running as a non root user and 
+	setting socket ownership accordingly)
 
+	EBox has to read the ldap administration password from 
+	ebox-ldap.passwd, so you must create it.  Where this file is 
+	depends on your installation, 
+	i.e /var/lib/ebox/conf/ebox-ldap.passwd
 
-- FIXME LDAP Workarounds to allow this module to change squid configuration and start/stop
-  the daemon:
-  	
-		* Make sure the apache user is able to write  /etc/squid.conf
-		* Add apache user as sudoer like this: 
-				www-data ALL=(ALL) NOPASSWD:ALL
-		
+	
+	Now you must generate a slapd.conf file. Use ebox-init-ldap
+	in tools:
+
+		ebox-init-ldap genconfig
+
+	Restart slapd
+
+		/etc/init.d/slapd restart
+
+	The final step consists of populating the ldap database
+
+		ebox-init-ldap populate

@@ -1,3 +1,18 @@
+# Copyright (C) 2005 Warp Netwoks S.L., DBS Servicios Informaticos S.L.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
 package EBox::CGI::UsersAndGroups::DelUserFromGroup;
 
 use strict;
@@ -15,6 +30,7 @@ sub new {
 	my $self = $class->SUPER::new('title' => 'Users and Groups',
 				      @_);
 #        $self->{redirect} = "UsersAndGroups/Group";
+	$self->{domain} = 'ebox-usersandgroups';
 	bless($self, $class);
 	return $self;
 }
@@ -25,12 +41,15 @@ sub _process($) {
 	my $usersandgroups = EBox::Global->modInstance('users');
 
 	my @args = ();
-
-	$self->_requireParam('deluser', __('user'));
+	
 	$self->_requireParam('group' , __('group'));
+	my $group = $self->param('group');
+	$self->{errorchain} = "UsersAndGroups/Group";
+	$self->keepParam('group');
+	
+	$self->_requireParam('deluser', __('user'));
 	
 	my @users = $self->param('deluser');
-	my $group = $self->param('group');
 	
 	foreach my $us (@users){
 		$usersandgroups->delUserFromGroup($us, $group);
