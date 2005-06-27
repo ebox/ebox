@@ -2,9 +2,10 @@
 
 use strict;
 
+use EBox;
 use EBox::Global;
 
-EBox::Global::init();
+EBox::init();
 
 use constant DEFAULTGROUP    => '__USERS__';
 use constant DEFAULTGROUPGID => '2000';
@@ -31,16 +32,7 @@ sub populate
 
 	($result->is_error) and warn "Cant initialize Groups";
 	
-	$dn = 'cn=' . DEFAULTGROUP . ',' . $users->groupsDn;
-	$result = $ldap->add($dn, attr => [
-		                           'cn' => DEFAULTGROUP,
-                		           'gidNumber'   => DEFAULTGROUPGID,
-                              		   'description' => 'All users',
-                              		   'objectclass' => ['posixGroup']
-                                          ]);
-
-	($result->is_error) and warn "Cant create default group";
-
+	$users->addGroup(DEFAULTGROUP, 'All users', 1);
 }
 
 sub clean 
@@ -63,15 +55,32 @@ sub gen_config
 	$users->_regenConfig;
 }
 
+sub addSysUser
+{
+	my $user = { 'user' => $_[1], 
+		     'fullname' => $_[2],
+		     'password' => "{crypt}" . $_[3], 
+		     'comment' => $_[4] };
+
+	$users->addUser($user, 1);
+}
+
+sub addSysGroup
+{
+
+	$users->addGroup($_[1], $_[2]);
+}
+
 sub usage
 {
-	print "Usage: $0 populate | genconfig\n";
+	print "Usage: $0 (populate | genconfig | addSysUser name fullname pwd commet | addSysGroup name comment)\n";
 }
 
 #main 
 
-unless ($#ARGV == 0) {
+if ($#ARGV == -1) {
 	usage();
+	exit(1);
 }
 
 if ($ARGV[0] eq 'populate') {
@@ -80,6 +89,16 @@ if ($ARGV[0] eq 'populate') {
 	gen_config();
 } elsif ($ARGV[0] eq 'clean') {
 	clean();
+} elsif ($ARGV[0] eq 'addSysUser') {
+	unless ($#ARGV == 4) {
+	        usage();
+	}
+	addSysUser(@ARGV);
+} elsif ($ARGV[0] eq 'addSysGroup') {
+	unless ($#ARGV == 2) {
+	        usage();
+	}
+	addSysGroup(@ARGV);
 } else {
 	usage();
 }

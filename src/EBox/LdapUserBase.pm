@@ -28,84 +28,191 @@ sub new
 	return $self;
 }
 
-# When a new user is created this method is called
-sub _addUser($$)
+# Method: _addUser
+# 	
+# 	When a new user is created this method is called
+#
+# Parameters: 
+#
+#   	user - user name to be created 
+sub _addUser($$) # (user)
 {
 
 }
 
-# When a user is deleted this method is called
-sub _delUser($$)
+# Method: _delUser
+#   
+# 	When a user is deleted this method is called
+#
+# Parameters:
+#
+#   	user - user name to be deleted
+sub _delUser($$) # (user)
 {
 
 }
 
-# When a user is modified this method is called
-sub _modifyUser($$)
+# Method: _modifyUser
+#   
+#	 When a user is modified this method is called
+#
+# Parameters:
+#
+#   	user - user name to be modified
+sub _modifyUser($$) # (user)
 {
 
 }
 
-# When a user is to be deleted, modules should warn the sort of  data
-# (if any) is going to be removed
-sub _delUserWarning($$)
+# Method: _delUserWarning
+#   
+# 	When a user is to be deleted, modules should warn the sort of  data
+# 	(if any) is going to be removed
+#
+# Parameters:
+#
+#   	user - user name
+#
+# Returns:
+#
+#   	array ref - Each element must be a string describing the sort of data
+#   	is going to be removed if the user is deleted. If nothing is going to
+#   	removed you must not return anything
+sub _delUserWarning($$) # (user)
 {
 
 }
 
-# When a new group is created this method is called
-sub _addGroup($$)
+# Method: _addGroup
+# 	
+# 	When a new user is created this method is called
+#
+# Parameters: 
+#
+#   	user - user name to be created 
+sub _addGroup($$) # (group)
 {
 
 }
 
-# When a group is deleted this method is called
-sub _delGroup($$)
+# Method: _modifyGroup
+#   
+#	 When a group is modified this method is called
+#
+# Parameters:
+#
+#   	group - group name to be modified
+sub _modifyGroup($$) # (group)
 {
 
 }
 
-# When a group is to be deleted, modules should warn the sort of  data
-# (if any) is going to be removed
-sub _delGroupWarning($$)
+# Method: _delGroup
+#   
+# 	When a group is deleted this method is called
+#
+# Parameters:
+#
+#   	group - group name to be deleted
+
+sub _delGroup($$) # (group)
 {
 
 }
 
-# When a user is to be edited, this method is called to get customized
-# mason components from modules depending on users stored in LDAP.
-# Thus, these components will be showed below the basic user data
-# The method has to return a hash ref containing:
+# Method: _delGroupWarning
+#   
+# 	When a group is to be deleted, modules should warn the sort of  data
+# 	(if any) is going to be removed
+#
+# Parameters:
+#
+#   	group - group name
+#
+# Returns:
+#
+#   	array ref - Each element must be a string describing the sort of data
+#   	is going to be removed if the group is deleted. If nothing is going to
+#   	removed you must not return anything
+sub _delGroupWarning($$) # (group)
+{
+
+}
+
+# Method: _userAddOns
+#   
+# 	When a user is to be edited, this method is called to get customized
+# 	mason components from modules depending on users stored in LDAP.
+# 	Thus, these components will be showed below the basic user data
+# 	The method has to return a hash ref containing:
 # 	'path'   => MASON_COMPONENT_PATH_TO_BE_ADDED
 # 	'params' => PARAMETERS_FOR_MASON_COMPONENT
+#
+# Parameters:
+#
+#   	user - user name to be edited
+#
+# Returns:
+#
+#   	A hash ref containing:
+#
+#   	path - mason component which is going to be added
+#   	params - parameters for the mason component
 sub _userAddOns($$)
 {
 
 }
 
-# When a group is to be edited, this method is called to get customized
-# mason components from modules depending on groups stored in LDAP.
-# Thus, thesecomponents will be showed below the basic group data
-# The method has to return a hash ref containing:
+# Method: _groupAddOns
+#   
+# 	When a group is to be edited, this method is called to get customized
+# 	mason components from modules depending on groups stored in LDAP.
+# 	Thus, these components will be showed below the basic group data
+# 	The method has to return a hash ref containing:
 # 	'path'   => MASON_COMPONENT_PATH_TO_BE_ADDED
 # 	'params' => PARAMETERS_FOR_MASON_COMPONENT
+#
+# Parameters:
+#
+#   	group - group name to be edited
+#
+# Returns:
+#
+#   	A hash ref containing:
+#
+#   	path - mason component which is going to be added
+#   	params - parameters for the mason component
 sub _groupAddOns($$)
 {
 
 }
 
-# Those modules which need to use their own LDAP schemas must implement 
-# this method. It must return an array with LDAP schemas.
+# Method: _includeLDAPSchemas
+#   
+# 	Those modules which need to use their own LDAP schemas must implement 
+# 	this method. It must return an array with LDAP schemas.
+#
+# Returns:
+#
+#   	an array ref - containing in each element the full path of the schema 
+#   	schema file to be include
 sub _includeLDAPSchemas
 {
 	return [];	
 }
 
-# Those modules which need to include their own acls for the LDAP
-# configuration must implement this method. It must return an array
-# containing acl's
+# Method: _includeLDAPAcls
+#   
+# 	Those modules which need to include their own acls for the LDAP
+# 	configuration must implement this method. It must return an array
+# 	containing acl's
+#
+# Returns:
+#
+#   	an array ref - containing in each element an acl 
 sub _includeLDAPAcls
 {
 	return [];
 }
+
 1;

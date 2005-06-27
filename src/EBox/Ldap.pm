@@ -31,6 +31,7 @@ use EBox::Exceptions::DataNotFound;
 use EBox::Exceptions::Internal;
 use EBox::Gettext;
 use Data::Dumper;
+use Encode qw( :all );
 
 use Error qw(:try);
 
@@ -48,6 +49,17 @@ sub new {
 	return $self;
 }
 
+# Method: ldapCon 
+#
+#       Returns the Net::LDAP connection
+#       
+# Returns:    
+#               
+#       An object of class Net::LDAP whose connection has already bound       
+#
+# Exceptions: 
+#               
+#       Internal - If connection can't be created
 sub ldapCon {
 	my $self = shift;
 
@@ -61,6 +73,17 @@ sub ldapCon {
 	return $self->{ldap};
 }
 
+# Method: getPassword 
+#
+#       Returns the password used to connect to the LDAP directory
+#       
+# Returns:    
+#               
+#       string - password
+#
+# Exceptions: 
+#               
+#       Internal - If password can't be read
 sub getPassword {
 
 	my $path = EBox::Config->conf . "/ebox-ldap.passwd";
@@ -77,22 +100,62 @@ sub getPassword {
 }
 
 
+# Method: dn
+#
+#       Returns the dn
+#       
+# Returns:    
+#               
+#       string - dn
+#
 sub dn {
 	return DN;
 }
 
+# Method: rootDn
+#
+#       Returns the dn of the priviliged user
+#       
+# Returns:    
+#               
+#       string - rootdn
+#
 sub rootDn {
 	return ROOTDN
 }
 
+# Method: rootPw
+#
+#       Returns the password of the priviliged user
+#       
+# Returns:    
+#               
+#       string - password
+#
 sub rootPw {
 	return getPassword();
 }
 
+# Method: slapdConfFile
+#
+#       Returns the location of the slapd's configuration file
+#       
+# Returns:    
+#               
+#       string - location
+#
 sub slapdConfFile {
 	return SLAPDCONFFILE;
 }
 
+# Method: ldapConf
+#
+#       Returns the current configuration for LDAP: 'dn', 'ldapi', 'rootdn'
+#       
+# Returns:    
+#               
+#     hash ref  - holding the keys 'dn', 'ldapi' and 'rootdn' 
+#
 sub ldapConf {
 	shift;
 	
@@ -104,17 +167,41 @@ sub ldapConf {
 	return $conf;
 }
 
-sub search($$) {
+# Method: search
+#
+#       Performs a search in the LDAP directory using Net::LDAP. 
+#       
+# Parameters:
+#
+#	args - arguments to pass to Net::LDAP->search()
+#               
+# Exceptions:
+#
+#	Internal - If there is an error during the search
+sub search($$) # (args)
+{
 	my $self = shift;
 	my $args = shift;
 
 	$self->ldapCon;	
 	my $result = $self->{ldap}->search(%{$args});
 	_errorOnLdap($result, $args);
-	return $result;
+	return _utf8Attrs($result);
 	
 }
 
+# Method: modify
+#
+#       Performs  a  modification in the LDAP directory using Net::LDAP. 
+#       
+# Parameters:
+#
+#	dn - dn where to perform the modification 
+#	args - parameters to pass to Net::LDAP->modify()
+#               
+# Exceptions:
+#
+#	Internal - If there is an error during the search
 sub modify($$) {
 	my $self = shift;
 	my $dn   = shift;
@@ -127,6 +214,17 @@ sub modify($$) {
 
 }
 
+# Method: delete
+#
+#       Performs  a deletion  in the LDAP directory using Net::LDAP. 
+#       
+# Parameters:
+#
+#	dn - dn to delete 
+#               
+# Exceptions:
+#
+#	Internal - If there is an error during the search
 sub delete($$) {
 	my $self = shift;
 	my $dn   = shift;
@@ -137,6 +235,19 @@ sub delete($$) {
 	return $result;
 
 }
+
+# Method: add
+#
+#       Adds an object or attributes  in the LDAP directory using Net::LDAP. 
+#       
+# Parameters:
+#
+#	dn - dn to add
+#	args - parameters to pass to Net::LDAP->add()
+#               
+# Exceptions:
+#
+#	Internal - If there is an error during the search
 
 sub add($$) {
 	my $self = shift;
@@ -165,6 +276,25 @@ sub _errorOnLdap($;$)
 						$frames[3] . " " .
 						$result->error);
         }
+}
+
+# Workaround to mark strings returned from ldap as utf8 strings
+sub _utf8Attrs # (result)
+{
+        my $result = shift;
+
+        my @entries = $result->entries;
+        foreach my $attr (@{$entries[0]->{'asn'}->{'attributes'}}) {
+                my @vals = @{$attr->{vals}};
+                next unless (@vals);
+                my @utfvals;
+                foreach my $val (@vals) {
+                        _utf8_on($val);
+                        push @utfvals, $val;
+                }
+                $attr->{vals} = \@utfvals;
+        }
+        return $result;
 }
 
 1;

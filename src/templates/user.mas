@@ -66,8 +66,7 @@ use EBox::Gettext;
 		</table>
 		<h3><%__('Delete user')%></h3>
 		<div class='note'>
-			<%__('Esto eliminara el usuario y todas sus dependencias; por ejemplo, sus
-			cuentas de correo, datos de usuario...')%>
+			<% __('This operation will cause the removal of the user and all his dependences; such as mail accounts, user data...') %>
 		</div>
 		<form action='Del' method='POST'>
 		<p>

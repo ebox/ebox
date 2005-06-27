@@ -44,9 +44,7 @@ case "$1" in
 		ebox-sudoers > /etc/sudoers
 		chmod 0440 /etc/sudoers
 		
-		# generate slapd.conf
-		/usr/lib/ebox-usersandgroups/ebox-init-ldap genconfig
-	
+		
 		# Init ldap data base
 		PASS="ebox$RANDOM$RANDOM"
 		CRYPTPASS=`create_password_hash "$PASS"`;
@@ -55,11 +53,15 @@ case "$1" in
                 chmod 0440 /var/lib/ebox/conf/ebox-ldap.passwd
                 chown ebox.ebox /var/lib/ebox/conf/ebox-ldap.passwd
 
+		# generate slapd.conf
+		/usr/lib/ebox-usersandgroups/ebox-init-ldap genconfig
+		
 		invoke-rc.d slapd stop
 		touch /var/lib/slapd/suffix_change
+		
+		if [ ! -d /var/lib/ebox/ldap ]; then
 
-		rm /var/lib/ldap/*
-
+		mkdir /var/lib/ebox/ldap
  cat <<EOF | slapadd
 dn: dc=ebox
 objectClass: top
@@ -81,14 +83,23 @@ EOF
 	
 		echo "done"
 		
+		fi
+		
 		# replace /etc/default/slapd with desired options
-		echo 'SLAPD_SERVICES="ldapi:///????x-mod=777"' > /etc/default/slapd
+		echo 'SLAPD_SERVICES="ldapi://%2fvar%2frun%2fldapi/????x-mod=0777"' > /etc/default/slapd
+
+		# Workaround for slapd 2.23-5, it does not update the rc?.d files
+		 update-rc.d slapd defaults 19 80 >/dev/null
 
 		# start slapd
 		invoke-rc.d slapd start
-
-		# populate ldap database
-		/usr/lib/ebox-usersandgroups/ebox-init-ldap populate
+		
+		if [ -z "$2" ]; then
+			# populate ldap database 
+			/usr/lib/ebox-usersandgroups/ebox-init-ldap populate
+		else 
+			exit 0;
+		fi
 esac
 
 #DEBHELPER#

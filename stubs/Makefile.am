@@ -6,4 +6,4 @@ nobase_Stub_DATA = slapd.conf.mas
 
 EXTRA_DIST = $(nobase_Stub_DATA)
 
-MAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in slapd.conf.mas

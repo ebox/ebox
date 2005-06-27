@@ -18,7 +18,7 @@ package EBox::CGI::UsersAndGroups::Groups;
 use strict;
 use warnings;
 
-use base 'EBox::CGI::Base';
+use base 'EBox::CGI::ClientBase';
 
 use EBox::Global;
 use EBox::UsersAndGroups;

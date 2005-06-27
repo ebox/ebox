@@ -10,42 +10,30 @@
 # , 2005.
 # , 2005.
 # Isaac Clerencia <isaac@warp.es>, 2005.
+# Javier Uruen Val <460821@celes.unizar.es>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: bugs@warp.es\n"
-"POT-Creation-Date: 2005-03-14 02:31+0100\n"
-"PO-Revision-Date: 2005-02-18 19:46+0100\n"
-"Last-Translator: Isaac Clerencia <isaac@warp.es>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"POT-Creation-Date: 2005-05-09 15:18+0200\n"
+"PO-Revision-Date: 2005-05-09 15:36+0200\n"
+"Last-Translator: Javier Uruen Val <460821@celes.unizar.es>\n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.10\n"
 
-#: src/EBox/CGI/DelUserFromGroup.pm:45 src/EBox/CGI/Group.pm:45
-#: src/EBox/CGI/AddUserToGroup.pm:44
+#: src/EBox/CGI/DelUserFromGroup.pm:45 src/EBox/CGI/AddUserToGroup.pm:44
+#: src/EBox/CGI/Group.pm:45
 msgid "group"
 msgstr "grupo"
 
 #: src/EBox/CGI/DelUserFromGroup.pm:50 src/EBox/CGI/AddUserToGroup.pm:49
 msgid "user"
 msgstr "usuario"
-
-#: src/EBox/CGI/ModifyGroup.pm:40 src/EBox/CGI/AddGroup.pm:45
-#: src/EBox/UsersAndGroups.pm:463 src/EBox/UsersAndGroups.pm:468
-#: src/EBox/UsersAndGroups.pm:531 src/EBox/UsersAndGroups.pm:626
-#: src/EBox/UsersAndGroups.pm:649 src/EBox/UsersAndGroups.pm:692
-#: src/EBox/UsersAndGroups.pm:763
-msgid "group name"
-msgstr "nombre de grupo"
-
-#: src/EBox/CGI/ModifyGroup.pm:47 src/EBox/CGI/ModifyUser.pm:48
-#: src/EBox/CGI/AddUser.pm:49
-msgid "comment"
-msgstr "comentario"
 
 #: src/EBox/CGI/Del.pm:65
 msgid "object name"
@@ -63,12 +51,25 @@ msgstr "Usuario eliminado correctamente"
 msgid "Group removed successfully"
 msgstr "Grupo eliminado correctamente"
 
+#: src/EBox/CGI/ModifyGroup.pm:40 src/EBox/CGI/AddGroup.pm:45
+#: src/EBox/UsersAndGroups.pm:659 src/EBox/UsersAndGroups.pm:664
+#: src/EBox/UsersAndGroups.pm:769 src/EBox/UsersAndGroups.pm:896
+#: src/EBox/UsersAndGroups.pm:933 src/EBox/UsersAndGroups.pm:1007
+#: src/EBox/UsersAndGroups.pm:1113
+msgid "group name"
+msgstr "nombre de grupo"
+
+#: src/EBox/CGI/ModifyGroup.pm:47 src/EBox/CGI/ModifyUser.pm:48
+#: src/EBox/CGI/AddUser.pm:49
+msgid "comment"
+msgstr "comentario"
+
 #: src/EBox/CGI/ModifyUser.pm:42 src/EBox/CGI/AddUser.pm:45
-#: src/EBox/UsersAndGroups.pm:183 src/EBox/UsersAndGroups.pm:189
-#: src/EBox/UsersAndGroups.pm:254 src/EBox/UsersAndGroups.pm:300
-#: src/EBox/UsersAndGroups.pm:317 src/EBox/UsersAndGroups.pm:503
-#: src/EBox/UsersAndGroups.pm:548 src/EBox/UsersAndGroups.pm:621
-#: src/EBox/UsersAndGroups.pm:644 src/EBox/UsersAndGroups.pm:665
+#: src/EBox/UsersAndGroups.pm:267 src/EBox/UsersAndGroups.pm:273
+#: src/EBox/UsersAndGroups.pm:359 src/EBox/UsersAndGroups.pm:413
+#: src/EBox/UsersAndGroups.pm:444 src/EBox/UsersAndGroups.pm:733
+#: src/EBox/UsersAndGroups.pm:798 src/EBox/UsersAndGroups.pm:891
+#: src/EBox/UsersAndGroups.pm:928 src/EBox/UsersAndGroups.pm:965
 msgid "user name"
 msgstr "nombre de usuario"
 
@@ -104,28 +105,35 @@ msgstr "Editar usuario"
 msgid "username"
 msgstr "nombre de usuario"
 
-#: src/EBox/CGI/Groups.pm:30 src/EBox/UsersAndGroups.pm:964
+#: src/EBox/CGI/Groups.pm:30 src/EBox/UsersAndGroups.pm:1377
 msgid "Groups"
 msgstr "Grupos"
 
-#: src/EBox/CGI/Users.pm:31 src/EBox/UsersAndGroups.pm:962
+#: src/EBox/CGI/Users.pm:31 src/EBox/UsersAndGroups.pm:1375
 msgid "Users"
 msgstr "Usuarios"
 
-#: src/EBox/UsersAndGroups.pm:178
-msgid "Username must be at most "
+#: src/EBox/UsersAndGroups.pm:262
+#, fuzzy
+msgid "Username must not be longer than "
 msgstr "El nombre de usuario debe de ser como máximo"
 
-#: src/EBox/UsersAndGroups.pm:451
-msgid "Groupname must be at most "
+#: src/EBox/UsersAndGroups.pm:282 src/EBox/UsersAndGroups.pm:673
+msgid "Maximum number of system users reached"
+msgstr "Máximo número de usuarios de sistema alcanzado"
+
+#: src/EBox/UsersAndGroups.pm:647
+#, fuzzy
+msgid "Groupname must not be longer than "
 msgstr "El nombre del grupo debe de ser como máximo"
 
-#: src/EBox/UsersAndGroups.pm:457
+#: src/EBox/UsersAndGroups.pm:653
 msgid "The group name is not valid because it is used internally"
 msgstr "El nombre de grupo no es válido porque se utiliza internamente"
 
-#: src/EBox/UsersAndGroups.pm:836
-msgid "Password must be at most "
+#: src/EBox/UsersAndGroups.pm:1186
+#, fuzzy
+msgid "Password must not be longer than "
 msgstr "La contraseña debe de ser como máximo"
 
 #: src/EBox/LdapUserImplementation.pm:42
@@ -247,10 +255,18 @@ msgstr "Eliminar usuarios del grupo"
 msgid "Add users to group"
 msgstr "Añadir usuarios al grupo"
 
-#: src/templates/group.mas:99 src/templates/group.mas:108
-#: src/templates/group.mas:110
+#: src/templates/group.mas:99 src/templates/group.mas:109
+#: src/templates/group.mas:111
 msgid "Delete group"
 msgstr "Eliminar grupo"
+
+#: src/templates/group.mas:102
+msgid ""
+"If you remove this group all its data within its shared directory will be "
+"deleted"
+msgstr ""
+"Si elemina este grupo todos sus datos contenidos en su directorio compartido "
+"serán eliminados"
 
 #: src/templates/user.mas:10
 msgid "Administration of user"
@@ -260,6 +276,14 @@ msgstr "Administración del usuario"
 #: src/templates/user.mas:86
 msgid "Delete user"
 msgstr "Eliminar usuario"
+
+#: src/templates/user.mas:77
+msgid ""
+"This operation will cause the removal of the user and all his dependences; "
+"such as mail accounts, user data..."
+msgstr ""
+"Esta operación eliminará el usuario y todas sus dependencias, tales como "
+"cuentas de correo, datos del usuario..."
 
 #: src/templates/groups.mas:10
 msgid "Add Group"
@@ -276,12 +300,3 @@ msgstr "Editar grupo"
 #: src/templates/groups.mas:54
 msgid "Group of users"
 msgstr "Grupo de usuarios"
-
-#~ msgid "old group name"
-#~ msgstr "nombre de grupo anterior"
-
-#~ msgid "group id"
-#~ msgstr "identificador de grupo"
-
-#~ msgid "group description"
-#~ msgstr "descripción de grupo"

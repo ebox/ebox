@@ -36,7 +36,7 @@ database        bdb
 
 suffix          "<% $dn %>"
 
-directory       "/var/lib/ebox/ldap"
+directory       "@LOCALSTATEDIR@/lib/ebox/ldap"
 
 index           objectClass eq
 

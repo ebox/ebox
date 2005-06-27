@@ -87,7 +87,7 @@ use EBox::Gettext;
 
 <h3><% __("Delete group") %></h3>
 <div class='note'>
-	Si borra este grupo perdera todos los directorios que comparta el mismo.
+	<% __('If you remove this group all its data within its shared directory will be deleted') %>
 </div>
 <br />
 <form action='Del' method='POST'>

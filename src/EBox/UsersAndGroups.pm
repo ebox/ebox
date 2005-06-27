@@ -30,8 +30,10 @@ use EBox::LdapUserImplementation;
 
 use constant USERSDN	    => 'ou=Users';
 use constant GROUPSDN       => 'ou=Groups';
+use constant SYSMINUID	    => 1900;
+use constant SYSMINGID	    => 1900;
 use constant MINUID	    => 2000;
-use constant MINGID	    => 2001;
+use constant MINGID	    => 2000;
 use constant HOMEPATH       => '/nonexistent';
 use constant MAXUSERLENGTH  => 24;
 use constant MAXGROUPLENGTH => 24;
@@ -51,6 +53,10 @@ sub _create
 	return $self;
 }
 
+# Method: _regenConfig
+#
+#       Overrides base method. It regenertates the ldap service configuration
+#
 sub _regenConfig 
 {
 	my $self = shift;
@@ -68,6 +74,10 @@ sub _regenConfig
 	 		     "/usersandgroups/slapd.conf.mas", \@array);
 }
 
+# Method: _rootCommands
+#
+#       Overrides base method. It regenertates the ldap service configuration
+#
 sub rootCommands 
 {
 	my $self = shift;
@@ -82,19 +92,47 @@ sub rootCommands
 	return @array;
 }
 
+# Method: groupsDn 
+#
+#       Returns the dn where the groups are stored in the ldap directory
+#
+# Returns:
+#
+#       string - dn
+#
 sub groupsDn
 {
 	my $self = shift;
 	return GROUPSDN . "," . $self->{ldap}->dn;
 }
 
+# Method: usersDn
+#
+#       Returns the dn where the users are stored in the ldap directory
+#
+# Returns:
+#
+#       string - dn
+#
 sub usersDn 
 {
 	my $self = shift;
 	return USERSDN . "," . $self->{ldap}->dn;
 }
 
-sub userExists($$) 
+# Method: userExists 
+#
+#      	Checks if a given user exists
+#   
+# Parameters:
+#       
+#       user - user name 
+#
+# Returns:
+#
+#       boolean - true if it exists, otherwise false
+#
+sub userExists # (user)
 {
 	my $self = shift;
 	my $user = shift;
@@ -110,7 +148,20 @@ sub userExists($$)
 	return ($result->count > 0);
 }
 
-sub uidExists($$) 
+
+# Method: uidExists 
+#
+#      	Checks if a given uid exists
+#   
+# Parameters:
+#       
+#       uid - uid number to check
+#
+# Returns:
+#
+#       boolean - true if it exists, otherwise false
+#
+sub uidExists # (uid)
 {
 	my $self = shift;
 	my $uid = shift;
@@ -126,9 +177,23 @@ sub uidExists($$)
 	return ($result->count > 0);
 }
 
-sub lastUid($) 
+# Method: lastUid
+#
+#      	Returns the last uid used.
+#   
+# Parameters:
+#       
+#	system - boolan: if true, it returns the last uid for system users, 
+#	otherwise the last uid for normal users
+#
+# Returns:
+#
+#       string - last uid
+#
+sub lastUid # (system)
 {
 	my $self = shift;
+	my $system = shift;
 	
 	my %args = (
 			base => $self->usersDn,
@@ -144,15 +209,24 @@ sub lastUid($)
 	my $uid = -1;
 	foreach my $user (@users) {
 		my $curruid = $user->get_value('uidNumber');
+		if ($system) {
+			last if ($curruid > MINUID);
+		} else {
+			next if ($curruid < MINUID);
+		}
 		if ( $curruid > $uid){
 			$uid = $curruid;
 		}
 	}
 
-	return ($uid < MINUID ?  MINUID : $uid);
+	if ($system) {
+		return ($uid < SYSMINUID ?  SYSMINUID : $uid);
+	} else {
+		return ($uid < MINUID ?  MINUID : $uid);
+	}
 }
 
-sub _initUser($$) 
+sub _initUser 
 {
 	my $self = shift;
 	my $user = shift;
@@ -167,16 +241,26 @@ sub _initUser($$)
 }
 
 
-
-sub addUser($$) 
+# Method: addUser 
+#
+#      	Adds a user
+#   
+# Parameters:
+#       
+#	user - hash ref containing: 'user' (user name), 'fullname', 'password',
+#	and comment
+#	system - boolan: if true it adds the user as system user, otherwise as 
+#	normal user
+sub addUser # (user, system)
 {
 	my $self = shift;
 	my $user = shift;
+	my $system = shift;
 
 	if (length($user->{'user'}) > MAXUSERLENGTH) {
 		throw EBox::Exceptions::External(
-			__("Username must be at most " . MAXUSERLENGTH .
-			   "characters long"));
+			__("Username must not be longer than " . MAXUSERLENGTH .
+			   "characters"));
 	}
 	unless (_checkName($user->{'user'})) {
 		throw EBox::Exceptions::InvalidData(
@@ -190,15 +274,25 @@ sub addUser($$)
 						   'value' => $user->{'user'});
 	}
 
-	my $uid = $self->lastUid + 1;
+	my $uid;
+	if ($system) {
+		$uid = $self->lastUid(1) + 1;
+		if ($uid == MINUID) {
+			thrown EBox::Exceptions::Internal(
+				__('Maximum number of system users reached'));
+		}
+	} else {
+		$uid = $self->lastUid + 1;
+	}
+	
 	my $gid = $self->groupGid(DEFAULTGROUP);
 	
 	$self->_checkPwdLength($user->{'password'});
 	my %args = ( 
 		    attr => [
-			     'cn'	    => $user->{'user'},
-			     'uid'	   => $user->{'user'},
-			     'sn'	    => $user->{'fullname'},
+			     'cn'	     => $user->{'user'},
+			     'uid'	     => $user->{'user'},
+			     'sn'	     => $user->{'fullname'},
 			     'uidNumber'     => $uid,
 			     'gidNumber'     => $gid,
 			     'homeDirectory' => HOMEPATH ,
@@ -212,7 +306,9 @@ sub addUser($$)
 	
 
 	$self->_changeAttribute($dn, 'description', $user->{'comment'});
-	$self->_initUser($user->{'user'});
+	unless ($system) {
+		$self->_initUser($user->{'user'});
+	}
 }
 
 sub _modifyUserPwd($$$) 
@@ -242,7 +338,16 @@ sub _updateUser($$)
 	}
 }
 
-sub modifyUser ($$$) 
+# Method: modifyUser 
+#
+#      	Modifies a user
+#   
+# Parameters:
+#       
+#	user - hash ref containing: 'user' (user name), 'fullname', 'password',
+#	and comment
+#
+sub modifyUser # (\%user)
 {
 	my $self =  shift;
 	my $user =  shift;
@@ -290,7 +395,15 @@ sub _cleanUser($$)
 	}
 }
 
-sub delUser ($$) 
+# Method: delUser
+#
+#      	Removes a given user
+#   
+# Parameters:
+#       
+#	user - user name to be deleted 
+#
+sub delUser # (user)
 {
 	my $self = shift;
 	my $user = shift;
@@ -306,7 +419,21 @@ sub delUser ($$)
 	
 }
 
-sub userInfo($$;$) 
+# Method: userInfo 
+#
+#      	Returns a hash ref containing the inforamtion for a given user
+#   
+# Parameters:
+#       
+#	user - user name to gather information
+#	entry - *optional* ldap entry for the user
+#
+# Returns:
+#
+#	hash ref - holding the keys: 'username', 'fullname', password', 
+#	'homeDirectory', 'uid' and 'group'
+#
+sub userInfo # (user, entry)
 {
 	my $self = shift;
 	my $user = shift;
@@ -355,7 +482,15 @@ sub userInfo($$;$)
 
 }
 
-sub users($) 
+# Method: users
+#
+#      	Returns an array containing all the users (not system users)
+#
+# Returns:
+#
+#	array - holding the users
+#
+sub users 
 {
 	my $self = shift;
 	
@@ -381,7 +516,19 @@ sub users($)
 	return @users;
 }
 
-sub groupExists($$) 
+# Method: groupExists
+#
+#      	Checks if a given group name exists
+#   
+# Parameters:
+#       
+#       group - group name
+#
+# Returns:
+#
+#       boolean - true if it exists, otherwise false
+#
+sub groupExists # (group) 
 {
 	my $self = shift;
 	my $group = shift;
@@ -397,6 +544,18 @@ sub groupExists($$)
 	return ($result->count > 0);
 }
 
+# Method: gidExists
+#
+#      	Checks if a given gid number exists
+#   
+# Parameters:
+#       
+#       gid - gid number
+#
+# Returns:
+#
+#       boolean - true if it exists, otherwise false
+#
 sub gidExists($$) 
 {
 	my $self = shift;
@@ -413,9 +572,23 @@ sub gidExists($$)
 	return ($result->count > 0);
 }
 
-sub lastGid($) 
+# Method: lastGid
+#
+#      	Returns the last gid used.
+#   
+# Parameters:
+#       
+#	system - boolan: if true, it returns the last gid for system users, 
+#	otherwise the last gid for normal users
+#
+# Returns:
+#
+#       string - last gid
+#
+sub lastGid # (gid) 
 {
 	my $self = shift;
+	my $system = shift;
 	
 	my %args = (
 			base => $self->groupsDn,
@@ -431,28 +604,51 @@ sub lastGid($)
 	my $gid = -1;
 	foreach my $user (@users) {
 		my $currgid = $user->get_value('gidNumber');
+		if ($system) {
+			last if ($currgid > MINGID);
+		} else {
+			next if ($currgid < MINGID);
+		}
+
 		if ( $currgid > $gid){
 			$gid = $currgid;
 		}
 	}
 
-	return ($gid < MINGID ?  MINGID : $gid);
+	if ($system) {
+		return ($gid < SYSMINUID ?  SYSMINUID : $gid);
+	} else {
+		return ($gid < MINUID ?  MINUID : $gid);
+	}
+
 }
 
-sub addGroup($$) 
+# Method: addGroup
+#
+#      	Adds a new group
+#   
+# Parameters:
+#       
+#	group - group name
+#	comment - comment's group
+#	system - boolan: if true it adds the group as system group, 
+#	otherwise as normal group
+#
+sub addGroup # (group, comment, system)
 {
 	my $self = shift;
 	
 	my $group = shift;
 	my $comment = shift;
+	my $system = shift;
 
 	if (length($group) > MAXGROUPLENGTH) {
 		throw EBox::Exceptions::External(
-			__("Groupname must be at most " . MAXGROUPLENGTH .
-			   "characters long"));
+			__("Groupname must not be longer than ".MAXGROUPLENGTH .
+			   "characters"));
 	}
 	
-	if ($group eq DEFAULTGROUP) {
+	if (($group eq DEFAULTGROUP) and (not $system)) {
 		throw EBox::Exceptions::External(
 			__('The group name is not valid because it is used' .
 			   ' internally'));
@@ -469,7 +665,16 @@ sub addGroup($$)
 						   'value' => $group);
 	}
 	#FIXME
-	my $gid = $self->lastGid + 1;
+	my $gid;
+	if ($system) {
+		$gid = $self->lastGid(1) + 1;
+		if ($gid == MINGID) {
+			thrown EBox::Exceptions::Internal(
+				__('Maximum number of system users reached'));
+		}
+	} else {
+		$gid = $self->lastGid + 1;
+	}
 
 	my %args = ( 
 		    attr => [
@@ -485,13 +690,38 @@ sub addGroup($$)
 	
 	$self->_changeAttribute($dn, 'description', $comment);
 
-	my @mods = @{$self->_modsLdapUserBase()};
-	foreach my $mod (@mods){
-		$mod->_addGroup($group);
+	unless ($system) {
+		my @mods = @{$self->_modsLdapUserBase()};
+		foreach my $mod (@mods){
+			$mod->_addGroup($group);
+		}
 	}
 }
 
-sub modifyGroup ($$$) 
+sub _updateGroup($$) 
+{
+	my $self = shift;
+	my $group = shift;
+	
+	# Tell modules depending on groups and groups
+	# a group  has been updated
+	my @mods = @{$self->_modsLdapUserBase()};
+	
+	foreach my $mod (@mods){
+		$mod->_modifyGroup($group);
+	}
+}
+
+# Method: modifyGroup
+#
+#      	Modifies a group
+#   
+# Parameters:
+#       
+#	hash ref - holding the keys 'groupname' and 'comment'. At the moment
+#	comment is the only modifiable attribute
+#
+sub modifyGroup # (\%groupdata)) 
 {
 	my $self =  shift;
 	my $groupdata =  shift;
@@ -522,7 +752,15 @@ sub _cleanGroup($$)
 	}
 }
 
-sub delGroup($$) 
+# Method: delGroup
+#
+#      	Removes a given group
+#   
+# Parameters:
+#       
+#	group - group name to be deleted 
+#
+sub delGroup # (group)
 {
 	my $self = shift;
 	my $group = shift;
@@ -531,14 +769,26 @@ sub delGroup($$)
 		throw EBox::Exceptions::DataNotFoud('data' => __('group name'),
 						    'value' => $group);
 	}
-
+	
+	$self->_cleanGroup($group);
 	my $dn = "cn=" . $group . "," . $self->groupsDn;
 	my $result = $self->{'ldap'}->delete($dn);
 
-	$self->_cleanGroup($group);
 }
 
-sub groupInfo($$) 
+# Method: groupInfo 
+#
+#      	Returns a hash ref containing the inforamtion for a given group
+#   
+# Parameters:
+#       
+#	group - group name to gather information
+#	entry - *optional* ldap entry for the group
+#
+# Returns:
+#
+#	hash ref - holding the keys: 'groupname' and 'description'
+sub groupInfo # (group) 
 {
 	my $self = shift;
 	my $group = shift;
@@ -576,6 +826,14 @@ sub groupInfo($$)
 
 }
 
+# Method: groups
+#
+#      	Returns an array containing all the groups (not system groupss)
+#
+# Returns:
+#
+#	array - holding the groups
+#
 sub groups 
 {
 	my $self = shift;
@@ -610,7 +868,19 @@ sub groups
 	return @groups;
 }
 
-sub addUserToGroup($$$) 
+# Method: addUserToGroup 
+#
+#	Adds a user to a given group
+#   
+# Parameters:
+#       
+#	user - user name to add to the group
+#	group - group name 
+#
+# Exceptions:
+#
+#	DataNorFound - If user or group don't exist
+sub addUserToGroup # (user, group)
 {
 	my $self = shift;
 
@@ -631,9 +901,23 @@ sub addUserToGroup($$$)
 
 	my %attrs = ( add => { memberUid => $user } );
  	$self->{'ldap'}->modify($dn, \%attrs);
+
+	$self->_updateGroup($group);
 }
 
-sub delUserFromGroup($$$) 
+# Method: delUserFromGroup 
+#
+#	Removes a user from a group
+#   
+# Parameters:
+#       
+#	user - user name to remove  from the group
+#	group - group name 
+#
+# Exceptions:
+#
+#	DataNorFound - If user or group don't exist
+sub delUserFromGroup # (user, group)
 {
 	my $self = shift;
 
@@ -653,10 +937,26 @@ sub delUserFromGroup($$$)
 	my $dn = "cn=" . $group . "," . $self->groupsDn;
 	my %attrs = ( delete => {  memberUid => $user  } );
 	$self->{'ldap'}->modify($dn, \%attrs);
+
+	$self->_updateGroup($group);
 }
 
-
-sub groupOfUsers($$) 
+# Method: groupOfUsers 
+#
+#	Given a user it returns all the groups which the user belongs to
+#   
+# Parameters:
+#       
+#	user - user name 
+#
+# Returns:
+#
+#	array ref - holding the groups
+#
+# Exceptions:
+#
+#	DataNorFound - If user does not  exist
+sub groupOfUsers # (user)
 {
 	my $self = shift;
 	my $user = shift;
@@ -683,7 +983,22 @@ sub groupOfUsers($$)
 	return \@groups;
 }
 
-sub  usersInGroup ($$) 
+# Method: usersInGroup 
+#
+#	Given a group it returns all the users belonging to it
+#   
+# Parameters:
+#       
+#	group - group name
+#
+# Returns:
+#
+#	array ref - holding the groups
+#
+# Exceptions:
+#
+#	DataNorFound - If group does not  exist
+sub  usersInGroup # (group) 
 {
 	my $self = shift;
 	my $group= shift;
@@ -711,7 +1026,19 @@ sub  usersInGroup ($$)
 
 }
 
-sub usersNotInGroup($$)
+# Method: usersNotInGroup 
+#
+#	Given a group it returns all the users who not belonging to it
+#   
+# Parameters:
+#       
+#	group - group name
+#
+# Returns:
+#
+#	array  - holding the groups
+#
+sub usersNotInGroup # (group)
 {
 	my $self  = shift;
 	my $groupname = shift;
@@ -731,8 +1058,19 @@ sub usersNotInGroup($$)
 }
 
 
-
-sub gidGroup($$) 
+# Method: gidGroup 
+#
+#	Given a gid number it returns its group name
+#   
+# Parameters:
+#       
+#	gid - gid number
+#
+# Returns:
+#
+#	string - group name
+#
+sub gidGroup # (gid)
 {
 	my $self = shift;
 	my $gid  = shift;
@@ -754,7 +1092,19 @@ sub gidGroup($$)
 	return $result->entry(0)->get_value('cn');
 }	
 
-sub groupGid($$) 
+# Method: groupGid 
+#
+#	Given a group name  it returns its gid number
+#   
+# Parameters:
+#       
+#	group - group name 
+#
+# Returns:
+#
+#	string - gid number
+#
+sub groupGid # (group)
 {
 	my $self = shift;
 	my $group  = shift;
@@ -833,8 +1183,8 @@ sub _checkPwdLength($$)
 	
 	if (length($pwd) > MAXPWDLENGTH) {
 		throw EBox::Exceptions::External(
-			__("Password must be at most " . MAXPWDLENGTH .
-			   "characters long"));
+			__("Password must not be longer than " . MAXPWDLENGTH .
+			   "characters"));
 	}
 }
 
@@ -842,7 +1192,7 @@ sub _checkPwdLength($$)
 sub _checkName
 {
 	my $name = shift;
-	($name =~ /[^\w\s]/) and return undef;
+	($name =~ /[^A-Za-z0-9_\s]/) and return undef;
 	return 1;
 }
 
@@ -865,7 +1215,20 @@ sub _modsLdapUserBase($)
 	return \@modules;
 }
 
-sub allUserAddOns($$) 
+# Method: allUserAddOns
+#
+#       Returns all the mason components from those modules implementing
+#	the function _userAddOns from EBox::LdapUserBase
+#   
+# Parameters:
+#       
+#       user - username
+#
+# Returns:
+#
+#       array ref - holding all the components and parameters
+#
+sub allUserAddOns # (user)
 {
 	my $self = shift;
 	my $username = shift;
@@ -885,7 +1248,19 @@ sub allUserAddOns($$)
 	return \@components;
 }
 
-
+# Method: allGroupAddOns
+#
+#       Returns all the mason components from those modules implementing
+#	the function _groupAddOns from EBox::LdapUserBase
+#   
+# Parameters:
+#       
+#       group  - group name
+#
+# Returns:
+#
+#       array ref - holding all the components and parameters
+#
 sub allGroupAddOns($$) 
 {
 	my $self = shift;
@@ -904,6 +1279,15 @@ sub allGroupAddOns($$)
 	return \@components;
 }
 
+# Method: allLDAPIncludes
+#
+#	Returns all the ldap schemas requested by those modules implementing
+#	the function _includeLDAPSchemas from EBox::LdapUserBase
+#   
+# Returns:
+#
+#       array ref - holding all the schemas 
+#
 sub allLDAPIncludes 
 {
 	my $self = shift;
@@ -919,6 +1303,15 @@ sub allLDAPIncludes
 	return \@includes;
 }
 
+# Method: allLDAPAcls
+#
+#	Returns all the ldap acls requested by those modules implementing
+#	the function _includeLDAPSchemas from EBox::LdapUserBase
+#   
+# Returns:
+#
+#       array ref - holding all the acls
+#
 sub allLDAPAcls 
 {
 	my $self = shift;
@@ -934,6 +1327,21 @@ sub allLDAPAcls
 	return \@allAcls;
 }
 
+# Method: allWarning
+#
+#	Returns all the the warnings provided by the modules when a certain 
+#	user or group is going to be deleted. Function _delUserWarning or
+#	_delGroupWarning is called in all module implementing them.
+#
+# Parameters:
+#
+# 	object - Sort of object: 'user' or 'group'
+# 	name - name of the user or group
+#   
+# Returns:
+#
+#       array ref - holding all the warnings
+#
 sub allWarnings($$$) 
 {
 	my $self = shift;
@@ -955,6 +1363,11 @@ sub allWarnings($$$)
 	return \@allWarns;
 }
 
+# Method: menu 
+#
+#       Overrides EBox::Module method.
+#   
+#
 sub menu
 {
         my ($self, $root) = @_;

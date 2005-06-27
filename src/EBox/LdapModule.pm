@@ -29,6 +29,15 @@ sub new
 	return $self;
 }
 
+# Method: _ldapModImplementation
+#
+#      	All modules using any of the functions in LdapUserBase.pm
+#   	should override this method to return the implementation
+#	of that interface.
+#
+# Returns:
+#
+#	An object implementing EBox::LdapUserBase 
 sub _ldapModImplementation 
 {
 	throw EBox::Exceptions::NotImplemented();	
