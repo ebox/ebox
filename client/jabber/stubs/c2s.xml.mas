@@ -1,0 +1,113 @@
+<%args>
+	$domain
+	$bindpw
+	$binddn
+	$basedc
+	$ssl
+</%args>
+<%init>
+use EBox::Gettext;
+settextdomain('ebox-jabber');
+</%init>
+<c2s>
+  <id>c2s</id>
+  <pidfile>/var/run/jabberd2/c2s.pid</pidfile>
+  <router>
+    <ip>127.0.0.1</ip>            <!-- default: 127.0.0.1 -->
+    <port>5347</port>             <!-- default: 5347 -->
+    <user>jabberd</user>          <!-- default: jabberd -->
+    <pass>secret</pass>           <!-- default: secret -->
+
+    <retry>
+      <init>3</init>
+      <lost>3</lost>
+      <sleep>2</sleep>
+    </retry>
+  </router>
+
+  <log type='file'>
+    <ident>jabberd/c2s</ident>
+    <facility>local3</facility>
+    <file>/var/log/jabberd2/c2s.log</file>
+  </log>
+
+  <local>
+    <id><% $domain %></id>
+    
+    <ip>0.0.0.0</ip>
+%	if (!($ssl eq 'no')){
+    <pemfile>/etc/ebox/ssl.pem/ebox.pem</pemfile>
+    <ssl-port>5223</ssl-port>
+%		if ($ssl eq 'required') {
+    <require-starttls/>
+    <port>0</port>
+%		} else {
+    <port>5222</port>
+%		}
+%	} else {
+    <port>5222</port>
+%	}
+  </local>
+
+  <io>
+    <max_fds>1024</max_fds>
+    <limits>
+      <bytes>0</bytes>
+      <connects>0</connects>
+    </limits>
+    
+    <access>
+      <order>allow,deny</order>
+    </access>
+
+    <check>
+      <interval>0</interval>
+      <idle>0</idle>
+      <keepalive>0</keepalive>
+    </check>
+  </io>
+
+  <authreg>
+    <module>ldap</module>
+    <register>
+      <enable/>
+
+      <instructions><% __('Enter a username and password to register with this server.') %></instructions>
+
+      <password/>
+    </register>
+
+    <mechanisms>
+      <traditional>
+        <plain/>
+        <digest/>
+        <zerok/>
+      </traditional>
+
+      <sasl>
+        <plain/>
+        <digest-md5/>
+      </sasl>
+
+    </mechanisms>
+
+    <ldap>
+      <host>localhost</host>
+      <port>389</port>
+
+      <v3/>
+
+      <binddn><% $binddn %></binddn>
+      <bindpw><% $bindpw %></bindpw>
+      
+      <uidattr>uid</uidattr>
+      <basedn><% $basedc %></basedn>
+    </ldap>
+
+    <pipe>
+      <exec>/usr/sbin/pipe-auth.pl</exec>
+    </pipe>
+
+  </authreg>
+
+</c2s>
