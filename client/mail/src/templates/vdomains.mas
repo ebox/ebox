@@ -1,0 +1,83 @@
+<!-- vim: ts=4 sw=4 filetype=mason
+-->
+<%args>
+	$mdsize
+	%vdomains
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<h3><% __('Add a new virtual domain') %></h3>
+<form action='AddVDomain' method='POST'>
+	<table class='formTable'>
+	<tr>
+		<td class='tright'>
+			<span class='ftitle'><% __('Domain name') %>:</span>
+		</td>
+		<td class='tright'>
+			<input type='text' class='inputText' name='vdomain' />
+		</td>
+	</tr>
+	<tr>
+		<td class='tright'>
+			<span class='ftitle'>
+				<% __('Default maildir size (Mb)') %>:
+			</span>
+		</td>
+		<td class='tright'>
+			<input 	type='text' 
+					class='inputText' 
+					name='dftmdsize' 
+					value='<% $mdsize %>' />
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input class='inputButton' type='submit' name='addVDomain' 
+				   value="<% __('Add') %>"
+				   alt="<% __('Add') %>">
+		</td>
+	</tr>
+	</table>
+</form>
+
+%   my @kvd = keys %vdomains;
+%	if(@kvd != 0) {
+
+		<h3><% __('Virtual domains list') %></h3>
+		<table cellspacing='0' class='dataTable'>
+			<thead>
+				<tr>
+					<th width='44%' class='tleft'>
+						<% __('Name') %>
+					</th>
+					<th width='22%' class='tleft'>
+						<% __('Maildir Size') %>
+					</th>
+					<th class='thOptions'>
+						<% __('Action') %>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+%			foreach my $domain (@kvd) {
+				<tr class='border'>
+					<td><% $domain %></td>
+					<td><% $vdomains{$domain} %></td>
+					<td class='tcenter'>
+						<a href="EditVDomain?vdomain=<% $domain %>">
+						<img src='/data/images/edit.gif'
+							alt="<% __('Edit') %>" title="<% __('Edit') %>" /></a>
+						<img src='/data/images/sep.gif' alt='-'/>
+						<a href='DelVDomain?vdomain=<% $domain %>'>
+						<img src='/data/images/delete.gif' 
+							title="<% __('Delete') %>"
+							alt="<% __('Delete') %>"/></a>
+					</td>
+				</tr>
+%				}
+			</tbody>
+		</table>
+%	}
+

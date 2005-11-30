@@ -1,0 +1,24 @@
+#!/bin/bash
+
+case "$1" in
+	remove)
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+		invoke-rc.d postfix stop || true
+		invoke-rc.d courier-authdaemon stop || true
+		invoke-rc.d courier-imap stop || true
+		invoke-rc.d courier-imap-ssl stop || true
+		invoke-rc.d courier-pop stop || true
+		invoke-rc.d courier-pop-ssl stop || true
+
+		# restart logs
+                invoke-rc.d ebox logs restart || true
+
+		;;		
+
+	purge)
+		/usr/lib/ebox-logs/ebox-sql-table drop message || true
+
+		;;
+esac
+
+#DEBHELPER#
