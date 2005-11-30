@@ -1,0 +1,10 @@
+#!/bin/bash
+
+case "$1" in
+	purge)
+		#delete logs and temporary files when purging
+		rm -rf /var/lib/ebox/
+		;;	
+esac
+
+#DEBHELPER#
