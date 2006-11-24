@@ -101,13 +101,6 @@ sub setService # (enabled)
 
 	($active and $self->service) and return;
 	(!$active and !$self->service) and return;
-
-	if ($active) {
-	  if ($self->nStaticIfaces() == 0) {
-	    throw EBox::Exceptions::External(__("DHCP server can not activated because there are not any network interface with a static address. <a href='Network/Ifaces'>Configure one</a> first"));
-	  }
-	}
-
 	$self->set_bool("active", $active);
 	$self->_configureFirewall();
 }
@@ -136,105 +129,55 @@ sub setDHCPConf
 	my $self = shift;
 
 	my $net = EBox::Global->modInstance('network');
-	my $staticRoutes_r =  $self->staticRoutes();
+	my $ifaces = $net->allIfaces();
+	my %iflist;
+	foreach (@{$ifaces}) {
+		if($net->ifaceMethod($_) eq 'static') {
+			my $address = $net->ifaceAddress($_);
+			my $netmask = $net->ifaceNetmask($_);
+			my $network = ip_network($address, $netmask);
 
-	my @params = ();
-	push @params, ('dnsone' => $net->nameserverOne);
-	push @params, ('dnstwo' => $net->nameserverTwo);
- 	push @params, ('ifaces' => $self->ifacesInfo($staticRoutes_r));
- 	push @params, ('real_ifaces' => $self->realIfaces());
+			$iflist{$_}->{'net'} = $network;
+			$iflist{$_}->{'address'} = $address;
+			$iflist{$_}->{'netmask'} = $netmask;
+			$iflist{$_}->{'ranges'} = $self->ranges($_);
+			$iflist{$_}->{'fixed'} = $self->fixedAddresses($_);
+			my $gateway = $self->defaultGateway($_);
+			if(defined($gateway) and $gateway ne ""){
+				$iflist{$_}->{'gateway'} = $gateway;
+			}else{
+				$iflist{$_}->{'gateway'} = $address;
+			}
+			my $search = $self->searchDomain($_);
+			$iflist{$_}->{'search'} = $search;
+			my $nameserver1 = $self->nameserver($_,1);
+			if(defined($nameserver1) and $nameserver1 ne ""){
+				$iflist{$_}->{'nameserver1'} = $nameserver1;
+			}
+			my $nameserver2 = $self->nameserver($_,2);
+			if(defined($nameserver2) and $nameserver2 ne ""){
+				$iflist{$_}->{'nameserver2'} = $nameserver2;
+			}
+		}
+	}
 
-	$self->writeConfFile(DHCPCONFFILE, "dhcp/dhcpd.conf.mas", \@params);
+	my $real_ifaces = $net->ifaces();
+	my %realifs;
+	foreach (@{$real_ifaces}) {
+		if($net->ifaceMethod($_) eq 'static') {
+			$realifs{$_} = $net->vifaceNames($_);
+		}
+
+	}
+
+	my @array = ();
+	push(@array, 'dnsone' => $net->nameserverOne);
+	push(@array, 'dnstwo' => $net->nameserverTwo);
+	push(@array, 'ifaces' => \%iflist);
+	push(@array, 'real_ifaces' => \%realifs);
+
+	$self->writeConfFile(DHCPCONFFILE, "dhcp/dhcpd.conf.mas", \@array);
 }
-
-sub realIfaces
-{
-  my ($self) = @_;
-  my $net = EBox::Global->modInstance('network');
- 
-  my $real_ifaces = $net->ifaces();
-  my %realifs;
-  foreach (@{$real_ifaces}) {
-    if ($net->ifaceMethod($_) eq 'static') {
-      $realifs{$_} = $net->vifaceNames($_);
-    }
- 
-  }
- 
-  return \%realifs;
-}
- 
- 
-sub ifacesInfo
-{
-  my ($self, $staticRoutes_r) = @_;
- 
-  my $net = EBox::Global->modInstance('network');
-  my $ifaces = $net->allIfaces();
- 
-  my %iflist;
-  foreach (@{$ifaces}) {
-    if ($net->ifaceMethod($_) eq 'static') {
-      my $address = $net->ifaceAddress($_);
-      my $netmask = $net->ifaceNetmask($_);
-      my $network = ip_network($address, $netmask);
- 
-      $iflist{$_}->{'net'} = $network;
-      $iflist{$_}->{'address'} = $address;
-      $iflist{$_}->{'netmask'} = $netmask;
-      $iflist{$_}->{'ranges'} = $self->ranges($_);
-      $iflist{$_}->{'fixed'} = $self->fixedAddresses($_);
-
-      # look if we have static routes for this network
-      my $netWithMask = EBox::NetWrappers::to_network_with_mask($network, $netmask);
-       $iflist{$_}->{'staticRoutes'} =  $staticRoutes_r->{$netWithMask} if exists $staticRoutes_r->{$netWithMask};
- 
-      my $gateway = $self->defaultGateway($_);
-      if (defined($gateway) and $gateway ne "") {
-	$iflist{$_}->{'gateway'} = $gateway;
-      } else {
-	$iflist{$_}->{'gateway'} = $address;
-      }
-      my $search = $self->searchDomain($_);
-      $iflist{$_}->{'search'} = $search;
-      my $nameserver1 = $self->nameserver($_,1);
-      if (defined($nameserver1) and $nameserver1 ne "") {
-	$iflist{$_}->{'nameserver1'} = $nameserver1;
-      }
-      my $nameserver2 = $self->nameserver($_,2);
-      if (defined($nameserver2) and $nameserver2 ne "") {
-	$iflist{$_}->{'nameserver2'} = $nameserver2;
-      }
-    }
-  }
- 
-  return \%iflist;
-}
- 
- 
-sub isNetworkManaged
-{
-  my ($self, $network, $netmask ) = @_;
- 
-  return 0 if !($self->service());
- 
-  my $net = EBox::Global->modInstance('network');
-  my $ifaces = $net->allIfaces();
-  foreach my $if (@{ $ifaces }) {
-    next if $net->ifaceMethod($if) ne 'static';
- 
-    my $address = $net->ifaceAddress($_);
-    my $ifNetmask = $net->ifaceNetmask($_);
-    my $ifNetwork = ip_network($address, $netmask);
- 
-    if (($network eq $ifNetwork) and ($netmask eq $ifNetmask)) {
-      return 1;
-    }
-  }
- 
-  return 0;
-}
-
 
 #   Function: initRange
 #
@@ -493,38 +436,6 @@ sub nameserver # (iface,number)
 
 	$self->get_string("$iface/nameserver$number");
 }
-
-#   Function: staticRoutes
-#
-#	Gets the static routes. It polls the ebox modules wich implements EBox::DHCP::StaticRouteProvider
-#   Returns:
-#
-#	hash ref - contating the static toutes in hash refereces. The key are the subnets in CIDR notations that denotes where is appliable the new route. 
-#	The valkues are  hash rference with the keys 'destination', 'netmask' and 'gw'
-#	
-sub staticRoutes
-{
-  my ($self) = @_;
-  my %staticRoutes = ();
-
-  my @modules = @{ EBox::Global->modInstancesOfType('EBox::DHCP::StaticRouteProvider') };
-  foreach  my $mod (@modules) {
-    my @modStaticRoutes = @{ $mod->staticRoutes() };
-    while (@modStaticRoutes) {
-      my $net   = shift @modStaticRoutes;
-      my $route = shift @modStaticRoutes;
-      if (exists $staticRoutes{$net}) {
-	push  @{$staticRoutes{$net}}, $route;
-      }
-      else {
-	$staticRoutes{$net} = [$route];
-      }
-    }
-  }
-
-  return \%staticRoutes;
-}
-
 
 #   Function: addRange
 #
@@ -869,11 +780,24 @@ sub _configureFirewall {
 sub ifaceMethodChanged # (iface, old_method, new_method)
 {
 	my ($self, $iface, $old_method, $new_method) = @_;
-	return 0 if !$self->service();
-	return 0 if $old_method ne 'static';
-	return 0 if $new_method eq 'static';
+	($old_method eq 'static') or return 0;
 
-	return 1;
+	my $nr = @{$self->ranges($iface)};
+	($nr != 0) and return 1;
+
+	my $nf = @{$self->fixedAddresses($iface)};
+	($nf != 0) and return 1;
+
+	my $gateway = $self->defaultGateway($iface);
+	(defined($gateway) and $gateway ne "") and return 1;
+
+	my $nameserver1 = $self->nameserver($iface,1);
+	(defined($nameserver1) and $nameserver1 ne "") and return 1;
+
+	my $nameserver2 = $self->nameserver($iface,2);
+	(defined($nameserver2) and $nameserver2 ne "") and return 1;
+
+	return 0;
 }
 
 #   Function: vifaceAdded
@@ -991,11 +915,6 @@ sub freeIface #( self, iface )
 {
 	my ( $self, $iface ) = @_;
 	$self->delete_dir("$iface");
-
-	my $net = EBox::Global->modInstance('network');
-	if ($net->ifaceMethod($iface) eq 'static') {
-	  $self->_checkStaticIfaces(-1);
-	}
 }
 
 #   Function: freeViface
@@ -1007,41 +926,6 @@ sub freeViface #( self, iface, viface )
 {
 	my ( $self, $iface, $viface ) = @_;
 	$self->delete_dir("$iface:$viface");
-
-	my $net = EBox::Global->modInstance('network');
-	if ($net->ifaceMethod($viface) eq 'static') {
-	  $self->_checkStaticIfaces(-1);
-	}
-
-}
-
-
-
-
-sub _checkStaticIfaces
-{
-  my ($self, $adjustNumber) = @_;
-  defined $adjustNumber or $adjustNumber = 0;
-
-  my $nStaticIfaces = $self->nStaticIfaces() + $adjustNumber;
-  if ($nStaticIfaces == 0) {
-    if ($self->service()) {
-      $self->setService(0);
-      EBox::info('DHCP service was deactivated because there was not any static interface left');
-    }
-  }  
-}
-
-
-sub nStaticIfaces
-{
-  my ($self) = @_;
-
-  my $net = EBox::Global->modInstance('network');
-  my $ifaces = $net->allIfaces();
-  my $staticIfaces = grep  { $net->ifaceMethod($_) eq 'static' } @{$ifaces};
-
-  return $staticIfaces;
 }
 
 #   Function: statusSummary 
@@ -1069,8 +953,6 @@ sub rootCommands
 
 	return @array;
 }
-
-
 
 #   Function: menu 
 #

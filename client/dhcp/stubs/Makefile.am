@@ -3,7 +3,7 @@
 Stubdir = @STUBSPATH@/dhcp
 
 
-nobase_Stub_DATA = dhcpd.conf.mas shared-network.mas subnet.mas staticRoutes.mas
+nobase_Stub_DATA = dhcpd.conf.mas shared-network.mas subnet.mas
 
 EXTRA_DIST = $(nobase_Stub_DATA)
 
