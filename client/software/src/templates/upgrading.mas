@@ -42,16 +42,18 @@ function callServer() {
   var url = "/ebox/Software/CurrentPackage";
 
   
-  // Open a connection to the server
-  xmlHttp.open("GET", url, true);
+  try {
+	  // Open a connection to the server
+	  xmlHttp.open("GET", url, true);
+	 
+	  // Setup a function for the server to run when it's done
+	  xmlHttp.onreadystatechange = updatePage;
 
- 
-  // Setup a function for the server to run when it's done
-  xmlHttp.onreadystatechange = updatePage;
+	  // Send the request
+	  xmlHttp.send(null);
+  } catch (e) {
 
-  // Send the request
-  xmlHttp.send(null);
-
+  }
 
    window.setTimeout('callServer()', 5000);
 }
