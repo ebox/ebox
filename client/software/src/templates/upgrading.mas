@@ -5,7 +5,10 @@ use EBox::Gettext;
 </%init>
 <script type="text/javascript">
 
+const TIMEOUT = 10000;
+
 var xmlHttp = false;
+
 
 /*@cc_on @*/
 /*@if (@_jscript_version >= 5)
@@ -42,22 +45,19 @@ function callServer() {
   var url = "/ebox/Software/CurrentPackage";
 
   
-  try {
-	  // Open a connection to the server
-	  xmlHttp.open("GET", url, true);
-	 
-	  // Setup a function for the server to run when it's done
-	  xmlHttp.onreadystatechange = updatePage;
+  // Open a connection to the server
+  xmlHttp.open("GET", url, true);
+ 
+  // Setup a function for the server to run when it's done
+  xmlHttp.onreadystatechange = updatePage;
 
-	  // Send the request
-	  xmlHttp.send(null);
-  } catch (e) {
+  // Send the request
+  xmlHttp.send(null);
 
-  }
-
-   window.setTimeout('callServer()', 5000);
+   window.setTimeout('callServer()', TIMEOUT);
 }
-window.setTimeout('callServer()', 5000);
+
+window.setTimeout('callServer()', TIMEOUT);
 callServer();
 </script>
 
