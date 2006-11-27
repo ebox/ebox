@@ -52,6 +52,9 @@ case "$1" in
 		# restart slapd
 		/etc/init.d/slapd restart
 
+		# sleep for a while until slapd is up
+		sleep 3
+
 		# update current ldap database
 		/usr/lib/ebox-samba/ebox-samba-ldap update-users
 		
