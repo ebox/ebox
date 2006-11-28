@@ -1,7 +1,6 @@
 package EBox::Exceptions::Sudo::Command;
 use base 'EBox::Exceptions::Sudo::Base';
-# package:
-#   this class exists to notify any sudo error which does not relates to the exceutiomn of the actual command (sudoers error, bad command, etc..)
+
 use strict;
 use warnings;
 
