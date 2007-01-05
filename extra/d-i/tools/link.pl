@@ -37,6 +37,7 @@ sub good_link ($$) {
 		print "Hardlink: $dest => $src\n" if ($link_verbose >= 3);
 		if (not link ($src, $dest)) {
 			print STDERR "Link from $src to $dest failed: $!\n";
+			system("cp $src $dest");
 		}
 	}
 }

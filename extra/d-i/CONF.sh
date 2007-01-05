@@ -82,7 +82,7 @@ export ARCH=`dpkg --print-installation-architecture`
 #	      images, however. Also, if you are using an NFS partition for
 #	      some part of this, you must use this option.
 # Paths to the mirrors
-export MIRROR=/home/huno/stuff/mirror
+export MIRROR=/mnt/debian
 
 # Comment the following line if you don't have/want non-US
 #export NONUS=/ftp/debian-non-US
@@ -93,14 +93,14 @@ export MIRROR=/home/huno/stuff/mirror
 #export FORCENONUSONCD1=1
 
 # Path of the temporary directory
-export TDIR=/home/huno/stuff/tmp
+export TDIR=/mnt/magnetic/dev/d-i/tmp
 
 # Path where the images will be written
-export OUT=/home/huno/stuff/out
+export OUT=/mnt/magnetic/dev/d-i/out
 
 # Where we keep the temporary apt stuff.
 # This cannot reside on an NFS mount.
-export APTTMP=/home/huno/stuff/tmp/apt
+export APTTMP=/mnt/magnetic/dev/d-i/apt
 
 # Do I want to have NONFREE merged in the CD set
 # export NONFREE=1
@@ -120,7 +120,7 @@ export LOCAL=1
 # If your local packages are not under $MIRROR, but somewhere else, 
 # you can uncomment this line and edit to to point to a directory
 # containing dists/$CODENAME/local/binary-$ARCH
-export LOCALDEBS=/home/huno/stuff/ebox-debs
+export LOCALDEBS=/mnt/magnetic/dev/ebox-platform/buildbot/branches/0.8.1/last/packages/
 
 # If you want a <codename>-secured tree with a copy of the signed
 # Release.gpg and files listed by this Release file, then
@@ -140,7 +140,7 @@ export LOCALDEBS=/home/huno/stuff/ebox-debs
 # Use this to force copying the files instead of symlinking or hardlinking
 # them. This is useful if your destination directories are on a different
 # partition than your source files.
-# export COPYLINK=1
+export COPYLINK=1
 
 # Options
 # export MKISOFS=/usr/bin/mkisofs
