@@ -17,7 +17,7 @@ d-i    preseed/late_command            string rm -f /target/usr/sbin/sendmail ; 
 # antes de presentar el indicador «login:». Ésta es una buena forma de
 # instalar el conjunto de paquetes que desea, o de modificar la
 # configuración del sistema:
-base-config    base-config/late_command        string mv /var/tmp/locale.gen /etc/locale.gen ; /usr/sbin/locale-gen ; /usr/sbin/locale-gen; DEBIAN_FRONTEND=noninteractive apt-get -y install "^ebox-.*" ssh ; cp /etc/apt/sources.list.ebox /etc/apt/sources.list ; mv /var/tmp/ebox-*.deb /var/cache/apt/archives/ ; ebox-software 
+base-config    base-config/late_command        string DEBIAN_FRONTEND=noninteractive apt-get -y install "^ebox-.*" ssh ; cp /etc/apt/sources.list.ebox /etc/apt/sources.list ; mv /var/tmp/ebox-*.deb /var/cache/apt/archives/ ; ebox-software ; mv /var/tmp/locale.gen /etc/locale.gen ; /usr/sbin/locale-gen ; /usr/sbin/locale-gen
 
 #### Configuración de red.
 
