@@ -62,6 +62,7 @@ sub isReadOnly
 
 
 
+#
 # Method: modExists 
 #
 #      Check if a module exists 
@@ -77,16 +78,8 @@ sub isReadOnly
 sub modExists # (module) 
 {
 	my ($self, $name) = @_;
-
 	my $class = $self->get_string("modules/$name/class");
-	return undef unless(defined($class));
-
-	# Try to dectect if gconf is messing with us,
-	# and a removed module is still there
-	eval "use $class";
-	return undef if ($@);
-
-	return 1;
+	return defined($class);
 }
 
 #
@@ -170,7 +163,6 @@ sub modNames
 		}
 	}
 	foreach my $mod (@{$self->all_dirs_base("modules")}) {
-		next unless ($self->modExists($mod));
 		next if (grep(/^$mod$/, @allmods));
 		my $class = $global->get_string("modules/$mod/class");
 		unless (defined($class) and ($class ne '')) {
