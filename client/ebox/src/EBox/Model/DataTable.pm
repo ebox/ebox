@@ -1562,10 +1562,6 @@ sub fieldsWithUndefSetter
 {
 	my $self = shift;
 
-	if ($self->{'fields'}) {
-		return $self->{'fields'};
-	}
-	
 	unless (defined($self->table()->{'tableDescription'})) {
 		throw Excepetions::Internal('table description not defined');
 	}
@@ -1590,10 +1586,6 @@ sub setterTypes
 {
 	my ($self) = @_ ;
 
-	if ($self->{'fields'}) {
-		return $self->{'fields'};
-	}
-	
 	unless (defined($self->table()->{'tableDescription'})) {
 		throw Excepetions::Internal('table description not defined');
 	}
