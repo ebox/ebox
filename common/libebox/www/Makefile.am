@@ -19,8 +19,9 @@ nobase_www_DATA = images/delete.gif images/show.gif \
   images/bkgwhite.png images/ff.gif images/rw.gif images/r.gif \
   images/f.gif images/install.gif images/title-login.png \
   images/remove.gif images/requeue.gif images/writecd.gif \
-  images/reload.gif images/ajax-loader.gif images/edit-table.gif\
-  images/search.gif
+  images/reload.gif images/ajax-loader.gif images/edit-table.gif \
+  images/search.gif images/non_ff.gif   images/non_f.gif \
+  images/non_r.gif  images/non_rw.gif
 
 EXTRA_DIST = $(nobase_www_DATA)
 
