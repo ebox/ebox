@@ -1092,6 +1092,7 @@ sub onRemove
 	EBox::init();
 
 	my $serviceMod = EBox::Global->modInstance('services');
+	my $fwMod = EBox::Global->modInstance('firewall');
 
 	if ($serviceMod->serviceExists('name' => 'dhcp')) {
 		 $serviceMod->removeService('name' => 'dhcp');
@@ -1100,6 +1101,7 @@ sub onRemove
 	}
 
 	$serviceMod->save();
+    $fwMod->save();
 }
 
 #   Function: menu 
