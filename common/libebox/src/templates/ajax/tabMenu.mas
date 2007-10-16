@@ -36,7 +36,7 @@ use EBox::Gettext;
          href="#<% $modelElement->name() %>"
 %     # Set the CSS class
 %     if ( $idx == $selectedTab ) {
-         class="selected"
+         class="current"
 %     }
          onclick="return false;">
        <% $modelElement->printableName() %>
