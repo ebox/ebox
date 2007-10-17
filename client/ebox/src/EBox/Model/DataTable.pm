@@ -31,6 +31,7 @@ use Clone qw(clone);
 use strict;
 use warnings;
 
+use constant PAGESIZE => 10;
 # TODO
 # 	
 #	Factor findValue, find, findAll and findAllValue
@@ -75,7 +76,7 @@ sub new
 		        'table' => undef,
 			'cachedVersion' => undef,
 			'domain' => $domain,
-			'pageSize' => 10
+			'pageSize' => PAGESIZE 
 		};
 
         bless($self, $class);
@@ -1843,7 +1844,13 @@ sub pageSize
 {
 	my ($self) = @_;
 
-	return $self->{'pageSize'}
+    my $pageSize = $self->{'pageSize'};
+
+	unless (defined($pageSize) and ($pageSize =~ /^\d+/) and ($pageSize > 0)) {
+       return PAGESIZE;
+    }
+
+    return $pageSize;
 }
 
 # Method: setPageSize
