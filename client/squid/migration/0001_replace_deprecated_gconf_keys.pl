@@ -20,81 +20,92 @@ use EBox::Global;
 use EBox::Config;
 use EBox::Sudo;
 
-use Perl6::Junction qw(any);
+use Perl6::Junction qw(any all);
 
 
 sub runGConf
 {
   my ($self) = @_;
 
-  $self->_migrateService();
-  $self->_migrateGeneralSettings();
+  $self->_migrateKeys();
   $self->_migrateDomains();
   $self->_migrateExtensions();
   $self->_migrateMIMETypes();
   $self->_migrateObjects();
-
-  my $squid = $self->{gconfmodule};
-  $squid->setTablesAsPopulated();
 }
 
 
-sub _migrateService
+
+sub _migrateKeys
 {
   my ($self) = @_;
 
   my $squid = $self->{gconfmodule};
 
-  my $service = $squid->get_bool('active');
+  my %deprecatedKeys = (
+			# to squid service models
+			active => {
+				   newKey => 'SquidService/enabled',
+				   getter => 'get_bool',
+				   setter => 'set_bool',
+				  },
 
-  my $squidService = $squid->model('SquidService');
-  $squidService->setRow(
-			0, # force 
-			enabled => $service
+			# to general settings model
+			policy => {
+					 newKey => 'GeneralSettings/globalPolicy',
+					 setter => 'set_string',
+					 getter => 'get_string',
+					},
+			transproxy => {
+				       newKey => 'GeneralSettings/transparentProxy',
+				       setter => 'set_bool',
+				       getter => 'get_bool',
+				      },
+			port => {
+					 newKey => 'GeneralSettings/port',
+					 setter => 'set_int',
+					 getter => 'get_int',
+					},
+			
+			# to another model
+			threshold => {
+				      newKey => 
+				      'ContentFilterThreshold/contentFilterThreshold',
+				      setter => 'set_int',
+				      getter => 'get_int',
+				     },
 		       );
 
-  $squid->unset('active');
+
+  $self->_migrateSimpleKeys($squid, \%deprecatedKeys);
 }
 
 
-sub _migrateGeneralSettings
+
+
+
+sub _migrateSimpleKeys
 {
-  my ($self) = @_;
+  my ($self, $squid, $deprecatedKeys_r) = @_;
 
-  my $squid = $self->{gconfmodule};
-  
-  my $policy  = $squid->get_string('policy');
-  $policy or $policy = 'deny';
-  my $transproxy = $squid->get_bool('transproxy');
-  $transproxy or $transproxy = 0;
-  my $port       = $squid->get_int('port');
-  $port or $port = 3128;
-  my $threshold  = $squid->get_int('threshold');
-  $threshold or $threshold = 0;
+  my $entries = $squid->all_entries_base('') ;  
+  my $allExistentKeys = all  @{ $entries };
+  while (my ($oldKey, $migrationSpec) = each %{ $deprecatedKeys_r }) {
+    if ( $oldKey ne $allExistentKeys ) {
+      next;
+    }
 
-  if (($policy eq 'filter') and ($threshold == 0)) {
-    # this configuration combination is not longer value so we set the threshold
-    # to 'very permissive' to avoid errors
-    $threshold = 200;
+    my $newKey = $migrationSpec->{newKey};
+    my $getter = $migrationSpec->{getter};
+    my $setter = $migrationSpec->{setter};
+
+
+    my $oldValue  = $squid->$getter($oldKey);
+    $squid->$setter($newKey, $oldValue);
+    
+    $squid->unset($oldKey);
   }
-
-
-  my $generalSettings = $squid->model('GeneralSettings');
-  $generalSettings->setRow(
-			   0, # force
-			   globalPolicy     => $policy,
-			   port             => $port,
-			   contentFilterThreshold => $threshold,
-			   transparentProxy => $transproxy,
-			  );
-
-  # Disable unsetting old keys while migration script is still buggy
-  # my @deprecatedKeys = qw(policy transproxy port threshold);
-  # foreach (@deprecatedKeys) {
-    # $squid->unset($_);
-  #}
 }
-
 
 sub _migrateDomains
 {
@@ -102,6 +113,28 @@ sub _migrateDomains
 
   my $squid = $self->{gconfmodule};
   my $domainFilter = $squid->model('DomainFilter');
+
+  my $allowedSites_r = $squid->get_list('allowed_sites');
+  foreach my $domain (@{ $allowedSites_r }) {
+    $domainFilter->addRow(
+			  domain => $domain,
+			  policy => 'allow',
+			 );
+  }
+  $squid->unset('allowed_sites');
+
+  
+  my $bannedSites_r = $squid->get_list('banned_sites');
+  foreach my $domain (@{ $bannedSites_r }) {
+    $domainFilter->addRow(
+			  domain => $domain,
+			  policy => 'deny',
+			 );
+  }
+  $squid->unset('banned_sites');					 
+					
+
+
   $self->_listsToTable('allowed_sites', 'banned_sites', $domainFilter, 'domain');
 }
 
@@ -109,14 +142,78 @@ sub _migrateExtensions
 {
   my ($self) = @_;
 
-  my $squid = $self->{gconfmodule};
+  $self->_migrateAllowAndBanList(
+				 populateMethod => '_populateExtensions',
+				 
+				 newModelName => 'ExtensionFilter',
+				 newModelDir  =>  'EBox::Squid::Model::ExtensionsFilter',
+				 newModelElementType => 'extension',
 
-  if ($self->_notPopulated('EBox::Squid::Model::ExtensionsFilter', 'allowed_extensions', 'banned_extensions')) {
-    return $self->_populateExtensions();
+				 allowListKey   => 'allowed_extensions',
+				 banListKey     => 'banned_extensions',
+				);
+}
+
+sub _migrateAllowAndBanList
+{
+  my ($self, %args) = @_;
+
+  my $populateMethod = $args{populateMethod};
+
+  my $newModelName = $args{newModelName};
+  my $newModelDir  = $args{newModelDir};
+  my $newModelElementType = $args{newModelElementType};
+  
+  my $allowListKey   = $args{allowListKey};
+  my $banListKey     = $args{banListKey};
+
+
+  print "migrating $newModelElementType\n";
+
+  my $status = $self->_populatedStatus($newModelDir, $allowListKey, $banListKey);
+  if ( $status->{populated} eq 'no' ) {
+    print "NO poulated\n";
+    return $self->$populateMethod();
+  }
+ 
+  my $squid = $self->{gconfmodule};
+  my $newModel = $squid->model($newModelName);  
+
+  if ($status->{populated} eq 'yes') {
+    print "YEs poulated\n";
+    $self->_listsToTable($allowListKey, $banListKey, $newModel, $newModelElementType);
+    return;
   }
 
-  my $extensionFilter = $squid->model('ExtensionFilter');
-  $self->_listsToTable('allowed_extensions', 'banned_extensions', $extensionFilter, 'extension');
+  if ($status->{populated} eq 'partial') {
+    print "PARTIAL poulated\n";
+    my $missing = $status->{missing};
+    my $force = 0;
+    if ($missing == 0) {
+      $force = 1; # XXX this is bz the dafult changed from 0 to 1!!
+    }
+
+    print "MISSING $missing";
+
+    # migrate the setted data
+    if ($missing == 0) {
+      $self->_listsToTable($allowListKey, undef, $newModel, $newModelElementType);
+    }
+    elsif ($missing == 1) {
+      $self->_listsToTable(undef, $banListKey, $newModel, $newModelElementType);
+    }
+    else {
+      die 'must not be reached';
+    }
+
+    # .. and populate the other half
+    $self->$populateMethod($missing, $force);
+
+    return;
+  }
+
+  die 'must not be reached';
+
 }
 
 
@@ -125,9 +222,18 @@ sub _migrateExtensions
 
 sub _populateExtensions
 {
-  my ($self) = @_;
+  my ($self, $onlyAllowType, $force) = @_;
 
   my $defaultAllow = 1;
+
+  if (defined $onlyAllowType)  {
+    if ($onlyAllowType != $defaultAllow) {
+      if ( $force) {
+	$defaultAllow = $onlyAllowType;
+      }
+    }
+  }
+
   my @extensions = qw(
                      ade adp asx bas bat cab chm cmd com cpl crt dll exe hlp 
                      ini hta inf ins isp lnk mda mdb mde mdt mdw mdz msc msi 
@@ -152,50 +258,83 @@ sub _populateExtensions
 
 
 
-
-sub _notPopulated
+# returns:
+#     populated -> ('yes', 'no', 'partial')
+#     missing   ->  boo # (only when populated == 'partial'
+#    partialPopulated -bool
+#     allowPop
+sub _populatedStatus
 {
   my ($self, $dir, $allowList, $banList) = @_;
 
   my $squid = $self->{gconfmodule};  
 
   if ($squid->dir_exists($dir)) {
-    return 0;
+    return {
+	    populated => 'yes',
+	   };
   }
   
+
+
+
   my @entries = @{ $squid->all_entries_base('') };
-  if ($allowList eq any @entries) {
-    return 0;
+  my $allowPopulated =  $allowList eq any @entries;
+  my $banPopulated   =  $banList eq any @entries;
+
+  if ($allowPopulated and $banPopulated) {
+    return {
+	    populated => 'yes',
+	   };
   }
-  elsif ($banList eq any @entries) {
-    return 0;
+  elsif ($allowPopulated and not $banPopulated) {
+    return {
+	    populated => 'partial',
+	    missing  =>  0,
+	   }
+  }
+  elsif (not $allowPopulated and $banPopulated) {
+    return {
+	    populated => 'partial',
+	    missing  => 1,  
+	   }
   }
 
-  return 1;
+  return  { populated => 'no'   };
 }
 
 sub _migrateMIMETypes
 {
   my ($self) = @_;
 
-  my $squid = $self->{gconfmodule};
+  $self->_migrateAllowAndBanList(
+				 populateMethod => '_populateMIMETypes',
+				 
+				 newModelName => 'MIMEFilter',
+				 newModelDir  =>  'EBox::Squid::Model::MIMEFilter',
+				 newModelElementType => 'MIMEType',
 
-  if ($self->_notPopulated('EBox::Squid::Model::MIMEFilter', 'allowed_mimetype', 'banned_mimetype')) {
-    return $self->_populateMIMETypes();
-  }
-
-  my $mimetypeFilter = $squid->model('MIMEFilter');
-  $self->_listsToTable('allowed_mimetype', 'banned_mimetype', $mimetypeFilter, 'MIMEType');
+				 allowListKey   => 'allowed_mimetype',
+				 banListKey     => 'banned_mimetype',
+				);
 }
 
 
 sub _populateMIMETypes
 {
-  my ($self) = @_;
+  my ($self, $onlyAllowType, $force) = @_;
 
   my $squid = $self->{gconfmodule};
 
   my $defaultAllow = 1;
+
+  if ($onlyAllowType != $defaultAllow) {
+    if ( $force) {
+      $defaultAllow = $onlyAllowType;
+    }
+  }
+
+
   my @mimeTypes = qw(
                     audio/mpeg audio/x-mpeg audio/x-pn-realaudio audio/x-wav 
                     video/mpeg video/x-mpeg2 video/acorn-replay video/quicktime 
@@ -215,13 +354,16 @@ sub _populateMIMETypes
 }
 
 
+
+
+
 sub _listsToTable
 {
   my ($self, $allowedKey, $bannedKey, $model, $elementType) = @_;
 
   my $squid = $self->{gconfmodule};
-  my $allowedList = $squid->get_list($allowedKey);
-  my $bannedList = $squid->get_list($bannedKey);
+  my $allowedList = defined $allowedKey ? $squid->get_list($allowedKey): [];
+  my $bannedList  = defined $bannedKey  ? $squid->get_list($bannedKey) : [];
 
 
   my %elements;
@@ -232,7 +374,7 @@ sub _listsToTable
     $elements{$_} = 0;
   }
 
-    while (my ($element, $allowed) = each %elements) {
+  while (my ($element, $allowed) = each %elements) {
     $model->addRow(
 			  $elementType  => $element,
 			  allowed => $allowed,
