@@ -110,7 +110,7 @@ sub _description
       {
        components      => [
                            '/' . $dhcp->name() . '/Options/' . $self->{interface},
-                           '/' . $dhcp->name() . '/AdvancedOptions/' . $self->{interface},
+                           '/' . $dhcp->name() . '/LeaseTimes/' . $self->{interface},
                           ],
        layout          => 'tabbed',
        name            => 'OptionsTab',
