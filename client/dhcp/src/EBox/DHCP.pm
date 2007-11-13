@@ -231,7 +231,7 @@ sub models
             $self->{advancedOptionsModel}->{$iface} =
               new EBox::DHCP::Model::AdvancedOptions(
                                                      gconfmodule => $self,
-                                                     directory   => "AdvancedOptions/$iface",
+                                                     directory   => "LeaseTimes/$iface",
                                                      interface   => $iface);
             push ( @models, $self->{advancedOptionsModel}->{$iface} );
             $self->{rangeInfoModel}->{$iface} =
