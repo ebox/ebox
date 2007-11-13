@@ -221,7 +221,7 @@ sub _table
       );
 
     my $dataForm = {
-                    tableName          => 'AdvancedOptions',
+                    tableName          => 'LeaseTimes',
                     printableTableName => __('Advanced Options'),
                     modelDomain        => 'DHCP',
                     defaultActions     => [ 'editField', 'changeView' ],

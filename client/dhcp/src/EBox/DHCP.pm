@@ -1363,7 +1363,7 @@ sub _removeDataModelsAttached
     my ($self, $iface) = @_;
 
     # RangeTable/Options/FixedAddressTable
-    foreach my $modelName (qw(OptionsModel RangeModel FixedAddrModel)) {
+    foreach my $modelName (qw(AdvancedOptionsModel OptionsModel RangeModel FixedAddrModel)) {
         my $model = $self->_getModel($modelName, $iface);
         if ( defined ( $model )) {
             $model->removeAll(1);
