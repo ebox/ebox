@@ -217,7 +217,6 @@ sub _table
                             trailingText     => __('seconds'),
                             optional         => 1,
                            ),
-
       );
 
     my $dataForm = {
