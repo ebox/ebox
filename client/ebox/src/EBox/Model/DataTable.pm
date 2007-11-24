@@ -706,7 +706,7 @@ sub addTypedRow
 
       # Check if the new row is unique
       if ( $self->rowUnique() ) {
-          $self->_checkRowIsUnique(undef, \@userData);
+          $self->_checkRowIsUnique(undef, $paramsRef);
       }
 
       my $leadingText = substr( $tableName, 0, 4);
@@ -1198,11 +1198,10 @@ sub setTypedRow
 
       }
 
-      # TODO: Check its usefulness
-      my @newValues = @{$self->setterTypes()};
       # Check if the new row is unique
+      my @newValues = values(%{$allData});
       if ( $self->rowUnique() ) {
-	  $self->_checkRowIsUnique($id, \@newValues);
+	  $self->_checkRowIsUnique($id, $allData);
       }
 
       $changedData->{id} = $id;
@@ -1465,10 +1464,9 @@ sub _increaseStoredAndCachedVersion
 #       hash ref of every row
 #
 sub _tailoredOrder # (rows)
-  {
-	return $_[1];
-	
-  }
+{
+    return $_[1];
+}
 
 
 # Method: setTableName
@@ -2099,7 +2097,7 @@ sub findAll
 #	Return the first row which matches the value of the given
 #	field against the data returned by the method value()
 #
-#	If you want to match against value use
+#	If you want to match against printable value use
 #	<EBox::Model::DataTable::find>
 # Parameters:
 #
@@ -2564,33 +2562,32 @@ sub actionClickedJS
 #      Set the default messages done by possible actions
 #
 sub _setDefaultMessages
-  {
+{
 
-      my ($self) = @_;
+    my ($self) = @_;
 
-      # Table is already defined
-      my $table = $self->{'table'};
+    # Table is already defined
+    my $table = $self->{'table'};
 
-      $table->{'messages'} = {} unless ( $table->{'messages'} );
-      my $rowName = $self->printableRowName();
+    $table->{'messages'} = {} unless ( $table->{'messages'} );
+    my $rowName = $self->printableRowName();
 
-      my %defaultMessages =
-        (
-         'add'       => __x('{row} added', row => $rowName),
-         'del'       => __x('{row} deleted', row => $rowName),
-         'update'    => __x('{row} updated', row => $rowName),
-         'moveUp'    => __x('{row} moved up', row => $rowName),
-         'moveDown'  => __x('{row} moved down', row => $rowName),
-        );
+    my %defaultMessages =
+      (
+       'add'       => __x('{row} added', row => $rowName),
+       'del'       => __x('{row} deleted', row => $rowName),
+       'update'    => __x('{row} updated', row => $rowName),
+       'moveUp'    => __x('{row} moved up', row => $rowName),
+       'moveDown'  => __x('{row} moved down', row => $rowName),
+      );
 
-      foreach my $action (keys (%defaultMessages)) {
-          unless ( exists $table->{'messages'}->{$action} ) {
-              $table->{'messages'}->{$action} = $defaultMessages{$action};
-          }
-      }
+    foreach my $action (keys (%defaultMessages)) {
+        unless ( exists $table->{'messages'}->{$action} ) {
+            $table->{'messages'}->{$action} = $defaultMessages{$action};
+        }
+    }
 
-
-  }
+}
 
 # Group: Private helper functions
 
@@ -2603,23 +2600,25 @@ sub _setDefaultMessages
 # Parameters:
 #
 #	(POSITIONAL)
-#	
+#
 #	fieldName - the name of the field to match
 #	value - value we want to match
 #	allMatches -   1 or undef to tell the method to return just the
 #		first match or all of them
 #
-#	printableValue - if 1 match against printableValue, undef against value
-# 	Example:
+#       printableValue - Boolean if true match against printableValue,
+#       undef against value
 #
-# 	find('default',  1, undef);
+# Example:
+#
+# 	_find('default',  1, undef, undef);
 #
 # Returns:
 #
 #	An array of hash ref containing the rows with their printable
 #	values
-# 	
-sub _find 
+#
+sub _find
 {
     my ($self, $fieldName, $value, $allMatches, $printableValue) = @_;
 
@@ -2633,10 +2632,10 @@ sub _find
     foreach my $row (@{$rows}) {
     	my $values;
 	if ($printableValue) {
-        	$values = $row->{'printableValueHash'};  
-	} else {
-		$values = $row->{'plainValueHash'};
-	}
+            $values = $row->{'printableValueHash'};
+        } else {
+            $values = $row->{'plainValueHash'};
+        }
         next unless (exists $values->{$fieldName});
         next unless ($values->{$fieldName} eq $value);
         push (@matched, $values);
@@ -2650,62 +2649,45 @@ sub _checkFieldIsUnique
 {
 	my ($self, $newData) = @_;
 
-
-	my $gconfmod = $self->{'gconfmodule'};
-	my $dir = $self->{'directory'};
-
-	unless ($gconfmod->dir_exists($dir)) {
-		return 0;
-	}
-
-	my @ids = $gconfmod->all_dirs($dir);
-
-	foreach my $id (@ids) {
-		my $hash = $gconfmod->hash_from_dir($id);
-
-		if ($newData->compareToHash($hash))  {
-			throw EBox::Exceptions::DataExists(
-					'data' => $newData->printableName(),
-					'value' => $newData->printableValue());
-
-		}
-	}
-
+        my $rows = $self->rows();
+        foreach my $row (@{$rows}) {
+            my $rowField = $row->{'valueHash'}->{$newData->fieldName()};
+            if ( $newData->isEqualTo($rowField) ) {
+                throw EBox::Exceptions::DataExists(
+                                      'data'  => $newData->printableName(),
+                                      'value' => $newData->printableValue(),
+                                                  );
+            }
+        }
 	return 0;
 }
 
-# Check the new row to add/set is unique
+# Check the new row to add/set is unique, it ignores enabled parameter
+# is any
 # rowId can be undef if the call comes from an addition
-# An array ref of types is passing in
+# A hash ref of types is passing in
 # throw <EBox::Exceptions::DataExists> if not unique
 sub _checkRowIsUnique # (rowId, row_ref)
-  {
-
+{
     my ($self, $rowId, $row_ref) = @_;
 
-    my $rowIds_ref = $self->{'gconfmodule'}->all_dirs_base($self->{'directory'});
+    my $rows = $self->rows();
 
-    foreach my $aRowId (@{$rowIds_ref}) {
-      # Compare if the row identifier is different
-      next if (defined ($rowId)) and ($aRowId eq $rowId);
-
-      my $hash = $self->{'gconfmodule'}->hash_from_dir($self->{'directory'} . '/' . $aRowId);
-      # Check every field
-      my $equal = 'equal';
-      foreach my $field (@{$row_ref}) {
-	next if ($field->compareToHash($hash));
-	$equal = undef;
-	last;
-      }
-      if ($equal) {
-	throw EBox::Exceptions::DataExists(
-					   'data'  => $self->printableRowName(),
-					   'value' => ''
-					  );
-      }
+    my $fields = $self->fields();
+     foreach my $row (@{$rows}) {
+        # Compare if the row identifier is different
+        next if ( defined($rowId) and $row->{'id'} eq $rowId);
+        my $nEqual = grep
+          { $row_ref->{$_}->isEqualTo($row->{valueHash}->{$_}) }
+            @{$fields};
+        next if ( $nEqual == 0 );
+        throw EBox::Exceptions::DataExists(
+                                           'data'  => $self->printableRowName(),
+                                           'value' => ''
+                                           );
     }
 
-  }
+}
 
 
 # Deprecated?
