@@ -2649,7 +2649,8 @@ sub _checkFieldIsUnique
 {
 	my ($self, $newData) = @_;
 
-        my $rows = $self->rows();
+        # Call _rows instead of rows because of deep recursion
+        my $rows = $self->_rows();
         foreach my $row (@{$rows}) {
             my $rowField = $row->{'valueHash'}->{$newData->fieldName()};
             if ( $newData->isEqualTo($rowField) ) {
@@ -2671,7 +2672,8 @@ sub _checkRowIsUnique # (rowId, row_ref)
 {
     my ($self, $rowId, $row_ref) = @_;
 
-    my $rows = $self->rows();
+    # Call _rows instead of rows because of deep recursion
+    my $rows = $self->_rows();
 
     my $fields = $self->fields();
      foreach my $row (@{$rows}) {
