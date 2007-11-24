@@ -665,9 +665,9 @@ sub checkRule
     # access in memory is done
     $self->_createBuilders();
 
-    if ( defined( $ruleParams{id} )) {
+    if ( defined( $ruleParams{ruleId} )) {
       # Try to update the rule
-      $self->_updateRule( $ruleParams{interface}, $ruleParams{id}, \%ruleParams, 'test' );
+      $self->_updateRule( $ruleParams{interface}, $ruleParams{ruleId}, \%ruleParams, 'test' );
     }
     else {
       # Try to build the rule
