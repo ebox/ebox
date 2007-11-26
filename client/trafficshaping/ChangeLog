@@ -1,5 +1,9 @@
 0.11
 	+ Difference easily internal/external interfaces through GUI
+	+ Normalizing guaranteed rates from two or more rules now works
+	correctly under rate decreasing 
+	+ Warning about a change on gateways when there is at least a rule
+	on internal interfaces models
 0.10.99
 	+ Use last model/view changes to get rid of the multitable code
 	+ Remove rules using an object when it's removed

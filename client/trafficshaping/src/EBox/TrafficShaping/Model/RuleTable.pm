@@ -81,11 +81,11 @@ sub new
     $self->{ts} = $params{gconfmodule};
     my $netMod = EBox::Global->modInstance('network');
     if ( $netMod->ifaceIsExternal($self->{interface}) ) {
-        $self->_setLimitRate( $self->{ts}->uploadRate($self->{interface}) );
         $self->{interfaceType} = 'external';
+        $self->_setStateRate($self->{ts}->uploadRate($self->{interface}));
     } else {
-        $self->_setLimitRate( $self->{ts}->totalDownloadRate() );
         $self->{interfaceType} = 'internal';
+        $self->_setStateRate($self->{ts}->totalDownloadRate());
     }
 
     bless($self, $class);
@@ -174,13 +174,17 @@ sub isUsingId
       my ($self, $modelName, $id) = @_;
 
       if ( $modelName eq 'GatewayTable' ) {
-          my $manager = EBox::Model::ModelManager->instance();
-          my $observableModel = $manager->model($modelName);
+          if ( $self->{interfaceType} eq 'external' ) {
+              my $manager = EBox::Model::ModelManager->instance();
+              my $observableModel = $manager->model($modelName);
 
-          my $gateway = $observableModel->row($id);
-          my $gatewayIface = $gateway->{plainValueHash}->{interface};
-
-          return ($gatewayIface eq $self->{interface}) && ($self->size() > 0);
+              my $gateway = $observableModel->row($id);
+              my $gatewayIface = $gateway->{plainValueHash}->{interface};
+              return ($gatewayIface eq $self->{interface}) && ($self->size() > 0);
+          } else {
+              # Every time a gateway is changed, call a warning from an internal interface
+              return ($self->size() > 0);
+          }
       }
 
       return 0;
@@ -212,7 +216,7 @@ sub notifyForeignModelAction
             # Check new bandwidth
             my $netMod = EBox::Global->modInstance('network');
             my $limitRate;
-            if ( $netMod->ifaceIsExternal($self->{interface}) ) {
+            if ( $self->{interfaceType} eq 'external' ) {
                 $limitRate = $self->{ts}->uploadRate($self->{interface});
             } else {
                 # Internal interface
@@ -221,9 +225,9 @@ sub notifyForeignModelAction
             if ( $limitRate == 0 or (not $self->{ts}->enoughInterfaces())) {
                 $userNotes = $self->_removeRules();
             } else {
-                $userNotes = $self->_normalize($limitRate);
+                $userNotes = $self->_normalize($self->_stateRate(), $limitRate);
             }
-            $self->_setLimitRate( $limitRate );
+            $self->_setStateRate( $limitRate );
         } else {
             # Check if there are any download rate
             if ( $self->{ts}->totalDownloadRate() == 0) {
@@ -423,6 +427,23 @@ sub updatedRowNotify
 
   }
 
+# Method: committedLimitRate
+#
+#       Get the limit rate to use to build the tree at this moment
+#
+# Returns:
+#
+#       Int - the current state for limit rate for this interface at
+#       traffic shaping module
+#
+sub committedLimitRate
+{
+    my ($self) = @_;
+
+    return $self->_stateRate();
+
+}
+
 # Group: Protected methods
 
 # Method: _table
@@ -619,12 +640,12 @@ sub _removeRules
 sub _normalize
 {
 
-    my ($self, $currentLimitRate) = @_;
+    my ($self, $oldLimitRate, $currentLimitRate) = @_;
 
     my ($limitNum, $guaranNum, $removeNum) = (0, 0, 0);
-    if ( $self->_limitRate() > $currentLimitRate ) {
+    if ( $oldLimitRate > $currentLimitRate ) {
         # The bandwidth has been decreased
-        foreach my $pos (0 .. $self->size() - 1 ) {
+        for (my $pos = 0; $pos < $self->size(); $pos++ ) {
             my $row = $self->get( $pos );
             my $guaranteedRate = $row->{plainValueHash}->{guaranteed_rate};
             my $limitedRate = $row->{plainValueHash}->{limited_rate};
@@ -634,7 +655,7 @@ sub _normalize
             }
             # Normalize guaranteed rate
             if ( $guaranteedRate != 0 ) {
-                $guaranteedRate = ( $guaranteedRate * $currentLimitRate ) / $self->_limitRate();
+                $guaranteedRate = ( $guaranteedRate * $currentLimitRate ) / $oldLimitRate;
                 $guaranNum++;
             }
             try {
@@ -643,6 +664,8 @@ sub _normalize
             } catch EBox::Exceptions::External with {
                 # The updated rule is fucking everything up (min guaranteed
                 # rate reached and more!)
+                my ($exc) = @_;
+                EBox::warn($row->{id} . " is being removed. Reason: $exc");
                 $self->removeRow( $row->{id}, 1);
                 $removeNum++;
             }
@@ -661,25 +684,24 @@ sub _normalize
 
 }
 
-# Store the limit rate on gconftool (interprocess) in order to
-# normalize afterwards when a new limit rate appears
-sub _setLimitRate
+# Get the rate stored by state in order to work when gateway changes
+# are produced
+sub _stateRate
 {
+    my ($self) = @_;
 
-    my ($self, $limitRate) = @_;
-
-    $self->{gconfmodule}->st_set_int( $self->{directory} . LIMIT_RATE_KEY,
-                                   $limitRate);
+    return $self->{gconfmodule}->st_get_int($self->{directory} . LIMIT_RATE_KEY);
 
 }
 
-# Get the limit rate stored in GConf
-sub _limitRate
+# Set the rate into GConf state in order to work when gateway changes
+# are produced
+sub _setStateRate
 {
+    my ($self, $rate) = @_;
 
-    my ($self) = @_;
-
-    return $self->{gconfmodule}->st_get_int( $self->{directory} . LIMIT_RATE_KEY);
+    $self->{gconfmodule}->st_set_int($self->{directory} . LIMIT_RATE_KEY,
+                                     $rate);
 
 }
 

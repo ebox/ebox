@@ -1470,14 +1470,15 @@ sub _createTree # (interface, type)
       # The maximum rate for an internal interface is the sum of the gateways associated
       # to the external interfaces
 
-      my $global = EBox::Global->getInstance();
-      my $network = $self->{'network'}; 
-      if ( $network->ifaceIsExternal($iface) ) {
-	$linkRate = $self->uploadRate($iface);
-      }
-      else {
-	$linkRate = $self->totalDownloadRate();
-      }
+      my $model = $self->ruleModel($iface);
+      $linkRate = $model->committedLimitRate();
+#      my $network = $self->{'network'}; 
+#      if ( $network->ifaceIsExternal($iface) ) {
+#	$linkRate = $self->uploadRate($iface);
+#      }
+#      else {
+#	$linkRate = $self->totalDownloadRate();
+#      }
 
       if ( not defined($linkRate) or $linkRate == 0) {
 	throw EBox::Exceptions::External(__x("Interface {iface} should have a maximum " .
