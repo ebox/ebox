@@ -1,3 +1,5 @@
+0.11
+	+ New release
 0.10.99
 	+ Use the new model/view framework. UI uses Ajax.
 	+ Show eBox domain server if DNS is installed
