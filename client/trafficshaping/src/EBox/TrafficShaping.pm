@@ -642,24 +642,10 @@ sub checkRule
 		max => MAX_ID_VALUE));
     }
 
-    # Check interface to be external, it is already check on model
-    # RuleTable
-#    $self->_checkInterface( $ruleParams{interface} );
-
-    # Check rates
-#    $self->_checkRate( $ruleParams{guaranteedRate}, __('Guaranteed Rate') );
-#    $self->_checkRate( $ruleParams{limitedRate}, __('Limited Rate') );
-
-#    if ( defined ( $ruleParams{priority} ) ) {
-#      $self->_checkPriority( $ruleParams{priority} );
-#    }
     unless ( defined ( $ruleParams{priority} )) {
       # Set the priority the lowest
       $ruleParams{priority} = 7;
     }
-
-    # Set the rule enabled
-    $ruleParams{enabled} = 'enabled';
 
     # Create builders ( Disc -> Memory ) Mandatory every time an
     # access in memory is done
