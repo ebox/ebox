@@ -2458,8 +2458,7 @@ sub addNewRowJS
 {
 	my ($self, $page) = @_;
 	
-	my  $function = 'addNewRow("%s", "%s", %s, "%s",'.
-			'undefined, %s)';
+	my  $function = 'addNewRow("%s", "%s", %s, "%s", %s)';
 
 	my $table = $self->table();
 	my $fields = $self->_paramsWithSetterJS();
@@ -3054,11 +3053,11 @@ sub _filterRows
 	}
 	my $offset = $index + $pageSize;
 	if ($page == $tpages) {
-		$offset = @newRows - 1;
+		$offset = @newRows;
 	}
 	
 	if ($tpages > 0) {
-		return [@newRows[$index ..  $offset]];
+		return [@newRows[$index ..  ($offset - 1)]];
 	} else {
 		return \@newRows;
 	}
