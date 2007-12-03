@@ -3,7 +3,7 @@
 Migrationsdir = @LIBDIR@/ebox-logs/migration
 
 
-nobase_Migrations_SCRIPTS = #0001_update_configurelogtable.pl
+nobase_Migrations_SCRIPTS = 0001_update_configurelogtable.pl
 
 
 EXTRA_DIST = $(nobase_Migrations_SCRIPTS)
