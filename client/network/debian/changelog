@@ -1,3 +1,9 @@
+ebox-network (0.11.1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 11 Dec 2007 16:58:20 +0100
+
 ebox-network (0.11) unstable; urgency=low
 
   * New upstream release
