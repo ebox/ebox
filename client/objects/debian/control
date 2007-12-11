@@ -8,8 +8,8 @@ Standards-Version: 3.6.1
 
 Package: ebox-objects
 Architecture: all
-Depends: ebox (= 0.11), libnet-ip-perl
-Conflicts: ebox (<< 0.11)
+Depends: ebox (= 0.11.1), libnet-ip-perl
+Conflicts: ebox (<< 0.11.1)
 Replaces: ebox (<< 0.6)
 Description: Object management
  eBox is a framework for the development and deployment of security-wise
