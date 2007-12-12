@@ -1,3 +1,7 @@
+O.11.2
+	+ Bugfix. Do not create LDAP password if it already exists one.
+	+ Bugfix. Add slash to controller into users table which prevented
+	  searchs
 0.11.1
 	+ Bugfix. Fix module naming thing which prevented backups from 
 	  being restored
