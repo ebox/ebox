@@ -23,6 +23,7 @@ use base 'EBox::CGI::ClientBase';
 use EBox::Global;
 use EBox::Gettext;
 use EBox::LogAdmin qw(:all);
+use EBox::ServiceModule::Manager;
 
 sub new # (error=?, msg=?, cgi=?)
 {
@@ -40,6 +41,7 @@ sub _process
 
 	my $global = EBox::Global->getInstance();
 
+
 	if (defined($self->param('save'))) {
 		$global->saveAllModules;
 		$self->{redirect} = "/Summary/Index";
@@ -50,8 +52,11 @@ sub _process
 		rollbackPending();
 	} else {
 		if ($global->unsaved) {
+            my $manager = new EBox::ServiceModule::Manager();
+            my $askPermission = defined @{$manager->checkFiles()};
 			my @array = ();
 			push(@array, 'unsaved' => 'yes');
+            push(@array, 'askPermission' => $askPermission);
 			#FIXME: uncomment to enable logadmin stuff
 			#push(@array, 'actions' => pendingActions());
 			$self->{params} = \@array;

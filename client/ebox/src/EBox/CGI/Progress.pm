@@ -73,11 +73,11 @@ sub _process
 sub _progressId
 {
   my ($self) = @_;
-  my $pi = $self->param('progress');
+  my $pId = $self->param('progress');
 
-  $pi or
+  $pId or
     throw EBox::Exceptions::Internal('No progress indicator id supplied');
-  return $pi;
+  return $pId;
 }
 
 1;

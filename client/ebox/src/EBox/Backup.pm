@@ -25,6 +25,7 @@ use EBox::Exceptions::MissingArgument;
 use EBox::Gettext;
 use EBox::FileSystem;
 use EBox::ProgressIndicator;
+use EBox::ProgressIndicator::Dummy;
 
 use File::Temp qw(tempdir);
 use File::Copy qw(copy move);
@@ -38,7 +39,7 @@ use POSIX qw(strftime);
 use DirHandle;
 use Perl6::Junction qw(any all);
 
-use Params::Validate qw(validate_with validate_pos);
+use Params::Validate qw(validate_with validate_pos ARRAYREF);
 use Filesys::Df;
 
 use Readonly;
@@ -61,11 +62,10 @@ sub _makeBackup # (description, bug?)
 {
 	my ($self, %options) = @_;
 
-	my $bug         = delete $options{bug};
 	my $description = delete $options{description};
 
+	my $bug         = $options{bug};
 	my $progress   = $options{progress};
-
 
 	my $time = strftime("%F %T", localtime);
 
@@ -131,7 +131,11 @@ sub _dumpModulesBackupData
   my $global = EBox::Global->getInstance();
   my @names = @{$global->modNames};
   foreach my $modName (@names) {
+    # XXX temporally skipping logs
+    next if $modName eq 'logs';
+
     my $mod = $global->modInstance($modName);
+
 
     if ($progress) {
       # update progress object
@@ -552,7 +556,7 @@ sub prepareMakeBackup
   $options{description} = q{'} . $options{description} . q{'};
   my @scriptParams = %options; 
 
-  my $makeBackupScript = EBox::Config::libexec() . 'ebox-make-backup';
+  my $makeBackupScript = EBox::Config::pkgdata() . 'ebox-make-backup';
   $makeBackupScript    .= "  @scriptParams";
   
   my $global     = EBox::Global->getInstance();
@@ -580,8 +584,8 @@ sub prepareMakeBackup
 #
 # Parameters:
 #
-#                   progressIndicatorId - Id of the progress indicator 
-#                       associated with this operation (mandatory )
+#                   progress-  progress indicator 
+#                       associated with this operation (optionak)
 #                   description - backup's description (default: 'Backup')
 #                   fullBackup  - wether do a full backup or  backup only configuration (default: false)
 #
@@ -596,14 +600,20 @@ sub makeBackup # (options)
 		params => [%options],
 		spec   => {
 			   progress     => { 
-					    optional => 0, 
+					    optional => 1, 
 					     isa => 'EBox::ProgressIndicator'
 					   },
 			   description => { default =>  __('Backup') },
 			   fullBackup  => { default => 0 },
+			   bug         => { default => 0},
 			  });
 
   my $progress = $options{progress};
+  if (not $progress) {
+    $progress = EBox::ProgressIndicator::Dummy->create();
+    $options{progress} = $progress;
+  }
+
   EBox::debug("make backup id: " . $progress->id());
   $progress->started or
     throw EBox::Exceptions::Internal("ProgressIndicator's executable has not been run");
@@ -621,24 +631,28 @@ sub makeBackup # (options)
   }
  otherwise {
    my $ex = shift @_;
-   $progress->setAsFinished();
+   $progress->setAsFinished(1, $ex->text);
    $ex->throw();
  };
 
 
-  my $retValue;
+  my $backupFinalPath;
   try {
       $progress->notifyTick();
       $progress->setMessage(__('Writing backup file to hard disc'));
 
-      $retValue = $self->_moveToArchives($filename, $backupdir);      
-  }
-  finally {
-    $progress->setAsFinished();
-  };
-    
+      $backupFinalPath = $self->_moveToArchives($filename, $backupdir);   
 
-  return $retValue;
+      $progress->setAsFinished();   
+  }
+ otherwise {
+   my $ex = shift @_;
+   $progress->setAsFinished(1, $ex->text);
+   $ex->throw();
+ };
+
+
+  return $backupFinalPath;
 }
 
 
@@ -825,24 +839,46 @@ sub  _checkSize
 #
 # Parameters:
 #
-#       file - backup's file (as positional parameter)
-#       fullRestore  - wether do a full restore or  restore only configuration (default: false)
+#       file - backup's file (as positional parameter) fullRestore - wether do a
+#       full restore or restore only configuration (default: false) 
 #
 #  Returns:
 #    the progress indicator object whihc represents the progress of the restauration
 #
 # Exceptions:
 #	
-#	External - If it can't unpack de backup
+#	External - If it can't unpack the backup archive
 #
 sub prepareRestoreBackup
 {
-  my ($self, $file, @options) = @_;
+  my ($self, $file, %options) = @_;
 
-  my $restoreBackupScript = EBox::Config::libexec() . 'ebox-restore-backup';
-  $restoreBackupScript    .= " file $file @options";
+  my $restoreBackupScript = EBox::Config::pkgdata() . 'ebox-restore-backup';
+
+  my $execOptions;
+
+  if (exists $options{fullRestore}) {
+    if ($options{fullRestore}) {
+      $execOptions .= '--full-restore ';
+    }
+  }
+
+  if (exists $options{forceDependencies}) {
+    if ($options{forceDependencies}) {
+      $execOptions .= '--force-dependencies ';
+    }
+  }
+
+  if (exists $options{modsToRestore}) {
+    foreach my $m (@{ $options{modsToRestore} }) {
+      $execOptions .= "--module $m ";
+    }
+  }
+
+
+  $restoreBackupScript    .= " $execOptions $file";
   
-  my $totalTicks = scalar @{ $self->_modInstancesForRestore };
+  my $totalTicks = scalar @{ $self->_modInstancesForRestore($file) };
 
   my $progressIndicator =  EBox::ProgressIndicator->create(
 			     executable => $restoreBackupScript,
@@ -863,8 +899,8 @@ sub prepareRestoreBackup
 # Parameters:
 #
 #       file - backup's file (as positional parameter) 
-#       progressIndicatorId - Id of the progress indicator associated
-#                       with htis operation (mandatory )
+#       progressIndicator - Progress indicator associated
+#                       with htis operation (optional )
 # fullRestore - wether do a full restore or restore only configuration (default: false)
 #
 # Exceptions:
@@ -879,18 +915,40 @@ sub restoreBackup # (file, %options)
   validate_with ( params => [%options], 
 		  spec => { 
 			   progress    => {
-					   optional => 0,
+					   optional => 1,
 					   isa => 'EBox::ProgressIndicator',
 					  },
-			   fullRestore => { default => 0 },  
-			  });
+			   modsToRestore => {
+					    type => ARRAYREF,
+					    optional => 1,
+					   },
+			   fullRestore => { default => 0 },
+			   dataRestore    => { 
+					   default => 0 ,
+					   # incompatible with fullRestore ..
+					   callbacks => {
+							 incompatibleRestores =>  
+							 sub {
+							   (not $_[0]) or (not $_[1]->{fullRestore})
+							 },
+							},
+					      
+					  },
+			   forceDependencies => {default => 0 },
+			  }
+		);
 
   _ensureBackupdirExistence();
   $self->_checkSize($file);
 
-  my $progress = delete $options{progress}; # we don't need to pass the progress
-                                            # object to any methos, so we remove
-                                            # it from the options
+  my $progress = $options{progress};
+  if (not $progress) {
+    $progress = EBox::ProgressIndicator::Dummy->create;
+    $options{progress} = $progress;
+  }
+
+
+
   EBox::debug("restore backup id: " . $progress->id);
   $progress->started or
     throw EBox::Exceptions::Internal("ProgressIndicator's executable has not been run");
@@ -898,25 +956,15 @@ sub restoreBackup # (file, %options)
   my $tempdir = $self->_unpackAndVerify($file, $options{fullRestore});
 
   try {
-    if (`tar xzf $tempdir/eboxbackup/files.tgz -C $tempdir/eboxbackup`) {
-      `rm -rf $tempdir`;
-      throw EBox::Exceptions::External(
-				       __('Could not unpack the backup'));
-    }
+    $self->_unpackModulesRestoreData($tempdir);
 
-    my @modules  = @{ $self->_modInstancesForRestore() };
+    my @modules  = @{ $self->_modInstancesForRestore($file, %options) };
     my @restored = ();
     try {
       foreach my $mod (@modules) {
-	my $modname = $mod->name();
-
-	# update progress indicator 
-	$progress->notifyTick(); 
-	$progress->setMessage($modname);
-
 	my $restoreOk = $self->_restoreModule($mod, $tempdir, \%options);
 	if ($restoreOk) {
-	  push @restored, $modname;
+	  push @restored, $mod->name();
 	}
 
       }
@@ -925,17 +973,17 @@ sub restoreBackup # (file, %options)
     otherwise {
       my $ex = shift;
 
-      EBox::error('Error while restoring: ' . $ex->text());
+      my $errorMsg = 'Error while restoring: ' . $ex->text();
+      EBox::error($errorMsg);
+      $progress->setAsFinished(1, $errorMsg);
 
       $self->_revokeRestore(\@restored);
+
       throw $ex;
-    }
-    finally {
-      $progress->setAsFinished(); #
     };
 
-
     EBox::info('Restore successful');
+    $progress->setAsFinished(); 
   }
   finally {
       system 'rm -rf $tempdir';
@@ -943,10 +991,31 @@ sub restoreBackup # (file, %options)
 }
 
 
+sub _unpackModulesRestoreData
+{
+  my ($self, $tempdir) = @_;
+
+  my $unpackCmd = "tar xzf $tempdir/eboxbackup/files.tgz -C $tempdir/eboxbackup";
+
+  system $unpackCmd;
+
+  if ($? != 0) {
+    system 'rm -rf $tempdir';
+    throw EBox::Exceptions::External(
+				     __('Could not unpack the backup')
+				    );
+  }
+}
+
 sub _restoreModule
 {
   my ($self, $mod, $tempdir, $options_r) = @_;
   my $modname = $mod->name();
+
+  # update progress indicator 
+  my $progress = $options_r->{progress};
+  $progress->notifyTick(); 
+  $progress->setMessage($modname);
 
   if (not -e "$tempdir/eboxbackup/$modname.bak") {
     EBox::error("Restore data not found for module $modname. Skipping $modname restore");
@@ -957,7 +1026,11 @@ sub _restoreModule
   $mod->setAsChanged(); # we set as changed first because it is not
   # guaranteed that a failed backup will not
   # change state
-  $mod->restoreBackup("$tempdir/eboxbackup", %{ $options_r });
+  $mod->restoreBackup("$tempdir/eboxbackup", 
+		      fullRestore => $options_r->{fullRestore},
+		      dataRestore => $options_r->{dataRestore},
+		     );
+
   $self->_migratePackage($mod->package());
   
   return 1;
@@ -988,7 +1061,7 @@ sub _migratePackage
 	my $migrationdir = EBox::Config::lib() . "/$package/migration";
 	
 	if (-d $migrationdir) {
-		my $migration = EBox::Config::libexec() . '/ebox-migrate';
+		my $migration = EBox::Config::pkgdata() . '/ebox-migrate';
 		try {
 			EBox::Sudo::command("$migration $migrationdir");
 		} catch EBox::Exceptions::Internal with {
@@ -1000,15 +1073,63 @@ sub _migratePackage
 
 sub _modInstancesForRestore
 {
-  my ($self) = @_;
+  my ($self, $archive, %options) = @_;
+  my $forceDependencies = $options{forceDependencies};
+
+  my $anyModuleInBackup = any( @{ $self->_modulesInBackup($archive) } );
+
   my $global = EBox::Global->getInstance();
 
-  # we remove global module because it will be  the first to be restored
-  my @modules   =  grep { $_->name ne 'global' } @{$global->modInstances() };   
+  my @modules =  @{ $global->modInstances() };
+
+
+  # if we have a module list we check it and only keep those modules
+  if (exists $options{modsToRestore}) {
+    my @modsToRestore =  @{ $options{modsToRestore} };
+    foreach my $m (@modsToRestore) {
+      if (not( $m eq $anyModuleInBackup)) {
+	throw EBox::Exceptions::External(
+					 __x(
+					     'No module {m} found in backup',
+					     'm' => $m
+					    )
+					);
+      }
+    }
+
+    # we use the module list instead of the full list of backup's module
+    $anyModuleInBackup = any @modsToRestore;
+  }
+
+
+  # we restore the intersection between the installed modules AND the modules in
+  # the backup archive
+  @modules = grep {
+    $_->name eq $anyModuleInBackup
+  } @modules;
+
+
+
+
+
+  # we remove global module because it will not  be restored
+  @modules   =  grep { $_->name ne 'global' } @modules;   
+  # XXX temporally skipping log module
+  @modules = grep {  $_->name ne 'logs' } @modules;
+
+  if (not @modules) {
+    throw EBox::Exceptions::External(
+	      __('No modules to restore')
+				    );
+  }
+
 
   # check modules dependencies
-  foreach my $mod (@modules) {
-    $self->_checkModDeps($mod->name);
+  if (not $forceDependencies) {
+    foreach my $mod (@modules) {
+      $self->_checkModDeps($mod->name);
+    }
+    
   }
 
   # we sort the modules list with a restore-safe order
@@ -1026,13 +1147,20 @@ sub _modInstancesForRestore
     $aDependsB <=> $bDependsA;
   } @modules;
 
-  # we restore global in first place to avoid false changed info
-  unshift @modules, $global; 
-
   return \@modules;
 }
 
 
+sub _modulesInBackup
+{
+  my ($self, $archive) = @_;
+
+  my $tempDir = $self->_unpackArchive($archive, 'modules'); 
+  my $modulesString = read_file("$tempDir/eboxbackup/modules"); 
+
+  my @modules = split '\s', $modulesString;
+  return \@modules;
+}
 
 
 sub _checkModDeps

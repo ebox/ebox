@@ -19,7 +19,7 @@ package EBox::Auth;
 use strict;
 use warnings;
 
-use base qw(Apache::AuthCookie);
+use base qw(Apache2::AuthCookie);
 
 use EBox;
 use EBox::Config;
@@ -28,6 +28,7 @@ use EBox::Global;
 use EBox::Exceptions::Internal;
 use EBox::Exceptions::Lock;
 use EBox::LogAdmin;
+use Apache2::Connection;
 
 use Apache;
 use Digest::MD5;
@@ -153,7 +154,7 @@ sub setPassword # (password)
 
 # Method: authen_cred
 #
-#   	Overriden method from <Apache::AuthCookie>.
+#   	Overriden method from <Apache2::AuthCookie>.
 #
 sub authen_cred  # (request, password)
 {
@@ -171,7 +172,7 @@ sub authen_cred  # (request, password)
 
     unless ($self->checkPassword($passwd)) {
 	my $log = EBox->logger;
-	my $ip  = $r->get_remote_host();
+	my $ip  = $r->connection->remote_host();
 	$log->warn("Failed login from: $ip");
 	return;
     }
@@ -190,7 +191,7 @@ sub authen_cred  # (request, password)
 
 # Method: authen_ses_key
 #
-#   	Overriden method from <Apache::AuthCookie>.
+#   	Overriden method from <Apache22::AuthCookie>.
 #
 sub authen_ses_key  # (request, session_key)
 {

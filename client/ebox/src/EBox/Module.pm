@@ -28,11 +28,14 @@ use EBox::Exceptions::Internal;
 use EBox::Exceptions::Lock;
 use EBox::Gettext;
 use EBox::FileSystem;
+use EBox::ServiceModule::Manager;
 use HTML::Mason;
 use File::Temp qw(tempfile);
 use Fcntl qw(:flock);
 use Error qw(:try);
 use Params::Validate qw(validate_pos validate_with SCALAR HASHREF ARRAYREF);
+
+use constant SER_IFACE_CLASS => 'EBox::ServiceModule::ServiceInterface';
 
 # Method: _create 
 #
@@ -118,6 +121,12 @@ sub restartService
 	$self->_lock();
 	my $global = EBox::Global->getInstance();
 	my $log = EBox::logger;
+	
+	if ($self->isa(SER_IFACE_CLASS) and not $self->isEnabled()) {
+		$log->info("Skipping restart for $self->{name} as it's disabled");
+		return;
+	}
+
 	$log->info("Restarting service for module: " . $self->name);
 	try {
 		$self->_regenConfig('restart' => 1);
@@ -272,26 +281,34 @@ sub setAsChanged
 #  dir - directory used for the backup operation
 #  (named parameters following)
 #  fullBackup - wether we want to do a full restore as opposed a configuration-only restore (default: false)
-#  directlyToDisc - wether the backup is written directly to a CD
-#
+# bug - wether we are making a bug report instead of a normal backup 
 sub makeBackup # (dir, %options) 
 {
   my ($self, $dir, %options) = @_;
   defined $dir or throw EBox::Exceptions::InvalidArgument('directory');
   validate_with ( params => [%options],
-		  spec =>  { fullBackup     => { default => 0},  
-			     directlyToDisc => { default => 0},
+		  spec =>  { 
+			    fullBackup     => { default => 0},  
+                             bug            => { default => 0 },
 			     progress        => {optional => 1},
 			   } );
 
   my $backupDir = $self->_createBackupDir($dir);
 
-  $self->aroundDumpConfig($backupDir);
+  $self->aroundDumpConfig($backupDir, %options);
 
-  if ($self->can('extendedBackup') and $options{fullBackup}) {
-    $self->_bootstrapExtendedBackup($backupDir, %options);
+  if ($options{fullBackup}) {
+    $self->extendedBackup(dir => $backupDir, %options);
   }
 
+}
+
+
+# default implementation: do nothing
+sub extendedBackup
+{
+  # my %params = @_;
+  # my $dir = $params{dir};
 }
 
 # Method: backupDir
@@ -340,30 +357,8 @@ sub _createBackupDir
   return $backupDir;
 }
 
-sub _bootstrapExtendedBackup
-{
-  my ($self, $dir, %options) = @_;
-
-  # save version
-  if ($self->can('version')) {
-    $self->_dump_version($dir);
-  }
-
-  $self->extendedBackup(dir => $dir, %options);
-}
 
 
-sub _dump_version
-{
-  my ($self, $dir) = @_;
-
-  my $file = "$dir/version";
-  my $versionInfo = $self->version();
-
-  open my $FH, ">$file" or throw EBox::Exceptions::Internal('Cannot create version backup file');
-  print $FH $versionInfo;
-  close $FH;
-}
 
 #
 # Method: restoreBackup
@@ -380,40 +375,42 @@ sub restoreBackup # (dir, %options)
   my ($self, $dir, %options) = @_;
   defined $dir or throw EBox::Exceptions::InvalidArgument('directory');
   validate_with ( params => [%options],
-		  spec =>  { fullRestore => { default => 0}   } );
+		  spec =>  { 
+			    fullRestore => { default => 0},
+			    dataRestore => {
+					    default => 0,
+					    # incompatible with fullRestore ..
+					    callbacks => {
+							  incompatibleRestores =>  
+							  sub {
+							    (not $_[0]) or (not $_[1]->{fullRestore})
+							  },
+							 },
+					   },
+			   },
+		);
   
   my $backupDir = $self->backupDir($dir);
   (-d $backupDir) or throw EBox::Exceptions::Internal("$backupDir must be a directory");
 
-  $self->aroundRestoreConfig($backupDir);
+  if (not $options{dataRestore}) {
+    $self->aroundRestoreConfig($backupDir);
+  }
 
-  if ($options{fullRestore} and $self->can('extendedRestore')) {
-    $self->_bootstrapExtendedRestore($backupDir, %options);
+
+  if ($options{fullRestore} or $options{dataRestore}) {
+    $self->extendedRestore(dir => $backupDir, %options);
   }
 }
 
-sub _bootstrapExtendedRestore
-{
-  my ($self, $dir, @options) = @_;
 
-  my $version = $self->_read_version($dir);
-  $self->extendedRestore(dir => $dir, version => $version, @options);
+# default implementation: do nothing
+sub extendedRestore
+{
+  # my %params = @_;
+  # my $dir = $params{dir};
 }
 
-sub _read_version
-{
-  my ($self, $dir) = @_;
-  my $file = "$dir/version";
-
-  return undef if (! -f $file);
-  
-  open my $FH, "<$file" or throw EBox::Exceptions::Internal("Version info file cannot be opened");
-  my @versionInfo = <$FH>;
-  close $FH;
-
-  my $versionInfo = join "\n", @versionInfo;
-  return $versionInfo
-}
 
 
 sub _bak_file_from_dir
@@ -452,8 +449,8 @@ sub restoreDependencies
 #
 sub dumpConfig
 {
-  my ($self, $dir) = @_;
-  validate_pos(@_, 1, 1);
+  my ($self, $dir, %options) = @_;
+
 }
 
 
@@ -473,10 +470,10 @@ sub dumpConfig
 #
 sub aroundDumpConfig
 {
-  my ($self, $dir) = @_;
-  validate_pos(@_, 1, 1);
+  my ($self, $dir, @options) = @_;
 
-  $self->dumpConfig($dir);
+
+  $self->dumpConfig($dir, @options);
 }
 
 
@@ -818,6 +815,16 @@ sub writeConfFile # (file, component, params, defaults)
 	my ($self, $file, $compname, $params, $defaults) = @_;
 	validate_pos(@_, 1, { type =>  SCALAR }, { type => SCALAR }, { type => ARRAYREF, default => [] }, { type => HASHREF, optional => 1 });
 
+    my $manager;
+    if ($self->isa('EBox::ServiceModule::ServiceInterface')) {
+        $manager = new EBox::ServiceModule::Manager();
+        if ($manager->skipModification($self->serviceModuleName(), $file)) {
+            EBox::info("Skiping modification of $file");
+            return;
+        }
+    }
+
+
 	my ($fh,$tmpfile) = tempfile(DIR => EBox::Config::tmp);
 	unless($fh) {
 		throw EBox::Exceptions::Internal(
@@ -848,8 +855,12 @@ sub writeConfFile # (file, component, params, defaults)
 	EBox::Sudo::root("/bin/mv $tmpfile  $file");
 	EBox::Sudo::root("/bin/chmod $mode $file");
 	EBox::Sudo::root("/bin/chown $uid.$gid $file");
+
+    if ($self->isa('EBox::ServiceModule::ServiceInterface')) {
+        $manager->updateFileDigest($self->serviceModuleName(), $file);
+    }
+
+
 }
-
-
 
 1;

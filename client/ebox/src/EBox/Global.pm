@@ -245,20 +245,12 @@ sub revokeAllModules
 		"revoking their changes, their state is unknown: $failed");
 }
 
-#
-# Method: saveAllModules
-#
-#      Save changes in all modules 		
-#
-sub saveAllModules
+sub modifiedModules
 {
-	my $self = shift;
+    my ($self) = @_;
 	my @names = @{$self->modNames};
-	my @mods = ();
-	my $log = EBox::logger();
-	my $msg = "Saving config and restarting services: ";
-	my $failed = "";
-	
+    my @mods;
+
 	if ($self->modExists('firewall')) {
 		push(@mods, 'firewall');
 	}
@@ -267,17 +259,35 @@ sub saveAllModules
 
 		unless (grep(/^$modname$/, @mods)) {
 			push(@mods, $modname);
-			$msg .= "$modname ";
 		}
 		
 		my @deps = @{$self->modRevDepends($modname)};
 		foreach my $aux (@deps) {
 			unless (grep(/^$aux$/, @mods)) {
 				push(@mods, $aux);
-				$msg .= "$aux ";
 			}
 		}
 	}
+
+    return \@mods;
+}
+
+# Method: saveAllModules
+#
+#      Save changes in all modules 		
+#
+sub saveAllModules
+{
+	my $self = shift;
+
+	my $log = EBox::logger();
+
+	my $failed = "";
+	
+
+	my @mods = @{$self->modifiedModules()};
+	my $msg = "Saving config and restarting services: @mods";
+
 	$log->info($msg);
 
 	my $apache = 0;
@@ -287,6 +297,13 @@ sub saveAllModules
 			next;
 		}
 		my $mod = $self->modInstance($name);
+		my $class = 'EBox::ServiceModule::ServiceInterface';
+		if ($mod->isa($class) and not $mod->configured()) {
+			$mod->_saveConfig();
+            $self->modRestarted($name);
+			next;
+		}
+
 		try {
 			$mod->save();
 		} catch EBox::Exceptions::Internal with {

@@ -29,6 +29,8 @@
 	+ Upgrade runit dependency until 1.8.0 to avoid runit related
 	issues
 0.11
+	+ Use apache2
+	+ Add ebox-unblock-exec to unset signal mask before running  a executable
 	+ Fix issue with multiple models and models with params.
 	  This triggered a bug in DHCP when there was just one static
 	  interface

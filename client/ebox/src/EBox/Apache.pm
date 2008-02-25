@@ -56,24 +56,12 @@ sub _create
 
 sub serverroot
 {
-	my $root = EBox::Config::configkey('httpd_serverroot');
-	($root) or
-		throw EBox::Exceptions::External(__('You must set the '.
-		'httpd_serverroot variable in the ebox configuration file'));
-	return $root;
+	return '/var/lib/ebox';
 }
 
-#not used now
 sub initd
 {
-	my $initd = EBox::Config::configkey('httpd_init');
-	($initd) or
-		throw EBox::Exceptions::External(__('You must set the '.
-			'httpd_init variable in the ebox configuration file'));
-	( -x $initd ) or
-		throw EBox::Exceptions::External(__('The httpd_init script'.
-			' you configured is not executable.'));
-	return $initd;
+	return '/usr/share/ebox/ebox-apache2ctl';
 }
 
 # restarting apache from inside apache could be problematic, so we fork() and
@@ -104,11 +92,11 @@ sub _daemon # (action)
 	}
 
 	if ($action eq 'stop') {
-		EBox::Service::manage('apache-perl','stop');
+		EBox::Sudo::root('/usr/share/ebox/ebox-apache2ctl stop');
 	} elsif ($action eq 'start') {
-		EBox::Service::manage('apache-perl','start');
+		EBox::Sudo::root('/usr/share/ebox/ebox-apache2ctl start');
 	} elsif ($action eq 'restart') {
-		exec(EBox::Config::libexec . 'ebox-apache-restart');
+		exec(EBox::Config::pkgdata . 'ebox-apache-restart');
 	}
 
 	if ($fork) {
@@ -191,17 +179,14 @@ sub _writeStartupFile
 
 sub _httpdConfFile
 {
-    my $httpdconf = EBox::Config::configkey('httpd_conf');
-    return $httpdconf;
+    return '/var/lib/ebox/conf/apache2.conf';
 }
 
 
 sub _startupFile
 {
   
-    my $startup = File::Basename::dirname( _httpdConfFile() ); # startup mus be in the same dir thet the pache conf file
-    $startup .= '/startup.pl';
-    return $startup;
+    return '/var/lib/ebox/conf/startup.pl';
 }
 
 sub port

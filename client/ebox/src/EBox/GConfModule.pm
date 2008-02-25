@@ -71,6 +71,7 @@ sub _helper
 sub _config
 {
 	my $self = shift;
+	$self->{gconf}->clear_cache();
 	$self->{helper} = $self->{config};
 }
 
@@ -113,22 +114,29 @@ sub _load_from_file # (dir?, key?)
   $self->_config();
 
   my $file =  $self->_bak_file_from_dir($dir);
-  -f $file or throw EBox::Exceptions::Internal("Backup file missing: ".
-					       "$file.");
+  if (not  -f $file)  {
+    EBox::error("GConf backup file missing for module " . $self->name);
+    return;
+  }
+
   ($key) or $key = $self->_key("");
   $self->_delete_dir_internal($key);
-  `/usr/bin/gconftool --load=$file $key` and
+
+  system "/usr/bin/gconftool --load=$file $key";
+  if (not ($? == 0)) {
     throw EBox::Exceptions::Internal("Error while restoring " .
 				     "configuration from $file");
+  }
+
 }
 
 
 # we override aroundDumpConfig to save gconf data before dump module config
 sub aroundDumpConfig
 {
-  my ($self, $dir) = @_;
+  my ($self, $dir, @options) = @_;
   $self->_dump_to_file($dir);  
-  $self->dumpConfig($dir);     
+  $self->dumpConfig($dir, @options);     
 }
 
 # dumps GConf entries to a file in the dir specified
@@ -418,7 +426,9 @@ sub _all_entries # (key)
 {
 	my ($self, $key) = @_;
 	$key = $self->_key($key);
-	return $self->_gconf_wrapper("all_entries", $key);
+	my @entries = $self->_gconf_wrapper("all_entries", $key);
+	my @entrypaths = map { $_->{key} } @entries;
+	return @entrypaths;
 }
 
 #
@@ -917,7 +927,7 @@ sub _delete_dir_internal # (key)
 	my ($self, $dir) = @_;
 	my @keys = $self->_gconf_wrapper("all_entries", $dir);
 	foreach (@keys) {
-		$self->_gconf_wrapper("unset", $_);
+		$self->_gconf_wrapper("unset", $_->{key});
 	}
 	@keys = $self->_gconf_wrapper("all_dirs", $dir);
 	foreach (@keys) {

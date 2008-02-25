@@ -117,12 +117,17 @@ sub menu
 	my ($self, $root) = @_;
 
 	$root->add(new EBox::Menu::Item('url' => 'Summary/Index',
-					'text' => __('Status'),
+					'text' => __('Summary'),
 					'order' => 1));
+
+	$root->add(new EBox::Menu::Item('url' => 'ServiceModule/StatusView',
+					'text' => __('Module status'),
+					'order' => 2));
+
 
 	my $folder = new EBox::Menu::Folder('name' => 'EBox',
 					    'text' => __('System'),
-					    'order' => 2);
+					    'order' => 3);
 
 	$folder->add(new EBox::Menu::Item('url' => 'EBox/General',
 					  'text' => __('General')));

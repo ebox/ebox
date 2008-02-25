@@ -24,7 +24,11 @@ package EBox::Events;
 #      since it may be considered as a base module as logs. It manages
 #      the EventDaemon.
 
-use base qw(EBox::GConfModule EBox::Model::ModelProvider EBox::Model::CompositeProvider);
+use base qw(EBox::GConfModule 
+            EBox::Model::ModelProvider 
+            EBox::Model::CompositeProvider
+			EBox::ServiceModule::ServiceInterface
+            );
 
 use strict;
 use warnings;
@@ -56,7 +60,7 @@ use Error qw(:try);
 #
 #         SERVICE - the service managed by this module
 #
-use constant SERVICE                 => 'event-daemon';
+use constant SERVICE                 => 'ebox.event-daemon';
 use constant CONF_DIR                => EBox::Config::conf() . 'events/';
 use constant ENABLED_DISPATCHERS_DIR => CONF_DIR . 'DispatcherEnabled/';
 use constant ENABLED_WATCHERS_DIR    => CONF_DIR . 'WatcherEnabled/';
@@ -93,6 +97,16 @@ sub _create
       return $self;
 
   }
+
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#
+sub serviceModuleName
+{
+	return 'events';
+}
+
 
 # Method: _regenConfig
 #
@@ -349,9 +363,7 @@ sub service
 
       my ($self) = @_;
 
-      my $enableModel = $self->_enableForm();
-
-      return $enableModel->enabledValue();
+	  return $self->isEnabled();
 
   }
 
@@ -367,13 +379,8 @@ sub setService
   {
 
       my ($self, $enabled) = @_;
-
-      my $enableModel = $self->_enableForm();
-
-      $enableModel->setRow(1,
-                           ( enabled => $enabled ),
-                          );
-
+      
+      $self->enableService($enabled);
   }
 
 # Method: enableEventElement

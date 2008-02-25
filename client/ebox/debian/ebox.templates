@@ -1,0 +1,17 @@
+Template: ebox/password1
+Type: password
+Description: eBox administrator password:
+ Please enter the password which will be used to log into the eBox web
+ interface.
+
+Template: ebox/password2
+Type: password
+Description: Confirm password:
+ Please enter the password which will be used to log into the eBox web
+ interface.
+
+Template: ebox/password_mismatch
+Type: note
+Description: Passowrd mismatch
+ The two passwords you entered were not the same. Please try again
+
