@@ -22,7 +22,7 @@ case "$1" in
         # create directory for RRD databases
         RRD_DIR=`perl -MEBox::Network::Report::ByteRate -e'$d = EBox::Network::Report::ByteRate::_rrdDir(); print $d; 1'`
         mkdir -p $RRD_DIR
-        chown ebox.ebox $RRD_DIR
+        chown ebox:ebox $RRD_DIR
 
         # restart networking
         invoke-rc.d networking start
