@@ -469,13 +469,7 @@ sub actions
 		'reason' => __('eBox will take care of starting and stopping ' .
 						'the services.'),
 		'module' => 'dns'
-	},
-    {
-		'action' => __('Create directory /etc/bind/zones'),
-		'reason' =>	__('eBox will store its zones under that directory.'),
-		'module' => 'dns'
 	}
-
     ];
 }
 
@@ -512,7 +506,7 @@ sub usedFiles
 	{
 		my $domdata = $self->completeDomain($domain);
 		push(@domainData, $domdata);
-		my $file = BIND9CONFDIR . "/zones/db." . $domdata->{'name'};
+		my $file = BIND9CONFDIR . "/db." . $domdata->{'name'};
 		push (@{$files}, 
 						{
 							 'file' => $file,
@@ -526,7 +520,7 @@ sub usedFiles
 	my @inaddrs;
 	foreach my $reversedDataItem(@{$reversedData})
 	{
-		my $file = BIND9CONFDIR . "/zones/db." . $reversedDataItem->{'groupip'};
+		my $file = BIND9CONFDIR . "/db." . $reversedDataItem->{'groupip'};
 		push (@{$files}, 
 						{
 							 'file' => $file,
@@ -648,7 +642,7 @@ sub _setBindConf
 		my $domdata = $self->completeDomain($domain);
 		push(@domainData, $domdata);
 
-		my $file = BIND9CONFDIR . "/zones/db." . $domdata->{'name'};
+		my $file = BIND9CONFDIR . "/db." . $domdata->{'name'};
 		@array = ();
 		push(@array, 'domain' => $domdata);
 		$self->writeConfFile($file,"dns/db.mas",\@array);
@@ -659,7 +653,7 @@ sub _setBindConf
 	my @inaddrs;
 	foreach my $reversedDataItem(@{$reversedData})
 	{
-		my $file = BIND9CONFDIR . "/zones/db." . $reversedDataItem->{'groupip'};
+		my $file = BIND9CONFDIR . "/db." . $reversedDataItem->{'groupip'};
 		push(@inaddrs, $reversedDataItem->{'groupip'});
 		@array = ();
 		push(@array, 'rdata' => $reversedDataItem);
