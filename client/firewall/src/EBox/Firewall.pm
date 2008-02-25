@@ -18,8 +18,12 @@ package EBox::Firewall;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule EBox::ObjectsObserver EBox::NetworkObserver
-EBox::Model::ModelProvider EBox::LogObserver);
+use base qw(EBox::GConfModule 
+			EBox::ObjectsObserver 
+			EBox::NetworkObserver
+			EBox::Model::ModelProvider
+			EBox::ServiceModule::ServiceInterface
+			);
 
 use EBox::Objects;
 use EBox::Global;
@@ -81,6 +85,49 @@ sub _create
 	return $self;
 }
 
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Flush previous firewall rules'),
+		'reason' => __('The eBox firewall will flush any previous firewall rule ' .
+					' which have been added manually or by another tool'),
+		'module' => 'firewall'
+	},
+	{
+		'action' => __('Secure by default'),
+		'reason' => __('Just a few connections are allowed by default. ' .
+					'Make sure you add the proper incoming and outcoming ' .
+					'rules to make your system work as expected. Usually, ' .
+					'all outcoming connections are denied by default, and ' .
+					'only SSH and HTTPS incoming connections are allowed.'),
+		'module' => 'firewall'
+
+	}
+	];
+}
+
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#
+sub serviceModuleName
+{
+	return 'firewall';
+}
+
+#  Method: enableModDepends
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableModDepends
+#
+sub enableModDepends 
+{
+	return ['network'];
+}
 
 # Method: models
 #
@@ -158,6 +205,7 @@ sub _regenConfig
 	my $self = shift;
 	use EBox::Iptables;
 	my $ipt = new EBox::Iptables;
+	return unless ($self->isEnabled());
 	$ipt->start();
 }
 
@@ -753,7 +801,7 @@ sub onInstall
 	$fw->setInternalService('eBox administration', 'accept');
 	$fw->setInternalService('ssh', 'accept');
 
-	$fw->save();
+	$fw->saveConfigRecursive();
 }
 
 # Method: onRemove
