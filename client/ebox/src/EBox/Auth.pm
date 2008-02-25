@@ -30,7 +30,6 @@ use EBox::Exceptions::Lock;
 use EBox::LogAdmin;
 use Apache2::Connection;
 
-use Apache;
 use Digest::MD5;
 use Fcntl qw(:flock);
 
