@@ -1,0 +1,3 @@
+
+exec /usr/bin/setsid /usr/sbin/dansguardian -N
+respawn
