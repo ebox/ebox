@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# don't start bind9 with its script	
+update-rc.d -f bind9 remove
+
+# stop bind9
+invoke-rc.d bind9 stop
+
+# create /etc/bind/zones
+
+test -d /etc/bind/zones || mkdir /etc/bind/zones
