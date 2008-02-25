@@ -25,7 +25,7 @@ images = images/delete.gif images/show.gif \
 js = js/csshover.htc js/common.js \
   js/help.js js/table-helper.js js/prototype.js \
   js/fileUpload.js js/image-helper.js \
-  js/tabMenu.js js/progress.js \
+  js/tabMenu.js  \
   js/modalbox.js  js/prototype.js  \
   js/scriptaculous/controls.js \
   js/scriptaculous/unittest.js \
