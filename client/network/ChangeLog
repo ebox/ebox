@@ -3,6 +3,7 @@
 	real-time. The monitoring may be filter by source address and
 	service (protocol/port).
 0.11
+	+ move helper scripts to data dir (applied Soren's patch)
 	+ Bugfix: Change from static to other method works again
 0.10.99
 	+ New release

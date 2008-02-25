@@ -19,9 +19,13 @@ package EBox::Network;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule EBox::Model::ModelProvider EBox::Model::CompositeProvider);
+use base qw(
+            EBox::GConfModule 
+			EBox::Model::ModelProvider
+			EBox::Model::CompositeProvider
+			EBox::ServiceModule::ServiceInterface
+           ); 
 
-use constant DHCLIENT_CONF_FILE => '/etc/dhcp3/dhclient.conf';
 # Interfaces list which will be ignored
 use constant ALLIFACES => qw(sit tun tap lo irda eth wlan vlan);
 use constant IGNOREIFACES => qw(sit tun tap lo irda);
@@ -67,8 +71,37 @@ sub _create
 	return $self;
 }
 
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Add default routers to the default table'),
+		'reason' => __('This is needed to work with a multigateway ' .
+					'configuration. Note that to list the default routes you ' .
+					'must execute: ') . ' ip route ls table default ',
+		'module' => 'network'
+	},
+	{	
+		'action' => __('Enable eBox DHCP hook'),
+		'reason' => __('It will take care of adding the default route' .
+				' given by a DHCP server to the default route table. '),
+		'module' => 'network'
+	}
+	];
+}
 
-
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#
+sub serviceModuleName
+{
+	return 'network';
+}
 
 sub modelClasses
 {
@@ -1692,18 +1725,6 @@ sub _generateRoutes
 	}
 }
 
-sub _generateDHCPClientConf
-{
-	my $self = shift;
-	
-	my @params = ('script' => 
-		EBox::Config::libexec . "../ebox-network/dhclient-script");
-	
-	$self->writeConfFile(DHCLIENT_CONF_FILE,
-				'network/dhclient.conf.mas',
-				\@params);
-}
-
 sub _multigwRoutes
 {
 	my $self = shift;
@@ -1733,9 +1754,8 @@ sub _multigwRoutes
 	# We modify the dhclient script behaviour to add the
 	# default route where we need it.
 
-	$self->_generateDHCPClientConf();
 	
-	root(EBox::Config::libexec . "../ebox-network/ebox-flush-fwmarks");
+	root(EBox::Config::share() . "ebox-network/ebox-flush-fwmarks");
 	my $marks = $self->marksForRouters();
 	my $routers = $self->gatewaysWithMac();
 	for my $router (@{$routers}) {
@@ -1874,7 +1894,7 @@ sub _regenConfig
 		}
 	}
 	foreach (@ifups) {
-		root("/sbin/ifup --force -i $file $_");
+		root(EBox::Config::pkgdata() . "ebox-unblock-exec /sbin/ifup --force -i $file $_");
 		unless ($self->isReadOnly()) {
 			$self->_unsetChanged($_);
 		}
