@@ -6,12 +6,14 @@
 	  with Samba PDC when adding machines and creating users with 
 	  repeated uid
 0.11.2
-	+ Do not generate a new LDAP password if it already exists
+    + Do not generate a new LDAP password if it already exists
 0.11.1
 	+ Fix issue with module naming which prevented backups from being
 	restored
 0.11
-        + The pseudo-model now is ordered by `sortedBy` field
+	+ Initial Ubuntu packaging
+	+ bugfix. fix issue with module naming which prevented backups from being
+	  restored
 0.10.99
 	+ Create pseudo-model to use the users table with Ajax 
 0.10

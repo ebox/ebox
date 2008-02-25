@@ -18,7 +18,11 @@ package EBox::UsersAndGroups;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule EBox::LdapModule EBox::Model::ModelProvider);
+use base qw(EBox::GConfModule 
+			EBox::LdapModule 
+			EBox::Model::ModelProvider
+			EBox::ServiceModule::ServiceInterface
+		   );
 
 use EBox::Global;
 use EBox::Ldap;
@@ -29,6 +33,9 @@ use EBox::Sudo qw( :all );
 use EBox::FileSystem;
 use Error qw(:try);
 use EBox::LdapUserImplementation;
+
+use File::Copy;
+use Perl6::Junction qw(any);
 
 use constant USERSDN	    => 'ou=Users';
 use constant GROUPSDN       => 'ou=Groups';
@@ -45,14 +52,72 @@ use constant DEFAULTGROUP   => '__USERS__';
 sub _create 
 {
 	my $class = shift;
-	my $self = $class->SUPER::_create(name => 'users',
-					  domain => 'ebox-usersandgroups',
-					  @_);
+	my $self = $class->SUPER::_create(name => 'users', 
+			printableName => __('users and groups'),
+			domain => 'ebox-usersandgroups',
+			@_);
 
 	$self->{ldap} = EBox::Ldap->instance();
 
 	bless($self, $class);
 	return $self;
+}
+
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('The openLDAP server will be configrued and intialized'),
+		'reason' => __('eBox will initialize openLDAP to store its database. ' .
+					'Your current database will be replaced and backuped in' .
+					'/var/backups/slapd'),
+		'module' => 'users'
+	}
+    ];
+}
+
+# Method: usedFiles 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::files
+#
+sub usedFiles 
+{
+    return [
+	{	
+		'file' => '/etc/default/slapd',
+		'reason' => __('To make openLDAP listen on TCP and Unix sockets'),
+		'module' => 'users'
+	},
+	{	
+		'file' => '/etc/ldap/slapd.conf',
+		'reason' => __('To configure the openLDAP database with dc ' .
+					' entry, rootpw, rootdn, schemas and ACLs used by '.
+					' the LDAP based eBox modules'),
+		'module' => 'users'
+	}
+	];
+}
+
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    command(EBox::Config::share() . '/ebox-usersandgroups/ebox-init-ldap init');
+}
+
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#
+sub serviceModuleName
+{
+	return 'users';
 }
 
 # Method: _regenConfig
@@ -1400,9 +1465,14 @@ sub _ldapModImplementation
 
 sub dumpConfig
 {
-  my ($self, $dir) = @_;
+  my ($self, $dir, %options) = @_;
 
   $self->{ldap}->dumpLdapData($dir);
+
+  if ($options{bug}) {
+    my $file = $self->{ldap}->ldifFile($dir);
+    $self->_removePasswds($file);
+  }
 }
 
 
@@ -1413,6 +1483,48 @@ sub restoreConfig
   $self->{ldap}->loadLdapData($dir);
 }
 
+
+
+sub _removePasswds
+{
+  my ($self, $file) = @_;
+
+  my $tmpFile = "/tmp/ea";
+  
+
+  my $anyPasswdAttr = any(qw(
+                              userPassword 
+                              sambaLMPassword 
+                              sambaNTPassword
+                            )
+			 );
+  my $passwordSubstitution = "password";
+
+  my $FH_IN;
+  my $FH_OUT;
+
+  open $FH_IN, "<$file" or 
+    throw EBox::Exceptions::Internal ("Cannot open $file: $!");
+  open $FH_OUT, ">$tmpFile" or
+    throw EBox::Exceptions::Internal ("Cannot open $tmpFile: $!");
+
+  foreach my $line (<$FH_IN>) {
+    my ($attr, $value) = split ':', $line;
+    if ($attr eq $anyPasswdAttr) {
+      $line = $attr . ': ' . $passwordSubstitution . "\n";
+    }
+
+    print $FH_OUT $line;
+  }
+
+  close $FH_IN  or 
+    throw EBox::Exceptions::Internal ("Cannot close $file: $!");
+  close $FH_OUT or
+    throw EBox::Exceptions::Internal ("Cannot close $tmpFile: $!");
+    
+  File::Copy::move($tmpFile, $file);
+  unlink $tmpFile;
+}
 
 # Method: onInstall 
 #
@@ -1436,16 +1548,16 @@ sub onInstall
 			'destinationPort' => 389,
 			'internal' => 0);
 
-        $serviceMod->save();
+        $serviceMod->saveConfig();
 		
 	} else {
 		EBox::info("Not adding ldap service as it already exists");
 	}
 
-    $fw->setInternalService('ldap', 'accept');
+    $fw->setInternalService('ldap', 'deny');
 
 
-	$fw->save();
+	$fw->saveConfig();
 
 }
 

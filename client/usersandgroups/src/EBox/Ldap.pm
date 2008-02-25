@@ -38,7 +38,7 @@ use Error qw(:try);
 use File::Slurp qw(read_file);
 
 use constant DN            => "dc=ebox";
-use constant LDAPI         => "ldapi://%2fvar%2frun%2fldapi";
+use constant LDAPI         => "ldapi://%2fvar%2frun%2fslapd%2fldapi";
 use constant LDAP	   => "ldap://127.0.0.1";
 use constant SLAPDCONFFILE => "/etc/ldap/slapd.conf";
 use constant ROOTDN        => 'cn=admin,' . DN;
@@ -201,7 +201,7 @@ sub slapdConfFile {
 #     hash ref  - holding the keys 'dn', 'ldapi', 'ldap', and 'rootdn' 
 #
 sub ldapConf {
-	shift;
+	my ($class) = @_;
 	
 	my $conf = {
 		     'dn'     => DN,
@@ -522,6 +522,13 @@ sub refreshLdap
 
 
 
+sub ldifFile
+{
+  my ($self, $dir) = @_;
+  return "$dir/ldap.ldif";
+}
+
+
 sub dumpLdapData
 {
   my ($self, $dir) = @_;
@@ -530,7 +537,7 @@ sub dumpLdapData
   my $slapdConfFile = EBox::Ldap::slapdConfFile();
   my $user  = EBox::Config::user();
   my $group = EBox::Config::group();
-  my $ldifFile = "$dir/ldap.ldif";
+  my $ldifFile = $self->ldifFile($dir);
 
   my $slapcatCommand = $self->_slapcatCmd($ldifFile, $slapdConfFile);
   my $chownCommand = "/bin/chown $user.$group $ldifFile";
@@ -545,13 +552,15 @@ sub loadLdapData
   
   my $ldapDir   = EBox::Ldap::dataDir();
   my $slapdConfFile = EBox::Ldap::slapdConfFile();
-  my $ldifFile = "$dir/ldap.ldif";
+  my $ldifFile = $self->ldifFile($dir);
 
   my $rmCommand = $self->_rmLdapDirCmd($ldapDir);
   my $slapaddCommand = $self->_slapaddCmd($ldifFile, $slapdConfFile);
   
   $self->_pauseAndExecute(cmds => [$rmCommand, $slapaddCommand ]);
 }
+
+
 
 
 sub _slapcatCmd
