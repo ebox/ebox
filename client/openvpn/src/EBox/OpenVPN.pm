@@ -16,7 +16,8 @@
 package EBox::OpenVPN;
 use base qw(EBox::GConfModule 
            EBox::NetworkObserver  EBox::LogObserver
-           EBox::FirewallObserver EBox::CA::Observer);
+           EBox::FirewallObserver EBox::CA::Observer
+           EBox::ServiceModule::ServiceInterface);
 
 use strict;
 use warnings;
@@ -53,7 +54,7 @@ my $anyDaemonType = any @daemonTypes;
 sub _create 
 {
 	my $class = shift;
-	my $self = $class->SUPER::_create(name => 'openvpn');
+	my $self = $class->SUPER::_create(name => 'openvpn', printableName => __('openVPN'));
 	bless($self, $class);
 	return $self;
 }
@@ -68,6 +69,80 @@ sub _regenConfig
 }
 
 
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Remove openVPN and quagga init script links'),
+		'reason' => __('eBox will take care of starting and stopping ' .
+						'the services.'),
+		'module' => 'openvpn'
+	}
+    ];
+}
+
+
+# Method: usedFiles
+#
+#	Override EBox::ServiceModule::ServiceInterface::usedFiles
+#
+sub usedFiles
+{
+	return [
+		{
+		 'file' => '/etc/quagga/daemons',
+		 'module' => 'openvpn',
+ 	 	 'reason' => __('To configure Quagga to run ripd and zebra')
+		},
+		{
+		 'file' => '/etc/quagga/debian.conf',
+		 'module' => 'openvpn',
+ 	 	 'reason' => __('To configure Quagga to listen on the given interfaces') 
+		},
+		{
+		 'file' => '/etc/quagga/zebra.conf',
+		 'module' => 'openvpn',
+ 	 	 'reason' => __('Main zebra configuration file')
+		},
+		{
+		 'file' => '/etc/quagga/ripd.conf',
+		 'module' => 'openvpn',
+ 	 	 'reason' => __('To configure ripd to exchange routes with client '.
+                        'to client connections')
+		}
+	       ];
+}
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    EBox::Sudo::root(EBox::Config::share() . '/ebox-openvpn/ebox-openvpn-enable');
+}
+
+
+# Method: serviceModuleName 
+#
+#	Override EBox::ServiceModule::ServiceInterface::serviceModuleName
+#
+sub serviceModuleName
+{
+	return 'openvpn';
+}
+
+#  Method: enableModDepends
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableModDepends
+#
+sub enableModDepends 
+{
+    return ['network'];
+}
 #
 # Method: confDir
 #
@@ -880,10 +955,12 @@ sub _setService # (active)
 sub service
 {
   my ($self) = @_;
-  my $service = $self->userService;
-  $service and return $service;
 
-  return $self->internalService;
+  return $self->isEnabled();
+  #my $service = $self->userService;
+  #$service and return $service;
+
+ # return $self->internalService;
 }
 
 

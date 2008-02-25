@@ -210,6 +210,7 @@ sub newAndRemoveClientTest : Test(32)
 							  ['192.168.55.21' => 1040],
 							 ],
 				    service           => 1,
+				    ripPasswd         => 'passwd',
 				   ],
 
 		       client2 =>  [ 
@@ -221,6 +222,7 @@ sub newAndRemoveClientTest : Test(32)
 							 ],
 				    service           => 1,
 				    internal            => 0,
+				    ripPasswd         => 'passwd',
 				   ],
 
 		       $reservedClient =>  [ 
@@ -232,6 +234,7 @@ sub newAndRemoveClientTest : Test(32)
 							  ],
 				     service           => 1,
 				     internal            => 1,
+			 	    ripPasswd         => 'passwd',
 				    ],
 		      );
 

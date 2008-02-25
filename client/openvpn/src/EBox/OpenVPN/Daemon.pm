@@ -117,7 +117,7 @@ sub user
     return $self->_openvpnModule->user();
 }
 
-#
+
 # Method: group
 #
 #    Return the user will be used to run the  daemon
@@ -334,18 +334,69 @@ sub confFileParams
 #
 #   Abstract method. Must return the configuration file template
 #
+#
 # Returns:
 #   undef if no ripDaemon is needed by the openvpn's daemon
 #   if the ripDaemons is needed it must return a hash refrence with the
 #   following keys:
-#       iface        - the iface where the rip daemon needs to be active
+#       iface        - a hash ref returned from the method ifaceWithRipPasswd
 #       redistribute - wether the daemon wants to redistribute routes or not
 sub ripDaemon
 {
   throw EBox::Exceptions::NotImplemented();
 }
 
+#   Method: ifaceWithRipPasswd
 #
+#  return a reference to a hash with the interface information needed to
+#  configure the ripd daemon
+#
+#   Returns:
+#        hash reference with the following fields
+#              ifaceName - name of the network interface
+#              passwd    - rip password for this daemon
+sub ifaceWithRipPasswd
+{
+  my ($self) = @_;
+  my $iface = $self->iface;
+  my $passwd = $self->ripPasswd;
+
+  return {
+	  ifaceName => $iface,
+	  passwd    => $passwd,
+	 };
+}
+
+#  Method: ripPasswd
+#
+#     get the password used by this daemon to secure RIP transmissions
+#
+#     Returns:
+#        the password as string (empty string if the password wasn't set)
+sub ripPasswd
+{
+  my ($self) = @_;
+  my $passwd = $self->getConfString('ripPasswd');
+  defined $passwd or $passwd = '';   # since is optional it may be undefined
+  return $passwd;
+}
+
+#  Method: setRipPasswd
+#
+#     set the password used by this daemon to secure RIP transmissions
+#
+#     Parameters:
+#        passwd - a non-empty password
+sub setRipPasswd
+{
+  my ($self, $passwd) = @_;
+  $passwd or 
+    throw EBox::Exceptions::Internal('You must supply a non-empty password');
+
+  $self->setConfString('ripPasswd', $passwd);
+}
+
+
 # Method: start
 #
 #  Start the daemon

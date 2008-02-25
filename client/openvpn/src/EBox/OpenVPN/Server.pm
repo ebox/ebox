@@ -5,7 +5,7 @@ use warnings;
 
 use base qw(EBox::OpenVPN::Daemon);
 
-use EBox::Validate qw(checkPort checkAbsoluteFilePath checkIP checkNetmask);
+use EBox::Validate qw(checkPort checkAbsoluteFilePath checkIP checkNetmask checkIPNetmask);
 use EBox::NetWrappers;
 use EBox::CA;
 use EBox::FileSystem;
@@ -463,7 +463,7 @@ sub ripDaemon
   
   $self->pullRoutes() or return undef;
 
-  my $iface = $self->iface();
+  my $iface = $self->ifaceWithRipPasswd();
   return { iface => $iface };
 }
 
@@ -645,6 +645,10 @@ sub _checkAdvertisedNet
   checkIP($net, __('network address'));
   checkNetmask($netmask, __('network mask'));
 
+  if (EBox::Validate::checkIPNetmask($net, $netmask)) {
+    throw EBox::Exceptions::External(__x('Network address {net} with netmask {mask} is not a valid network', net => $net, mask => $netmask));
+  }
+
   if ($self->getConfString("advertised_nets/$net")) {
     throw EBox::Exceptions::External(__x("Network {net} is already advertised in this server", net => $net));
   }
@@ -715,6 +719,7 @@ sub setInternal
 #  advertisedNets - advertised nets 
 #  tlsRemote      - tls remote option
 #  pullRoutes     - wether pull routes from clientes or not
+#  ripPasswd      - rip password used to secure the routes' pulling
 sub init
 {
     my ($self, %params) = @_;
@@ -724,6 +729,12 @@ sub init
     (exists $params{port} ) or throw EBox::Exceptions::External __("The server requires a port number");
     (exists $params{proto}) or throw EBox::Exceptions::External __("A IP protocol must be specified for the server");
     (exists $params{certificate}) or throw EBox::Exceptions::External __("A  server certificate must be specified");
+    if (exists $params{pullRoutes}) {
+      ($params{ripPasswd}) or
+	throw EBox::Exceptions::External(
+		  __(q{eBox-to-EBox tunnel's password missing})
+					);
+    }
 
     my $network = EBox::Global->modInstance('network');
     my $externalIfaces = $network->ExternalIfaces();
@@ -741,7 +752,7 @@ sub init
     $self->setPort($params{port});
     $self->setCertificate($params{certificate});    
 
-    my @noFundamentalAttrs = qw(local clientToClient advertisedNets tlsRemote pullRoutes internal); 
+    my @noFundamentalAttrs = qw(local clientToClient advertisedNets tlsRemote pullRoutes ripPasswd  internal); 
     push @noFundamentalAttrs, 'service'; # service must be always the last attr so if there is a error before the server is not activated
 
     foreach my $attr (@noFundamentalAttrs)  {

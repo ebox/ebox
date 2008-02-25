@@ -14,7 +14,7 @@ my $serversShowed = (@servers and not $noCA);
 my $clientsShowed = @clients;
 </%init>
 
-<& enable.mas, title => __('OpenVPN service status'), active => $active &>
+<h3> <% __('Servers') %> </h3>
 <h3> <% __('Servers') %> </h3>
 % if ($noCA) {
   <& /openvpn/caRequired.mas &>

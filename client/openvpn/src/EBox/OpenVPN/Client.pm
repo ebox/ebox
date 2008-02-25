@@ -336,6 +336,7 @@ sub removeServer
 #  caCertificate - Path to the CA's certificate.
 #  certificate  -  Path to the client's certificate.
 #  certificateKey    -  Path yo the client's certificate key.
+#  ripPasswd      - rip password from the server
 #
 #  service - wether the client is enabled or disabed. *(Default: disabled)*
 #
@@ -349,14 +350,14 @@ sub init
     (exists $params{certificate}) or throw EBox::Exceptions::External __("The client certificate must be specified");
     (exists $params{certificateKey}) or throw EBox::Exceptions::External __("The client private key must be specified");
     (exists $params{servers}) or throw EBox::Exceptions::External __("Servers must be supplied to the client");
-    
+        (exists $params{ripPasswd}) or throw EBox::Exceptions::External __("Server's tunnel password missing");
 
     exists $params{service} or $params{service} = 0;
     exists $params{internal}  or $params{internal}  = 0;
 
     $self->setCertificateFiles($params{caCertificate}, $params{certificate}, $params{certificateKey});
 
-   my @attrs = qw(proto servers service internal);
+   my @attrs = qw(proto servers service internal ripPasswd);
     foreach my $attr (@attrs)  {
 	if (exists $params{$attr} ) {
 	    my $mutator_r = $self->can("set\u$attr");
@@ -371,7 +372,7 @@ sub ripDaemon
 {
   my ($self) = @_;
   
-  my $iface = $self->iface();
+  my $iface = $self->ifaceWithRipPasswd();
   return { iface => $iface, redistribute => 1 };
 }
 

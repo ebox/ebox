@@ -45,7 +45,7 @@ sub requiredParameters
 {
     my ($self) = @_;
     if ($self->param('create')) {
-	[qw(create name proto caCertificate certificate certificateKey serverAddr serverPort service)];
+	[qw(create name proto caCertificate certificate certificateKey serverAddr serverPort service ripPasswd)];
     }
     else {
 	return [];

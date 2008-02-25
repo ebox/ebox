@@ -46,6 +46,12 @@ my @tableElements  = (
 	printableName =>      __("Client's private key"),
 	help => __("Private key used to unlock the client's certificate"),
       ], 
+
+      [ name => 'ripPasswd', 
+	printableName => __("Server's tunnel password"), 
+	input => 'text', 
+	help => __("This password must be the same as  the one set in the server. Otherwise, the client would be unable to push routes to the server"),
+      ],
      );
 if ($nameEditable) {
    unshift @tableElements, [ name => 'name', printableName =>    __('Client name') ];
