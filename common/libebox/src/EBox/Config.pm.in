@@ -124,6 +124,11 @@ sub libexec
 	return $ref->{libdir} . "ebox/";
 }
 
+sub pkgdata 
+{
+	return $ref->{datadir} . "ebox/";
+}
+
 sub locale 
 {
 	return $ref->{datadir} . "locale/";
@@ -172,12 +177,12 @@ sub soapSession
 
 sub log 
 {
-	return $ref->{localstatedir} . "lib/ebox/log/";
+	return $ref->{localstatedir} . "log/ebox/";
 }
 
 sub logfile
 {
-	return $ref->{localstatedir} . "lib/ebox/log/ebox.log";
+	return $ref->{localstatedir} . "log/ebox/ebox.log";
 }
 
 sub stubs 
