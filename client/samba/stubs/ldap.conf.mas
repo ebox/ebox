@@ -23,6 +23,8 @@ uri <% $ldapi %>
 # if supported by client library)
 ldap_version 3
 
+bind_policy soft
+
 # The distinguished name to bind to the server with
 # if the effective user ID is root. Password is
 # stored in /etc/ldap.secret (mode 600)

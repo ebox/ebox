@@ -47,7 +47,6 @@ sub _process($) {
 		$active = 'yes';
 	}
 	push (@array, 'active'		=> $active);
-	push (@array, 'domain'		=> $samba->domainName);
 	push (@array, 'pdc'		=> $samba->pdc);
 	push (@array, 'workinggroup'    => $samba->workgroup);
 	push (@array, 'netbios'         => $samba->netbios);
