@@ -1,0 +1,2 @@
+exec /usr/sbin/cupsd -f
+respawn
