@@ -1,0 +1,2 @@
+respawn
+exec /usr/sbin/dhcpd3 -f -q

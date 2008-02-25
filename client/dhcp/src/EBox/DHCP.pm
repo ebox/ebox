@@ -19,7 +19,12 @@ package EBox::DHCP;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule EBox::NetworkObserver EBox::LogObserver EBox::Model::ModelProvider EBox::Model::CompositeProvider);
+use base qw(EBox::GConfModule 
+		EBox::NetworkObserver 
+		EBox::LogObserver 
+		EBox::Model::ModelProvider 
+		EBox::Model::CompositeProvider
+		EBox::ServiceModule::ServiceInterface);
 
 use EBox::Config;
 use EBox::Exceptions::InvalidData;
@@ -63,7 +68,7 @@ use File::Path;
 # Module local conf stuff
 use constant DHCPCONFFILE => "/etc/dhcp3/dhcpd.conf";
 use constant PIDFILE => "/var/run/dhcpd.pid";
-use constant DHCP_SERVICE => "dhcpd3";
+use constant DHCP_SERVICE => "ebox.dhcpd3";
 use constant TFTP_SERVICE => "tftpd-hpa";
 
 use constant CONF_DIR => EBox::Config::conf() . 'dhcp/';
@@ -84,18 +89,10 @@ sub _create
 {
 	my $class = shift;
 	my $self  = $class->SUPER::_create(name => 'dhcp', 
+									   printableName => 'dhcp server',
                                            domain => 'ebox-dhcp',
                                            @_);
 	bless ($self, $class);
-
-        $self->{enableModel} =
-          new EBox::Common::Model::EnableForm(
-                                              gconfmodule => $self,
-                                              directory   => 'EnableForm',
-                                              domain      => 'ebox-dhcp',
-                                              enableTitle => __('DHCP service status'),
-                                              modelDomain => 'DHCP',
-                                             );
 
 	return $self;
 }
@@ -103,6 +100,66 @@ sub _create
 sub domain
 {
 	return 'ebox-dhcp';
+}
+
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Remove dhcpd3 init script links'),
+		'reason' => __('eBox will take care of starting and stopping ' .
+						'the services.'),
+		'module' => 'squid'
+	}
+    ];
+}
+
+
+# Method: usedFiles
+#
+#	Override EBox::ServiceModule::ServiceInterface::usedFiles
+#
+sub usedFiles
+{
+	return [
+		{
+		 'file' => DHCPCONFFILE,
+		 'module' => 'dhcp',
+ 	 	 'reason' => 'dhcpd configuration file'
+		}
+	       ];
+}
+
+#  Method: enableModDepends
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableModDepends
+#
+sub enableModDepends 
+{
+    return ['network'];
+}
+
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    root(EBox::Config::share() . '/ebox-dhcp/ebox-dhcp-enable');
+}
+
+
+# Method: serviceModuleName 
+#
+#	Override EBox::ServiceModule::ServiceInterface::serviceModuleName
+#
+sub serviceModuleName
+{
+	return 'dhcp';
 }
 
 # Method: _stopService
@@ -169,7 +226,7 @@ sub onInstall
     my $fw = EBox::Global->modInstance('firewall');
     $fw->setInternalService('dhcp', 'accept');
     $fw->setInternalService('tftp', 'accept');
-    $fw->save();
+    $fw->saveConfigRecursive();
 }
 
 # Method: onRemove
@@ -195,8 +252,7 @@ sub onRemove
         EBox::info("Not removing tftp service as it already removed");
     }
 
-    $serviceMod->save();
-    $fwMod->save();
+    $fwMod->saveConfigRecursive();
 
     # Remove user defined conf dir
     File::Path::rmtree( CONF_DIR );
@@ -272,7 +328,6 @@ sub models
             push ( @models, $self->{rangeInfoModel}->{$iface});
         }
     }
-    push ( @models, $self->{enableModel} );
 
     return \@models;
 
@@ -371,27 +426,29 @@ sub setService # (enabled)
 {
     my ($self, $active) = @_;
 
-    ($active and $self->service) and return;
-    (!$active and !$self->service) and return;
+    $self->enableService($active);
 
-    if ($active) {
-        if ($self->_nStaticIfaces() == 0) {
-            throw EBox::Exceptions::External(
-                     __x('DHCP server cannot activated because '
-                         . 'there are not any network interface '
-                         . 'with a static address. '
-                         . '{openhref}Configure one{closehref} first',
-                         openhref  => "<a href='Network/Ifaces'>",
-                         closehref => '</a>')
-                                            );
-        }
-    }
-
-        #	$self->set_bool("active", $active);
-        #	$self->_configureFirewall();
-    $self->{enableModel}->setRow(1,
-                                 ( enabled => $active)
-                                );
+#    ($active and $self->service) and return;
+#    (!$active and !$self->service) and return;
+#
+#    if ($active) {
+#        if ($self->_nStaticIfaces() == 0) {
+#            throw EBox::Exceptions::External(
+#                     __x('DHCP server cannot activated because '
+#                         . 'there are not any network interface '
+#                         . 'with a static address. '
+#                         . '{openhref}Configure one{closehref} first',
+#                         openhref  => "<a href='Network/Ifaces'>",
+#                         closehref => '</a>')
+#                                            );
+#        }
+#    }
+#
+#        #	$self->set_bool("active", $active);
+#        #	$self->_configureFirewall();
+#    $self->{enableModel}->setRow(1,
+#                                 ( enabled => $active)
+#                                );
 }
 
 # Method: service
@@ -405,8 +462,10 @@ sub setService # (enabled)
 sub service
 {
     my ($self) = @_;
+
+    return $self->isEnabled();
 #	return $self->get_bool("active");
-    return $self->{enableModel}->enabledValue();
+    #return $self->{enableModel}->enabledValue();
 }
 
 
