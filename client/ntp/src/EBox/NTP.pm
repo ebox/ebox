@@ -98,7 +98,7 @@ sub usedFiles
 #
 sub enableActions
 {
-    root(EBox::Config::share() . '/ebox-ntp/ebox-dhcp-enable');
+    root(EBox::Config::share() . '/ebox-ntp/ebox-ntp-enable');
 }
 
 sub _doDaemon
