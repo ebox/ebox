@@ -64,7 +64,6 @@ src/templates/Makefile
 stubs/Makefile
 tools/Makefile
 schemas/Makefile
-www/Makefile
 Makefile
 ])
 
