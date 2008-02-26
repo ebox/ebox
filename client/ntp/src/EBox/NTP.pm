@@ -18,7 +18,7 @@ package EBox::NTP;
 use strict;
 use warnings;
 
-use base 'EBox::GConfModule';
+use base qw(EBox::GConfModule EBox::ServiceModule::ServiceInterface);
 
 use EBox::Objects;
 use EBox::Gettext;
@@ -39,7 +39,7 @@ use constant NTPCONFFILE => "/etc/ntp.conf";
 sub _create 
 {
 	my $class = shift;
-	my $self = $class->SUPER::_create(name => 'ntp', 
+	my $self = $class->SUPER::_create(name => 'ntp', printableName => 'ntp',
 						domain => 'ebox-ntp',
 						@_);
 	bless($self, $class);
@@ -60,23 +60,64 @@ sub domain
 	return 'ebox-ntp';
 }
 
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Remove ntp init script links'),
+		'reason' => __('eBox will take care of starting and stopping ' .
+						'the services.'),
+		'module' => 'ntp'
+	}
+    ];
+}
+
+
+# Method: usedFiles
+#
+#	Override EBox::ServiceModule::ServiceInterface::usedFiles
+#
+sub usedFiles
+{
+	return [
+		{
+		 'file' => NTPCONFFILE,
+		 'module' => 'ntp',
+ 	 	 'reason' => 'ntp configuration file'
+		}
+	       ];
+}
+
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    root(EBox::Config::share() . '/ebox-ntp/ebox-dhcp-enable');
+}
+
 sub _doDaemon
 {
    my $self = shift;
 	my $logger = EBox::logger();
 
   if (($self->service or $self->synchronized) and $self->isRunning) {
-      EBox::Service::manage('ntpd','stop');
+      EBox::Service::manage('ebox.ntpd','stop');
 		sleep 2;
 		if ($self->synchronized) {
 			my $exserver = $self->get_string('server1');
 			try { 
 				root("/usr/sbin/ntpdate $exserver");
 			} catch EBox::Exceptions::Internal with {
-				$logger->info("Error no se pudo lanzar ntpdate");
+				$logger->info("Couldn't execute ntpdata");
 			};
 		}
-      EBox::Service::manage('ntpd','start');
+      EBox::Service::manage('ebox.ntpd','start');
    } elsif ($self->service or $self->synchronized) {    
 		if ($self->synchronized) {
 			my $exserver = $self->get_string('server1');
@@ -86,11 +127,11 @@ sub _doDaemon
 				$logger->info("Error no se pudo lanzar ntpdate");
 			};
 		}
-      EBox::Service::manage('ntpd','start');
+      EBox::Service::manage('ebox.ntpd','start');
    } elsif ($self->isRunning) {
-      		EBox::Service::manage('ntpd','stop');
+      		EBox::Service::manage('ebox.ntpd','stop');
 		if ($self->synchronized) {
-      			EBox::Service::manage('ntpd','start');
+      			EBox::Service::manage('ebox.ntpd','start');
 		}
    }
 }
@@ -125,7 +166,7 @@ sub setService # (active)
 	my ($self, $active) = @_;
 	($active and $self->service) and return;
 	(!$active and !$self->service) and return;
-	$self->set_bool('active', $active);
+	$self->enableService($active);
 	$self->_configureFirewall;
 }
 
@@ -139,7 +180,8 @@ sub setService # (active)
 sub service
 {
    my $self = shift;
-   return $self->get_bool('active');
+
+	return $self->isEnabled();
 }
 
 # Method: setSynchronized
@@ -463,7 +505,7 @@ sub _addNTPService
 		EBox::info("Not adding ntp services as it already exists");
 	}
 
-    $serviceMod->save();
+    $serviceMod->saveConfig();
 }
 
 1;
