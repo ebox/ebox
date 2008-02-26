@@ -475,10 +475,6 @@ sub menu
         $folder->add(new EBox::Menu::Item('url' => 'NTP/Timezone',
                                           'text' => __('Time zone')));
         $root->add($folder);
-
-        my $item = new EBox::Menu::Item('url' => 'NTP/Index',
-                                        'text' => __('NTP server'));
-		$root->add($item);
 }
 
 sub _addNTPService
