@@ -52,7 +52,7 @@ sub isRunning
 	# return undef if service is not enabled
 	# otherwise it might be misleading if time synchronization is set
 	($self->service) or return undef;
-	return EBox::Service::running('ntpd');
+	return EBox::Service::running('ebox.ntpd');
 }
 
 sub domain
@@ -147,7 +147,7 @@ sub _doDaemon
 
 sub _stopService
 {
-      	EBox::Service::manage('ntpd','stop');
+      	EBox::Service::manage('ebox.ntpd','stop');
 }
 
 sub _configureFirewall($){
