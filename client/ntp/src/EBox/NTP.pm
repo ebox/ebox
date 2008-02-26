@@ -101,6 +101,15 @@ sub enableActions
     root(EBox::Config::share() . '/ebox-ntp/ebox-ntp-enable');
 }
 
+# Method: serviceModuleName 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::serviceModuleName
+#
+sub serviceModuleName
+{
+    return 'ntp';
+}
+
 sub _doDaemon
 {
    my $self = shift;
