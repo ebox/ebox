@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# don't start postfix and courier with its init script
+update-rc.d -f postfix remove
+update-rc.d -f courier-authdaemon remove
+update-rc.d -f courier-imap remove
+update-rc.d -f courier-imap-ssl remove
+update-rc.d -f courier-pop remove
+update-rc.d -f courier-pop-ssl remove
+
+# create directory for saslauthdaemon
+SASLAUTHD="/var/spool/postfix/var/run/saslauthd"
+test -d $SASLAUTHD || mkdir -p $SASLAUTHD
+
+# regenerate slapd.conf
+/usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
+
+# restart slapd
+invoke-rc.d slapd restart
+
+# populate ldap
+/usr/share/ebox-mail/ebox-mail-ldap update
+
+# generate mail aliases
+/usr/sbin/postalias /etc/aliases
+
+# restart mail to generate configuration files
+invoke-rc.d ebox mail restart
+
+# restart saslauthdaemon
+invoke-rc.d saslauthd restart
