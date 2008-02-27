@@ -8,7 +8,10 @@ update-rc.d -f courier-imap-ssl remove
 update-rc.d -f courier-pop remove
 update-rc.d -f courier-pop-ssl remove
 
-# create directory for saslauthdaemon
+# copy LDAP schemas
+cp /usr/share/ebox-mail/*.schema /etc/ldap/schema
+
+# Create dir within postfix chroot
 SASLAUTHD="/var/spool/postfix/var/run/saslauthd"
 test -d $SASLAUTHD || mkdir -p $SASLAUTHD
 
