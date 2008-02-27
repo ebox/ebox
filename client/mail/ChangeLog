@@ -2,6 +2,7 @@
         + Add mail dispatcher to notify eBox events using this SMTP server
 	+ Enhanced strings
 0.11
+	+ Wrap service call with ebox-unblock-exec
 	+ Fix typo in message
 0.10.99
 	+ New release

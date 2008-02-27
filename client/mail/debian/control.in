@@ -1,0 +1,18 @@
+Source: ebox-mail
+Section: web
+Priority: optional
+Maintainer: Isaac Clerencia <isaac@warp.es>
+Build-Depends: debhelper (>= 4.0.0), cdbs
+Standards-Version: 3.6.1
+
+Package: ebox-mail
+Architecture: all
+Depends: ebox (= 0.11), ebox-firewall, ebox-usersandgroups, @POSTFIX_DEPS@, courier-pop, courier-imap, courier-pop-ssl, courier-imap-ssl, courier-authdaemon, courier-ldap, libsasl2-2, libsasl2-modules, sasl2-bin
+Conflicts: ebox (<< 0.11)
+Description: Mail server
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This module adds a mail server to your eBox installation.

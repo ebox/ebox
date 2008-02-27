@@ -73,17 +73,7 @@ sub setUserAccount () {
 														'value' => $email);
    }
 
-	unless (isAPositiveNumber($mdsize)) {
-		throw EBox::Exceptions::InvalidData(
-			'data'	=> __('maildir size'),
-			'value'	=> $mdsize);
-	}
-	
-	if($mdsize > MAXMGSIZE) {
-		throw EBox::Exceptions::InvalidData(
-			'data'	=> __('maildir size'),
-			'value'	=> $mdsize);
-	}
+
 
 	my $userinfo = $users->userInfo($user);
 
@@ -96,7 +86,6 @@ sub setUserAccount () {
 				mail		=> $email,
 				mailbox	=> $rhs.'/'.$lhs.'/',
 				quota		=> '0',
-				userMaildirSize => $mdsize * BYTES,
 				mailHomeDirectory => DIRVMAIL
 			]
 		]
@@ -110,6 +99,10 @@ sub setUserAccount () {
 	foreach my $item(@list) {
 		my $alias = $mail->{malias}->groupAlias($item);
 		$mail->{malias}->addMaildrop($alias, $email);
+	}
+
+	if ($mail->mdQuotaAvailable) {
+	  $self->_setUserAccountWithMdQuota($dn, $mdsize);
 	}
 }
 
@@ -139,29 +132,38 @@ sub delUserAccount () { #username, mail
 		$mail->{malias}->delMaildrop($alias,$usermail);
 	}
 
+	# get the mailbox attribute for later use..
+	my $mailbox = $self->getUserLdapValue($username, "mailbox");
 
 	# Now we remove all mail atributes from user ldap leaf
-	my $mailbox = $self->getUserLdapValue($username, "mailbox");
-	my %attrs = (
-			changes => [
-				delete => [
-					mail			=> $self->getUserLdapValue($username, "mail"),
-					mailbox 		=> $mailbox,
-					quota			=> $self->getUserLdapValue($username, "quota"),
-					userMaildirSize => $self->getUserLdapValue($username, "userMaildirSize"),
-					mailHomeDirectory => $self->getUserLdapValue($username, "mailHomeDirectory"),
-					objectClass	=> 'couriermailaccount',
-					objectClass => 'usereboxmail'
-				]
-			]
-	);
+	my @toDelete = (
+			mail			=> $self->getUserLdapValue($username, "mail"),
+			mailbox 		=> $mailbox,
+			quota			=> $self->getUserLdapValue($username, "quota"),
 
+			mailHomeDirectory => $self->getUserLdapValue($username, "mailHomeDirectory"),
+			objectClass	=> 'couriermailaccount',
+			objectClass => 'usereboxmail'
+		       );
+
+
+	push @toDelete, $self->_userWithMdQuotaLdapAttrs($username);
+
+
+
+	my %attrs = (
+		     changes => [
+				 delete => \@toDelete,
+				]
+		    );
+	
 	my $ldap = $self->{ldap};
 	my $dn = "uid=$username," .  $users->usersDn;
-	my $removed = $ldap->modify($dn, \%attrs ); 
+	$ldap->modify($dn, \%attrs ); 
 
 	# Here we remove mail directorie of user account.
 	root("/bin/rm -rf ".DIRVMAIL.$mailbox);
+
 
 }
 
@@ -208,6 +210,23 @@ sub getUserLdapValue () { #uid, ldap value
 	
 	return $entry->get_value($value);
 }
+
+sub existsUserLdapValue () { #uid, ldap value
+	my ($self, $uid, $value) = @_;
+	my $users = EBox::Global->modInstance('users');
+
+	my %args = (
+			base => $users->usersDn(),
+			filter => "&(objectclass=*)(uid=$uid)",
+			scope => 'one',
+			attrs => [$value]
+	);
+
+	my $result = $self->{ldap}->search(\%args);
+
+	return ($result->count() > 0);
+}
+
 
 
 sub _delGroup() { #groupname
@@ -274,21 +293,33 @@ sub _userAddOns() {
 	my $entry = $result->entry(0);
 
 	my $usermail = $entry->get_value('mail');
-	my $mdsize = $entry->get_value('userMaildirSize');
-	my %vd =  $mail->{vdomains}->vdandmaxsizes();
+
 	my @aliases = $mail->{malias}->accountAlias($usermail);
+	my @vdomains =  $mail->{vdomains}->vdomains();
 
-	my $args = { 'username'	=>	$username,
-		     'mail'	=>	$usermail,
-		     'aliases'	=> \@aliases,
-		     'vdomains'	=> \%vd,
-		     'mdsize'	=> ($mdsize / $self->BYTES),
-		     service => $mail->service,
-		   };
+	my @paramsList = ( 
+			  'username'	=>	$username,
+			  'mail'	=>	$usermail,
+			  'aliases'	=> \@aliases,
+			  'vdomains'	=> \@vdomains,
+			  service => $mail->service,
+			 );
+
+
+	if ($mail->mdQuotaAvailable) {
+	  push @paramsList, $self->_mdQuotaAccountAddonParams($entry);
+	  
+	}
+
+
+
 	
-	return { path => '/mail/account.mas', params => $args };
-
+	return { path => '/mail/account.mas', params => { @paramsList } };
 }
+
+
+
+
 
 sub _groupAddOns() {
 	my ($self, $group) = @_;
@@ -370,35 +401,6 @@ sub _accountExists() { #username
 
 	return ($result->count > 0);
 
-}
-
-# Method: setMDSize
-#
-#  This method sets maildir size to a user account
-#
-# Parameters:
-#
-# 		uid - username
-#		mdsize - new maildir size
-sub setMDSize() {
-	my ($self, $uid, $mdsize) = @_;
-	my $users = EBox::Global->modInstance('users');
-	
-	unless (isAPositiveNumber($mdsize)) {
-		throw EBox::Exceptions::InvalidData(
-			'data'	=> __('maildir size'),
-			'value'	=> $mdsize);
-	}
-	
-	if($mdsize > MAXMGSIZE) {
-		throw EBox::Exceptions::InvalidData(
-			'data'	=> __('maildir size'),
-			'value'	=> $mdsize);
-	}
-
-	my $dn = "uid=$uid," .  $users->usersDn;
-	my $r = $self->{'ldap'}->modify($dn, {
-		replace => { 'userMaildirSize' => $mdsize * $self->BYTES }});
 }
 
 
@@ -617,6 +619,129 @@ sub _isCourierObject() {
 	}
 
 	return undef;
+}
+
+
+sub _accountAddOn
+{
+        my ($self, $username) = @_;
+
+	my $mail = EBox::Global->modInstance('mail');
+
+
+
+}
+
+
+
+# mail dir quota stuff///
+
+
+sub _setUserAccountWithMdQuota
+{
+  my ($self, $dn, $mdsize) = @_;
+
+  unless (isAPositiveNumber($mdsize)) {
+    throw EBox::Exceptions::InvalidData(
+					'data'	=> __('maildir size'),
+					'value'	=> $mdsize);
+  }
+  
+  if ($mdsize > MAXMGSIZE) {
+    throw EBox::Exceptions::InvalidData(
+					'data'	=> __('maildir size'),
+					'value'	=> $mdsize);
+  }
+
+  my %attrs = ( 
+	       changes => [ 
+			   add => [
+				   userMaildirSize => $mdsize * BYTES,
+			],
+			 
+			  ]
+	      );
+
+  my $ldap = $self->{ldap};
+  $ldap->modify($dn, \%attrs);
+}
+
+
+
+sub _userWithMdQuotaLdapAttrs
+{
+  my ($self, $username) = @_;
+
+  # to be sure we check for the presence of mdQuota related attributes even when
+  # quota is not available bz the attriubte may be from a previous installation
+  # via backup  or postfix upgrade
+
+  my $value =  $self->existsUserLdapValue($username, "userMaildirSize");
+
+  if (not defined $value) {
+    # attribute deos not exist so nothing to delete
+    return ();
+  }
+
+  return (
+	  userMaildirSize => $self->getUserLdapValue($username, "userMaildirSize")
+	 );
+
+}
+
+
+
+
+# Method: setMDSize
+#
+#  This method sets maildir size to a user account
+#
+# Parameters:
+#
+# 		uid - username
+#		mdsize - new maildir size
+sub setMDSize() {
+	my ($self, $uid, $mdsize) = @_;
+
+	my $mail = EBox::Global->modInstance('mail');
+	$mail->assureMdQuotaIsAvailable();
+
+
+	my $users = EBox::Global->modInstance('users');
+	
+	unless (isAPositiveNumber($mdsize)) {
+		throw EBox::Exceptions::InvalidData(
+			'data'	=> __('maildir size'),
+			'value'	=> $mdsize);
+	}
+	
+	if($mdsize > MAXMGSIZE) {
+		throw EBox::Exceptions::InvalidData(
+			'data'	=> __('maildir size'),
+			'value'	=> $mdsize);
+	}
+
+	my $dn = "uid=$uid," .  $users->usersDn;
+	my $r = $self->{'ldap'}->modify($dn, {
+		replace => { 'userMaildirSize' => $mdsize * $self->BYTES }});
+}
+
+
+
+
+sub _mdQuotaAccountAddonParams
+{
+  my ($self, $userLdapEntry) = @_;
+
+  my $mdsize = $userLdapEntry->get_value('userMaildirSize');
+
+
+  my @params = (
+		mdQuotaAvailable  => 1,
+		mdsize => ($mdsize / BYTES),
+	       );
+
+  return @params;
 }
 
 1;

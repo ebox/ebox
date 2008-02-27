@@ -1,21 +1,9 @@
 #!/bin/bash
 
-webserver=apache
-
+#DEBHELPER#
 
 case "$1" in
 	configure)
-		# install gconf schemas
-		SCHEMA_LOCATION=/usr/share/gconf/schemas
-		SCHEMA_FILES="mail.schemas "
-		for SCHEMA in $SCHEMA_FILES; do
-			if [ -e $SCHEMA_LOCATION/$SCHEMA ]; then
-				HOME=/var/lib/ebox GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` \
-				gconftool-2 \
-				--makefile-install-rule $SCHEMA_LOCATION/$SCHEMA > /dev/null
-			fi
-		done
-
 		kill `pidof gconfd-2` >/dev/null 2>&1 || true
 
 		# don't start postfix with its script
@@ -31,13 +19,16 @@ case "$1" in
 		test -d $SASLAUTHD || mkdir -p $SASLAUTHD
 
 		# regenerate slapd.conf
-		/usr/lib/ebox-usersandgroups/ebox-init-ldap genconfig
+		/usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
 
 		# restart slapd
-		/etc/init.d/slapd restart
+		invoke-rc.d slapd restart
 
 		# populate ldap
-		/usr/lib/ebox-mail/ebox-mail-ldap update
+		/usr/share/ebox-mail/ebox-mail-ldap update
+
+		# generate mail aliases
+		/usr/sbin/postalias /etc/aliases
 
 		# restart mail to generate configuration files
 		invoke-rc.d ebox mail restart
@@ -46,12 +37,15 @@ case "$1" in
 		invoke-rc.d saslauthd restart
 
 		# create log table
-		/usr/lib/ebox/ebox-sql-table add message /usr/share/ebox/sqllog/mail.sql
+		/usr/share/ebox/ebox-sql-table add message /usr/share/ebox/sqllog/mail.sql
 
-                # restart logs
-                invoke-rc.d ebox logs restart || true
+        # restart logs
+        invoke-rc.d ebox logs restart || true
+	# restart firewall
+	# XXX: remove this line when module uses the new service feature
+        invoke-rc.d ebox firewall restart || true	
 esac
 
-#DEBHELPER#
+
 
 exit 0

@@ -25,6 +25,7 @@ use base qw(EBox::GConfModule EBox::LdapModule EBox::ObjectsObserver
 use EBox::Sudo qw( :all );
 use EBox::Validate qw( :all );
 use EBox::Gettext;
+use EBox::Config;
 use EBox::Summary::Module;
 use EBox::Summary::Status;
 use EBox::Menu::Item;
@@ -34,6 +35,8 @@ use EBox::MailUserLdap;
 use EBox::MailAliasLdap;
 use EBox::MailLogHelper;
 use EBox::MailFirewall;
+
+use EBox::Exceptions::InvalidData;
 
 use Proc::ProcessTable;
 use Perl6::Junction qw(all);
@@ -498,7 +501,8 @@ sub fwport
 
 # Method: setRelay
 #
-#  This method sets the ip address of the smarthost
+#  This method sets the ip address of the smarthost 
+#  The address may be a domain name, hostname or a host address
 #
 # Parameters:
 #
@@ -508,7 +512,20 @@ sub setRelay #(smarthost)
 	my ($self, $relay) = @_;
 	
 	unless ($relay eq "") {
-		checkIP($relay, __('smarthost ip'));
+	        my $relayOk = 0;
+
+		$relayOk = checkHost($relay);
+		unless ($relayOk) {
+		  $relayOk = checkDomainName($relay);
+		}
+
+		if (not $relayOk) {
+		  throw EBox::Exceptions::InvalidData(
+						      data => __('Smarthost'),
+						      value => $relay,
+						      advice => __('The smart host must be a domain name, a host name or an host address'),
+						     )
+		}
 	}
 
 	$self->set_string('relay', $relay);
@@ -560,41 +577,6 @@ sub getMaxMsgSize
 	return $self->get_int('maxmsgsize');
 }
 
-# Method: setMDDefaultSize
-#
-#  This method sets the default maildir size 
-#
-# Parameters:
-#
-# 		size - size of maildir
-sub setMDDefaultSize
-{
-	my ($self, $size)  = @_;
-	
-	unless (isAPositiveNumber($size)) {
-		throw EBox::Exceptions::InvalidData(
-			'data'	=> __('maildir size'),
-			'value'	=> $size);
-	}
-	
-	if($size > MAXMGSIZE) {
-		throw EBox::Exceptions::InvalidData(
-			'data'	=> __('maildir size'),
-			'value'	=> $size);
-	}
-	
-	$self->set_int('mddefaultsize', $size);
-}
-
-# Method: getMDDefaultSize
-#
-#  This method returns the default maildir size
-#
-sub getMDDefaultSize
-{
-	my $self = shift;
-	return $self->get_int('mddefaultsize');
-}
 
 # Method: setAllowedObj
 #
@@ -852,20 +834,22 @@ sub _command
 	my ($self, $action, $service) = @_;
 	my $cmd = undef;
 
+	$cmd = EBox::Config::pkgdata() . 'ebox-unblock-exec ';
 	if ($service eq 'active') {
-		$cmd = MAILINIT . " " . $action;
+		$cmd .= MAILINIT . " " . $action;
 	} elsif ($service eq 'pop') {
-		$cmd = POPINIT . " " . $action;
+		$cmd .= POPINIT . " " . $action;
 	} elsif ($service eq 'imap') {
-		$cmd = IMAPINIT . " " . $action;
+		$cmd .= IMAPINIT . " " . $action;
 	} elsif ($service eq 'authdaemon') {
-		$cmd = AUTHDAEMONINIT . " " . $action;
+		$cmd .= AUTHDAEMONINIT . " " . $action;
 	} elsif ($service eq 'authldap') {
-		$cmd = AUTHLDAPINIT . " " . $action;
+		$cmd .= AUTHLDAPINIT . " " . $action;
 	} else {
 		throw EBox::Exceptions::Internal("Bad service: $service");
 	}
 
+	EBox::debug($cmd);
 	return $cmd;
 }		
 
@@ -1233,6 +1217,65 @@ sub _facilitiesForDiskUsage
   return {
 	  $printableName => [ $self->_storageMailDirs() ],
 	 };
+}
+
+
+sub mdQuotaAvailable
+{
+  my ($self) = @_;
+
+  return EBox::Config::configkey('mdQuotaAvailable');
+}
+
+
+sub assureMdQuotaIsAvailable
+{
+  my ($self) = @_;
+
+  if (not $self->mdQuotaAvailable) {
+    throw EBox::Exceptions::Internal('Maildir size quota is not available');
+  }
+}
+
+# Method: setMDDefaultSize
+#
+#  This method sets the default maildir size 
+#
+# Parameters:
+#
+# 		size - size of maildir
+sub setMDDefaultSize
+{
+	my ($self, $size)  = @_;
+
+	$self-> assureMdQuotaIsAvailable();
+	
+	unless (isAPositiveNumber($size)) {
+		throw EBox::Exceptions::InvalidData(
+			'data'	=> __('maildir size'),
+			'value'	=> $size);
+	}
+	
+	if($size > MAXMGSIZE) {
+		throw EBox::Exceptions::InvalidData(
+			'data'	=> __('maildir size'),
+			'value'	=> $size);
+	}
+	
+	$self->set_int('mddefaultsize', $size);
+}
+
+# Method: getMDDefaultSize
+#
+#  This method returns the default maildir size
+#
+sub getMDDefaultSize
+{
+	my $self = shift;
+
+	$self-> assureMdQuotaIsAvailable();
+
+	return $self->get_int('mddefaultsize');
 }
 
 

@@ -11,7 +11,7 @@ case "$1" in
 		invoke-rc.d courier-pop-ssl stop || true
 
 		# Generate configuration
-		/usr/lib/ebox-usersandgroups/ebox-init-ldap genconfig
+		/usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
 
                 # Restart slapd
                 invoke-rc.d slapd restart
@@ -19,12 +19,12 @@ case "$1" in
 		# restart logs
                 invoke-rc.d ebox logs restart || true
 
-		/usr/bin/ebox-clean-gconf mail || true
+		/usr/share/ebox/ebox-clean-gconf mail || true
 
 		;;		
 
 	purge)
-		/usr/lib/ebox/ebox-sql-table drop message || true
+		/usr/share/ebox/ebox-sql-table drop message || true
 
 		;;
 esac
