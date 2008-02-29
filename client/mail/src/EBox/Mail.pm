@@ -20,7 +20,8 @@ use warnings;
 
 use base qw(EBox::GConfModule EBox::LdapModule EBox::ObjectsObserver
             EBox::FirewallObserver EBox::LogObserver
-            EBox::Report::DiskUsageProvider EBox::Model::ModelProvider);
+            EBox::Report::DiskUsageProvider EBox::Model::ModelProvider
+            EBox::ServiceModule::ServiceInterface);
 
 use EBox::Sudo qw( :all );
 use EBox::Validate qw( :all );
@@ -69,8 +70,8 @@ use constant SERVICES => ('active', 'filter', 'pop', 'imap', 'sasl');
 sub _create 
 {
 	my $class = shift;
-	my $self = $class->SUPER::_create(name => 'mail',
-		domain => 'ebox-mail',
+	my $self = $class->SUPER::_create(name => 'mail', printableName =>
+					__('mail'), domain => 'ebox-mail',
 		@_);
 
 	$self->{vdomains} = new EBox::MailVDomainsLdap;
@@ -84,6 +85,143 @@ sub _create
 sub domain 
 {
 	return 'ebox-mail';
+}
+
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Remove postfix init script link'),
+		'reason' => __('eBox will take care of starting and stopping ' .
+						'the service.'),
+		'module' => 'mail'
+	},
+	{
+		'action' => __('Remove courier init script links for authdaemon, '.
+                       'imap, imap-ssl, pop, and pop-ssl'),
+		'reason' => __('eBox will take care of starting and stopping those ' .
+						'services'),
+		'module' => 'mail'
+	},
+	{	
+		'action' => __('Create directory for saslauthdaemon in postfix chroot'),
+		'reason' => __('To allow postfix communicate with saslauthd '),
+		'module' => 'mail'
+	},
+	{	
+		'action' => __('Generate mail aliases'),
+		'reason' => __('eBox will execute /usr/sbin/postalias /etc/aliases '),
+		'module' => 'mail'
+	},
+	{	
+		'action' => __('Add LDAP schemas'),
+		'reason' => __('eBox will add two LDAP schemas: authldap.schema and ' .
+						'eboximail.schema.'),
+		'module' => 'mail'
+	}
+    ];
+}
+
+# Method: usedFiles 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::files
+#
+sub usedFiles 
+{
+    return [
+	{	
+		'file' => MAILMAINCONFFILE, 
+		'reason' => __('To configure postfix'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => MAILMASTERCONFFILE,
+		'reason' => __('To define how client programs connect to services in ' .
+                        ' postfix'),
+		'module' => 'mail'
+	},
+	{	
+		'file' => AUTHDAEMONCONFFILE,
+		'reason' => __('To configure courier to authenticate against LDAP'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => AUTHLDAPCONFFILE,
+		'reason' => __('To let courier know how to access LDAP'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => POP3DCONFFILE,
+		'reason' => __('To configure courier POP3'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => POP3DSSLCONFFILE,
+		'reason' => __('To configure POP3 with SSL support'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => IMAPDCONFFILE,
+		'reason' => __('To configure IMAP'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => IMAPDSSLCONFFILE,
+		'reason' => __('To configure IMAP with SSL support'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => SASLAUTHDDCONFFILE,
+		'reason' => __('To configure saslauthd to authenticate against LDAP '),
+		'module' => 'mail'
+	},
+    {	
+		'file' => SASLAUTHDCONFFILE,
+		'reason' => __('To configure saslauthd to authenticate against LDAP '),
+		'module' => 'mail'
+	},
+    {	
+		'file' => SMTPDCONFFILE,
+		'reason' => __('To configure saslauthd to use LDAP'),
+		'module' => 'mail'
+	},
+    {	
+		'file' => '/etc/ldap/slapd.conf',
+		'reason' => __('To add the LDAP schemas used by eBox mail'),
+		'module' => 'mail'
+	}
+	];
+}
+
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    root(EBox::Config::share() . '/ebox-mail/ebox-mail-enable');
+}
+
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#
+sub serviceModuleName
+{
+	return 'mail';
+}
+
+#  Method: enableModDepends
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableModDepends
+#
+sub enableModDepends 
+{
+    return ['network', 'users'];
 }
 
 # Method: modelClasses
@@ -917,7 +1055,11 @@ sub setService
 
 	($active xor $self->service($service)) or return;
 
-	$self->set_bool($service, $active);
+	if ($service eq 'active') {
+		$self->enableService($active);
+	} else {	
+		$self->set_bool($service, $active);
+	}
 }
 
 #
@@ -939,7 +1081,11 @@ sub service
 	defined ($service) or $service = 'active';
 	$self->_checkService($service);
 
-	return $self->get_bool($service);
+	if ($service eq 'active') {
+		return $self->isEnabled();
+	} else {
+		return $self->get_bool($service);
+	}
 }
 
 #
@@ -1224,7 +1370,7 @@ sub mdQuotaAvailable
 {
   my ($self) = @_;
 
-  return EBox::Config::configkey('mdQuotaAvailable');
+  return (EBox::Config::configkey('mdQuotaAvailable') eq 'yes');
 }
 
 

@@ -1,11 +1,3 @@
 #!/bin/bash
 
-
 #DEBHELPER#
-
-case "$1" in
-	remove)
-        # populate ldap
-		/usr/share/ebox-mail/ebox-mail-ldap clean || true
-		;;	
-esac 

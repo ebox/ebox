@@ -1,3 +1,9 @@
+ebox (0.11.99-0ubuntu1~ppa2) hardy; urgency=low
+
+  * Move progress.js from libebox to ebox
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 26 Feb 2008 11:58:13 +0100
+
 ebox (0.11.99-0ubuntu1~ppa1) hardy; urgency=low
 
   * New upstream release

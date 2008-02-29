@@ -41,6 +41,7 @@ sub new
 	my $class = shift;
 	my $self  = {};
 	$self->{ldap} = EBox::Ldap->instance();
+
 	bless($self, $class);
 	return $self;
 }
@@ -231,14 +232,19 @@ sub existsUserLdapValue () { #uid, ldap value
 
 sub _delGroup() { #groupname
 	my ($self, $group) = @_;
-	my $mail = EBox::Global->modInstance('mail');
+    
+	return unless (EBox::Global->modInstance('mail')->configured());
 
+	my $mail = EBox::Global->modInstance('mail');
 	$mail->{malias}->delAliasGroup($group);
 	
 }
 
 sub _delGroupWarning() {
 	my ($self, $group) = @_;
+
+	return unless (EBox::Global->modInstance('mail')->configured());
+
 	my $mail = EBox::Global->modInstance('mail');
 
 	settextdomain('ebox-mail');
@@ -256,12 +262,16 @@ sub _delGroupWarning() {
 sub _delUser() { #username
 	my ($self, $user) = @_;
 
+	return unless (EBox::Global->modInstance('mail')->configured());
+
 	$self->delUserAccount($user);
 	
 }
 
 sub _delUserWarning() {
 	my ($self, $user) = @_;
+
+	return unless (EBox::Global->modInstance('mail')->configured());
 
 	settextdomain('ebox-mail');
 	my $txt = __('This user has a mail account');
@@ -276,6 +286,8 @@ sub _delUserWarning() {
 
 sub _userAddOns() {
 	my ($self, $username) = @_;
+
+	return unless (EBox::Global->modInstance('mail')->configured());
 
 	my $mail = EBox::Global->modInstance('mail');
 	my $users = EBox::Global->modInstance('users');
@@ -324,6 +336,8 @@ sub _userAddOns() {
 sub _groupAddOns() {
 	my ($self, $group) = @_;
 
+	return unless (EBox::Global->modInstance('mail')->configured());
+
 	my $mail = EBox::Global->modInstance('mail');
 	my $users = EBox::Global->modInstance('users');
 
@@ -358,6 +372,9 @@ sub _groupAddOns() {
 
 sub _modifyGroup() {
 	my ($self, $group) = @_;
+
+	return unless (EBox::Global->modInstance('mail')->configured());
+
 	my $mail = EBox::Global->modInstance('mail');
 
 	my %args = (
