@@ -89,12 +89,30 @@ sub user
 	return $user;
 }
 
+sub groups
+{
+	my @values = @{configkeys('group')};
+	@values or throw EBox::Exceptions::External("The ebox group has not ".
+						"been set in the config file.");
+	my @groups;
+	for my $group (@values) {
+		if ($group =~ m/:/) {
+			push (@groups, split(':', $group));
+		} else {
+			push (@groups, $group);
+		}
+	}
+
+	return \@groups;
+}
+
 sub group
 {
-	my $user = configkey('group');
-	$user or throw EBox::Exceptions::External("The ebox group has not ".
-						"been set in the config file.");
-	return $user;
+	my @groups = @{groups()};
+	@groups or throw EBox::Exceptions::External("The ebox group has not ".
+					"been set in the config file.");
+
+	return $groups[0];
 }
 
 sub home
