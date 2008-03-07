@@ -8,8 +8,8 @@
 
 Index: src/EBox/Event/Watcher/State.pm
 ===================================================================
---- libebox/src/EBox/Event/Watcher/State.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
-+++ libebox/src/EBox/Event/Watcher/State.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
+--- ebox/src/EBox/Event/Watcher/State.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
++++ ebox/src/EBox/Event/Watcher/State.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
 @@ -99,7 +99,11 @@
        my $up = EBox::Service::running(ADMIN_SERVICE);
        my $gl = EBox::Global->getInstance(1);
@@ -25,8 +25,8 @@ Index: src/EBox/Event/Watcher/State.pm
            }
 Index: src/EBox/Event/Watcher/Log.pm
 ===================================================================
---- libebox/src/EBox/Event/Watcher/Log.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
-+++ libebox/src/EBox/Event/Watcher/Log.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
+--- ebox/src/EBox/Event/Watcher/Log.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
++++ ebox/src/EBox/Event/Watcher/Log.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
 @@ -104,9 +104,11 @@
  
      my $logs = $self->{logs};
@@ -148,8 +148,8 @@ Index: src/EBox/Event/Watcher/Log.pm
  1;
 Index: src/EBox/Logs.pm
 ===================================================================
---- libebox/src/EBox/Logs.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
-+++ libebox/src/EBox/Logs.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
+--- ebox/src/EBox/Logs.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
++++ ebox/src/EBox/Logs.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
 @@ -439,7 +439,7 @@
  	if (_checkValidDate($to)) {
  		$self->_addDateFilter($timecol, $to, '<');
