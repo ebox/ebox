@@ -1,0 +1,161 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_fix_memory_leak_events.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to fix memory leak in events
+
+@DPATCH@
+
+Index: src/EBox/Event/Watcher/State.pm
+===================================================================
+--- libebox/src/EBox/Event/Watcher/State.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
++++ libebox/src/EBox/Event/Watcher/State.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
+@@ -99,7 +99,11 @@
+       my $up = EBox::Service::running(ADMIN_SERVICE);
+       my $gl = EBox::Global->getInstance(1);
+       if ( $gl->modExists('soap') ){
+-          my $soap = $gl->modInstance('soap');
++          unless (defined $self->{'soap'}) {
++              $self->{'soap'} = $gl->modInstance('soap');
++          }
++
++          my $soap = $self->{'soap'};
+           if ( $soap->enabled() ) {
+               $up = $up and $soap->running();
+           }
+Index: src/EBox/Event/Watcher/Log.pm
+===================================================================
+--- libebox/src/EBox/Event/Watcher/Log.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
++++ libebox/src/EBox/Event/Watcher/Log.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
+@@ -104,9 +104,11 @@
+ 
+     my $logs = $self->{logs};
+     my @loggers = keys %{$logs->getAllTables()};
++
+     my $events = [];
+ 
+     my $lastQueried = $self->_lastQueriedTime();
++
+     my $now = time();
+ 
+     my $from = $self->_toYMDHMS($lastQueried);
+@@ -116,11 +118,19 @@
+         my $pagesize = PAGESIZE;
+         my $timeCol = $logs->getTableInfo($logger)->{timecol};
+         foreach my $filter (@{$self->_filters($logger)}) {
++            # Copy filter in filterCpy to workaround nasty
++            # issues with the garbage collector. 
++            my $filterCpy;
++            if (%{$filter}) {
++            $filterCpy = $filter;
++            } else {
++            $filterCpy = undef;
++            }	
+             my $finished = 0;
+             my $page = 0;
+             do {
+                 my $result = $logs->search($from, $to, $logger, $pagesize,
+-                                           $page, $timeCol, $filter);
++                                           $page, $timeCol, $filterCpy);
+                 my $nPages = POSIX::ceil ( $result->{totalret} / $pagesize );
+                 $finished = ($page + 1) >= $nPages;
+                 $page++;
+@@ -289,12 +299,14 @@
+ {
+     my ($self, $logger) = @_;
+ 
+-    my $confModel = EBox::Model::ModelManager->instance()->model($self->ConfigureModel());
+-
+-    my $row = $confModel->find(domain => $logger);
+-
+-    return $row->{enabled};
++    unless (exists $self->{logger}->{$logger}) {
++    	my $confModel = EBox::Model::ModelManager
++				->instance()->model($self->ConfigureModel());
++    	my $row = $confModel->find(domain => $logger);
++	$self->{logger}->{$logger} = $row->{enabled};
++    }
+ 
++    return  $self->{logger}->{$logger};
+ }
+ 
+ # Returns the filters used to do the search in and-ed mode
+@@ -303,34 +315,39 @@
+ 
+     my ($self, $logger) = @_;
+ 
+-    my $manager = EBox::Model::ModelManager->instance();
+-    my $logConfModel = $manager->model($self->ConfigureModel());
+-    my $loggerConfRow = $logConfModel->findValue(domain => $logger);
+-
+-    my $filterDirectory = $loggerConfRow->{filters}->{directory};
+-
+-    my $filterModel = $manager->model($loggerConfRow->{filters}->{model});
+-    $filterModel->setDirectory($filterDirectory);
+-
+-    my @filterSearchs = ();
+-    foreach my $filterRow (@{$filterModel->rows()}) {
+-        my $filterSearch = {};
+-        foreach my $filterField (@{$filterRow->{values}}) {
+-            if ( $filterField->value() ) {
+-                # Do not store a thing if the field is the event with
+-                # 'any' value to work with <EBox::Logs::search> API
+-                unless ( $filterField->fieldName() eq 'event'
+-                         and $filterField->value() eq 'any' ) {
+-                    $filterSearch->{$filterField->fieldName()} =
+-                      $filterField->value();
+-                }
+-            }
+-        }
+-        push ( @filterSearchs, $filterSearch );
++    unless ($self->{filters}->{$logger}) {
++	    my $manager = EBox::Model::ModelManager->instance();
++	    my $logConfModel = $manager->model($self->ConfigureModel());
++	    
++	    my $loggerConfRow = $logConfModel->findValue(domain => $logger);
++
++	    my $filterDirectory = $loggerConfRow->{filters}->{directory};
++
++	    my $filterModel = $manager->model($loggerConfRow->{filters}->{model});
++	    $filterModel->setDirectory($filterDirectory);
++
++	    my @filterSearchs = ();
++	    foreach my $filterRow (@{$filterModel->rows()}) {
++		my $filterSearch = {};
++		foreach my $filterField (@{$filterRow->{values}}) {
++		    if ( $filterField->value() ) {
++			# Do not store a thing if the field is the event with
++			# 'any' value to work with <EBox::Logs::search> API
++			unless ( $filterField->fieldName() eq 'event'
++				 and $filterField->value() eq 'any' ) {
++			    $filterSearch->{$filterField->fieldName()} =
++			      $filterField->value();
++			}
++		    }
++		}
++		
++		push ( @filterSearchs, $filterSearch );
++	    }
++	    $self->{filters}->{$logger} = \@filterSearchs;
++	    
+     }
+ 
+-    return \@filterSearchs;
+-
++    return $self->{filters}->{$logger};
+ }
+ 
+ 1;
+Index: src/EBox/Logs.pm
+===================================================================
+--- libebox/src/EBox/Logs.pm	(.../ubuntu-hardy-0.11.99/client/ebox)	(revisión: 9786)
++++ libebox/src/EBox/Logs.pm	(.../ubuntu-0.11.99/client/ebox)	(revisión: 9786)
+@@ -439,7 +439,7 @@
+ 	if (_checkValidDate($to)) {
+ 		$self->_addDateFilter($timecol, $to, '<');
+ 	}
+-	if ($filters) {
++	if ($filters and %{$filters}) {
+ 		foreach my $field (keys %{$filters}) {
+ 			unless (exists $tableinfo->{'titles'}->{$field}) {
+ 			   throw  EBox::Exceptions::Internal(

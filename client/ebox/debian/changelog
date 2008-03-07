@@ -1,3 +1,9 @@
+ebox (0.11.99-0ubuntu2~pp1) hardy; urgency=low
+
+  * Add patch to fix memory leak in events
+
+ -- Javier Uruen Val <javi@warp.es>  Fri, 07 Mar 2008 13:56:37 +0100
+
 ebox (0.11.99-0ubuntu1~ppa1) hardy; urgency=low
 
   * New upstream release
