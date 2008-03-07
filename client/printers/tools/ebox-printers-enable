@@ -7,9 +7,6 @@ update-rc.d -f cupsys remove
 # stop cups
 invoke-rc.d cupsys stop
 
-# add ebox to lpdadmin to manage printers and queues
-adduser --quiet ebox lpadmin
-
 # create /etc/cups/printers.conf if it does not exist
 if [ ! -e /etc/cups/printers.conf ]; then
     touch /etc/cups/printers.conf
