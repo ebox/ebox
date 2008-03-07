@@ -1,0 +1,41 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_fix_transparent_proxy.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to fix transparent proxy configuration
+
+@DPATCH@
+
+Index: stubs/squid.conf.mas
+===================================================================
+--- squid/stubs/squid.conf.mas	(.../ubuntu-hardy-0.11.99/client/squid)	(revisión: 9787)
++++ squid/stubs/squid.conf.mas	(.../ubuntu-0.11.99/client/squid)	(revisión: 9787)
+@@ -6,7 +6,11 @@
+ 	$memory
+ </%args>
+ # <EBOX> TAG_HTTPORT #
+-http_port <% $port %>
++% my $transKey = '';
++% if ($transparent eq 'yes') { 
++%   $transKey = 'transparent';
++% }
++http_port <% $port %> <% $transKey %>
+ # END_TAG #
+ 
+ visible_hostname localhost
+@@ -21,15 +25,6 @@
+ cache_effective_group proxy
+ cache_mem <% $memory %> MB
+ 
+-% if ($transparent eq 'yes') { 
+-# <EBOX> TAG_TRANSPARENT #
+-httpd_accel_host virtual
+-httpd_accel_port 80
+-httpd_accel_with_proxy on
+-httpd_accel_uses_host_header on
+-# END_TAG #
+-% }
+-
+ 
+ # <EBOX> TAG_ACL #
+ <% $objects %>
