@@ -11,6 +11,11 @@ case "$1" in
     configure)
         kill `pidof gconfd-2` >/dev/null 2>&1 || true
 
+        # add ebox to lpadmin to manage printers and queues
+        adduser --quiet ebox lpadmin
+         # add ebox to lp to read cups logs
+        adduser --quiet ebox lp
+
         onInstall
 
         # Restart eBox apache
