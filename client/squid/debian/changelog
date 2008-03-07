@@ -1,6 +1,6 @@
 ebox-squid (0.11.99-0ubuntu2~pp1) hardy; urgency=low
 
-  * Use new syntax to configure transparent proxy
+  * Add patch to use new syntax to configure transparent proxy
   
   * Do not setsid in dansguardian init script
 
