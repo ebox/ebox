@@ -1,0 +1,23 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_add_lp_group.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to add run eBox under lp and lpadmin 
+## DP: groups
+
+@DPATCH@
+
+Index: tools/ebox-printers-enable
+===================================================================
+--- printers/tools/ebox-printers-enable	(.../ubuntu-hardy-0.11.99/client/printers)	(revisión: 9794)
++++ printers/tools/ebox-printers-enable	(.../ubuntu-0.11.99/client/printers)	(revisión: 9794)
+@@ -7,9 +7,6 @@
+ # stop cups
+ invoke-rc.d cupsys stop
+ 
+-# add ebox to lpdadmin to manage printers and queues
+-adduser --quiet ebox lpadmin
+-
+ # create /etc/cups/printers.conf if it does not exist
+ if [ ! -e /etc/cups/printers.conf ]; then
+     touch /etc/cups/printers.conf
