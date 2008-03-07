@@ -2,6 +2,8 @@
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/dpatch.mk
+include /usr/share/dpatch/dpatch.make
  					
 DEB_CONFIGURE_EXTRA_FLAGS := --disable-runtime-tests 
 

@@ -1,0 +1,91 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_set_multiple_groups.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to allow ebox to use different groups 
+## DP: such as ebox, adm, lp...
+
+@DPATCH@
+
+Index: conf/99ebox.conf
+===================================================================
+--- libebox/conf/99ebox.conf	(.../ubuntu-hardy-0.11.99/common/libebox)	(revisión: 9785)
++++ libebox/conf/99ebox.conf	(.../ubuntu-0.11.99/common/libebox)	(revisión: 9785)
+@@ -22,7 +22,7 @@
+ user = ebox
+ 
+ # group [required]. The group under which ebox will run.
+-group = ebox
++group = ebox:adm
+ 
+ # debug mode [required]. yes|no
+ debug = yes 
+Index: src/EBox.pm
+===================================================================
+--- libebox/src/EBox.pm	(.../ubuntu-hardy-0.11.99/common/libebox)	(revisión: 9785)
++++ libebox/src/EBox.pm	(.../ubuntu-0.11.99/common/libebox)	(revisión: 9785)
+@@ -105,13 +105,18 @@
+ 
+ sub init
+ {
+-        POSIX::setlocale(LC_ALL, EBox::locale());
+-        my $user = EBox::Config::user();
+-        my $group = EBox::Config::group();
+-        my $uid = getpwnam($user);
+-        my $gid = getgrnam($group);
+-        setgid($gid) or die "Cannot change group to $group";
+-        setuid($uid) or die "Cannot change user to $user";
++	POSIX::setlocale(LC_ALL, EBox::locale());
++
++	my @groups = @{EBox::Config::groups()};
++	my $gids = '';
++	for my $group (@groups) {
++		$gids .= getgrnam($group) . ' ';	
++	}
++	$GID = $EGID = $gids;
++
++	my $user = EBox::Config::user();
++	my $uid = getpwnam($user);
++	setuid($uid) or die "Cannot change user to $user";
+ }
+ 
+ 1;
+Index: src/EBox/Config.pm.in
+===================================================================
+--- libebox/src/EBox/Config.pm.in	(.../ubuntu-hardy-0.11.99/common/libebox)	(revisión: 9785)
++++ libebox/src/EBox/Config.pm.in	(.../ubuntu-0.11.99/common/libebox)	(revisión: 9785)
+@@ -89,12 +89,30 @@
+ 	return $user;
+ }
+ 
+-sub group
++sub groups
+ {
+-	my $user = configkey('group');
+-	$user or throw EBox::Exceptions::External("The ebox group has not ".
++	my @values = @{configkeys('group')};
++	@values or throw EBox::Exceptions::External("The ebox group has not ".
+ 						"been set in the config file.");
+-	return $user;
++	my @groups;
++	for my $group (@values) {
++		if ($group =~ m/:/) {
++			push (@groups, split(':', $group));
++		} else {
++			push (@groups, $group);
++		}
++	}
++
++	return \@groups;
++}
++
++sub group
++{
++	my @groups = @{groups()};
++	@groups or throw EBox::Exceptions::External("The ebox group has not ".
++					"been set in the config file.");
++
++	return $groups[0];
+ }
+ 
+ sub home

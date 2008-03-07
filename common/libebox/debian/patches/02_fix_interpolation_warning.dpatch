@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_fix_interpolation_warning.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to remove interpolation warning
+
+@DPATCH@
+
+Index: src/EBox/Exceptions/Command.pm
+===================================================================
+--- libebox/src/EBox/Exceptions/Command.pm	(.../ubuntu-hardy-0.11.99/common/libebox)	(revisión: 9785)
++++ libebox/src/EBox/Exceptions/Command.pm	(.../ubuntu-0.11.99/common/libebox)	(revisión: 9785)
+@@ -99,6 +99,8 @@
+   my $errorStr = join ' ', @{ $error };
+   my $outputStr = join ' ', @{ $output };
+ 
++  $cmdType = '' unless defined($cmdType);
++
+   return "$cmdType $cmd failed. \nError output: $errorStr\nCommand output: $outputStr. \nExit value: $exitValue";
+ }
