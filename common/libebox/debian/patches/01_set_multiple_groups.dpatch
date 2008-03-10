@@ -116,7 +116,7 @@ Index: src/EBox/Config.pm.in
  
 +sub group
 +{
-+	my $value = @{configkeys('egroup')};
++	my $value = configkey('egroup');
 +	$value or throw EBox::Exceptions::External("The ebox group has not ".
 +			"been set in the config file.");
 +	return $value;
