@@ -423,7 +423,7 @@ sub _childExec
 sub execProgressIdParamName
 {
   my ($self) = @_;
-  return 'progress-id';
+  return '--progress-id';
 }
 
 # Method to clean up the rubbish regarding to the progress indicator
