@@ -87,7 +87,7 @@ sub _daemon # (action)
 		opendir(my $dir, "/proc/$$/fd");
 		while (defined(my $fd = readdir($dir))) {
 			next unless ($fd =~ /^\d+$/);
-			EBox::debug("closing $fd");
+            POSIX::close($fd);
 		}
 		open(STDOUT, "> /dev/null");
 		open(STDERR, "> /dev/null");
