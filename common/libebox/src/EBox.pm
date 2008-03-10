@@ -21,6 +21,7 @@ use warnings;
 use EBox::Config;
 use EBox::Exceptions::DeprecatedMethod;
 use POSIX qw(setuid setgid setlocale LC_ALL);
+use English;
 
 my $loginit = 0;
 
