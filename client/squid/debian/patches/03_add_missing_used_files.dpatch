@@ -1,0 +1,34 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 03_add_missing_used_files.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to add missing used files in dansguardian
+
+@DPATCH@
+
+Index: squid/src/EBox/Squid.pm.in
+===================================================================
+--- squid/src/EBox/Squid.pm.in	(revisión: 9785)
++++ squid/src/EBox/Squid.pm.in	(copia de trabajo)
+@@ -184,6 +184,21 @@
+ 		 'file' => DGDIR . "/bannedmimetypelist",
+ 		 'module' => 'squid',
+  	 	 'reason' => 'Content filter banned mime type list'
++		},
++		{
++		 'file' => DGDIR . "/exceptionsitelist",
++		 'module' => 'squid',
++ 	 	 'reason' => 'Content filter exception site list'
++		},
++		{
++		 'file' => DGDIR . "/greysitelist",
++		 'module' => 'squid',
++ 	 	 'reason' => 'Content filter grey site list'
++		},
++		{
++		 'file' => DGDIR . "/bannedsitelist",
++		 'module' => 'squid',
++ 	 	 'reason' => 'Content filter banned site list'
+ 		}
+ 	       ];
+ }
