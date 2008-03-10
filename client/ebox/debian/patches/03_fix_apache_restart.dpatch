@@ -11,7 +11,16 @@ Index: ebox/src/EBox/Apache.pm
 ===================================================================
 --- ebox/src/EBox/Apache.pm	(revisión: 9785)
 +++ ebox/src/EBox/Apache.pm	(copia de trabajo)
-@@ -82,14 +82,16 @@
+@@ -35,7 +35,7 @@
+ use EBox::Gettext;
+ use EBox::Config;
+ use English qw(-no_match_vars);
+-use File::Basename();
++use File::Basename;
+ 
+ # Constants
+ use constant RESTRICTED_RESOURCES_KEY    => 'restricted_resources';
+@@ -82,14 +82,17 @@
  		if ($pid) { 
  			return; # parent returns inmediately
  		}
@@ -19,16 +28,16 @@ Index: ebox/src/EBox/Apache.pm
 -		POSIX::setsid();
 -		close(STDOUT);
 -		close(STDERR);
-+        # Close descriptors as apache2 does not open them with close_on_exec
-+        # flag
-+		for my $fdName (`echo /proc/$$/fd/*`) {
-+			my $fd = basename $fdName;
++	        # Close descriptors as apache2 does not open them with close_on_exec
++        	# flag
++		opendir(my $dir, "/proc/$$/fd");
++		while (defined(my $fd = readdir($dir))) {
 +			next unless ($fd =~ /^\d+$/);
-+			POSIX::close($fd);
++			EBox::debug("closing $fd");
 +		}
  		open(STDOUT, "> /dev/null");
  		open(STDERR, "> /dev/null");
--		sleep(5);
+ 		sleep(5);
 -	}
 +	} 
  
