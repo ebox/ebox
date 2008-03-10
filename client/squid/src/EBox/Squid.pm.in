@@ -184,6 +184,21 @@ sub usedFiles
 		 'file' => DGDIR . "/bannedmimetypelist",
 		 'module' => 'squid',
  	 	 'reason' => 'Content filter banned mime type list'
+		},
+		{
+		 'file' => DGDIR . "/exceptionsitelist",
+		 'module' => 'squid',
+ 	 	 'reason' => 'Content filter exception site list'
+		},
+		{
+		 'file' => DGDIR . "/greysitelist",
+		 'module' => 'squid',
+ 	 	 'reason' => 'Content filter grey site list'
+		},
+		{
+		 'file' => DGDIR . "/bannedsitelist",
+		 'module' => 'squid',
+ 	 	 'reason' => 'Content filter banned site list'
 		}
 	       ];
 }
