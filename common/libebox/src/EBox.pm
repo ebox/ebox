@@ -113,7 +113,7 @@ sub init
 	for my $group (@groups) {
 		$gids .= getgrnam($group) . ' ';	
 	}
-	$GID = $EGID = $gids;
+	$GID = $EGID = getgrnam(EBox::Config::group()) . " $gids";
 
 	my $user = EBox::Config::user();
 	my $uid = getpwnam($user);
