@@ -1,4 +1,4 @@
-libebox (0.11.99-0ubuntu2~pp1) hardy; urgency=low
+libebox (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
 
   * Add patch to backport 0.11.100 fix to allow ebox to use different groups 
     such as ebox, adm, lp...
