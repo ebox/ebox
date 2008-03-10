@@ -35,7 +35,7 @@ use EBox::Exceptions::MissingArgument;
 use EBox::Gettext;
 use EBox::Config;
 use English qw(-no_match_vars);
-use File::Basename();
+use File::Basename;
 
 # Constants
 use constant RESTRICTED_RESOURCES_KEY    => 'restricted_resources';
@@ -82,15 +82,16 @@ sub _daemon # (action)
 		if ($pid) { 
 			return; # parent returns inmediately
 		}
-        # Close descriptors as apache2 does not open them with close_on_exec
-        # flag
-		for my $fdName (`echo /proc/$$/fd/*`) {
-			my $fd = basename $fdName;
+	        # Close descriptors as apache2 does not open them with close_on_exec
+        	# flag
+		opendir(my $dir, "/proc/$$/fd");
+		while (defined(my $fd = readdir($dir))) {
 			next unless ($fd =~ /^\d+$/);
-			POSIX::close($fd);
+			EBox::debug("closing $fd");
 		}
 		open(STDOUT, "> /dev/null");
 		open(STDERR, "> /dev/null");
+		sleep(5);
 	} 
 
 	if ($action eq 'stop') {
