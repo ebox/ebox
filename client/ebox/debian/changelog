@@ -1,4 +1,4 @@
-ebox (0.11.99-0ubuntu2~pp1) hardy; urgency=low
+ebox (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
 
   * Add patch to fix memory leak in events
   * Add patch to fix issue with missing parameter in ebox-make-backup

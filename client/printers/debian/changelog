@@ -1,4 +1,4 @@
-ebox-printers (0.11.99-0ubuntu2~pp1) hardy; urgency=low
+ebox-printers (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
 
   * Add configuration file to add lp and lpadmin to eBox's groups
   
