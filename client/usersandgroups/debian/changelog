@@ -1,3 +1,11 @@
+ebox-usersandgroups (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
+
+  * Backport patch from 0.11.100 to make backup tool aware of the
+    slapd apparmour profile which forces us to read and write from
+    stdin and stdout
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 10 Mar 2008 14:38:02 +0100
+
 ebox-usersandgroups (0.11.99-0ubuntu1~ppa1) hardy; urgency=low
 
   * New upstream release

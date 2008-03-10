@@ -1,0 +1,57 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_make_apparmour_aware.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to make usersandgroups backup tool aware 
+## DP: of slapcat apparmour profile to read and write from stdin and stdout
+
+@DPATCH@
+
+Index: usersandgroups/src/EBox/Ldap.pm
+===================================================================
+--- usersandgroups/src/EBox/Ldap.pm	(revisión: 9785)
++++ usersandgroups/src/EBox/Ldap.pm	(copia de trabajo)
+@@ -43,7 +43,9 @@
+ use constant SLAPDCONFFILE => "/etc/ldap/slapd.conf";
+ use constant ROOTDN        => 'cn=admin,' . DN;
+ use constant INIT_SCRIPT   => '/etc/init.d/slapd';
+-use constant DATA_DIR      => '/var/lib/ebox/ldap';
++use constant DATA_DIR      => '/var/lib/ldap';
++use constant LDAP_USER	   => 'openldap';
++use constant LDAP_GROUP    => 'openldap';
+ 
+ # Singleton variable
+ my $_instance = undef;
+@@ -556,23 +558,28 @@
+ 
+   my $rmCommand = $self->_rmLdapDirCmd($ldapDir);
+   my $slapaddCommand = $self->_slapaddCmd($ldifFile, $slapdConfFile);
++  my $chownDataCommand = $self->_chownDatadir;
+   
+-  $self->_pauseAndExecute(cmds => [$rmCommand, $slapaddCommand ]);
++  $self->_pauseAndExecute(
++		cmds => [$rmCommand, $slapaddCommand, $chownDataCommand ]);
+ }
+ 
+ 
++sub _chownDatadir
++{
++	return 'chown -R '  . LDAP_USER . ':' . LDAP_GROUP . ' ' . dataDir();
++}
+ 
+-
+ sub _slapcatCmd
+ {
+   my ($self, $ldifFile, $slapdConfFile) = @_;
+-  return  "/usr/sbin/slapcat  -f $slapdConfFile -l $ldifFile";
++  return  "/usr/sbin/slapcat  -f $slapdConfFile > $ldifFile";
+ }
+ 
+ sub _slapaddCmd
+ {
+   my ($self, $ldifFile, $slapdConfFile) = @_;
+-  return  "/usr/sbin/slapadd  -c -l $ldifFile -f $slapdConfFile";
++  return  "/usr/sbin/slapadd  -c -f $slapdConfFile < $ldifFile" ;
+ }
+ 
+ sub _rmLdapDirCmd
