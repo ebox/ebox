@@ -11,15 +11,21 @@ Index: conf/99ebox.conf
 ===================================================================
 --- libebox/conf/99ebox.conf	(.../ubuntu-hardy-0.11.99/common/libebox)	(revisión: 9785)
 +++ libebox/conf/99ebox.conf	(.../ubuntu-0.11.99/common/libebox)	(revisión: 9785)
-@@ -22,7 +22,7 @@
+@@ -21,9 +21,12 @@
+ # distribution.
  user = ebox
  
- # group [required]. The group under which ebox will run.
+-# group [required]. The group under which ebox will run.
 -group = ebox
-+group = ebox:adm
++# egroup [required]. The group under which ebox will run.
++egroup = ebox
  
++# group [optional]. Additional groups
++group = adm
++
  # debug mode [required]. yes|no
  debug = yes 
+
 Index: src/EBox.pm
 ===================================================================
 --- libebox/src/EBox.pm	(.../ubuntu-hardy-0.11.99/common/libebox)	(revisión: 9785)
@@ -83,7 +89,7 @@ Index: src/EBox/Config.pm.in
  sub user
  {
  	my $user = configkey('user');
-@@ -89,14 +103,32 @@
+@@ -89,14 +103,31 @@
  	return $user;
  }
  
@@ -110,11 +116,10 @@ Index: src/EBox/Config.pm.in
  
 +sub group
 +{
-+	my @groups = @{groups()};
-+	@groups or throw EBox::Exceptions::External("The ebox group has not ".
-+					"been set in the config file.");
-+
-+	return $groups[0];
++	my $value = @{configkeys('egroup')};
++	$value or throw EBox::Exceptions::External("The ebox group has not ".
++			"been set in the config file.");
++	return $value;
 +}
 +
  sub home
