@@ -122,11 +122,10 @@ sub groups
 
 sub group
 {
-	my @groups = @{groups()};
-	@groups or throw EBox::Exceptions::External("The ebox group has not ".
-					"been set in the config file.");
-
-	return $groups[0];
+	my $value = @{configkeys('egroup')};
+	$value or throw EBox::Exceptions::External("The ebox group has not ".
+			"been set in the config file.");
+	return $value;
 }
 
 sub home
