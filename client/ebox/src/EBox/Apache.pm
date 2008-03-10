@@ -82,14 +82,16 @@ sub _daemon # (action)
 		if ($pid) { 
 			return; # parent returns inmediately
 		}
-
-		POSIX::setsid();
-		close(STDOUT);
-		close(STDERR);
+        # Close descriptors as apache2 does not open them with close_on_exec
+        # flag
+		for my $fdName (`echo /proc/$$/fd/*`) {
+			my $fd = basename $fdName;
+			next unless ($fd =~ /^\d+$/);
+			POSIX::close($fd);
+		}
 		open(STDOUT, "> /dev/null");
 		open(STDERR, "> /dev/null");
-		sleep(5);
-	}
+	} 
 
 	if ($action eq 'stop') {
 		EBox::Sudo::root('/usr/share/ebox/ebox-apache2ctl stop');
