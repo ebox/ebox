@@ -12,6 +12,8 @@ use EBox::Exceptions::Internal;
 use constant DEFAULTGROUP    => '__USERS__';
 use constant DEFAULTGROUPGID => '2000';
 
+EBox::init();
+
 my $global = EBox::Global->getInstance(1);
 my $users = $global->modInstance('users');
 
@@ -126,7 +128,7 @@ sub usage
 }
 
 #main 
-EBox::init();
+
 
 if ($#ARGV == -1) {
 	usage();
