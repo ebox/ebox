@@ -37,18 +37,23 @@ sub new {
 sub _process($) {
 	my $self = shift;
 	$self->{title} = __('Virtual domains');
-
-	my $masonParams = [];
 	my $mail        = EBox::Global->modInstance('mail');
-	if ($mail->mdQuotaAvailable()) {
-	  $masonParams = $self->_masonParamsWithMDQuota();
-	}
-	else {
-	  $masonParams = $self->_masonParamsWoMDQuota();
-	}
+	
+	if ($mail->configured()) {
+		my $masonParams = [];
+		if ($mail->mdQuotaAvailable()) {
+		  $masonParams = $self->_masonParamsWithMDQuota();
+		}
+		else {
+		  $masonParams = $self->_masonParamsWoMDQuota();
+		}
 
 
-	$self->{params} = $masonParams;
+		$self->{params} = $masonParams;
+	} else {
+	        $self->setTemplate('/notConfigured.mas'); 
+        	$self->{params} = ['module' => __('Mail')];
+	}
 }
 
 
