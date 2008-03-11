@@ -4,6 +4,9 @@ ebox-usersandgroups (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
     slapd apparmour profile which forces us to read and write from
     stdin and stdout
 
+  * Backport patch form 0.11.100 to initialise ebox-init-ldap with
+    ebox user before fetching a gconf instance
+
  -- Javier Uruen Val <javi@warp.es>  Mon, 10 Mar 2008 14:38:02 +0100
 
 ebox-usersandgroups (0.11.99-0ubuntu1~ppa1) hardy; urgency=low
