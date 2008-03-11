@@ -1,0 +1,32 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_fix_ebox_initialise.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to initialise ebox-init-ldap with ebox 
+## DP: user before fetching a gconf instance
+
+@DPATCH@
+
+Index: usersandgroups/tools/ebox-init-ldap
+===================================================================
+--- usersandgroups/tools/ebox-init-ldap	(revisión: 9785)
++++ usersandgroups/tools/ebox-init-ldap	(copia de trabajo)
+@@ -12,6 +12,8 @@
+ use constant DEFAULTGROUP    => '__USERS__';
+ use constant DEFAULTGROUPGID => '2000';
+ 
++EBox::init();
++
+ my $global = EBox::Global->getInstance(1);
+ my $users = $global->modInstance('users');
+ 
+@@ -126,8 +128,8 @@
+ }
+ 
+ #main 
+-EBox::init();
+ 
++
+ if ($#ARGV == -1) {
+ 	usage();
+ 	exit(1);
