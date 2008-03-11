@@ -14,6 +14,8 @@ cp /usr/share/ebox-mail/*.schema /etc/ldap/schema
 # Create dir within postfix chroot
 SASLAUTHD="/var/spool/postfix/var/run/saslauthd"
 test -d $SASLAUTHD || mkdir -p $SASLAUTHD
+# Allow postfix to connect to the unix socket
+chmod 711 $SASLAUTHD
 
 # regenerate slapd.conf
 /usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
