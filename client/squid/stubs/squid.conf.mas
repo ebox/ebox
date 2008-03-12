@@ -24,6 +24,7 @@ coredump_dir /var/spool/squid
 cache_effective_user proxy
 cache_effective_group proxy
 cache_mem <% $memory %> MB
+access_log /var/log/squid/access.log squid
 
 
 # <EBOX> TAG_ACL #
