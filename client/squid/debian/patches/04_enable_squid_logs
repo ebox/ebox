@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04_enable_squid_logs.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to enable squid logs
+
+@DPATCH@
+
+Index: squid/stubs/squid.conf.mas
+===================================================================
+--- squid/stubs/squid.conf.mas	(revisión: 9763)
++++ squid/stubs/squid.conf.mas	(copia de trabajo)
+@@ -24,6 +24,7 @@
+ cache_effective_user proxy
+ cache_effective_group proxy
+ cache_mem <% $memory %> MB
++access_log /var/log/squid/access.log squid
+ 
+ 
+ # <EBOX> TAG_ACL #
