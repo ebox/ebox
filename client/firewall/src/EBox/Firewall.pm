@@ -21,6 +21,7 @@ use warnings;
 use base qw(EBox::GConfModule 
 			EBox::ObjectsObserver 
 			EBox::NetworkObserver
+			EBox::LogObserver
 			EBox::Model::ModelProvider
 			EBox::ServiceModule::ServiceInterface
 			);
