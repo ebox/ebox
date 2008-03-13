@@ -53,7 +53,9 @@ use constant {
     RSS_FILE => EBox::Config::dynamicRSS() . 'alerts.rss',
     RSS_LOCK_FILE => EBox::Config::tmp() . 'alerts.rss.lock',
     CHANNEL_TTL => 5,
+    MAX_RSS_ITEMS => 500
 };
+
 
 # Class data
 our $LockFH;
@@ -311,6 +313,10 @@ sub _addEventToRSS
                    category    => $event->source(),
                    guid        => $event->source() . '-' . $event->timestamp(),
                   );
+
+    # Remove entries to MAX_RSS_ITEMS
+    my $length = scalar @{$rss->{'items'}};
+    splice(@{$rss->{'items'}}, -MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
 
     $rss->save(RSS_FILE);
 
