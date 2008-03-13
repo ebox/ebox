@@ -1,3 +1,9 @@
+ebox-firewall (0.11.99-0ubuntu2) hardy; urgency=low
+
+  * Backport 0.11.100 patch to enable log observer
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 13 Mar 2008 14:48:18 +0100
+
 ebox-firewall (0.11.99-0ubuntu1~ppa1) hardy; urgency=low
 
   * New upstream release
