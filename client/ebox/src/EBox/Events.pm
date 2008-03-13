@@ -517,7 +517,9 @@ sub _submitEventElements
                       my $filePath = EBox::Config::perlPath() . $element . '.pm';
                       # Get the class final name
                       ($element) = $element =~ m:^.*/(.*)$:g;
-                      symlink ( $filePath, $dir . '/' . $element . '.pm' )
+                       my $dest = "$dir/$element.pm";
+                       next if ( -l $dest );
+                       symlink ( $filePath, $dest );
                         or throw EBox::Exceptions::Internal("Cannot copy from $filePath to $dir");
                   } else {
                       ($element) = $element =~ m/^.*::(.*)$/;
