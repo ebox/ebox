@@ -1,0 +1,23 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 05_fix_event_link.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to create event links properly
+
+@DPATCH@
+
+Index: ebox/src/EBox/Events.pm
+===================================================================
+--- ebox/src/EBox/Events.pm	(revisión: 9763)
++++ ebox/src/EBox/Events.pm	(copia de trabajo)
+@@ -517,7 +517,9 @@
+                       my $filePath = EBox::Config::perlPath() . $element . '.pm';
+                       # Get the class final name
+                       ($element) = $element =~ m:^.*/(.*)$:g;
+-                      symlink ( $filePath, $dir . '/' . $element . '.pm' )
++                       my $dest = "$dir/$element.pm";
++                       next if ( -l $dest );
++                       symlink ( $filePath, $dest );
+                         or throw EBox::Exceptions::Internal("Cannot copy from $filePath to $dir");
+                   } else {
+                       ($element) = $element =~ m/^.*::(.*)$/;

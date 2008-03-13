@@ -1,0 +1,35 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06_reduce_rss_items.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to reduce the maximum number of RSS 
+## DP: entries to 500
+
+@DPATCH@
+
+Index: ebox/src/EBox/Event/Dispatcher/RSS.pm
+===================================================================
+--- ebox/src/EBox/Event/Dispatcher/RSS.pm	(revisión: 9763)
++++ ebox/src/EBox/Event/Dispatcher/RSS.pm	(copia de trabajo)
+@@ -53,8 +53,10 @@
+     RSS_FILE => EBox::Config::dynamicRSS() . 'alerts.rss',
+     RSS_LOCK_FILE => EBox::Config::tmp() . 'alerts.rss.lock',
+     CHANNEL_TTL => 5,
++    MAX_RSS_ITEMS => 500
+ };
+ 
++
+ # Class data
+ our $LockFH;
+ 
+@@ -312,6 +314,10 @@
+                    guid        => $event->source() . '-' . $event->timestamp(),
+                   );
+ 
++    # Remove entries to MAX_RSS_ITEMS
++    my $length = scalar @{$rss->{'items'}};
++    splice(@{$rss->{'items'}}, -MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
++
+     $rss->save(RSS_FILE);
+ 
+     $self->UnlockRSSFile();

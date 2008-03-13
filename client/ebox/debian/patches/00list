@@ -2,3 +2,5 @@
 02_fix_backup_parameter
 03_fix_apache_restart
 04_fix_disable_log_daemon
+05_fix_event_link
+06_reduce_rss_items
