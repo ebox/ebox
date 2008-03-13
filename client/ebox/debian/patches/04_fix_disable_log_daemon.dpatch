@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04_fix_disable_log_daemon.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to disable log daemon
+
+@DPATCH@
+
+Index: ebox/src/EBox/Logs.pm
+===================================================================
+--- ebox/src/EBox/Logs.pm	(revisión: 9785)
++++ ebox/src/EBox/Logs.pm	(copia de trabajo)
+@@ -80,6 +80,7 @@
+ 
+ 	$self->_saveEnabledLogs();
+ 	_stopService();
++	return unless ($self->isEnabled());
+ 	system(EBox::Config::pkgdata . 'ebox-loggerd');
+ }
+ 

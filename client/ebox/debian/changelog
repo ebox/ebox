@@ -1,9 +1,13 @@
+ebox (0.11.99-0ubuntu3) hardy; urgency=low
+
+  * Backport 0.11.100 patch to disable log daemon if requested by user
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 13 Mar 2008 15:00:57 +0100
+
 ebox (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
 
   * Add patch to fix memory leak in events
-
   * Add patch to fix issue with missing parameter in ebox-make-backup
-
   + Add patch to close file descriptors when forking to restart apache within
     apache properly
 
