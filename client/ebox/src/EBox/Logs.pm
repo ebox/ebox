@@ -80,7 +80,6 @@ sub _regenConfig
 
 	$self->_saveEnabledLogs();
 	_stopService();
-	return unless ($self->isEnabled());
 	system(EBox::Config::pkgdata . 'ebox-loggerd');
 }
 
