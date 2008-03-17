@@ -3932,4 +3932,57 @@ sub _setEnabledAsFieldInTable
 
 }
 
+
+sub _fileFields
+{
+  my ($self) = @_;
+
+  my $tableDesc = $self->table()->{tableDescription};
+  my @files = grep { $_->isa('EBox::Types::File') } @{ $tableDesc };
+
+  return @files;
+}
+
+
+sub backupFiles
+{
+  my ($self) = @_;
+
+  my @files = $self->_fileFields();
+  @files or return;
+
+  foreach my $file (@files) {
+    $file->backup();
+  }
+  
+}
+
+
+sub restoreFiles
+{
+  my ($self) = @_;
+
+  my @files = $self->_fileFields();
+  @files or return;
+
+  foreach my $file (@files) {
+    $file->restore();
+  }
+}
+
+sub backupFilesPaths
+{
+  my ($self) = @_;
+
+  my @paths =  map {
+    $_->path();
+  }  grep {  
+    $_->exist()
+  }
+ $self->_fileFields();
+
+  return \@paths;
+}
+
+
 1;
