@@ -316,7 +316,7 @@ sub _addEventToRSS
 
     # Remove entries to MAX_RSS_ITEMS
     my $length = scalar @{$rss->{'items'}};
-    splice(@{$rss->{'items'}}, -MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
+    splice(@{$rss->{'items'}}, - MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
 
     $rss->save(RSS_FILE);
 
