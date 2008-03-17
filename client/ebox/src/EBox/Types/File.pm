@@ -44,7 +44,7 @@ use EBox::Exceptions::Internal;
 
 # Core modules
 use File::Basename;
-use File::Copy;
+use File::Copy::Recursive;
 use Digest::MD5;
 
 # Group: Public methods
@@ -412,7 +412,7 @@ sub backup
     my $backupPath = $self->backupPath();
     $backupPath or return;
 
-    copy ($path, $backupPath);
+     File::Copy::Recursive::fcopy ($path, $backupPath);
   }
   else {
     my $noPreviousFilePath = $self->noPreviousFilePath();
