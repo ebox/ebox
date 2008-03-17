@@ -1,6 +1,6 @@
 ebox-openvpn (0.11.99-0ubuntu2) hardy; urgency=low
 
-  * Backport 0.11.100 fix to create eBox openVPN Diffie-Hellman file
+  * Create eBox openVPN Diffie-Hellman file
 
  -- Javier Uruen Val <javi@warp.es>  Mon, 17 Mar 2008 16:03:05 +0100
 

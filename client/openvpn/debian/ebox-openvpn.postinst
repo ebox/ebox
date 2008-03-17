@@ -11,10 +11,13 @@ case "$1" in
         #[ -d /dev/net -a ! -e /dev/net/tun ] && /bin/mknod /dev/net/tun c 10 200
 
 		# create diffie-hellman parameters if needed
-		 DH_FILE='/etc/openvpn/ebox-dh1024.pem'
-		if [ ! -e $DH_FILE  ]; then
+		# DH_FILE='/etc/openvpn/dh1024.pem'
+		if [ -e $DH_FILE  ]; then
+		    echo "We assume $DH_FILE is a Diffie-Hellman parameter file with 1024 byte length. If the assumption is false, please remove it and create a new one manually. If you do NOT do so, your OpenVPN tunnels may be compromised"
+		else
 		    openssl dhparam -out $DH_FILE 1024
 		fi
+
 
 		# create openvpn status log directory
 		STATUS_DIR=`perl -MEBox::OpenVPN -e 'print EBox::OpenVPN->logDir(); 1 '`
