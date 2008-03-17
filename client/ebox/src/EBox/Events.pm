@@ -519,7 +519,7 @@ sub _submitEventElements
                       ($element) = $element =~ m:^.*/(.*)$:g;
                        my $dest = "$dir/$element.pm";
                        next if ( -l $dest );
-                       symlink ( $filePath, $dest );
+                       symlink ( $filePath, $dest )
                         or throw EBox::Exceptions::Internal("Cannot copy from $filePath to $dir");
                   } else {
                       ($element) = $element =~ m/^.*::(.*)$/;
