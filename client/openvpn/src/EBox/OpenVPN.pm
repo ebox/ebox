@@ -64,6 +64,7 @@ sub _regenConfig
     my ($self) = @_;
 
     $self->_writeConfFiles();
+    $self->_prepareLogFiles();
     $self->_cleanupDeletedDaemons();
     $self->_doDaemon();
 }
@@ -188,6 +189,23 @@ sub _writeConfFiles
     }
 }
 
+sub _prepareLogFiles
+{
+    my ($self) = @_;
+
+    my $logDir = $self->logDir();
+    for my $name ($self->daemonsNames()) {
+        for my $file ("$logDir/$name.log", "$logDir/status-$name.log") {
+            try {
+                EBox::Sudo::root("test -e $file");
+            } otherwise {
+                EBox::Sudo::root("touch $file");
+            };
+            EBox::Sudo::root("chown root:ebox $file");
+            EBox::Sudo::root("chmod 0640 $file");
+        }
+    }
+}
 
 sub _cleanupDeletedDaemons
 {
