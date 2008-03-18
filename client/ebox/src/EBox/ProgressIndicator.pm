@@ -73,7 +73,7 @@ sub create
   $self->setConfString('message', '');
   $self->setConfBool('started', 0);
   $self->setConfBool('finished', 0);
-  # retValue=-1, not finished
+  # retValue==-1, not finished
   $self->setConfInt('retValue', -1);
 
   return $self;
@@ -240,7 +240,7 @@ sub setAsFinished
 
   $self->setConfBool('finished', 1);
 
-  $self->setConfInt('retValue', $retValue);
+  $self->setRetValue($retValue);
   if ( $retValue > 0 and defined($errorMsg)) {
     $self->setConfString('errorMsg', $errorMsg);
   }
@@ -319,11 +319,12 @@ sub stateAsString
     $state = 'not running';
   }
   elsif ($self->finished()) {
-    $state = 'done';
-
     my $retValue = $self->retValue();
-
-    if ($retValue != 0 ) {
+    if ($retValue == 0) {
+      $state = 'done';
+    }
+    elsif ($retValue != 0 ) {
+      $state = 'error';
       $state .= ",retValue:$retValue";
       my $errorMsg = $self->errorMsg();
       if ( $errorMsg ) {

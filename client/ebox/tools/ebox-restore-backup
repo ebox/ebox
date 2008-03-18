@@ -102,7 +102,20 @@ $restoreParams{fullRestore}       = $fullRestore;
 $restoreParams{dataRestore}       = $dataRestore;
 $restoreParams{forceDependencies} = $forceDependencies;
 
-EBox::Backup->restoreBackup($file, %restoreParams);
+try {
+  EBox::Backup->restoreBackup($file, %restoreParams);
+}
+otherwise {
+  my $ex = shift @_;
+
+  if (exists $restoreParams{progress}) {
+    my $progress = $restoreParams{progress};
+    $progress->setAsFinished(1, $ex->text);
+  }
+
+
+  $ex->throw();
+};
 
 
 

@@ -16,35 +16,34 @@ function updatePage (xmlHttp) {
 
 
     if (xmlHttp.readyState == 4) {
-        // current item
-        if (('message' in response) && response.message.length > 0 ) {
-   	   $('currentItem').innerHTML = response.message;
-        }
-
-       	if ( ('ticks' in response) && (response.ticks >= 0)) {
-	     $('ticks').innerHTML = response.ticks;
-        }
-
-       	if ( ('totalTicks' in response) && (response.totalTicks > 0)) {
-	     $('totalTicks').innerHTML = response.totalTicks;
-        }         
-    }
-
-    if (response.state == 'done') {
-        Element.hide('progressing');
-        if ( 'retValue' in response ) {
-            if ( response.retValue == 0 ) {
-                Element.show('done');
-            } else {
-                Element.show('error-progress');
-                if ( 'errorMsg' in response ) {
-                  $('error-progress-message').update( response.errorMsg );
-                }
+	if (response.state == 'running') {
+            // current item
+            if (('message' in response) && response.message.length > 0 ) {
+       	   $('currentItem').innerHTML = response.message;
             }
-        } else {
-            Element.show('done');
+    
+           	if ( ('ticks' in response) && (response.ticks >= 0)) {
+    	     $('ticks').innerHTML = response.ticks;
+            }
+    
+           	if ( ('totalTicks' in response) && (response.totalTicks > 0)) {
+    	     $('totalTicks').innerHTML = response.totalTicks;
+            }         
         }
+    
+       else if (response.state == 'done') {
+                Element.hide('progressing');
+                Element.show('done');
+       }
+       else if (response.state == 'error') {
+              Element.hide('progressing');
+              Element.show('error-progress');
+             if ( 'errorMsg' in response ) {
+                       $('error-progress-message').update( response.errorMsg );
+             }
+      }
    }
+
 }
 
 // Generate an Ajax request to fetch the current package
