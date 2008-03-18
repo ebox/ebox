@@ -407,15 +407,15 @@ sub backupFilesInArchive
 
 
   my $firstFile  = shift @filesToBackup;
-  my $archiveCmd = "tar  -C / -cf $archive $firstFile";
-  EBox::Sudo::command($archiveCmd);
+  my $archiveCmd = "tar  -C / -cf $archive --atime-preserve --absolute-names --preserve --same-owner $firstFile";
+  EBox::Sudo::root($archiveCmd);
 
   # we append the files one per one bz we don't want to overflow the command
   # line limit. Another approach would be to use a file catalog however I think
   # that for only a few files (typical situation for now) the append method is better
   foreach my $file (@filesToBackup) {
-    $archiveCmd = "tar -C /  -rf $archive $file";
-    EBox::Sudo::command($archiveCmd);
+    $archiveCmd = "tar -C /  -rf $archive --atime-preserve --absolute-names --preserve --same-owner $file";
+    EBox::Sudo::root($archiveCmd);
     
   }
 }
@@ -429,8 +429,8 @@ sub restoreFilesFromArchive
   ( -f $archive) or
     return;
 
-  my $restoreCmd = "tar  -C / -xf $archive";
-  EBox::Sudo::command($restoreCmd);
+  my $restoreCmd = "tar  -C / -xf $archive --atime-preserve --absolute-names --preserve --same-owner";
+  EBox::Sudo::root($restoreCmd);
 }
 
 1;
