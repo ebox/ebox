@@ -1,6 +1,8 @@
 ebox-openvpn (0.11.99-0ubuntu2) hardy; urgency=low
 
   * Create eBox openVPN Diffie-Hellman file
+  * Backport 0.11.100 fix to prepare log file permissions to be read
+    by loggerd
 
  -- Javier Uruen Val <javi@warp.es>  Mon, 17 Mar 2008 16:03:05 +0100
 
