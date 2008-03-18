@@ -1,8 +1,8 @@
 ebox-printers (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
 
   * Add configuration file to add lp and lpadmin to eBox's groups
-  
   * Add patch to add ebox to lp and lpadmin groups in postinst 
+  * Add patch to log from page_log instead of error_log
 
  -- Javier Uruen Val <javi@warp.es>  Fri, 07 Mar 2008 14:49:48 +0100
 
