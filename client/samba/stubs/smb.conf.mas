@@ -94,12 +94,13 @@ use EBox::Gettext;
  browseable = No
 
 % 	foreach my $group (@dirgroup) {
-[_<% $group->{'sharename'} %>]
+[<% $group->{'sharename'} %>]
+    comment = "<% __x('{group} share directory', group => $group->{'groupname'}) %>"
 	path = <% $group->{'path'} %>
 	valid users = @"<% $group->{'groupname'} %>"
 	force group = "<% $group->{'groupname'} %>"
 	force create mode = 0770
-	force directory mode = 1770
+	force directory mode = 0770
 	printable = No
 	read only = No
 	browseable = Yes
