@@ -1,6 +1,7 @@
 ebox-firewall (0.11.99-0ubuntu2) hardy; urgency=low
 
   * Backport 0.11.100 patch to enable log observer
+  * Backport 0.11.100 patch to parse new iptables log format
 
  -- Javier Uruen Val <javi@warp.es>  Thu, 13 Mar 2008 14:48:18 +0100
 
