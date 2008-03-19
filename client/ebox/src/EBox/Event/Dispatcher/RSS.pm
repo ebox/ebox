@@ -274,7 +274,20 @@ sub _addEventToRSS
     $self->LockRSSFile(1);
 
     my $rssComplaintDate = $self->_currentDate();
-    unless ( -r RSS_FILE ) {
+	my $create = undef;
+	
+    if ( not -r RSS_FILE ) {
+        $create = 1;
+    } else {
+        eval '$rss->parsefile(RSS_FILE)';
+        if ($@) {
+            unlink(RSS_FILE);
+            $create = 1;
+            $rss = new XML::RSS(version => '2.0');
+        }
+    }
+	
+    if ($create) {
         # Create the channel if it does not exist
         $rss->channel(title         => __x('eBox alerts channel for {hostname}',
                                          hostname => hostname()),
@@ -292,13 +305,13 @@ sub _addEventToRSS
                     description => 'eBox platform',
                     alt         => 'eBox platform',
                    );
-    } else {
-        $rss->parsefile(RSS_FILE);
+
     }
     # Update the lastBuildDate and pubDate
     $rss->channel(pubDate       => $rssComplaintDate,
                   lastBuildDate => $rssComplaintDate
                  );
+
     my $descriptionStr = __x('The event has happened in eBox {hostname} '
                              . 'from {source}',
                              hostname => hostname(),
@@ -315,8 +328,10 @@ sub _addEventToRSS
                   );
 
     # Remove entries to MAX_RSS_ITEMS
-    my $length = scalar @{$rss->{'items'}};
-    splice(@{$rss->{'items'}}, - MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
+    my $length = $rss->{'num_items'};
+    if ($length > MAX_RSS_ITEMS) {
+        splice(@{$rss->{'items'}}, - MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
+    }
 
     $rss->save(RSS_FILE);
 
