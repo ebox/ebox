@@ -1,0 +1,29 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_adjust_group_share.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to adjust group shares. Do not use 
+## DP: sticky bit. Remove leading underscore. Add comment to group shares
+
+@DPATCH@
+
+Index: samba/stubs/smb.conf.mas
+===================================================================
+--- samba/stubs/smb.conf.mas	(revisión: 9763)
++++ samba/stubs/smb.conf.mas	(copia de trabajo)
+@@ -94,12 +94,13 @@
+  browseable = No
+ 
+ % 	foreach my $group (@dirgroup) {
+-[_<% $group->{'sharename'} %>]
++[<% $group->{'sharename'} %>]
++    comment = "<% __x('{group} share directory', group => $group->{'groupname'}) %>"
+ 	path = <% $group->{'path'} %>
+ 	valid users = @"<% $group->{'groupname'} %>"
+ 	force group = "<% $group->{'groupname'} %>"
+ 	force create mode = 0770
+-	force directory mode = 1770
++	force directory mode = 0770
+ 	printable = No
+ 	read only = No
+ 	browseable = Yes
