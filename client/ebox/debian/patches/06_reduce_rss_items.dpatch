@@ -9,8 +9,8 @@
 
 Index: ebox/src/EBox/Event/Dispatcher/RSS.pm
 ===================================================================
---- ebox/src/EBox/Event/Dispatcher/RSS.pm	(revisión: 9763)
-+++ ebox/src/EBox/Event/Dispatcher/RSS.pm	(copia de trabajo)
+--- ebox/src/EBox/Event/Dispatcher/RSS.pm   (revisión: 9763)
++++ ebox/src/EBox/Event/Dispatcher/RSS.pm   (copia de trabajo)
 @@ -53,8 +53,10 @@
      RSS_FILE => EBox::Config::dynamicRSS() . 'alerts.rss',
      RSS_LOCK_FILE => EBox::Config::tmp() . 'alerts.rss.lock',
@@ -22,13 +22,53 @@ Index: ebox/src/EBox/Event/Dispatcher/RSS.pm
  # Class data
  our $LockFH;
  
-@@ -312,6 +314,10 @@
+@@ -272,7 +274,20 @@
+     $self->LockRSSFile(1);
+ 
+     my $rssComplaintDate = $self->_currentDate();
+-    unless ( -r RSS_FILE ) {
++	my $create = undef;
++	
++    if ( not -r RSS_FILE ) {
++        $create = 1;
++    } else {
++        eval '$rss->parsefile(RSS_FILE)';
++        if ($@) {
++            unlink(RSS_FILE);
++            $create = 1;
++            $rss = new XML::RSS(version => '2.0');
++        }
++    }
++	
++    if ($create) {
+         # Create the channel if it does not exist
+         $rss->channel(title         => __x('eBox alerts channel for {hostname}',
+                                          hostname => hostname()),
+@@ -290,13 +305,13 @@
+                     description => 'eBox platform',
+                     alt         => 'eBox platform',
+                    );
+-    } else {
+-        $rss->parsefile(RSS_FILE);
++
+     }
+     # Update the lastBuildDate and pubDate
+     $rss->channel(pubDate       => $rssComplaintDate,
+                   lastBuildDate => $rssComplaintDate
+                  );
++
+     my $descriptionStr = __x('The event has happened in eBox {hostname} '
+                              . 'from {source}',
+                              hostname => hostname(),
+@@ -312,6 +327,12 @@
                     guid        => $event->source() . '-' . $event->timestamp(),
                    );
  
 +    # Remove entries to MAX_RSS_ITEMS
-+    my $length = scalar @{$rss->{'items'}};
-+    splice(@{$rss->{'items'}}, - MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
++    my $length = $rss->{'num_items'};
++    if ($length > MAX_RSS_ITEMS) {
++        splice(@{$rss->{'items'}}, - MAX_RSS_ITEMS, ($length - MAX_RSS_ITEMS));
++    }
 +
      $rss->save(RSS_FILE);
  
