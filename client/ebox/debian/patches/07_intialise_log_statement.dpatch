@@ -1,50 +1,30 @@
-dpatch -- Debian Patching Thingy
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 07_initialise_log_statement.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Initialise log statement in every query
 
-Usage: dpatch [<global options>] <command> [<options>] [<patchset>]
+@DPATCH@
 
-Global Options:
-  --workdir, -d <dir>	Do everything in the given directory.
-  --strict, -S		Work in strict mode, exiting on warnings too.
-  --force, -F		Force applying or deapplying a patch.
-
-Commands:
-  apply (apply-all, apply-until)
-    Apply the given set of patches, all of them, or up to, and including
-    the specified one.
-
-  deapply (deapply-all, deapply-until)
-    Deapply a given set of patches, all of them, or up to, and including
-    the specified one.
-
-  call (call-all, call-until)
-    Call a given set of patches with a custom argument, all of them, or
-    up to, and including the specified one.
-
-  cat (cat-all, cat-until)
-    Show the meta-information of a given set of patches, all of them, or
-    up to, and including the specified one.
-
-  list (list-all, list-until)
-    List the name of a given set of patches, all of them, or up to and
-    including the specified one.
-
-  status (status-all, status-up-to)
-    Show the status (applied or not) of a given set of patches, all of them,
-    or up to and including the specified one.
-
-  log (log-all, log-up-to)
-    Display the log of the patch attempt, all attempts, or up to and including
-    the specified one.
-
-  patch-template
-    Generate a quasi-standard dpatch template.
-
-  help
-    This help screen.
-
-  version
-    Print version number and exit.
-
-You can get more information about the various commands by issuing one of the
-	dpatch <command> --help   OR   dpatch help <command>
-commands.
+Index: ebox/src/EBox/Logs.pm
+===================================================================
+--- ebox/src/EBox/Logs.pm	(revisión: 9863)
++++ ebox/src/EBox/Logs.pm	(copia de trabajo)
+@@ -433,6 +433,8 @@
+ 		   'Table {table} does not exist', 'table' => $table));
+ 	}
+ 
++	$self->{'sqlselect'} = { };
++
+ 	$self->_addTableName($table);
+ 	if (_checkValidDate($from)) {
+ 		$self->_addDateFilter($timecol, $from, '>');
+@@ -476,8 +478,6 @@
+ 	$self->_addSelect('*');
+ 	my @ret = @{$dbengine->query($self->_sqlStmnt())};
+ 	
+-	$self->{'sqlselect'} = undef;
+-
+ 	my $hashret = {
+ 		'totalret' => $tcount,
+ 		'arrayret' => \@ret
