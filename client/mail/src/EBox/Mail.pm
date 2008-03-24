@@ -108,7 +108,7 @@ sub actions
 		'module' => 'mail'
 	},
 	{	
-		'action' => __('Create directory for saslauthdaemon in postfix chroot'),
+		'action' => __('dpkg-stateoverride  saslauthdaemon directory'),
 		'reason' => __('To allow postfix communicate with saslauthd '),
 		'module' => 'mail'
 	},
