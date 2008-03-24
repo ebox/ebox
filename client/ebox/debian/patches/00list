@@ -4,3 +4,4 @@
 04_fix_disable_log_daemon
 05_fix_event_link
 06_reduce_rss_items
+07_intialise_log_statement
