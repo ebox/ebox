@@ -1,3 +1,76 @@
+PORT=443
+
+fetch_ebox_port()
+{
+    set +e 
+
+    ret=$(perl -e '
+            use EBox; 
+            use EBox::Global; 
+            EBox::init();
+
+            my $apache = EBox::Global->modInstance('apache');
+            print $apache->port();
+            exit 0;
+            ' 2> /dev/null );
+
+    if [ $? -eq 0 ]; then
+        PORT=$ret;
+    fi
+
+    set -e
+}
+
+check_port_available()
+{
+    check_port=$1
+
+    set +e
+
+    perl -e '
+        use IO::Socket; 
+        my $port = $ARGV[0];			
+        IO::Socket::INET->new(
+            PeerAddr => "127.0.0.1",
+            PeerPort => $port,
+            Proto	 => "tcp",
+            Timeout	 => 5) or exit 0;
+        exit 1;
+        ' $check_port 2> /dev/null;
+    ret=$?
+
+    set -e
+    return $ret;
+}
+
+set_ebox_port()
+{
+
+    db_get ebox/port
+    new_port=$RET
+
+	fetch_ebox_port;
+	if [ $new_port -eq $PORT ]; then
+		echo "Skipping apache port setting as current port and new port are equal"
+		return 0;
+	fi
+
+    set +e 
+
+    ret=$(perl -e '
+            use EBox; 
+            use EBox::Global; 
+
+            EBox::init();
+            my $port = $ARGV[0];
+            my $apache = EBox::Global->modInstance('apache');
+            $apache->setPort($port);
+            $apache->save();
+            ' $new_port);
+
+    set -e
+}
+
 store_password() {
     local pass1 
 
