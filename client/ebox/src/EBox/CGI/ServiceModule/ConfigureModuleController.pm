@@ -68,7 +68,7 @@ sub _process
         $module->setConfigured(undef);
         $module->enableService(undef);
         #throw EBox::Exceptions::Internal($excep->as_string());
-        throw EBox::Exceptions::Internal("Falied to enable");
+        throw EBox::Exceptions::Internal("Failed to enable");
     };
 
     $manager->updateModuleDigests($modName);
