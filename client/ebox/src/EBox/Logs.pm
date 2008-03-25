@@ -433,6 +433,8 @@ sub search {
 		   'Table {table} does not exist', 'table' => $table));
 	}
 
+	$self->{'sqlselect'} = { };
+
 	$self->_addTableName($table);
 	if (_checkValidDate($from)) {
 		$self->_addDateFilter($timecol, $from, '>');
@@ -476,8 +478,6 @@ sub search {
 	$self->_addSelect('*');
 	my @ret = @{$dbengine->query($self->_sqlStmnt())};
 	
-	$self->{'sqlselect'} = undef;
-
 	my $hashret = {
 		'totalret' => $tcount,
 		'arrayret' => \@ret
