@@ -3,7 +3,8 @@
 	$group
 	$user
 	$serverroot
-        $debug => 'no'
+	$tmpdir
+    $debug => 'no'
 </%args>
 
 
@@ -12,6 +13,8 @@ KeepAlive On
 MaxKeepAliveRequests 100
 KeepAliveTimeout 15
 AddDefaultCharset utf-8	
+
+PidFile <% $tmpdir %>/apache.pid
 
 <IfModule mpm_prefork_module>
     StartServers          1 
