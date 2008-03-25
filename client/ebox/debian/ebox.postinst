@@ -80,7 +80,6 @@ case "$1" in
         chown  ebox:ebox /var/lib/ebox
 
 
-
         #sudo configuration
         /usr/share/ebox/ebox-sudoers-friendly
 
@@ -94,7 +93,11 @@ case "$1" in
 
         /usr/share/ebox/ebox-sql-table add admin /usr/share/ebox/sqllog/admin.sql
         
-        invoke-rc.d ebox start
+        set_ebox_port            
+
+        invoke-rc.d ebox apache stop || true
+        invoke-rc.d ebox apache start || true
+        
 
 		;;
 esac
