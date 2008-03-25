@@ -63,9 +63,13 @@ set_ebox_port()
 
             EBox::init();
             my $port = $ARGV[0];
-            my $apache = EBox::Global->modInstance('apache');
+            my $global = EBox::Global->getInstance();
+            my $apache = $global->modInstance('apache');
             $apache->setPort($port);
-            $apache->save();
+            $apache->saveConfig();
+            if ($global->modExists('services')) {
+                $global->modInstance('services')->saveConfig();
+            }
             ' $new_port);
 
     set -e
