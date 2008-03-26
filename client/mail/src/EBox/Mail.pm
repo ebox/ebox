@@ -208,7 +208,7 @@ sub enableActions
 
 #  Method: serviceModuleName
 #
-#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#   Override EBox::ServiceModule::ServiceInterface::serviceModuleName
 #
 sub serviceModuleName
 {

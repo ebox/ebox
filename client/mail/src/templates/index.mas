@@ -251,7 +251,7 @@ use EBox::Gettext;
 </%args>
 <%init>
 my @selectFilterOptions = (
-	   { value => 'no' , printableValue => __('none') },
+	   { value => 'none' , printableValue => __('none') },
 	   { value => 'custom'   , printableValue => __('custom')},
 ); 
 
@@ -268,7 +268,7 @@ if ($filterservice eq 'yes') {
    $selectedValue = $filtername;
 }
 else {
-   $selectedValue = 'disabled';
+   $selectedValue = 'none';
 }
 </%init>
 <br />
