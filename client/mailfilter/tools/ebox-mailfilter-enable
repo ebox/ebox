@@ -1,0 +1,32 @@
+#!/bin/bash -x
+
+#  don't start amavis, clamav and spamassassin with the init script
+MAILFILTER_SERVICES='amavis clamav-daemon clamav-freshclam spamassassin'
+for SERVICE in $MAILFILTER_SERVICES; do
+    invoke-rc.d    $SERVICE stop  
+    update-rc.d -f $SERVICE remove
+done
+
+
+
+# move out old amavis conf files
+mv /etc/amavis/conf.d /etc/amavis/conf.d.old
+mkdir /etc/amavis/conf.d
+chmod --reference=/etc/amavis/conf.d.old /etc/amavis/conf.d
+chown --reference=/etc/amavis/conf.d.old /etc/amavis/conf.d
+
+
+# add clamav user to group amavis. Because it need access to amavis stuff
+addgroup clamav amavis
+
+# copy LDAP schemas
+cp /usr/share/ebox-mailfilter/*.schema /etc/ldap/schema
+# update ldap
+/usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
+/etc/init.d/slapd restart
+/usr/share/ebox-mailfilter/ebox-mailfilter-ldap update
+
+# populate file filter
+/usr/share/ebox-mailfilter/ebox-mailfilter-populate-filefilter update
+
+exit 0;

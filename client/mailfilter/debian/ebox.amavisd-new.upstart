@@ -1,0 +1,2 @@
+exec /usr/sbin/amavisd-new -c /etc/amavis/conf.d/amavisd.conf foreground
+respawn

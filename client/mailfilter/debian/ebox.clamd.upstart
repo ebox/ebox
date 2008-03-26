@@ -1,0 +1,2 @@
+exec /usr/sbin/clamd
+respawn

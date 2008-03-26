@@ -1,37 +1,5 @@
 #!/bin/bash
 
-webserver=apache
-
-function installRunitFiles {
-
-    RUNIT_SERVICE='clamd spamd amavisd-new'
-    for  SERVICE in $RUNIT_SERVICE; do
-	mkdir  -m 755  /etc/runit/$SERVICE
-	touch /etc/runit/$SERVICE/down
-
-	touch /etc/runit/$SERVICE/run
-	chmod 755 /etc/runit/$SERVICE/run
-    done
-    
-
-    echo '#!/bin/sh' > /etc/runit/clamd/run
-    echo 'exec 2>&1' >> /etc/runit/clamd/run
-    echo 'exec /usr/sbin/clamd' >> /etc/runit/clamd/run
-
-    echo '#!/bin/sh' > /etc/runit/spamd/run
-    echo 'exec 2>&1' >> /etc/runit/spamd/run
-    echo 'exec /usr/sbin/spamd' >> /etc/runit/spamd/run
-
-    echo '#!/bin/sh' > /etc/runit/amavisd-new/run
-    echo 'exec 2>&1' >> /etc/runit/amavisd-new/run
-    echo 'exec /usr/sbin/amavisd-new -c /etc/amavis/conf.d/amavisd.conf foreground' >> /etc/runit/amavisd-new/run
-
-
-    for  SERVICE in $RUNIT_SERVICE; do
-	ln -s /etc/runit/$SERVICE /var/service/$SERVICE
-    done
-
-}
 
 case "$1" in
 	configure)
@@ -45,20 +13,8 @@ case "$1" in
 			fi
 		done
 
-		installRunitFiles;
-
-
-		MAILFILTER_SERVICES='amavis clamav-daemon clamav-freshclam spamassassin'
-		for SERVICE in $MAILFILTER_SERVICES; do
-		    invoke-rc.d $SERVICE stop  # invoke-rc.d not used because it starts clamd with runit
-		    update-rc.d -f $SERVICE remove
- 		done
-
-
 		kill `pidof gconfd-2` >/dev/null 2>&1 || true
 
-		# clamav need access to amavis stuff
-		addgroup clamav amavis
 
 
 		# create spamassassin directory 
@@ -67,19 +23,7 @@ case "$1" in
 		test -d $SA_DIR || mkdir $SA_DIR
 		chown -R amavis.amavis $SA_DIR
 
-		# remove old amavis conf files
-		rm /etc/amavis/conf.d/*
-
-
-		# update ldap
-		/usr/lib/ebox-usersandgroups/ebox-init-ldap genconfig
-		/etc/init.d/slapd restart
-		/usr/lib/ebox-mailfilter/ebox-mailfilter-ldap update
-
-		# populate file filter
-		/usr/lib/ebox-mailfilter/ebox-mailfilter-populate-filefilter update
-
-		# invoke freshclam to update antvirus database if connection is found
+		# invoke freshclam to update antivirus database if connection is found
 		ping -c 1 www.google.com 2>&1 > /dev/null
 		CONNECTION=$?
 		
