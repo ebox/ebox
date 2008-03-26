@@ -1,0 +1,42 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_fetch_apache_port.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 fetch apache port and set the eBox administration port
+
+@DPATCH@
+
+Index: services/migration/0001_import_services_from_firewall.pl
+===================================================================
+--- services/migration/0001_import_services_from_firewall.pl	(revisión: 9763)
++++ services/migration/0001_import_services_from_firewall.pl	(copia de trabajo)
+@@ -18,6 +18,7 @@
+ use EBox::NetWrappers qw(:all);
+ use EBox::Validate qw(:all);
+ use EBox::Gettext;
++use Error qw(:try);
+ 
+ use base 'EBox::MigrationBase';
+ 
+@@ -98,13 +99,20 @@
+                 'readOnly' => 1);
+     }
+     
++    my $apachePort;
++    try {
++        $apachePort = EBox::Global->modInstance('apache')->port();
++    } otherwise {
++        $apachePort = 443;
++    };
++
+     unless ($serviceMod->serviceExists('name' => 'administration')) {
+         $serviceMod->addService('name' => __d('eBox administration'),
+                 'description' => __d('eBox Administration port'),
+                 'domain' => __d('ebox-services'),
+                 'protocol' => 'tcp', 
+                 'sourcePort' => 'any',
+-                'destinationPort' => '443',
++                'destinationPort' => $apachePort,
+                 'internal' => 1,
+                 'readOnly' => 1);
+     }
