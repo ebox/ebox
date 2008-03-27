@@ -51,8 +51,8 @@ sub _process($) {
 	my $user;
 	$user->{'user'} = $self->param('username');
 	$user->{'fullname'} = $self->param('fullname');
-	$user->{'password'} = $self->param('password');
-	$user->{'repassword'} = $self->param('repassword');
+	$user->{'password'} = $self->unsafeParam('password');
+	$user->{'repassword'} = $self->unsafeParam('repassword');
 	$user->{'group'} = $self->param('group');
 	$user->{'comment'} = $self->param('comment');
 
