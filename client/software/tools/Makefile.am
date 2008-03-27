@@ -2,8 +2,8 @@
 
 SUBDIRS =  cron
 
-pkglib_SCRIPTS =  ebox-update-packages
+pkgdata_SCRIPTS =  ebox-update-packages ebox-software-enable
 
 MAINTAINERCLEANFILES=Makefile.in
 
-EXTRA_DIST = $(pkglib_SCRIPTS)
+EXTRA_DIST = $(pkgdata_SCRIPTS)

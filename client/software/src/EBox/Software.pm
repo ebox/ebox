@@ -18,7 +18,7 @@ package EBox::Software;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule);
+use base qw(EBox::GConfModule EBox::ServiceModule::ServiceInterface);
 
 use EBox;
 use EBox::Config;
@@ -54,6 +54,95 @@ sub _create
 	bless($self, $class);
 	return $self;
 }
+
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+  return [ 
+	  {
+	   'action' => __(q{Add rule to firewall to allow connections to other's port 80}),
+	   'reason' => __(q{eBox need to repositories' 80 port in order to download packages}),
+	   'module' => 'software',
+	  },
+	  {
+	   'action' => __(q{Change configuration of dpkg and ucf}),
+	   'reason' => __(q{The new configuration is needed to always preserve old configuration files}),
+	   'module' => 'software',
+	  },
+	  {
+	   'action' => __(q{Change software packages repositories}),
+	   'reason' => __(q{The software module needs to use know working repositories to avoid package problems}),
+	   'module' => 'software',
+	  },
+	  {
+	   'action' => __(q{Change debconf configuration}),
+	   'reason' => __(q{eBox software module uses non-interactive mode and a critical priority}),
+	   'module' => 'software',
+	  },
+
+	 ];
+}
+
+
+# Method: usedFiles 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::files
+#
+sub usedFiles 
+{
+  my @usedFiles = (
+		   {	
+		    'file' =>   '/etc/dpkg/dpkg.cfg',
+		    'reason' => __(q{To make sure dpkg prefers to preserver old configuration file}),
+		    'module' => 'software'
+		   },
+		   {	
+		    'file' =>   '/etc/ucf.conf',
+		    'reason' => __(q{To make sure ucf prefers to preserver old configuration file}),
+		    'module' => 'software'
+		   },
+		   {	
+		    'file' =>   '/etc/apt/sources.list',
+		    'reason' => __(q{To use eBox'a repositories}),
+		    'module' => 'software'
+		   },
+		  );
+ 
+
+
+   return \@usedFiles;
+}
+
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    root(EBox::Config::share() . '/ebox-software/ebox-software-enable');
+}
+
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::serviceModuleName
+#
+sub serviceModuleName
+{
+	return 'software';
+}
+
+#  Method: enableModDepends
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableModDepends
+#
+sub enableModDepends 
+{
+    return ['network'];
+}
+
 
 # Method: listEBoxPkgs
 # 	
