@@ -44,8 +44,6 @@ sub _process($) {
 
 	$self->_requireParam('username', __('user name'));
 	$self->_requireParam('fullname', __('full name'));
-	$self->_requireParam('password', __('password'));
-	$self->_requireParam('repassword', __('retype password'));
 	$self->_requireParamAllowEmpty('comment', __('comment'));
 
 	my $user;
@@ -56,6 +54,12 @@ sub _process($) {
 	$user->{'group'} = $self->param('group');
 	$user->{'comment'} = $self->param('comment');
 
+	for my $field (qw/password repassword/) {
+		unless (defined($user->{$field}) and $user->{$field} ne "") {
+			throw EBox::Exceptions::DataMissing(
+					'data' => __($field));
+		}
+	}
 	
 	if ($user->{'password'} ne $user->{'repassword'}){
 		 throw EBox::Exceptions::External(__('Passwords do'.
