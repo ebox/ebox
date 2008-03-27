@@ -1,2 +1,3 @@
 01_make_apparmour_aware
 02_fix_ebox_initialise
+03_allow_unsafe_chars_in_password

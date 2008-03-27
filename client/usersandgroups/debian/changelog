@@ -1,3 +1,9 @@
+ebox-usersandgroups (0.11.99-0ubuntu3) hardy; urgency=low
+
+  * Backport 0.11.100 patch to allow unsafe characters in users' passwords
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 27 Mar 2008 14:49:38 +0100
+
 ebox-usersandgroups (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
 
   * Backport patch from 0.11.100 to make backup tool aware of the
