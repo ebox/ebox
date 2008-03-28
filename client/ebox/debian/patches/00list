@@ -7,3 +7,4 @@
 07_intialise_log_statement
 08_fix_apache_pid_file
 09_fix_apache_watcher
+10_service_watcher

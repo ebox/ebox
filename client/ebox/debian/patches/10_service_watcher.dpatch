@@ -1,0 +1,203 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 10_service_watcher.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to check if a service is down in service watcher
+
+@DPATCH@
+
+Index: ebox/src/EBox/Event/Watcher/Runit.pm
+===================================================================
+--- ebox/src/EBox/Event/Watcher/Runit.pm	(revisión: 9763)
++++ ebox/src/EBox/Event/Watcher/Runit.pm	(copia de trabajo)
+@@ -107,10 +107,96 @@
+ 
+       my ($self) = @_;
+ 
++      return [$self->_runningAlertServices(), $self->_wildServices()];
++
++  }
++
++# Group: Protected methods
++
++# Method: _name
++#
++# Overrides:
++#
++#        <EBox::Event::Watcher::Base::_name>
++#
++# Returns:
++#
++#        String - the event watcher name
++#
++sub _name
++  {
++
++      return __('Service');
++
++  }
++
++# Method: _description
++#
++# Overrides:
++#
++#        <EBox::Event::Watcher::Base::_description>
++#
++# Returns:
++#
++#        String - the event watcher detailed description
++#
++sub _description
++  {
++
++      return __('Check if any service is running or not when it should.');
++
++  }
++
++# Method: _runningAlertServices
++#
++#   Generate events for services which are running or not when they should
++sub _runningAlertServices
++{
++    my ($self) = @_;
++
++    my $gl = EBox::Global->getInstance(1);
++
++    my $class = 'EBox::ServiceModule::ServiceInterface';
++    my @events;
++    for my $mod (@{$gl->modInstancesOfType($class)}) {
++        next unless ($mod->can('isRunning'));
++        my $enabled = $mod->isEnabled(); 
++        my $running = $mod->isRunning();
++        my $name = $mod->printableName();
++        my $msg;
++        if ($running and not $enabled) {
++            $msg = __x("The module \"{name}\" is not enabled but is running\n", 
++                    name => $name);
++        }
++        if (not $running and $enabled) {
++            $msg = __x("The module \"{name}\" is enabled but is not running\n", 
++                    name => $name);
++        }
++        if ($msg) {
++            push ( @events, new EBox::Event( 
++                                    message => $msg,
++                                   level   => 'error',
++                                   source  => $self->name(),
++                                                     ));
++         }
++    }
++    
++    return @events;
++}
++
++# Method: _wildServices
++#
++#   Generate events for services which have been forced to stop by upstart
++#   due to too fast respawing.
++sub _wildServices
++{
++      my ($self) = @_;
++
+       # The wild services are stored within a file with the following
+       # format:
+       # wildService1\twildService2\twildService3
+ 
++      my @events;
+       if ( -f WILD_SERVICES ) {
+       # Check if any service has been left
+           open(my $wildServicesFile, '+<', WILD_SERVICES) or
+@@ -134,7 +220,6 @@
+               chomp($line);
+               my @wildServices = split ( '\t', $line);
+               if ( scalar ( @wildServices ) > 0 ) {
+-                  my @events = ();
+                   my ( $restartMax, $timeInterval ) = ( EBox::Config::configkey('restart_max'),
+                                                         EBox::Config::configkey('time_interval') );
+                   foreach my $wildService (@wildServices) {
+@@ -150,51 +235,11 @@
+                                    source  => $self->name(),
+                                                      ));
+                   }
+-                  return \@events;
+               }
+           }
+       }
+ 
+-      return undef;
++     return @events;
++}
+ 
+-  }
+-
+-# Group: Protected methods
+-
+-# Method: _name
+-#
+-# Overrides:
+-#
+-#        <EBox::Event::Watcher::Base::_name>
+-#
+-# Returns:
+-#
+-#        String - the event watcher name
+-#
+-sub _name
+-  {
+-
+-      return __('Service');
+-
+-  }
+-
+-# Method: _description
+-#
+-# Overrides:
+-#
+-#        <EBox::Event::Watcher::Base::_description>
+-#
+-# Returns:
+-#
+-#        String - the event watcher detailed description
+-#
+-sub _description
+-  {
+-
+-      return __('Check if any service has been restarted many ' .
+-                ' times in a time interval');
+-
+-  }
+-
+-
+ 1;
+Index: ebox/src/EBox/ServiceModule/ServiceInterface.pm
+===================================================================
+--- ebox/src/EBox/ServiceModule/ServiceInterface.pm	(revisión: 9763)
++++ ebox/src/EBox/ServiceModule/ServiceInterface.pm	(copia de trabajo)
+@@ -245,6 +245,27 @@
+     return $gconf->get_bool('_serviceModuleStatus');
+ }
+ 
++# Method: isRunning
++#
++#   Used to tell if a service is running or not.
++#
++#   Modules starting/stopping services must
++#   override this method to carry out their custom checks which can
++#   involve checking an upstart script, an existing PID...
++#
++#   By default we return true or false depending on if the module
++#   is enabled or not. 
++#
++# Returns:
++#
++#   boolean - true if it's running otherwise false
++sub isRunning
++{
++    my ($self) = @_;
++
++    return $self->isEnabled();
++}
++
+ # Method: enableService 
+ #
+ #   Used to enable a service

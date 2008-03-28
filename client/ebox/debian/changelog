@@ -1,3 +1,17 @@
+ebox (0.11.99-0ubuntu7) hardy; urgency=low
+
+  * Backport 0.11.100 patch to check if a service is up when it shouldn't
+    in service watcher
+
+ -- Javier Uruen Val <javi@warp.es>  Fri, 28 Mar 2008 16:23:10 +0100
+
+ebox (0.11.99-0ubuntu6) hardy; urgency=low
+
+  * Run db_input with "|| true" to avoid issues with questions without
+    defaults and noninteractive install
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 27 Mar 2008 11:00:54 +0100
+
 ebox (0.11.99-0ubuntu5) hardy; urgency=low
 
   * Backport 0.11.100 patch to store apache pid file under eBox directories
