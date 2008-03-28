@@ -162,6 +162,15 @@ sub serviceModuleName
 	return 'dhcp';
 }
 
+# Method: isRunning
+#
+#   Override EBox::ServiceModule::ServiceInterface::isRunning
+#
+sub isRunning
+{
+    return EBox::Service::running(DHCP_SERVICE);
+}
+
 # Method: _stopService
 #
 #        Stop the dhcp service
