@@ -1,0 +1,28 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_is_running_interface.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to add isRunning function to dhcp
+
+@DPATCH@
+
+Index: dhcp/src/EBox/DHCP.pm
+===================================================================
+--- dhcp/src/EBox/DHCP.pm	(revisión: 9763)
++++ dhcp/src/EBox/DHCP.pm	(copia de trabajo)
+@@ -162,6 +162,15 @@
+ 	return 'dhcp';
+ }
+ 
++# Method: isRunning
++#
++#   Override EBox::ServiceModule::ServiceInterface::isRunning
++#
++sub isRunning
++{
++    return EBox::Service::running(DHCP_SERVICE);
++}
++
+ # Method: _stopService
+ #
+ #        Stop the dhcp service
