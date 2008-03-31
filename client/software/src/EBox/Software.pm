@@ -219,7 +219,7 @@ sub installPkgs # (@pkgs)
 	  return;
 	}
 
-	my $executable = EBox::Config::libexec . "../ebox-software/ebox-update-packages @pkgs";
+	my $executable = EBox::Config::share() . "/ebox-software/ebox-update-packages @pkgs";
 	my $progress = EBox::ProgressIndicator->create(
 						       totalTicks => scalar @pkgs,
 						       executable => $executable,
