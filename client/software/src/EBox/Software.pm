@@ -63,25 +63,27 @@ sub actions
 {
   return [ 
 	  {
-	   'action' => __(q{Add rule to firewall to allow connections to other's port 80}),
-	   'reason' => __(q{eBox need to repositories' 80 port in order to download packages}),
+	   'action' => __(q{Add rule to firewall to allow HTTP connections}),
+	   'reason' => __(q{eBox needs to access package repositories via HTTP to download packages}),
 	   'module' => 'software',
 	  },
-	  {
-	   'action' => __(q{Change configuration of dpkg and ucf}),
-	   'reason' => __(q{The new configuration is needed to always preserve old configuration files}),
-	   'module' => 'software',
-	  },
+#	  {
+#	   'action' => __(q{Change configuration of dpkg and ucf}),
+#	   'reason' => __(q{The new configuration is needed to always preserve old configuration files}),
+#	   'module' => 'software',
+#	  },
 	  {
 	   'action' => __(q{Change software packages repositories}),
-	   'reason' => __(q{The software module needs to use know working repositories to avoid package problems}),
+	   'reason' => __('The software module needs to add custom repositories: '.
+                      '{repo}', repo => 
+                      'deb http://ppa.launchpad.net/juruen/ubuntu hardy main'),
 	   'module' => 'software',
 	  },
-	  {
-	   'action' => __(q{Change debconf configuration}),
-	   'reason' => __(q{eBox software module uses non-interactive mode and a critical priority}),
-	   'module' => 'software',
-	  },
+#	  {
+#	   'action' => __(q{Change debconf configuration}),
+#	   'reason' => __(q{eBox software module uses non-interactive mode and a critical priority}),
+#	   'module' => 'software',
+#	  },
 
 	 ];
 }
@@ -94,19 +96,19 @@ sub actions
 sub usedFiles 
 {
   my @usedFiles = (
-		   {	
-		    'file' =>   '/etc/dpkg/dpkg.cfg',
-		    'reason' => __(q{To make sure dpkg prefers to preserver old configuration file}),
-		    'module' => 'software'
-		   },
-		   {	
-		    'file' =>   '/etc/ucf.conf',
-		    'reason' => __(q{To make sure ucf prefers to preserver old configuration file}),
-		    'module' => 'software'
-		   },
+#		   {	
+#		    'file' =>   '/etc/dpkg/dpkg.cfg',
+#		    'reason' => __(q{To make sure dpkg prefers to preserver old configuration file}),
+#		    'module' => 'software'
+#		   },
+#		   {	
+#		    'file' =>   '/etc/ucf.conf',
+#		    'reason' => __(q{To make sure ucf prefers to preserver old configuration file}),
+#		    'module' => 'software'
+#		   },
 		   {	
 		    'file' =>   '/etc/apt/sources.list',
-		    'reason' => __(q{To use eBox'a repositories}),
+		    'reason' => __(q{To add custom repositories}),
 		    'module' => 'software'
 		   },
 		  );

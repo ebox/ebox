@@ -13,19 +13,16 @@ $fw->addOutputRule("tcp",80);
 $fw->save();'
 
 # make sure dpkg prefers to preserver old configuration files
-echo "force-confold" > /etc/dpkg/dpkg.cfg
+#echo "force-confold" > /etc/dpkg/dpkg.cfg
 # make sure ucf prefers to preserver old configuration files
-echo "conf_force_conffold=YES" > /etc/ucf.conf
+#echo "conf_force_conffold=YES" > /etc/ucf.conf
 
-. /usr/share/debconf/confmodule.sh
-db_set debconf/priority critical
-db_set debconf/frontend noninteractive
+#. /usr/share/debconf/confmodule.sh
+#db_set debconf/priority critical
+#db_set debconf/frontend noninteractive
 	
 # Add ebox debian sources
 cat > /etc/apt/sources.list <<EOF
-deb http://ebox-platform.com/debian/stable/ ebox/
-deb http://ebox-platform.com/debian/stable/ extra/
-deb http://ebox-platform.com/debian/sarge/stable/ main/
-deb http://ebox-platform.com/debian/sarge/stable/ security/
+deb http://ppa.launchpad.net/juruen/ubuntu hardy main
 EOF
 
