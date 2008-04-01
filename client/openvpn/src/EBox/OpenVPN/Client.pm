@@ -340,7 +340,7 @@ sub removeServer
 #
 #  service - wether the client is enabled or disabed. *(Default: disabled)*
 #
-#  hidden  - wethet the client is hidden from the web GUI *(default: false)*
+#  internal  - wethet the client is hidden from the web GUI *(default: false)*
 sub init
 {
     my ($self, %params) = @_;
@@ -350,10 +350,16 @@ sub init
     (exists $params{certificate}) or throw EBox::Exceptions::External __("The client certificate must be specified");
     (exists $params{certificateKey}) or throw EBox::Exceptions::External __("The client private key must be specified");
     (exists $params{servers}) or throw EBox::Exceptions::External __("Servers must be supplied to the client");
-        (exists $params{ripPasswd}) or throw EBox::Exceptions::External __("Server's tunnel password missing");
 
     exists $params{service} or $params{service} = 0;
     exists $params{internal}  or $params{internal}  = 0;
+
+    if (not exists $params{ripPasswd}) {
+      # internal client don't have to need rip password
+      $params{internal} or
+	throw EBox::Exceptions::External __("Server's tunnel password missing");
+    }
+
 
     $self->setCertificateFiles($params{caCertificate}, $params{certificate}, $params{certificateKey});
 
