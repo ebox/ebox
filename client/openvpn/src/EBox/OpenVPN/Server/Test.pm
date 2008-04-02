@@ -662,13 +662,13 @@ sub setSubnetAndMaskTest : Test(18)
 # }
 
 
-sub addAndRemoveAdvertisedNet : Test(30)
+sub addAndRemoveAdvertisedNet : Test(31)
 {
   my ($self) = @_;
   my $server = $self->_newServer('macaco');
 
   my @straightNets = (
-	      ['192.168.24.1', '255.255.255.0'],
+	      ['192.168.24.0', '255.255.255.0'],
 	      ['192.168.86.0', '255.255.255.0'],
 	      ['10.0.0.0', '255.0.0.0'],
 	      [ '192.168.34.0', '255.255.255.0'], # not directly reacheable net
@@ -692,7 +692,7 @@ sub addAndRemoveAdvertisedNet : Test(30)
 
 
 
-  # varaibles to control the tests' results
+  # variables to control the tests' results
   my ($address, $mask);
   my @nets;
   my $netCount = 0;
@@ -717,6 +717,8 @@ sub addAndRemoveAdvertisedNet : Test(30)
   dies_ok { $server->addAdvertisedNet('10.0.0.0.0', '255.255.255.0')  } 'Expecting error when adding a net with a incorrect address';
   dies_ok { $server->addAdvertisedNet('10.0.0.0', '256.255.255.0')  } 'Expecting error when adding a net with a incorrect netmask';
   dies_ok { $server->addAdvertisedNet('10.0.0.0.1111', '0.255.255.0')  } 'Expecting error when adding a net with both a incorrect address and netmask';
+  dies_ok { $server->addAdvertisedNet('10.0.0.11', '255.255.255.0')  } 'Expecting error when adding a net with both a host insteead of a network';
+
 
 
   # remove straight cases 

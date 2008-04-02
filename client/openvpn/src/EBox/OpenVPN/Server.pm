@@ -729,7 +729,7 @@ sub init
     (exists $params{port} ) or throw EBox::Exceptions::External __("The server requires a port number");
     (exists $params{proto}) or throw EBox::Exceptions::External __("A IP protocol must be specified for the server");
     (exists $params{certificate}) or throw EBox::Exceptions::External __("A  server certificate must be specified");
-    if (exists $params{pullRoutes}) {
+    if (exists $params{pullRoutes} and $params{pullRoutes}) {
       ($params{ripPasswd}) or
 	throw EBox::Exceptions::External(
 		  __(q{eBox-to-EBox tunnel's password missing})
@@ -740,7 +740,7 @@ sub init
     my $externalIfaces = $network->ExternalIfaces();
     if (not @{ $externalIfaces } ) {
       throw  EBox::Exceptions::External(
-			 __('Cannot create the OpenVPN server because thre is not any external network interface available')
+			 __('Cannot create the OpenVPN server because there is not any external network interface available')
 				       );
     }
       
@@ -771,7 +771,7 @@ sub clientBundle
   my ($self, @p) = @_;
   validate(@p,
 	   {
-	    os => 1,
+	    clientType        => { default => 'windows' },
 	    clientCertificate => 1,
 	    addresses         => { type => ARRAYREF },
 	    installer         => 0,
@@ -779,14 +779,18 @@ sub clientBundle
 	  );
 
   my %params = @p;
-  my $os = delete $params{os};
 
-
-  if ( !($os eq any('linux', 'windows')) ) {
-    throw EBox::Exceptions::External('Unsupported operative system: {os}', os => $os);
+  my $clientType = delete $params{clientType};
+  if ( !($clientType eq any('windows',  'linux', 'EBoxToEBox')) ) {
+    throw EBox::Exceptions::External( __x('Unsupported client type: {ct}', ct => $clientType) );
   }
 
-  my $class = 'EBox::OpenVPN::Server::ClientBundleGenerator::' . ucfirst $os;
+  if (@{ $params{addresses} } == 0) {
+        throw EBox::Exceptions::External('You must provide a server address for the bundle');
+  }
+
+  my $class = 'EBox::OpenVPN::Server::ClientBundleGenerator::' . ucfirst $clientType;
+
 
   $params{server} = $self;
 
@@ -954,6 +958,17 @@ sub summary
 
   my $subnet  = $self->subnet . '/' . $self->subnetNetmask;
   push @summary,(__('VPN subnet'), $subnet);
+
+  my $iface = $self->iface();
+  push @summary, (__('VPN network interface'), $iface );
+  
+  my $addr = $self->ifaceAddress();
+  if ($addr) {
+    push @summary, (__('VPN interface address'), $addr);
+  }
+  else {
+    push @summary, (__('VPN interface address'), __('No active'));
+  }
 
   return @summary;
 }

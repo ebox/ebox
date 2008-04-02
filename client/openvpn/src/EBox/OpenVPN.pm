@@ -775,7 +775,7 @@ sub _checkNamePrefix
   }
   elsif (not $isReservedName and $internalDaemon) {
     throw EBox::Exceptions::External( __x(
-					  'Invalid name {name}. A internal daemon must has a name which begins with the prefix {pf}',
+					  'Invalid name {name}. A internal daemon must have a name which begins with the prefix {pf}',
 					  name => $name,
 					  pf => $reservedPrefix,
 					 )
@@ -943,31 +943,7 @@ sub CAIsReady
 
 
 
-sub setUserService
-{
-  my ($self, $active) = @_;
-  $self->_setService('userActive', $self->userService, $active);
 
-
-}
-
-sub setInternalService
-{
-  my ($self, $active) = @_;
-  $self->_setService('internalActive', $self->internalService, $active);
-
-
-}
-
-
-sub _setService # (active)
-{
-  my ($self, $serviceKey, $actualService, $newService) = @_;
-  
-  ($newService xor $actualService) or return;
-  
-  $self->set_bool($serviceKey, $newService);
-}
 
 
 sub service
@@ -975,37 +951,10 @@ sub service
   my ($self) = @_;
 
   return $self->isEnabled();
-  #my $service = $self->userService;
-  #$service and return $service;
-
- # return $self->internalService;
 }
 
 
 
-sub userService
-{
-  my ($self) = @_;
-  return $self->_service('userActive');
-}
-
-
-
-sub internalService
-{
-  my ($self) = @_;
-  return $self->_service('internalActive');
-}
-
-
-sub _service
-{
-   my ($self, $serviceKey) = @_;
-   my $service =  $self->get_bool($serviceKey);
-
-
-   return $service;
-}
 
 sub _doDaemon
 {
@@ -1045,7 +994,7 @@ sub running
   if ($self->_runningInstances()) {
     return 1;
   } 
-  elsif ($self->userService) {
+  elsif ($self->service) {
     my @activeUserDaemons = grep { (not $_->service) and (not $_->internal) } $self->daemons;
     return @activeUserDaemons == 0 ? 1 : 0;      
   }
@@ -1074,15 +1023,8 @@ sub _startDaemon
 
 
   try {
-    my @daemons;
+    my @daemons =  grep { $_->service   } $self->daemons;
 
-    if ($self->userService) {
-      push @daemons, grep { $_->service and (not $_->internal)  } $self->daemons;
-    }
-
-    if ($self->internalService()) {
-      push @daemons, grep { $_->service and  $_->internal } $self->daemons;
-    }
 
     foreach my $daemon (@daemons) {
       $daemon->start();
@@ -1486,7 +1428,7 @@ sub summary
 sub statusSummary
 {
     my ($self) = @_;
-    return new EBox::Summary::Status('openvpn', __('OpenVPN service'), $self->userRunning, $self->userService);
+    return new EBox::Summary::Status('openvpn', __('OpenVPN service'), $self->userRunning, $self->service);
 }
 
 

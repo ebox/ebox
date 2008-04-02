@@ -6,7 +6,7 @@ templatedir = @TEMPLATESPATH@/openvpn
 template_DATA =  index.mas \
                  create.mas edit.mas delete.mas serverProperties.mas \
                  caRequired.mas externalIfaceRequired.mas \
-                 createClient.mas editClient.mas clientProperties.mas \
+                 createClient.mas editClient.mas clientProperties.mas fixedTdFormTable.mas\
                  clientBundle.mas
 
 EXTRA_DIST = $(template_DATA)

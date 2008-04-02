@@ -34,7 +34,7 @@ sub masonParameters
 {
     my ($self) = @_;
     my $openVPN = EBox::Global->modInstance('openvpn');
-    my $service = $openVPN->userService();
+    my $service = $openVPN->service();
     my @servers = $openVPN->serversNames();
     my @clients = $openVPN->userClientsNames();
     

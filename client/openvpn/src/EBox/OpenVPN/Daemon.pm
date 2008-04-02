@@ -8,6 +8,8 @@ use base qw(EBox::GConfModule::Partition EBox::NetworkObserver);
 use File::Slurp;
 use Error qw(:try);
 
+use EBox::NetWrappers;
+
 sub new
 {
     my ($class, $name, $daemonPrefix, $openvpnModule) = @_;
@@ -102,6 +104,43 @@ sub ifaceType
 {
   my ($self) = @_;
   return 'tap';
+}
+
+
+#
+# Method: ifaceAddress
+#
+#   get the vpn's iface address
+#
+# Returns:
+#    - the address in CIDR notation or undef if the interface has not address
+sub ifaceAddress
+{
+  my ($self) = @_;
+  my $iface = $self->iface();
+
+  if (not EBox::NetWrappers::iface_exists($iface)) {
+    return undef;
+  }
+
+  if (not EBox::NetWrappers::iface_is_up($iface)) {
+    return undef;
+  }
+  
+  my %addresses = %{ EBox::NetWrappers::iface_addresses_with_netmask($iface) };
+  my $nAddresses = keys %addresses;
+  if ($nAddresses == 0) {
+    EBox::error("No address found for interface $iface");
+    return undef;
+  }
+  elsif ($nAddresses > 1) {
+    EBox::warn("More than one addres for interface $iface. Only one of them will be show");
+  }
+
+  my ($addr, $netmask) = each %addresses;
+  my $cidrAddr = EBox::NetWrappers::to_network_with_mask($addr, $netmask);
+
+  return $cidrAddr;
 }
 
 #
@@ -478,16 +517,17 @@ sub _pidFile
 sub pid
 {
   my ($self) = @_;
+  my $pid;
+
   try {
-    my $pid = File::Slurp::read_file($self->_pidFile);
-    return $pid;
+    $pid = File::Slurp::read_file($self->_pidFile);
 
   }
   otherwise {
-  return undef;
-  } 
+    $pid = undef;
+  };
 
-
+  return $pid;
 }
 
 
@@ -501,7 +541,7 @@ sub running
 {
   my ($self) = @_;
   my $pid = $self->pid;
-  return defined $pid;
+  return (defined $pid);
 }
 
 

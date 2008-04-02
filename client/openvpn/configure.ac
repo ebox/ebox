@@ -59,10 +59,13 @@ AC_CONFIG_FILES([
 src/Makefile
 src/EBox/Makefile
 src/EBox/t/Makefile
+src/EBox/t/testdata/Makefile
 src/EBox/OpenVPN/Makefile
 src/EBox/OpenVPN/Server/Makefile
 src/EBox/OpenVPN/Server/t/Makefile
 src/EBox/OpenVPN/Server/ClientBundleGenerator/Makefile
+src/EBox/OpenVPN/Server/ClientBundleGenerator/EBoxToEBox/Makefile
+src/EBox/OpenVPN/Server/ClientBundleGenerator/t/Makefile
 src/EBox/OpenVPN/Client/Makefile
 src/EBox/OpenVPN/Client/t/Makefile
 src/EBox/OpenVPN/Client/t/testdata/Makefile

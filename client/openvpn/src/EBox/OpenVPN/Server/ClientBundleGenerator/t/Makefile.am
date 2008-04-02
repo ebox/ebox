@@ -1,7 +1,4 @@
-SUBDIRS = testdata
-
-test_scripts = OpenVPN.t
-
+test_scripts = EBoxToEBox.t
 
 EXTRA_DIST = $(test_scripts)
 
