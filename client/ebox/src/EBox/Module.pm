@@ -77,13 +77,17 @@ sub _create # (name, domain?)
 
 # Method: revokeConfig 
 #
-#   	Base method to revoke config. It should be overriden by subclasses 
-#   	as needed
+#   	Base method to revoke config. It just notifies that he module has been
+#   	restarted. 
+#       It should be overriden by subclasses as needed
 #
 sub revokeConfig
 {
-	# default empty implementation. It should be overriden by subclasses as
-	# needed
+	my $self = shift;
+	my $global = EBox::Global->getInstance();
+
+	$global->modIsChanged($self->name) or return;
+	$global->modRestarted($self->name);
 }
 
 # Method: _saveConfig 
