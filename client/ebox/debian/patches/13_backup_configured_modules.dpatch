@@ -1,0 +1,116 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 13_backup_configured_modules.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patchto only backup configured modules. Otherwise, 
+## DP: backup operations may fail
+
+@DPATCH@
+
+Index: ebox/src/EBox/Backup.pm
+===================================================================
+--- src/EBox/Backup.pm	(revisión: 9979)
++++ src/EBox/Backup.pm	(revisión: 9985)
+@@ -128,15 +128,12 @@
+ 
+   my $progress   = $options{progress};
+ 
+-  my $global = EBox::Global->getInstance();
+-  my @names = @{$global->modNames};
+-  foreach my $modName (@names) {
++  my @modules = @{ $self->_modInstancesForBackup() };
++  foreach my $mod (@modules) {
++    my $modName = $mod->name();
+     # XXX temporally skipping logs
+     next if $modName eq 'logs';
+ 
+-    my $mod = $global->modInstance($modName);
+-
+-
+     if ($progress) {
+       # update progress object
+       $progress->notifyTick();
+@@ -157,6 +154,47 @@
+ 
+ }
+ 
++sub _modInstancesForBackup
++{
++  my ($self) = @_;
++
++  my @mods = @{ $self->_configuredModInstances };
++
++  return \@mods;
++}
++
++
++sub _configuredModInstances
++{
++  my ($self) = @_;
++
++  my $global = EBox::Global->getInstance();
++
++  my @modules =  @{ $global->modInstances() };
++
++
++  my @configuredModules;
++  foreach my $mod (@modules) {
++    if ($mod->can('configured')) {
++      if ($mod->configured()) {
++	push @configuredModules, $mod;
++      }
++    }
++    else {
++      push @configuredModules, $mod;
++    }
++  }
++  # leave aside not configured modules
++#   @modules = grep {
++# #    (not $_->isa('EBox::ServiceModule::ServiceInterface') or
++# #    ($_->configured())) 
++#     $_->configured()
++#   } @modules;
++
++  return \@configuredModules;
++}
++
++
+ sub  _createFilesArchive
+ {
+   my ($self, $auxDir, $filesArchive) = @_;
+@@ -234,8 +272,8 @@
+ {
+   my ($self, $archiveContentsDir) = @_;
+ 
+-  my $global = EBox::Global->getInstance();
+-  my @modNames = @{ $global->modNames() };
++  my @mods     = @{ $self->_modInstancesForBackup() };
++  my @modNames = map { $_->name  } @mods;
+ 
+   my $file = "$archiveContentsDir/modules";
+   write_file($file, "@modNames");
+@@ -1078,9 +1116,8 @@
+ 
+   my $anyModuleInBackup = any( @{ $self->_modulesInBackup($archive) } );
+ 
+-  my $global = EBox::Global->getInstance();
+ 
+-  my @modules =  @{ $global->modInstances() };
++  my @modules =  @{ $self->_configuredModInstances };
+ 
+ 
+   # if we have a module list we check it and only keep those modules
+Index: ebox/src/templates/backup.mas
+===================================================================
+--- src/templates/backup.mas	(revisión: 9979)
++++ src/templates/backup.mas	(revisión: 9985)
+@@ -20,6 +20,9 @@
+ my $disabledAttr = $modulesChanged ? 'disabled' : '';
+ 
+ </%init>
++<div class='note'>
++    <% __x('Those modules which have not been enabled for first time in the {openref}module status{closeref} section will be ignored in both backup and restore operations', openref => '<a href="/ebox/ServiceModule/StatusView">', closeref => '<a>') %>
++</div>
+ <h3><% __('Back up the current state') %></h3>
+ <div class='help'>
+ 	<% __("Backups will be stored in eBox and then you will be able to
