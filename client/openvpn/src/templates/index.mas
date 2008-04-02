@@ -1,5 +1,4 @@
 <%args>
-$service
 @servers
 @clients
 
@@ -8,13 +7,11 @@ $noCA => 0
 </%args>
 <%init>
 use EBox::Gettext;
-my $active  = $service ? 'yes' : 'no';
 
 my $serversShowed = (@servers and not $noCA);
 my $clientsShowed = @clients;
 </%init>
 
-<h3> <% __('Servers') %> </h3>
 <h3> <% __('Servers') %> </h3>
 % if ($noCA) {
   <& /openvpn/caRequired.mas &>
