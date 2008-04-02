@@ -69,12 +69,12 @@ case "$1" in
         chmod 0600 ${STDERR_FILE}
         chown ebox:ebox ${STDERR_FILE}
 
-		# add the dynamic www-directories
-		DYNAMIC_WWW_DIRS=$(perl -MEBox::Config -e'print EBox::Config::dynamicwww() ; print " " ; print join(" ", @{EBox::Config::dynamicwwwSubdirs()});  1;'); 
-		for DIR in $DYNAMIC_WWW_DIRS; do
-		    mkdir -p $DIR
-		    chown -R ebox.ebox $DIR
-		done
+        # add the dynamic www-directories
+        DYNAMIC_WWW_DIRS=$(perl -MEBox::Config -e'print EBox::Config::dynamicwww() ; print " " ; print join(" ", @{EBox::Config::dynamicwwwSubdirs()});  1;'); 
+        for DIR in $DYNAMIC_WWW_DIRS; do
+        mkdir -p $DIR
+        chown -R ebox.ebox $DIR
+        done
 
         #change the /var/lib/ebox/ user
         chown  ebox:ebox /var/lib/ebox
@@ -92,14 +92,21 @@ case "$1" in
         create_db
 
         /usr/share/ebox/ebox-sql-table add admin /usr/share/ebox/sqllog/admin.sql
-        
-        set_ebox_port            
 
-        invoke-rc.d ebox apache stop || true
-        invoke-rc.d ebox apache start || true
+        set_ebox_port
+
+        if [ -z "$2" ]; then
+            invoke-rc.d ebox apache start || true
+        else 
+            invoke-rc.d ebox apache stop || true
+            # Give apache some time to stop completely 
+            # Otherwise it will fail to start as the port is being used
+            sleep 5
+            invoke-rc.d ebox apache start || true
+        fi 
         
 
-		;;
+        ;;
 esac
 
 
