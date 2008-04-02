@@ -1,3 +1,11 @@
+ebox-usersandgroups (0.11.99-0ubuntu4) hardy; urgency=low
+
+  * Backport 0.11.100 patch to fix backup restoring. Run rm within sh -c
+    to avoid issues with sudo and globbing of a directory without 
+    proper permissions
+
+ -- Javier Uruen Val <javi@warp.es>  Wed, 02 Apr 2008 23:55:33 +0200
+
 ebox-usersandgroups (0.11.99-0ubuntu3) hardy; urgency=low
 
   * Backport 0.11.100 patch to allow unsafe characters in users' passwords
