@@ -21,7 +21,7 @@ my $disabledAttr = $modulesChanged ? 'disabled' : '';
 
 </%init>
 <div class='note'>
-<% __(q{The modules which weren't never enabled will be ignored by both backup and restore operations }) %>
+    <% __x('Those modules which have not been enabled for first time in the {openref}module status{closeref} section will be ignored in both backup and restore operations', openref => '<a href="/ebox/ServiceModule/StatusView">', closeref => '<a>') %>
 </div>
 <h3><% __('Back up the current state') %></h3>
 <div class='help'>
