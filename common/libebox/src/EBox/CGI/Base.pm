@@ -23,6 +23,7 @@ use HTML::Mason::Exceptions;
 use CGI;
 use EBox::Gettext;
 use EBox;
+use EBox::Global;
 use EBox::Exceptions::Base;
 use EBox::Exceptions::Internal;
 use EBox::Exceptions::External;
@@ -34,6 +35,8 @@ use Data::Dumper;
 use Perl6::Junction qw(all);
 use File::Temp qw(tempfile);
 use File::Basename;
+use Apache2::Connection;
+use Apache2::RequestUtil;
 
 ## arguments
 ##		title [optional]
@@ -297,7 +300,13 @@ sub run
 	} 
 
 	if ((defined($self->{redirect})) && (!defined($self->{error}))) {
-		print($self->cgi()->redirect("/ebox/" . $self->{redirect}));
+                my $localAddr = Apache2::RequestUtil->request()->connection()->local_ip();
+                my $apachePort = EBox::Global->getInstance(1)->modInstance('apache')->port();
+                my $portStr = '';
+                if ( $apachePort != 443 ) {
+                    $portStr = ":$apachePort";
+                }
+		print($self->cgi()->redirect("https://${localAddr}${portStr}/ebox/" . $self->{redirect}));
 		EBox::debug("redirect: " . $self->{redirect});
 		return;
 	} 
