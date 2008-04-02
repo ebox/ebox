@@ -2,8 +2,9 @@ ebox (0.11.99-0ubuntu8) hardy; urgency=low
 
   * Backport 0.11.100 patch to clean up file descriptors before 
     running exec in progress indicator: used by backup and software modules
-  * Bacport 0.11.00 patch to use /lib/lsb/init-functions to log start/stop
+  * Backport 0.11.00 patch to use /lib/lsb/init-functions to log start/stop
     actions
+  * Add preinst script to fetch from eBox apache's port and set it in debconf
 
  -- Javier Uruen Val <javi@warp.es>  Wed, 02 Apr 2008 14:52:00 +0200
 
