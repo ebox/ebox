@@ -9,8 +9,8 @@
 
 Index: ebox/src/EBox/Backup.pm
 ===================================================================
---- src/EBox/Backup.pm	(revisión: 9979)
-+++ src/EBox/Backup.pm	(revisión: 9985)
+--- ebox/src/EBox/Backup.pm	(revisión: 9979)
++++ ebox/src/EBox/Backup.pm	(revisión: 9985)
 @@ -128,15 +128,12 @@
  
    my $progress   = $options{progress};
@@ -102,8 +102,8 @@ Index: ebox/src/EBox/Backup.pm
    # if we have a module list we check it and only keep those modules
 Index: ebox/src/templates/backup.mas
 ===================================================================
---- src/templates/backup.mas	(revisión: 9979)
-+++ src/templates/backup.mas	(revisión: 9985)
+--- ebox/src/templates/backup.mas	(revisión: 9979)
++++ ebox/src/templates/backup.mas	(revisión: 9985)
 @@ -20,6 +20,9 @@
  my $disabledAttr = $modulesChanged ? 'disabled' : '';
  
