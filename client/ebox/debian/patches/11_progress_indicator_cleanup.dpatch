@@ -1,0 +1,125 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 11_progress_indicator_cleanup.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to clean up file descriptors before running 
+## DP: exec in progress indicator
+
+@DPATCH@
+
+Index: ebox/src/EBox/Apache.pm
+===================================================================
+--- ebox/src/EBox/Apache.pm	(revisión: 9905)
++++ ebox/src/EBox/Apache.pm	(copia de trabajo)
+@@ -36,6 +36,7 @@
+ use EBox::Config;
+ use English qw(-no_match_vars);
+ use File::Basename;
++use POSIX ('setsid');
+ 
+ # Constants
+ use constant RESTRICTED_RESOURCES_KEY    => 'restricted_resources';
+@@ -64,6 +65,27 @@
+ 	return '/usr/share/ebox/ebox-apache2ctl';
+ }
+ 
++# Method: cleanupForExec
++#
++#	It does the job to prepare a forked apache process to do an exec.
++#	We should use spawn_proc_prog() from mod_perl but we experience
++#	some issues.
++#
++#
++sub cleanupForExec
++{
++    POSIX::setsid();
++
++	opendir(my $dir, "/proc/$$/fd");
++	while (defined(my $fd = readdir($dir))) {
++		next unless ($fd =~ /^\d+$/);
++		eval('POSIX::close($fd)');
++	}
++	open(STDOUT, '> /dev/null');
++	open(STDERR, '> /dev/null');
++	open(STDIN, '/dev/null');
++}
++
+ # restarting apache from inside apache could be problematic, so we fork() and
+ # detach the child from the process group.
+ sub _daemon # (action) 
+@@ -82,15 +104,7 @@
+ 		if ($pid) { 
+ 			return; # parent returns inmediately
+ 		}
+-	        # Close descriptors as apache2 does not open them with close_on_exec
+-        	# flag
+-		opendir(my $dir, "/proc/$$/fd");
+-		while (defined(my $fd = readdir($dir))) {
+-			next unless ($fd =~ /^\d+$/);
+-            POSIX::close($fd);
+-		}
+-		open(STDOUT, "> /dev/null");
+-		open(STDERR, "> /dev/null");
++		cleanupForExec();
+ 		sleep(5);
+ 	} 
+ 
+Index: ebox/src/EBox/ProgressIndicator.pm
+===================================================================
+--- ebox/src/EBox/ProgressIndicator.pm	(revisión: 9800)
++++ ebox/src/EBox/ProgressIndicator.pm	(copia de trabajo)
+@@ -23,10 +23,11 @@
+ use EBox::Config;
+ use EBox::Gettext;
+ use EBox::Global;
++use EBox::Apache;
+ 
+ use Error qw(:try);
+-use POSIX;
+ 
++
+ use constant HOST_MODULE => 'apache';
+ 
+ sub create 
+@@ -389,11 +390,10 @@
+   }
+ 
+   if ($pid) {
+-    EBox::debug("parent $$");
+     return; # parent returns immediately
+   }
+   else {
+-    EBox::debug("child $$");
++
+     $self->_childExec();
+   }
+ }
+@@ -401,22 +401,16 @@
+ 
+ sub _childExec
+ {
+-  my ($self) = @_;
++    my ($self) = @_;
+ 
+-  POSIX::setsid();
+-#   close(STDOUT);
+-#   close(STDERR);
+-#   open(STDOUT, "> /dev/null");
+-#   open(STDERR, "> /dev/null");
++    my $cmd = $self->_executable() .
++        ' ' .
++        $self->execProgressIdParamName() .
++        ' ' . 
++        $self->id();
+ 
+-  my $cmd = $self->_executable() .
+-                  ' ' .
+-                  $self->execProgressIdParamName() .
+-                  ' ' . 
+-		 $self->id();
+-
+-  EBox::debug("about to execute $cmd");
+-  exec($cmd);
++    EBox::Apache::cleanupForExec();
++    exec('/usr/bin/sudo ' . $cmd);
+ }

@@ -1,0 +1,68 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 12_ebox_init.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to use 
+## DP: /lib/lsb/init-functions to log start/stop actions
+
+@DPATCH@
+
+Index: ebox/tools/ebox
+===================================================================
+--- ebox/tools/ebox	(revisión: 9763)
++++ ebox/tools/ebox	(copia de trabajo)
+@@ -53,6 +53,11 @@
+     exit 2;
+   }
+ 
++  # Do not restart apache if we are run under ebox-software
++  if ($actionName eq 'restart' and $modname eq 'apache' ) {
++	return if (exists $ENV{'EBOX_SOFTWARE'} and $ENV{'EBOX_SOFTWARE'} == 1 );
++  }
++
+   if ($actionName eq 'start' and $modname eq 'network' and $mod->isEnabled()) {
+       try {
+         EBox::Sudo::root("/etc/init.d/networking stop");
+@@ -63,11 +68,11 @@
+   my $errorMsg;
+   try {
+     $mod->$action();
+-    $success = 1;
++    $success = 0;
+   } 
+   catch EBox::Exceptions::Base with {
+       my $ex = shift;
+-      $success = 0;
++      $success = 1;
+       $errorMsg =  $ex->text;
+   };
+ 
+@@ -95,14 +100,24 @@
+ 
+ }
+ 
++sub _logActionFunction
++{
++	my ($action, $success) = @_;
++	system(". /lib/lsb/init-functions; " . 
++	       " log_begin_msg \"$action\"; log_end_msg $success");
++}
++
++
++
+ sub printModuleMessage
+ {
+   my ($modname, $action, $success, $errorMsg) = @_;
++  
++  my %actions = ( 'start' => 'Starting', 'stop' => 'Stopping', 
++		  'restart' => 'Restarting' );
+ 
+-  my $successMsg = $success ?  '   [ OK ]' : '[ ERROR ]';
+-
+-  print STDOUT "EBox: $action $modname:\t\t\t$successMsg\n";
+-
++  my $msg = $actions{$action} . " eBox module: $modname";
++  _logActionFunction($msg, $success);
+   if ($errorMsg) {
+     print STDERR $errorMsg, "\n";
+   }
