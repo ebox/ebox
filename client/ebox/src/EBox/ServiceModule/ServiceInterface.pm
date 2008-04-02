@@ -245,6 +245,27 @@ sub isEnabled
     return $gconf->get_bool('_serviceModuleStatus');
 }
 
+# Method: isRunning
+#
+#   Used to tell if a service is running or not.
+#
+#   Modules starting/stopping services must
+#   override this method to carry out their custom checks which can
+#   involve checking an upstart script, an existing PID...
+#
+#   By default we return true or false depending on if the module
+#   is enabled or not. 
+#
+# Returns:
+#
+#   boolean - true if it's running otherwise false
+sub isRunning
+{
+    my ($self) = @_;
+
+    return $self->isEnabled();
+}
+
 # Method: enableService 
 #
 #   Used to enable a service
