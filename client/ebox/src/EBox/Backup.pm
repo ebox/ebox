@@ -128,14 +128,11 @@ sub _dumpModulesBackupData
 
   my $progress   = $options{progress};
 
-  my $global = EBox::Global->getInstance();
-  my @names = @{$global->modNames};
-  foreach my $modName (@names) {
+  my @modules = @{ $self->_modInstancesForBackup() };
+  foreach my $mod (@modules) {
+    my $modName = $mod->name();
     # XXX temporally skipping logs
     next if $modName eq 'logs';
-
-    my $mod = $global->modInstance($modName);
-
 
     if ($progress) {
       # update progress object
@@ -156,6 +153,47 @@ sub _dumpModulesBackupData
   }
 
 }
+
+sub _modInstancesForBackup
+{
+  my ($self) = @_;
+
+  my @mods = @{ $self->_configuredModInstances };
+
+  return \@mods;
+}
+
+
+sub _configuredModInstances
+{
+  my ($self) = @_;
+
+  my $global = EBox::Global->getInstance();
+
+  my @modules =  @{ $global->modInstances() };
+
+
+  my @configuredModules;
+  foreach my $mod (@modules) {
+    if ($mod->can('configured')) {
+      if ($mod->configured()) {
+	push @configuredModules, $mod;
+      }
+    }
+    else {
+      push @configuredModules, $mod;
+    }
+  }
+  # leave aside not configured modules
+#   @modules = grep {
+# #    (not $_->isa('EBox::ServiceModule::ServiceInterface') or
+# #    ($_->configured())) 
+#     $_->configured()
+#   } @modules;
+
+  return \@configuredModules;
+}
+
 
 sub  _createFilesArchive
 {
@@ -234,8 +272,8 @@ sub  _createModulesListFile
 {
   my ($self, $archiveContentsDir) = @_;
 
-  my $global = EBox::Global->getInstance();
-  my @modNames = @{ $global->modNames() };
+  my @mods     = @{ $self->_modInstancesForBackup() };
+  my @modNames = map { $_->name  } @mods;
 
   my $file = "$archiveContentsDir/modules";
   write_file($file, "@modNames");
@@ -1078,9 +1116,8 @@ sub _modInstancesForRestore
 
   my $anyModuleInBackup = any( @{ $self->_modulesInBackup($archive) } );
 
-  my $global = EBox::Global->getInstance();
 
-  my @modules =  @{ $global->modInstances() };
+  my @modules =  @{ $self->_configuredModInstances };
 
 
   # if we have a module list we check it and only keep those modules

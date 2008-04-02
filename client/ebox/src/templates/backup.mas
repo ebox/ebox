@@ -20,6 +20,9 @@ my $modeOptions = [
 my $disabledAttr = $modulesChanged ? 'disabled' : '';
 
 </%init>
+<div class='note'>
+<% __(q{The modules which weren't never enabled will be ignored by both backup and restore operations }) %>
+</div>
 <h3><% __('Back up the current state') %></h3>
 <div class='help'>
 	<% __("Backups will be stored in eBox and then you will be able to
