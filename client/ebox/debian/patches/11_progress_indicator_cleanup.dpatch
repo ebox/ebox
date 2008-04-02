@@ -9,8 +9,8 @@
 
 Index: ebox/src/EBox/Apache.pm
 ===================================================================
---- ebox/src/EBox/Apache.pm	(revisión: 9905)
-+++ ebox/src/EBox/Apache.pm	(copia de trabajo)
+--- ebox/src/EBox/Apache.pm	2008-04-02 15:20:37.000000000 +0200
++++ ebox/src/EBox/Apache.pm	2008-04-02 13:09:36.000000000 +0200
 @@ -36,6 +36,7 @@
  use EBox::Config;
  use English qw(-no_match_vars);
@@ -56,7 +56,7 @@ Index: ebox/src/EBox/Apache.pm
 -		opendir(my $dir, "/proc/$$/fd");
 -		while (defined(my $fd = readdir($dir))) {
 -			next unless ($fd =~ /^\d+$/);
--            POSIX::close($fd);
+-		    POSIX::close($fd);	
 -		}
 -		open(STDOUT, "> /dev/null");
 -		open(STDERR, "> /dev/null");
