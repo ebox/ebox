@@ -64,9 +64,35 @@ sub _create
 	return $self;
 }
 
+
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Create logs database'),
+		'reason' => __('eBox store its logs in the database'),
+		'module' => 'logs'
+	}
+    ];
+}
+
+
+# Method: enableActions 
+#
+# 	Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+    EBox::Sudo::root(EBox::Config::share() . '/ebox/ebox-logs-enable');
+}
+
 #  Method: serviceModuleName
 #
-#   Override EBox::ServiceModule::ServiceInterface::servivceModuleName
+#   Override EBox::ServiceModule::ServiceInterface::serviceModuleName
 #
 sub serviceModuleName
 {
