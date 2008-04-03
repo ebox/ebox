@@ -42,7 +42,6 @@ PidFile <% $tmpdir %>/apache.pid
 
 PerlInterpMaxRequests 20
 
-Include /etc/apache2/mods-available/alias.load
 Include /etc/apache2/mods-available/auth_basic.load
 Include /etc/apache2/mods-available/authn_file.load
 Include /etc/apache2/mods-available/authz_default.load
@@ -141,10 +140,6 @@ SSLCertificateKeyFile /var/lib/ebox/conf/ssl.key/ebox.key
     BrowserMatch "JDK/1\.0" force-response-1.0
 </IfModule>
 
-Alias /data/ @WWWPATH@
-Alias /dynamic-data @DYNAMICWWWPATH@
-ScriptAlias /ebox/ @CGIPATH@
-
 % if ($debug eq 'yes') {
 # Yes, this is useless right now.
 #PerlInitHandler	Apache2::Reload
@@ -187,8 +182,15 @@ PerlSetVar AuthCookieDebug 0
 
 RewriteEngine On
 
+# From /ebox to /ebox/ and redirect
 RewriteRule ^/ebox$ /ebox/ [R]
+# From / to /ebox and redirect
 RewriteRule ^/$ /ebox/ [R]
-RewriteRule ^/ebox/ebox.cgi$ [S,PT]
-RewriteRule ^/ebox/(.*) /ebox/ebox.cgi [E=script:$1,PT,L]
+# Map /ebox/ebox.cgi to the right Perl CGI and redirect
+RewriteRule ^/ebox/ebox.cgi$ /ebox/ [R]
+# From /data/ to / and finish
+RewriteRule ^/data(.*) $1 [L]
+# From /dynamic-data/ to the right directory in FS and finish
+RewriteRule ^/dynamic-data(.*) @DYNAMICWWWPATH@$1 [L]
+RewriteRule ^/ebox/(.*) @CGIPATH@ebox.cgi [E=script:$1,L]
 
