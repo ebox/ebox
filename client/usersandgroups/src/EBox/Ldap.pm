@@ -587,7 +587,7 @@ sub _rmLdapDirCmd
   my ($self, $ldapDir)   = @_;
   $ldapDir .= '/*' if  defined $ldapDir ;
 
-  return "/bin/rm -rf $ldapDir";
+  return "sh -c '/bin/rm -rf $ldapDir'";
 }
 
 sub _pauseAndExecute
