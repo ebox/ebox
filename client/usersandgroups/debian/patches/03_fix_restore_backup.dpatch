@@ -4,16 +4,50 @@
 ## All lines beginning with `## DP:' are a description of the patch.
 ## DP: Backport 0.11.100
 ## DP: patch to fix backup. Run rm within sh -c to avoid issues with sudo and 
-## DP: globbing
-## DP: in a directory with proper permissions
+## DP: globbing in a directory with proper permissions
 
 @DPATCH@
 
+Index: usersandgroups/src/EBox/UsersAndGroups.pm
+===================================================================
+--- usersandgroups/src/EBox/UsersAndGroups.pm	(revisión: 9990)
++++ usersandgroups/src/EBox/UsersAndGroups.pm	(revisión: 9997)
+@@ -71,10 +71,10 @@
+ {
+ 	return [ 
+ 	{
+-		'action' => __('The openLDAP server will be configrued and intialized'),
++		'action' => __('Your current openLDAP database will be replaced ' .
++				'and backuped in /var/backups/slapd'),
+ 		'reason' => __('eBox will initialize openLDAP to store its database. ' .
+-					'Your current database will be replaced and backuped in' .
+-					'/var/backups/slapd'),
++				'It will also overwrite your current configuration'),
+ 		'module' => 'users'
+ 	}
+     ];
 Index: usersandgroups/src/EBox/Ldap.pm
 ===================================================================
---- usersandgroups/src/EBox/Ldap.pm	(revisión: 9819)
-+++ usersandgroups/src/EBox/Ldap.pm	(copia de trabajo)
-@@ -587,7 +587,7 @@
+--- usersandgroups/src/EBox/Ldap.pm	(revisión: 9990)
++++ usersandgroups/src/EBox/Ldap.pm	(revisión: 9997)
+@@ -556,12 +556,15 @@
+   my $slapdConfFile = EBox::Ldap::slapdConfFile();
+   my $ldifFile = $self->ldifFile($dir);
+ 
++  my $backupCommand = $self->_backupSystemDirectory();
+   my $rmCommand = $self->_rmLdapDirCmd($ldapDir);
+   my $slapaddCommand = $self->_slapaddCmd($ldifFile, $slapdConfFile);
+   my $chownDataCommand = $self->_chownDatadir;
+   
+   $self->_pauseAndExecute(
+-		cmds => [$rmCommand, $slapaddCommand, $chownDataCommand ]);
++		cmds => [$backupCommand, $rmCommand, 
++			 $slapaddCommand, $chownDataCommand 
++			]);
+ }
+ 
+ 
+@@ -587,9 +590,16 @@
    my ($self, $ldapDir)   = @_;
    $ldapDir .= '/*' if  defined $ldapDir ;
  
@@ -21,4 +55,27 @@ Index: usersandgroups/src/EBox/Ldap.pm
 +  return "sh -c '/bin/rm -rf $ldapDir'";
  }
  
++sub _backupSystemDirectory
++{
++  my ($self) = @_;
++  
++  return EBox::Config::share() . '/ebox-usersandgroups/slapd.backup';
++}
++
  sub _pauseAndExecute
+ {
+   my ($self, %params) = @_;
+Index: usersandgroups/tools/slapd.backup
+===================================================================
+--- usersandgroups/tools/slapd.backup	(revisión: 9990)
++++ usersandgroups/tools/slapd.backup	(revisión: 9997)
+@@ -43,7 +43,8 @@
+   suffix=`grep "^suffix" $conf | sed -e "s/\(^suffix\s\+\|\"\|\'\)//g"`
+   for directory in "$suffix"; do
+     if [ ! -z "$suffix" ]; then
+-      slapcat > "$BACKUPDIR/$suffix.ldif" -b "$suffix"
++      date=$(date +%C%y%m%d-%H%M%S)
++      slapcat > "$BACKUPDIR/$suffix-$date.ldif" -b "$suffix"
+     fi
+   done
+ 
