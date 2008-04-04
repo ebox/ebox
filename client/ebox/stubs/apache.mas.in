@@ -7,7 +7,6 @@
     $debug => 'no'
 </%args>
 
-
 Timeout 300
 KeepAlive On
 MaxKeepAliveRequests 100
@@ -183,11 +182,11 @@ PerlSetVar AuthCookieDebug 0
 RewriteEngine On
 
 # From /ebox to /ebox/ and redirect
-RewriteRule ^/ebox$ /ebox/ [R]
+RewriteRule ^/ebox$ /ebox/
 # From / to /ebox and redirect
-RewriteRule ^/$ /ebox/ [R]
+RewriteRule ^/$ /ebox/
 # Map /ebox/ebox.cgi to the right Perl CGI and redirect
-RewriteRule ^/ebox/ebox.cgi$ /ebox/ [R]
+RewriteRule ^/ebox/ebox.cgi$ /ebox/
 # From /data/ to / and finish
 RewriteRule ^/data(.*) $1 [L]
 # From /dynamic-data/ to the right directory in FS and finish
