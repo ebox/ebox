@@ -121,5 +121,5 @@ Index: ebox/src/EBox/ProgressIndicator.pm
 -  EBox::debug("about to execute $cmd");
 -  exec($cmd);
 +    EBox::Apache::cleanupForExec();
-+    exec('/usr/bin/sudo ' . $cmd);
++    exec($cmd);
  }
