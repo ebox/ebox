@@ -556,12 +556,15 @@ sub loadLdapData
   my $slapdConfFile = EBox::Ldap::slapdConfFile();
   my $ldifFile = $self->ldifFile($dir);
 
+  my $backupCommand = $self->_backupSystemDirectory();
   my $rmCommand = $self->_rmLdapDirCmd($ldapDir);
   my $slapaddCommand = $self->_slapaddCmd($ldifFile, $slapdConfFile);
   my $chownDataCommand = $self->_chownDatadir;
   
   $self->_pauseAndExecute(
-		cmds => [$rmCommand, $slapaddCommand, $chownDataCommand ]);
+		cmds => [$backupCommand, $rmCommand, 
+			 $slapaddCommand, $chownDataCommand 
+			]);
 }
 
 
@@ -588,6 +591,13 @@ sub _rmLdapDirCmd
   $ldapDir .= '/*' if  defined $ldapDir ;
 
   return "sh -c '/bin/rm -rf $ldapDir'";
+}
+
+sub _backupSystemDirectory
+{
+  my ($self) = @_;
+  
+  return EBox::Config::share() . '/ebox-usersandgroups/slapd.backup';
 }
 
 sub _pauseAndExecute

@@ -43,7 +43,8 @@ function backupDirectories() {
   suffix=`grep "^suffix" $conf | sed -e "s/\(^suffix\s\+\|\"\|\'\)//g"`
   for directory in "$suffix"; do
     if [ ! -z "$suffix" ]; then
-      slapcat > "$BACKUPDIR/$suffix.ldif" -b "$suffix"
+      date=$(date +%C%y%m%d-%H%M%S)
+      slapcat > "$BACKUPDIR/$suffix-$date.ldif" -b "$suffix"
     fi
   done
 
