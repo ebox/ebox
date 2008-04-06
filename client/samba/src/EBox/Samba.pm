@@ -256,6 +256,7 @@ sub _setSambaConf
 	push(@array, 'active_file' => $self->fileService());	
 	push(@array, 'active_printer' => $self->printerService());	
 	push(@array, 'pdc' => $self->pdc());
+	push(@array, 'roaming' => $self->roamingProfiles());
 	push(@array, 'backup_path' => EBox::Config::conf() . '/backups');
 	
 	$self->writeConfFile(SMBCONFFILE, "samba/smb.conf.mas", \@array);
@@ -637,6 +638,19 @@ sub setDescription # (enabled)
 	}
 	($description eq $self->description) and return;
         $self->set_string('description', $description);
+}
+
+sub roamingProfiles
+{
+	my ($self) = @_;
+	return $self->get_bool('roaming');
+}
+
+sub setRoamingProfiles # (enabled) 
+{
+        my ($self, $enable) = @_;
+ 	return unless ($self->roamingProfiles() xor $enable);
+        $self->set_bool('roaming', $enable);
 }
 
 #returns description name

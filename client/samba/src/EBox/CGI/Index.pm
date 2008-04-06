@@ -52,6 +52,7 @@ sub _process($) {
 	push (@array, 'netbios'         => $samba->netbios);
 	push (@array, 'description'     => $samba->description);
 	push (@array, 'userquota'       => $samba->defaultUserQuota);
+	push (@array, 'roaming'         => $samba->roamingProfiles);
 
 	$self->{params} = \@array;
 }

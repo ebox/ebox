@@ -10,6 +10,7 @@
 	$active_printer
 	$active_file
 	$backup_path
+	$roaming
 </%args>
 <%init>
 use EBox::Gettext;
@@ -51,7 +52,11 @@ use EBox::Gettext;
  logon script = logon.bat
  logon drive = H:
  logon home =
+%  if ($roaming) {
  logon path = \\<% $netbios %>\%U
+% } else {
+ logon path = "" 
+% }
 
  domain logons = Yes
  os level = 65

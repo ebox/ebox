@@ -7,6 +7,7 @@
 	$netbios
 	$description
 	$userquota
+	$roaming
 </%args>
 <%init>
 use EBox::Gettext;
@@ -72,6 +73,22 @@ use EBox::Gettext;
 		</td>
 	</tr>
 	<tr>
+		<td class='tright'>
+			<span class='ftitle'><% __('Roaming profiles') %>:</span>
+		</td>
+		<td>
+		        <select name="roaming" enabled>
+%    		   	if ($roaming) {
+           		 	<option selected value='enabled' ><% __('Enabled') %></option>
+       		     		<option value='disabled' ><% __('Disabled') %></option>
+%			} else {
+           		 	<option selected value='disabled' ><% __('Disabled') %></option>
+       		     		<option value='enabled' ><% __('Enabled') %></option>
+%       		}
+       			 </select>
+   		</td>
+	</tr>
+	<tr>
 		<td></td>
 		<td>
 			<input class='inputButton' type='submit' name='changeuserquota' 
@@ -79,6 +96,7 @@ use EBox::Gettext;
 				   alt="<% __('Change') %>">
 		</td>
 	</tr>
+
 </tbody>
 </table>
 </form>
