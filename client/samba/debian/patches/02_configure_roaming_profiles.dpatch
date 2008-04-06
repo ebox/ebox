@@ -1,0 +1,157 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_configure_roaming_profiles.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to enable/disable roaming profiles
+
+@DPATCH@
+
+Index: samba/schemas/samba.schemas
+===================================================================
+--- samba/schemas/samba.schemas	(revisión: 9763)
++++ samba/schemas/samba.schemas	(copia de trabajo)
+@@ -44,6 +44,14 @@
+             <default>true</default>
+             <locale name="C"/>
+         </schema>
++		<schema>
++            <key>/schemas/ebox/modules/samba/roaming</key>
++            <applyto>/ebox/modules/samba/roaming</applyto>
++            <owner>ebox</owner>
++            <type>bool</type>
++            <default>false</default>
++            <locale name="C"/>
++        </schema>
+ 
+         <schema>
+             <key>/schemas/ebox/modules/samba/description</key>
+Index: samba/src/EBox/CGI/Index.pm
+===================================================================
+--- samba/src/EBox/CGI/Index.pm	(revisión: 9763)
++++ samba/src/EBox/CGI/Index.pm	(copia de trabajo)
+@@ -52,6 +52,7 @@
+ 	push (@array, 'netbios'         => $samba->netbios);
+ 	push (@array, 'description'     => $samba->description);
+ 	push (@array, 'userquota'       => $samba->defaultUserQuota);
++	push (@array, 'roaming'         => $samba->roamingProfiles);
+ 
+ 	$self->{params} = \@array;
+ }
+Index: samba/src/EBox/CGI/SambaConf.pm
+===================================================================
+--- samba/src/EBox/CGI/SambaConf.pm	(revisión: 9763)
++++ samba/src/EBox/CGI/SambaConf.pm	(copia de trabajo)
+@@ -44,12 +44,14 @@
+ 	$self->_requireParam('mode', __('working mode'));
+ 	$self->_requireParam('description', __('description'));
+ 	$self->_requireParam('userquota', __('user quota'));
++	$self->_requireParam('roaming', __('roaming profiles'));
+ 
+ 	$samba->setPdc($self->param('mode') eq 'pdc');
+ 	$samba->setWorkgroup($self->param('workgroup'));
+ 	$samba->setNetbios($self->param('netbios'));
+ 	$samba->setDefaultUserQuota($self->param('userquota'));
+ 	$samba->setDescription($self->param('description'));
++	$samba->setRoamingProfiles(($self->param('roaming') eq 'enabled'));
+ 
+ }
+ 
+Index: samba/src/EBox/Samba.pm
+===================================================================
+--- samba/src/EBox/Samba.pm	(revisión: 9763)
++++ samba/src/EBox/Samba.pm	(copia de trabajo)
+@@ -256,6 +256,7 @@
+ 	push(@array, 'active_file' => $self->fileService());	
+ 	push(@array, 'active_printer' => $self->printerService());	
+ 	push(@array, 'pdc' => $self->pdc());
++	push(@array, 'roaming' => $self->roamingProfiles());
+ 	push(@array, 'backup_path' => EBox::Config::conf() . '/backups');
+ 	
+ 	$self->writeConfFile(SMBCONFFILE, "samba/smb.conf.mas", \@array);
+@@ -639,6 +640,19 @@
+         $self->set_string('description', $description);
+ }
+ 
++sub roamingProfiles
++{
++	my ($self) = @_;
++	return $self->get_bool('roaming');
++}
++
++sub setRoamingProfiles # (enabled) 
++{
++        my ($self, $enable) = @_;
++ 	return unless ($self->roamingProfiles() xor $enable);
++        $self->set_bool('roaming', $enable);
++}
++
+ #returns description name
+ #ret: bool
+ sub description
+Index: samba/src/templates/index.mas
+===================================================================
+--- samba/src/templates/index.mas	(revisión: 9763)
++++ samba/src/templates/index.mas	(copia de trabajo)
+@@ -7,6 +7,7 @@
+ 	$netbios
+ 	$description
+ 	$userquota
++	$roaming
+ </%args>
+ <%init>
+ use EBox::Gettext;
+@@ -72,6 +73,22 @@
+ 		</td>
+ 	</tr>
+ 	<tr>
++		<td class='tright'>
++			<span class='ftitle'><% __('Roaming profiles') %>:</span>
++		</td>
++		<td>
++		        <select name="roaming" enabled>
++%    		   	if ($roaming) {
++           		 	<option selected value='enabled' ><% __('Enabled') %></option>
++       		     		<option value='disabled' ><% __('Disabled') %></option>
++%			} else {
++           		 	<option selected value='disabled' ><% __('Disabled') %></option>
++       		     		<option value='enabled' ><% __('Enabled') %></option>
++%       		}
++       			 </select>
++   		</td>
++	</tr>
++	<tr>
+ 		<td></td>
+ 		<td>
+ 			<input class='inputButton' type='submit' name='changeuserquota' 
+@@ -79,6 +96,7 @@
+ 				   alt="<% __('Change') %>">
+ 		</td>
+ 	</tr>
++
+ </tbody>
+ </table>
+ </form>
+Index: samba/stubs/smb.conf.mas
+===================================================================
+--- samba/stubs/smb.conf.mas	(revisión: 9889)
++++ samba/stubs/smb.conf.mas	(copia de trabajo)
+@@ -10,6 +10,7 @@
+ 	$active_printer
+ 	$active_file
+ 	$backup_path
++	$roaming
+ </%args>
+ <%init>
+ use EBox::Gettext;
+@@ -51,7 +52,11 @@
+  logon script = logon.bat
+  logon drive = H:
+  logon home =
++%  if ($roaming) {
+  logon path = \\<% $netbios %>\%U
++% } else {
++ logon path = "" 
++% }
+ 
+  domain logons = Yes
+  os level = 65

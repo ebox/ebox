@@ -1,0 +1,26 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 03_output_firewall_rules.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to enable/disable roaming profiles
+
+@DPATCH@
+
+Index: samba/src/EBox/SambaFirewall.pm
+===================================================================
+--- samba/src/EBox/SambaFirewall.pm	(revisión: 9763)
++++ samba/src/EBox/SambaFirewall.pm	(copia de trabajo)
+@@ -51,7 +51,12 @@
+ 			$r = "-m state --state NEW -o $ifc  ".
+ 				"-p udp --sport $port -j ACCEPT";
+ 			push(@rules, $r);
+-
++			$r = "-m state --state NEW -o $ifc  ".
++				"-p tcp --dport $port -j ACCEPT";
++			push(@rules, $r);
++			$r = "-m state --state NEW -o $ifc  ".
++				"-p udp --dport $port -j ACCEPT";
++			push(@rules, $r);
+ 		}
+ 	}
+ 	

@@ -1,3 +1,10 @@
+ebox-samba (0.11.99-0ubuntu3) hardy; urgency=low
+
+  * Backport 0.11.100 patch to enable/disable roaming profiles
+  * Backport 0.11.100 fix to add output firewall rules
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 06 Apr 2008 23:53:01 +0200
+
 ebox-samba (0.11.99-0ubuntu2) hardy; urgency=low
 
   * Backport 0.11.100 fix to adjust group shares: Do not use sticky bit.
