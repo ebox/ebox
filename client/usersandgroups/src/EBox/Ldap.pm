@@ -233,7 +233,7 @@ sub search($$) # (args)
 	$self->ldapCon;	
 	my $result = $self->{ldap}->search(%{$args});
 	_errorOnLdap($result, $args);
-	return _utf8Attrs($result);
+	return $result;
 	
 }
 
