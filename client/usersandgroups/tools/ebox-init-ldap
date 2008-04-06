@@ -45,7 +45,7 @@ sub init
         }
         print $fd $pass;
         close($fd);
-        unless (chmod (0440, $LDAP_PWD_FILE)) {
+        unless (chmod (0400, $LDAP_PWD_FILE)) {
                 throw EBox::Exceptions::External("Can't chmod $LDAP_PWD_FILE");
         }
     }
