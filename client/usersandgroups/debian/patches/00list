@@ -2,3 +2,5 @@
 02_fix_ebox_initialise
 03_allow_unsafe_chars_in_password
 03_fix_restore_backup
+04_fix_utf8_ldap
+05_ldap_password_file_permissions

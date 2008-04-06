@@ -1,0 +1,24 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04_fix_utf8_ldap.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to remove
+## DP: workaround to enable utf8 strings. Now the library does the job for us, 
+## DP: and we 
+## DP: break the string if we do it twice.
+
+@DPATCH@
+
+Index: usersandgroups/src/EBox/Ldap.pm
+===================================================================
+--- usersandgroups/src/EBox/Ldap.pm	(revisión: 9996)
++++ usersandgroups/src/EBox/Ldap.pm	(copia de trabajo)
+@@ -233,7 +233,7 @@
+ 	$self->ldapCon;	
+ 	my $result = $self->{ldap}->search(%{$args});
+ 	_errorOnLdap($result, $args);
+-	return _utf8Attrs($result);
++	return $result;
+ 	
+ }
+ 

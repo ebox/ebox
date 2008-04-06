@@ -1,3 +1,13 @@
+ebox-usersandgroups (0.11.99-0ubuntu5) hardy; urgency=low
+
+  * Backport 0.11.100 patch to disable workaround to enable utf8 strings
+    in ldap results. The library does the job for us and we break strings
+    if we do it twice
+  * Backport 0.11.100 patch to remove read permissions for adm group
+    in eBox ldap password file
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 07 Apr 2008 00:17:58 +0200
+
 ebox-usersandgroups (0.11.99-0ubuntu4) hardy; urgency=low
 
   * Backport 0.11.100 patch to fix backup restoring. Run rm within sh -c
