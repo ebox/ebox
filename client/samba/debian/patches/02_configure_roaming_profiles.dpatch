@@ -147,11 +147,25 @@ Index: samba/stubs/smb.conf.mas
   logon script = logon.bat
   logon drive = H:
   logon home =
+- logon path = \\<% $netbios %>\%U
 +%  if ($roaming) {
-  logon path = \\<% $netbios %>\%U
++ logon path = \\<% $netbios %>\profiles\%U
 +% } else {
 + logon path = "" 
 +% }
  
   domain logons = Yes
   os level = 65
+Index: samba/src/EBox/SambaLdapUser.pm
+===================================================================
+--- samba/src/EBox/SambaLdapUser.pm	(revisión: 9763)
++++ samba/src/EBox/SambaLdapUser.pm	(copia de trabajo)
+@@ -155,7 +155,6 @@
+ 
+ 				     sambaHomePath        => _smbHomes() . $user,
+ 
+-				     sambaProfilePath     => _smbProfiles . $user,
+ 				     sambaPrimaryGroupSID => $sid . '-' . SMBGROUP,
+ 				     sambaLMPassword      => $lm,
+ 				     sambaNTPassword      => $nt,
+
