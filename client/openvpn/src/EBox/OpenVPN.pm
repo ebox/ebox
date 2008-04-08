@@ -750,7 +750,7 @@ sub _checkName
     throw EBox::Exceptions::External(
         __x(
 	    'Cannot use the name {name} because a  deleted daemon which has not been cleaned up has the same name.' 
-             . ' If you wan to use this name, please save changes first',
+             . ' If you want to use this name, please save changes first',
 	    name => $name,
      ));
   }
