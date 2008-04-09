@@ -1,0 +1,6 @@
+# Always install the server kernel.
+d-i	base-installer/kernel/override-image	string linux-server
+# Only install basic language packs. Let tasksel ask about tasks.
+d-i	pkgsel/language-pack-patterns	string
+# No language support packages.
+d-i	pkgsel/install-language-support	boolean false
