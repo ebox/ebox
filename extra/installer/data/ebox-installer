@@ -9,10 +9,16 @@
 
 RC_NAME=ebox-installer
 
-
 mount /cdrom
-apt-cdrom add
-umount /cdrom 
+apt-cdrom add --no-mount
+APT_SUCCESS=$?
+umount /cdrom
+
+if [ $APT_SUCCESS != 0 ]; then
+    # retry prompting the user
+    apt-cdrom add
+fi
+
 
 echo Installing eBox...
 

@@ -6,6 +6,7 @@ VERSION=hardy
 VERSION_NUMBER=8.04
 EXTRAS_SRC=/home/javier/installer/extras
 
+UPDATE_MD5_SCRIPT=./updateMd5sum.sh
 
 pushd $CDIMAGE
 
@@ -23,7 +24,10 @@ echo Architecture: i386 >> $RELEASE_FILE
 
 
 rm -rf pool/extras/*
-cp -r $EXTRAS_SRC pool/extras
+cp -r $EXTRAS_SRC/* pool/extras
 
 
 popd
+
+echo Updating md5sums
+$UPDATE_MD5_SCRIPT
