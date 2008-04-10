@@ -11,9 +11,10 @@ test -d $CD_BUILD_DIR/.disk || (print "No .disk directory found in $CD_BUILD_DIR
 
 pushd $SCRIPTS_DIR
 
+./customUbuntuKeyring.sh
 ./configureAptFtpArchive.sh
 ./addExtrasToPool.sh
-./updateMd5Sum.sh:
+./updateMd5sum.sh
 ./put-ebox-stuff.sh
 ./mkisofs.sh
 
@@ -22,4 +23,4 @@ popd
 
 # XXX remove this step with new apt-key package
 # remove release signature
-find $BUILD_DIR -name Release.gpg | xargs -n 1 rm -vf
+#find $BUILD_DIR -name Release.gpg | xargs -n 1 rm -vf
