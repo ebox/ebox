@@ -72,6 +72,8 @@ sub _makeBackup # (description, bug?)
 	my $confdir = EBox::Config::conf;
 	my $tempdir = tempdir("$confdir/backup.XXXXXX") or
 		throw EBox::Exceptions::Internal("Could not create tempdir.");
+	EBox::Sudo::command("chmod 0700 $tempdir");
+
 	my $auxDir = "$tempdir/aux";
 	my $archiveContentsDirRelative = "eboxbackup";
 	my $archiveContentsDir = "$tempdir/$archiveContentsDirRelative";
@@ -439,6 +441,7 @@ sub _unpackArchive
 
   my $tempDir = tempdir(EBox::Config::tmp . "/backup.XXXXXX") or
     throw EBox::Exceptions::Internal("Could not create tempdir.");
+  EBox::Sudo::command("chmod 0700 $tempDir");
 
   my $filesWithPath =  @files > 0 ?
     join ' ', map { 'eboxbackup/' . $_  } @files : '';

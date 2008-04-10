@@ -28,6 +28,8 @@ use Test::MockObject;
 use Test::More;
 use Test::Exception;
 use Test::Differences;
+use Test::File;
+
 use EBox::Test qw(checkModuleInstantiation);
 use EBox::TestStubs qw(fakeEBoxModule);
 use EBox::Gettext;
@@ -921,6 +923,22 @@ sub dataRestoreTest : Test(7)
   checkExtendedCanaryGConf(AFTER_BACKUP_VALUE);
   # .. but data must be restored
   checkExtendedCanaryData(BEFORE_BACKUP_VALUE, 1);
+}
+
+
+sub checkArchivePermissions : Test(3)
+{
+  my ($self) = @_;
+
+  setCanaries(BEFORE_BACKUP_VALUE);
+  my $archive = checkMakeBackup(fullBackup => 0);
+  Test::File::file_mode_is($archive, 0600, 'Checking wether the archive permission only allow reads by its owner');
+  my @op = `ls -l $archive`;
+  diag "LS -l @op";
+
+
+  my $backupDir = EBox::Backup->backupDir();
+  Test::File::file_mode_is($backupDir, 0700, 'Checking wether the archives directory permission only allow reads by its owner');
 }
 
 1;
