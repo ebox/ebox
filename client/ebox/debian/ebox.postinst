@@ -55,6 +55,13 @@ case "$1" in
         chown -R ebox:adm /var/lib/ebox/conf
         chown -R ebox:adm /var/lib/ebox/log
  
+        # Create and set permissions for ebox.sid
+        EBOX_SID="/var/lib/ebox/conf/ebox.sid"
+        if [ ! -e $EBOX_SID ]; then
+            touch $EBOX_SID
+        fi
+        chown ebox:ebox $EBOX_SID
+        chmod 0600 $EBOX_SID
 
         # add the stderr file needed by sudo
         STDERR_FILE=`perl -MEBox::Config -e'print EBox::Config::tmp() . 'stderr'; 1'`;

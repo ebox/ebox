@@ -1,3 +1,10 @@
+ebox (0.11.99-0ubuntu9) hardy; urgency=low
+
+      * Fix permissions on /var/lib/ebox/conf/ebox.sid. To prevent cookies
+        from being read.
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 10 Apr 2008 13:08:20 +0200
+
 ebox (0.11.99-0ubuntu8) hardy; urgency=low
 
   * Backport 0.11.100 patch to clean up file descriptors before 
