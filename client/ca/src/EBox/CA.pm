@@ -74,6 +74,7 @@ use constant CAPUBKEY    => KEYSDIR . "capubkey.pem";
 
 # Directory mode to allow only owner and readable from others
 use constant DIRMODE     => 00705;
+use constant PRIVATEDIRMODE     => 00700;
 
 # Use Certification Version 3
 use constant EXTENSIONS_V3 => "1";
@@ -222,7 +223,7 @@ sub createCA {
     mkdir (CRLDIR, DIRMODE);
     mkdir (NEWCERTSDIR, DIRMODE);
     mkdir (KEYSDIR, DIRMODE);
-    mkdir (PRIVDIR, DIRMODE);
+    mkdir (PRIVDIR, PRIVATEDIRMODE);
     mkdir (REQDIR, DIRMODE);
     # Create index and crl number
     open ( my $OUT, ">" . INDEXFILE);
