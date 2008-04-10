@@ -1,5 +1,5 @@
 Dir {
-  ArchiveDir "/home/javier/installer/cd-image/";
+  ArchiveDir "ARCHIVE_DIR";
 };
 
 TreeDefault {

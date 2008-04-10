@@ -1,5 +1,5 @@
 Dir {
-  ArchiveDir "/home/javier/installer/cd-image";
+  ArchiveDir "ARCHIVE_DIR";
 };
 
 TreeDefault {
@@ -8,13 +8,13 @@ TreeDefault {
 
 BinDirectory "pool/main" {
   Packages "dists/hardy/main/binary-i386/Packages";
-  BinOverride "/home/javier/installer/indices/override.hardy.main";
-  ExtraOverride "/home/javier/installer/indices/override.hardy.extra.main";
+  BinOverride "INDICES/override.hardy.main";
+  ExtraOverride "INDICES/override.hardy.extra.main";
 };
 
 BinDirectory "pool/restricted" {
  Packages "dists/hardy/restricted/binary-i386/Packages";
- BinOverride "/home/javier/installer/indices/override.hardy.restricted";
+ BinOverride "INDICES/override.hardy.restricted";
 };
 
 Default {

@@ -1,14 +1,10 @@
 #!/bin/bash
 
+. ../build_cd.conf
 
-CDIMAGE=/home/javier/installer/cd-image
-VERSION=hardy
-VERSION_NUMBER=8.04
-EXTRAS_SRC=/home/javier/installer/extras
 
-UPDATE_MD5_SCRIPT=./updateMd5sum.sh
 
-pushd $CDIMAGE
+pushd $CD_BUILD_DIR
 
 mkdir -p dists/$VERSION/extras/binary-i386 pool/extras/ isolinux preseed
 
@@ -24,10 +20,7 @@ echo Architecture: i386 >> $RELEASE_FILE
 
 
 rm -rf pool/extras/*
-cp -r $EXTRAS_SRC/* pool/extras
+cp -r $EXTRAS_DIR/* pool/extras
 
 
 popd
-
-echo Updating md5sums
-$UPDATE_MD5_SCRIPT

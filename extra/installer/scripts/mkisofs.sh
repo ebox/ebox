@@ -1,11 +1,9 @@
 #!/bin/bash
-IMAGE=custom.iso
-BUILD=/home/javier/installer/cd-image
-
+. ../build_cd.conf
 
 mkisofs -r -V "Custom Ubuntu Install CD" \
             -cache-inodes \
             -J -l -b isolinux/isolinux.bin \
             -c isolinux/boot.cat -no-emul-boot \
             -boot-load-size 4 -boot-info-table \
-            -o $IMAGE $BUILD
+            -o $ISO_IMAGE $CD_BUILD_DIR

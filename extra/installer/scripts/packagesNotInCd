@@ -3,9 +3,6 @@
 use strict;
 use warnings;
 
-
-my $distName = 'stable';
-
 my ($cdImage, @packages) = @ARGV;
 
 (-d $cdImage) or 

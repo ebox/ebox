@@ -1,5 +1,5 @@
 Dir {
-  ArchiveDir "/home/javier/installer/cd-image/";
+  ArchiveDir "ARCHIVE_DIR";
 };
 
 TreeDefault {
@@ -8,12 +8,12 @@ TreeDefault {
 
 BinDirectory "pool/main" {
   Packages "dists/hardy/main/debian-installer/binary-i386/Packages";
-  BinOverride "/home/javier/installer/indices/override.hardy.main.debian-installer";
+  BinOverride "INDICES/override.hardy.main.debian-installer";
 };
 
 BinDirectory "pool/restricted" {
   Packages "dists/hardy/restricted/debian-installer/binary-i386/Packages";
-  BinOverride "/home/javier/installer/indices/override.hardy.restricted.debian-installer";
+  BinOverride "INDICES/override.hardy.restricted.debian-installer";
 };
 
 Default {
