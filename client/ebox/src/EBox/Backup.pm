@@ -78,9 +78,9 @@ sub _makeBackup # (description, bug?)
 	my $backupArchive = "$confdir/eboxbackup.tar";
 	
 	try {
-	  mkdir($auxDir) or
+	  mkdir($auxDir, 0700) or
 	    throw EBox::Exceptions::Internal("Could not create auxiliar tempdir.");
-	  mkdir($archiveContentsDir) or
+	  mkdir($archiveContentsDir, 0700) or
 	    throw EBox::Exceptions::Internal("Could not create archive tempdir.");
 
 	  $self->_dumpModulesBackupData($auxDir, %options);
@@ -199,7 +199,7 @@ sub  _createFilesArchive
 {
   my ($self, $auxDir, $filesArchive) = @_;
 
-  if (`tar czf $filesArchive -C $auxDir .`) {
+  if (`umask 0077; tar czf $filesArchive -C $auxDir .`) {
     throw EBox::Exceptions::Internal("Could not create archive.");
   }
   `rm -rf $auxDir`;
@@ -293,7 +293,7 @@ sub  _createBackupArchive
   my $cmd;
   my @output;
 
-  $cmd = "tar cf $backupArchive -C $tempdir $archiveContentsDirRelative  --exclude $filesArchive 2>&1";
+  $cmd = "umask 0077; tar cf $backupArchive -C $tempdir $archiveContentsDirRelative  --exclude $filesArchive 2>&1";
   @output = `$cmd`;
   if ($? != 0) {
     EBox::error("Failed command: $cmd. Output: @output");
@@ -559,7 +559,7 @@ sub _ensureBackupdirExistence
   my $backupdir = backupDir();
 
   unless (-d $backupdir) {
-    mkdir($backupdir) or throw EBox::Exceptions::Internal
+    mkdir($backupdir, 0700) or throw EBox::Exceptions::Internal
       ("Could not create backupdir.");
   }
 

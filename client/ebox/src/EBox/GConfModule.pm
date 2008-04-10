@@ -158,7 +158,7 @@ sub _dump_to_file # (dir?)
 	my $key = "/ebox/modules/" . $self->name;
 	($dir) or $dir = EBox::Config::conf;
 	my $file = $self->_bak_file_from_dir($dir);
-	`/usr/bin/gconftool --dump $key > $file` and
+	`umask 0077; /usr/bin/gconftool --dump $key > $file` and
 		throw EBox::Exceptions::Internal("Error while backing up " .
 						 "configuration on $file");
 }
