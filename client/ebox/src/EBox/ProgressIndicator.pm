@@ -23,9 +23,10 @@ use base 'EBox::GConfModule::StatePartition';
 use EBox::Config;
 use EBox::Gettext;
 use EBox::Global;
+use EBox::Apache;
 
 use Error qw(:try);
-use POSIX;
+
 
 use constant HOST_MODULE => 'apache';
 
@@ -390,11 +391,10 @@ sub _fork
   }
 
   if ($pid) {
-    EBox::debug("parent $$");
     return; # parent returns immediately
   }
   else {
-    EBox::debug("child $$");
+
     $self->_childExec();
   }
 }
@@ -402,22 +402,16 @@ sub _fork
 
 sub _childExec
 {
-  my ($self) = @_;
+    my ($self) = @_;
 
-  POSIX::setsid();
-#   close(STDOUT);
-#   close(STDERR);
-#   open(STDOUT, "> /dev/null");
-#   open(STDERR, "> /dev/null");
+    my $cmd = $self->_executable() .
+        ' ' .
+        $self->execProgressIdParamName() .
+        ' ' . 
+        $self->id();
 
-  my $cmd = $self->_executable() .
-                  ' ' .
-                  $self->execProgressIdParamName() .
-                  ' ' . 
-		 $self->id();
-
-  EBox::debug("about to execute $cmd");
-  exec($cmd);
+    EBox::Apache::cleanupForExec();
+    exec($cmd);
 }
 
 
