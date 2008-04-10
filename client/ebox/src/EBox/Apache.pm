@@ -36,6 +36,7 @@ use EBox::Gettext;
 use EBox::Config;
 use English qw(-no_match_vars);
 use File::Basename;
+use POSIX ('setsid');
 
 # Constants
 use constant RESTRICTED_RESOURCES_KEY    => 'restricted_resources';
@@ -64,6 +65,27 @@ sub initd
 	return '/usr/share/ebox/ebox-apache2ctl';
 }
 
+# Method: cleanupForExec
+#
+#	It does the job to prepare a forked apache process to do an exec.
+#	We should use spawn_proc_prog() from mod_perl but we experience
+#	some issues.
+#
+#
+sub cleanupForExec
+{
+    POSIX::setsid();
+
+	opendir(my $dir, "/proc/$$/fd");
+	while (defined(my $fd = readdir($dir))) {
+		next unless ($fd =~ /^\d+$/);
+		eval('POSIX::close($fd)');
+	}
+	open(STDOUT, '> /dev/null');
+	open(STDERR, '> /dev/null');
+	open(STDIN, '/dev/null');
+}
+
 # restarting apache from inside apache could be problematic, so we fork() and
 # detach the child from the process group.
 sub _daemon # (action) 
@@ -82,15 +104,7 @@ sub _daemon # (action)
 		if ($pid) { 
 			return; # parent returns inmediately
 		}
-	        # Close descriptors as apache2 does not open them with close_on_exec
-        	# flag
-		opendir(my $dir, "/proc/$$/fd");
-		while (defined(my $fd = readdir($dir))) {
-			next unless ($fd =~ /^\d+$/);
-            POSIX::close($fd);
-		}
-		open(STDOUT, "> /dev/null");
-		open(STDERR, "> /dev/null");
+		cleanupForExec();
 		sleep(5);
 	} 
 
