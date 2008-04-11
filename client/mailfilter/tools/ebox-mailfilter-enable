@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 
 #  don't start amavis, clamav and spamassassin with the init script
 MAILFILTER_SERVICES='amavis clamav-daemon clamav-freshclam spamassassin'
@@ -30,3 +30,4 @@ cp /usr/share/ebox-mailfilter/*.schema /etc/ldap/schema
 /usr/share/ebox-mailfilter/ebox-mailfilter-populate-filefilter update
 
 exit 0;
+
