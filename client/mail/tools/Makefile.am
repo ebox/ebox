@@ -2,7 +2,7 @@
 
 SUBDIRS = sqllog
 
-pkgdata_SCRIPTS = ebox-mail-ldap ebox-mail-enable
+pkgdata_SCRIPTS = ebox-mail-ldap ebox-mail-enable ebox-create-certificate
 
 MAINTAINERCLEANFILES = Makefile.in
 

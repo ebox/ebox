@@ -18,6 +18,15 @@ test -d $SASLAUTHD || mkdir -p $SASLAUTHD
 # Allow postfix to connect to the unix socket
 dpkg-statoverride --add postfix sasl 710 $SASLAUTHD
 
+# Create certificates for smptd
+/usr/share/ebox-mail/ebox-create-certificate /etc/postfix/sasl/
+mv /etc/postfix/sasl/smtp.key /etc/postfix/sasl/smtp-key.pem
+mv /etc/postfix/sasl/smtp.cert /etc/postfix/sasl/smtp.pem
+rm /etc/postfix/sasl/smtp.pem
+
+# Generate aliases
+newaliases
+
 # regenerate slapd.conf
 /usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
 
