@@ -59,6 +59,7 @@ sub domain
 	return "ebox-jabber";
 }
 
+
 # Method: actions
 #
 # 	Override EBox::ServiceModule::ServiceInterface::actions
@@ -156,9 +157,9 @@ sub _doDaemon
 {
 	my $self = shift;
 
-	if ($self->service and EBox::Service::running('ebox.jabber.jabber-c2s')) {
+	if ($self->isEnabled and EBox::Service::running('ebox.jabber.jabber-c2s')) {
 		$self->_daemons('restart');
-	} elsif ($self->service) {
+	} elsif ($self->isEnabled) {
 		$self->_daemons('start');
 	} else {
 		$self->_daemons('stop');
@@ -183,7 +184,7 @@ sub usesPort # (protocol, port, iface)
 {
 	my ($self, $protocol, $port, $iface) = @_;
 
-	return undef unless($self->service());
+	return undef unless($self->isEnabled());
 
 	return 1 if (($port eq JABBERPORT) and !($self->ssl eq 'required'));
 	return 1 if (($port eq JABBERPORTSSL) and !($self->ssl eq 'no'));
@@ -195,7 +196,7 @@ sub usesPort # (protocol, port, iface)
 sub firewallHelper
 {
 	my $self = shift;
-	if ($self->service){
+	if ($self->isEnabled){
 		return new EBox::JabberFirewall();
 	}
 	return undef;
@@ -342,7 +343,7 @@ sub statusSummary
 {
 	my $self = shift;
 	return new EBox::Summary::Status('jabber', __('Jabber'),
-		EBox::Service::running('ebox.jabber.jabber-c2s'), $self->service);
+		EBox::Service::running('ebox.jabber.jabber-c2s'), $self->isEnabled);
 }
 
 
