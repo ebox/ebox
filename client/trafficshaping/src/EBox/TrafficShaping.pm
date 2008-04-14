@@ -35,7 +35,12 @@ package EBox::TrafficShaping;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule EBox::NetworkObserver EBox::Model::ModelProvider EBox::Model::CompositeProvider);
+use base qw(EBox::GConfModule 
+            EBox::NetworkObserver 
+            EBox::Model::ModelProvider 
+            EBox::Model::CompositeProvider
+            EBox::ServiceModule::ServiceInterface
+            );
 
 ######################################
 # Dependencies:
@@ -114,6 +119,45 @@ sub startUp
     $self->_createBuilders(regenConfig => 0);
 
     $self->{'started'} = 1;
+}
+
+
+# Method: actions
+#
+# 	Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+	return [ 
+	{
+		'action' => __('Add iptables rules to mangle table'),
+		'reason' => __('To mark packets with different priorities and rates'),
+		'module' => 'trafficshping'
+	},
+    {
+		'action' => __('Add tc rules'),
+		'reason' => __('To implement the traffic shaping rules'),
+		'module' => 'trafficshping'
+	}
+    ];
+}
+
+#  Method: serviceModuleName
+#
+#   Override EBox::ServiceModule::ServiceInterface::serviceModuleName
+#
+sub serviceModuleName
+{
+	return 'trafficshaping';
+}
+
+#  Method: enableModDepends
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableModDepends
+#
+sub enableModDepends 
+{
+    return ['network'];
 }
 
 # Method: _regenConfig
