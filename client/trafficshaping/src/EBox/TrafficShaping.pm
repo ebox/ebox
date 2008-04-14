@@ -172,8 +172,9 @@ sub _regenConfig
     my ($self) = @_;
 
     # FIXME
-
-    $self->startUp() unless ($self->{'started'});
+    # Clean up stuff
+    $self->_stopService();
+    return unless ($self->isEnabled());
 
     # Create builders ( Disc -> Memory ) Mandatory every time an
     # access in memory is done
@@ -324,7 +325,7 @@ sub _stopService
   {
     my $self = shift;
 
-    $self->startUp();
+    $self->startUp() unless ($self->{'started'});
 
     my $ifaces_ref = $self->all_dirs_base('');
 
