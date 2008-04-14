@@ -11,12 +11,10 @@ test -d $CD_BUILD_DIR/.disk || (print "No .disk directory found in $CD_BUILD_DIR
 
 pushd $SCRIPTS_DIR
 
-./customUbuntuKeyring.sh
-./configureAptFtpArchive.sh
-./addExtrasToPool.sh
-./updateMd5sum.sh
-./put-ebox-stuff.sh
-./mkisofs.sh
+CD_SCRIPTS='./customUbuntuKeyring.sh ./configureAptFtpArchive.sh ./addExtrasToPool.sh ./updateMd5sum.sh ./put-ebox-stuff.sh ./mkisofs.sh'
+for SCRIPT in $CD_SCRIPTS; do
+    $SCRIPT || (print "$SCRIPT failed" && exit 1)
+done
 
 popd
 

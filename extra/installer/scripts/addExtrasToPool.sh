@@ -20,7 +20,7 @@ echo Architecture: i386 >> $RELEASE_FILE
 
 
 rm -rf pool/extras/*
-cp -r $EXTRAS_DIR/* pool/extras
+cp -r $EXTRAS_DIR/* pool/extras  || exit 1
 
 
 popd
