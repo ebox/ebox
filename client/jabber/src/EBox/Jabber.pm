@@ -97,7 +97,7 @@ sub usedFiles
 		{
 		 'file' => JABBERSMCONFFILE,
 		 'module' => 'jabber',
- 	 	 'reason' => __('To properly configure jaberd2')
+ 	 	 'reason' => __('To properly configure jabberd2')
 		},
        ];
 }
@@ -326,7 +326,7 @@ sub _setJabberConf
 
 	$self->writeConfFile(JABBERC2SCONFFILE,
 			     "jabber/c2s.xml.mas",
-			     \@array, [ 'uid' => 0, 'gid' => 0, mode => '600' ]);
+			     \@array, { 'uid' => 0, 'gid' => 0, mode => '600' });
 
 	@array = ();
 
