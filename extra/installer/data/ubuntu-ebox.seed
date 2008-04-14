@@ -10,45 +10,45 @@ d-i pkgsel/include string adduser amavisd-new  arj bind9 bzip2 clamav clamav-dae
 
 
 
-# XXX remove en productuin
+# Uncomment to ease installation testing
 
 
-# Hostname:
-netcfg	netcfg/get_hostname	string	ubuntu
+# # Hostname:
+# netcfg	netcfg/get_hostname	string	ubuntu
 
-# Is the system clock set to UTC?
-clock-setup	clock-setup/utc	boolean	false
-# Initialization vector generation algorithm for this partition:
-# Choices: 
-partman-crypto	partman-crypto/ivalgorithm	select	
-# Dummy template for preseeding unavailable questions
-d-i	console-keymaps-at/keymap	string	us
-# Passphrase input error
-partman-crypto	partman-crypto/passphrase-mismatch	error	
-# Continue with partitioning?
-partman-partitioning	partman-partitioning/unknown_label	boolean	true
-
-
-# Locale sets language and country.
-d-i debian-installer/locale string en_US
+# # Is the system clock set to UTC?
+# clock-setup	clock-setup/utc	boolean	false
+# # Initialization vector generation algorithm for this partition:
+# # Choices: 
+# partman-crypto	partman-crypto/ivalgorithm	select	
+# # Dummy template for preseeding unavailable questions
+# d-i	console-keymaps-at/keymap	string	us
+# # Passphrase input error
+# partman-crypto	partman-crypto/passphrase-mismatch	error	
+# # Continue with partitioning?
+# partman-partitioning	partman-partitioning/unknown_label	boolean	true
 
 
-# Keyboard layout:
-# Choices: USA - Alternative international (former us_intl), USA - Classic Dvorak, USA - Colemak, USA - Dvorak international, USA - Dvorak, USA - Group toggle on multiply/divide key, USA - International (AltGr dead keys), USA - International (with dead keys), USA - Left handed Dvorak, USA - Macintosh, USA - Right handed Dvorak, USA - Russian phonetic, USA - With EuroSign on 5, USA
-d-i	console-setup/variant	select	USA
+# # Locale sets language and country.
+# d-i debian-installer/locale string en_US
 
-#d-i apt-setup/use_mirror boolean false
-d-i mirror/http/proxy string
-d-i time/zone string US/Eastern
 
-# To create a normal user account.
-d-i passwd/user-fullname string Debian User
-d-i passwd/username string foobar
-# Normal user's password, either in clear text
-d-i passwd/user-password password foobar
-d-i passwd/user-password-again password foobar
+# # Keyboard layout:
+# # Choices: USA - Alternative international (former us_intl), USA - Classic Dvorak, USA - Colemak, USA - Dvorak international, USA - Dvorak, USA - Group toggle on multiply/divide key, USA - International (AltGr dead keys), USA - International (with dead keys), USA - Left handed Dvorak, USA - Macintosh, USA - Right handed Dvorak, USA - Russian phonetic, USA - With EuroSign on 5, USA
+# d-i	console-setup/variant	select	USA
 
-# XXX END
+# #d-i apt-setup/use_mirror boolean false
+# d-i mirror/http/proxy string
+# d-i time/zone string US/Eastern
+
+# # To create a normal user account.
+# d-i passwd/user-fullname string Debian User
+# d-i passwd/username string foobar
+# # Normal user's password, either in clear text
+# d-i passwd/user-password password foobar
+# d-i passwd/user-password-again password foobar
+
+# # XXX END
 
 
 tasksel        tasksel/first  multiselect
