@@ -126,7 +126,7 @@ sub serviceModuleName
 #
 sub enableModDepends 
 {
-    return ['usersandgroups'];
+    return ['users'];
 }
 
 
