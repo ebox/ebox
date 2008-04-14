@@ -44,6 +44,7 @@ sub _userAddOns
 	my ($self, $username) = @_;
 	my $jabber = EBox::Global->modInstance('jabber');
 
+	return unless ($jabber->configured());
 
 	my $active = 'no';
 	$active = 'yes' if($self->hasAccount($username));
