@@ -107,7 +107,7 @@ sub usedFiles
 #
 sub enableActions
 {
-    root(EBox::Config::share() . '/ebox-jabber/ebox-jabber-enable');
+    root(EBox::Config::share() . '/ebox-jabber/ebox-enable-jabber');
 }
 
 
