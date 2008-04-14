@@ -58,7 +58,7 @@ sub _userAddOns
 	             'active'   => $active,
 		     'is_admin' => $is_admin, 
 
-		     'service' => $jabber->service,
+		     'service' => $jabber->isEnabled(),
 		   };
 
 	return { path => '/jabber/jabber.mas',
