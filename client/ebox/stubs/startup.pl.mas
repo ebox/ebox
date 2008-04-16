@@ -43,7 +43,7 @@ use EBox::CGI::ClientBase;
 use Perl6::Junction;
 use Error;
 
-# workaround agains librrds-perl bug
+# workaround librrds-perl bug with locales with different decimal separator
 if (EBox::Global->getInstance()->modExists('network')) {
         eval("use RRDs;");
 }
