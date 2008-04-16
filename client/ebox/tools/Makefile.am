@@ -2,7 +2,7 @@
 SUBDIRS = sqllog cron
 
 pkgdata_SCRIPTS =  ebox-apache2ctl ebox-apache-restart ebox-sql-table ebox-migrate ebox-sudoers ebox ebox-runit ebox-sudoers-friendly ebox-clean-gconf ebox-create-certificate ebox-make-backup ebox-restore-backup ebox-unblock-exec ebox-passwd \
-  ebox-logs-enable
+  ebox-logs-enable ebox-set-locale
 
 MAINTAINERCLEANFILES = Makefile.in
 
