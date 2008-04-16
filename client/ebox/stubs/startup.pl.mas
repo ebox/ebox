@@ -43,6 +43,11 @@ use EBox::CGI::ClientBase;
 use Perl6::Junction;
 use Error;
 
+# workaround agains librrds-perl bug
+if (EBox::Global->getInstance()->modExists('network')) {
+        eval("use RRDs;");
+}
+
 
 
 1;
