@@ -66,18 +66,31 @@ sub gettextdomain
 	return $cur_domain;
 }
 
+# Enable utf8 only in strings coming from mason templates.
+# Strings coming from CGIs are already utf8 enabled
+sub __utf8_on
+{
+	my ($string) = @_;
+	my @frames = caller (2);
+	if ($frames[0] =~ /^HTML::Mason/) {
+		_utf8_on($$string);
+	}
+}
+
 sub __ # (text)
 {
 	_set_packagedomain();
 	my $string = gettext(shift);
 	_unset_packagedomain();
-	_utf8_on($string);
+	__utf8_on(\$string);
 	return $string;
 }
 
 sub __n # (text)
 {
 	my $string = shift;
+	my ($p, $a, $c) = caller;
+	__utf8_on(\$string);
 	return $string;
 }
 
@@ -87,7 +100,7 @@ sub __x # (text, %variables)
 	_set_packagedomain();
 	my $string = gettext($msgid);
 	_unset_packagedomain();
-	_utf8_on($string);
+	__utf8_on(\$string);
 	return __expand($string, %vars);
 }
 
@@ -98,7 +111,7 @@ sub __d # (text,domain)
 	textdomain($domain);
 	$string = gettext($string);
 	textdomain($cur_domain);
-	_utf8_on($string);
+	__utf8_on(\$string);
 	return $string;
 }
 
