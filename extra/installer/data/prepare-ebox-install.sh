@@ -8,3 +8,4 @@ update-rc.d $INSTALLER start  41 S .
 
 # Set eBox inittab
 cp /tmp/inittab /etc/inittab
+cp /tmp/locale.gen /var/tmp
