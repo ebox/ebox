@@ -75,18 +75,17 @@ sub _menu
 sub _title
 {
 	my $self = shift;
+
+	my $title = $self->{title}; 
+	defined $title or $title = '';
+	# XXX workaround form utf8 hell
+	Encode::_utf8_off($title);
+	
 	my $filename = EBox::Config::templates . '/title.mas';
 	my $interp = $self->_masonInterp();
 	my $comp = $interp->make_component(comp_file => $filename);
-	my @params = ();
-	
-	my $title = $self->{title}; 
-	if (defined($title) and (length($title) > 0)) {
-		$title = __($title);
-	} else {
-		$title = "";
-	}
-	push(@params, 'title' => $title);
+
+	my @params = ( 'title' => $title);
 
 	settextdomain('ebox');
 	$interp->exec($comp, @params);
