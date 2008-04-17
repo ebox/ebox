@@ -59,6 +59,13 @@ sub new # (title=?, error=?, msg=?, cgi=?, template=?)
 	}
 	$self->{domain} = 'ebox';
 	$self->{paramsKept} = ();
+
+	# XXX workaround form utf8 hell
+	if (Encode::is_utf8($self->{title})) {
+	  Encode::_utf8_off($self->{title});
+	}
+
+
 	bless($self, $class);
 	return $self;
 }
@@ -78,9 +85,7 @@ sub _title
 
 	my $title = $self->{title}; 
 	defined $title or $title = '';
-	# XXX workaround form utf8 hell
-	Encode::_utf8_off($title);
-	
+
 	my $filename = EBox::Config::templates . '/title.mas';
 	my $interp = $self->_masonInterp();
 	my $comp = $interp->make_component(comp_file => $filename);
