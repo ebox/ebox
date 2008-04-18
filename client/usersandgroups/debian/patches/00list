@@ -4,3 +4,4 @@
 03_fix_restore_backup
 04_fix_utf8_ldap
 05_ldap_password_file_permissions
+06_ldap_connect_retry

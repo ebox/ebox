@@ -1,3 +1,11 @@
+ebox-usersandgroups (0.11.99-0ubuntu6~ppa1) hardy; urgency=low
+
+  * Add patch to try to connect to slapd several times before giving up
+    and throwing an exceptions as slapd might need some time to accept
+    connectiongs after a restart
+
+ -- Javier Uruen Val <javi@warp.es>  Fri, 18 Apr 2008 16:59:00 +0200
+
 ebox-usersandgroups (0.11.99-0ubuntu5) hardy; urgency=low
 
   * Backport 0.11.100 patch to disable workaround to enable utf8 strings
