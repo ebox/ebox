@@ -553,6 +553,15 @@ sub serviceModuleName
 	return 'dns';
 }
 
+# Method: isRunning
+#
+# 	Override EBox::ServiceModule::ServiceInterface::isRunning
+#
+sub isRunning
+{
+    return EBox::Service::running('ebox.bind9');
+}
+
 sub _doDaemon
 {
 	my $self = shift;
@@ -600,6 +609,20 @@ sub setService
 	my ($self, $enabled) = @_;
 
 	$self->enableService($enabled)
+}
+
+# Method: enableService
+#
+# Overrides:
+#
+#  <EBox::ServiceModule::ServiceInterface::enableService>
+#
+sub enableService
+{
+	my ($self, $status) = @_;
+	
+	$self->SUPER::enableService($status);
+	$self->configureFirewall();    
 }
 
 # Method: _regenConfig
