@@ -11,6 +11,9 @@ test -d $CD_BUILD_DIR/.disk || (print "No .disk directory found in $CD_BUILD_DIR
 
 pushd $SCRIPTS_DIR
 
+./genLocalesFile.pl $DATA_DIR || (print "Autogeneration of locales files failed. Make usre you have a updated version of EBox::Gettext in your perl path." && exit 1)
+
+
 CD_SCRIPTS='./customUbuntuKeyring.sh ./configureAptFtpArchive.sh ./addExtrasToPool.sh ./updateMd5sum.sh ./put-ebox-stuff.sh ./mkisofs.sh'
 for SCRIPT in $CD_SCRIPTS; do
     $SCRIPT || (print "$SCRIPT failed" && exit 1)

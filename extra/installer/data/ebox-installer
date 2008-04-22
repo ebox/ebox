@@ -32,10 +32,14 @@ fi
 
 # Append eBox support languages to generate to current supported
 # locales
-cat /var/tmp/locale.gen >> /etc/locale.gen
+LOCALES_FILE=/var/lib/locales/supported.d/local
+TMP=/tmp/local.tmp
+cat /var/tmp/locale.gen $LOCALES_FILE > $TMP
+sort $TMP | uniq > $LOCALES_FILE
+rm -f $TMP
 
 # Regenerate locales to update the new messages from eBox
-/usr/sbin/locale-gen #; /usr/sbin/locale-gen
+/usr/sbin/locale-gen 
 
 /usr/share/ebox/ebox-set-locale $LANG
 

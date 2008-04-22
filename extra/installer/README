@@ -1,5 +1,7 @@
 Howto create the install CD
 
+
+
 1) Edit configuration file
  You must edit the file 'build_cd.conf' to reflect your environment. At least you will need to change the MAINTAINER_ADRESS and YOURKEYID items, probably also the BASE_DIR variable.
  The UBUNTU_KEYRING_TAR and UBUNTU_KEYRING_DIR must changed to reflect the version number of the package.
@@ -22,6 +24,9 @@ Howto create the install CD
   You need to download the ISO file to remaster. 
   After download it, execute the setup_build_dir.sh ISO_FILE_PATH command.
 
-6) Execute the build CD script.
+6) Make sure you have the latest version of the EBox::Gettext perl package in your perl path. You can get it from the sources or form the libebox debian package.
+
+
+7) Execute the build CD script.
  Execute the ./build_cd.sh script, it will ask you about your gpg passphrase a few times. If the build was sucessful you'll have your ISO written to the file pointed by the ISO_IMAGE key.
   
