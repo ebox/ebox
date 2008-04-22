@@ -66,23 +66,11 @@ sub gettextdomain
 	return $cur_domain;
 }
 
-# Enable utf8 only in strings coming from mason templates.
-# Strings coming from CGIs are already utf8 enabled
-sub __utf8_on
-{
-	my ($string) = @_;
-	my @frames = caller (2);
-	if ($frames[0] =~ /^HTML::Mason/) {
-		_utf8_on($$string);
-	}
-}
-
 sub __ # (text)
 {
 	_set_packagedomain();
 	my $string = gettext(shift);
 	_unset_packagedomain();
-	__utf8_on(\$string);
 	return $string;
 }
 
@@ -90,7 +78,6 @@ sub __n # (text)
 {
 	my $string = shift;
 	my ($p, $a, $c) = caller;
-	__utf8_on(\$string);
 	return $string;
 }
 
@@ -100,7 +87,6 @@ sub __x # (text, %variables)
 	_set_packagedomain();
 	my $string = gettext($msgid);
 	_unset_packagedomain();
-	__utf8_on(\$string);
 	return __expand($string, %vars);
 }
 
@@ -111,7 +97,6 @@ sub __d # (text,domain)
 	textdomain($domain);
 	$string = gettext($string);
 	textdomain($cur_domain);
-	__utf8_on(\$string);
 	return $string;
 }
 
@@ -153,7 +138,6 @@ sub _unset_packagedomain
 	}
 }
 
-use utf8;
 my $langs;
 $langs->{'an_ES.UTF-8'} = 'Aragonés';
 $langs->{'es_ES.UTF-8'} = 'Castellano';
@@ -171,7 +155,6 @@ $langs->{'pt_PT.UTF-8'} = 'Português';
 $langs->{'ru_RU.UTF-8'} = 'Русский';
 $langs->{'sv_SE.UTF-8'} = 'Svenska';
 $langs->{'tr_TR.UTF-8'} = 'Türkçe';
-no utf8;
 
 # Method:  langname
 #
