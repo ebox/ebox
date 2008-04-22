@@ -63,7 +63,8 @@ sub _title
 
 sub _header
 {
-
+	my $self = shift;
+	print($self->cgi()->header(-charset=>'utf-8'));
 }
 
 sub _footer
@@ -79,6 +80,7 @@ sub _print
 {
 	my $self = shift;
 	settextdomain($self->{'domain'});
+	$self->_header();
 	$self->_body();
 	settextdomain('ebox');
 }
