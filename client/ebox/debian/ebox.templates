@@ -24,6 +24,7 @@ Description: eBox HTTPS port:
 
 Template: ebox/port_used
 Type: boolean
+Default: true
 Description: Do you want to continue?
  It seems that the port you have selected is already being used. Press yes to 
  proceed anyway, or no to enter a new port.
