@@ -20,7 +20,7 @@ use warnings;
 
 use EBox::Config;
 use EBox::Exceptions::DeprecatedMethod;
-use POSIX qw(setuid setgid setlocale LC_ALL);
+use POSIX qw(setuid setgid setlocale LC_ALL LC_NUMERIC);
 use English;
 
 my $loginit = 0;
@@ -107,6 +107,7 @@ sub locale
 sub init
 {
 	POSIX::setlocale(LC_ALL, EBox::locale());
+	POSIX::setlocale(LC_NUMERIC, 'C');
 
 	my @groups = @{EBox::Config::groups()};
 	my $gids = '';
