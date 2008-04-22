@@ -17,7 +17,6 @@ package EBox::Gettext;
 
 use Locale::gettext;
 use EBox::Config;
-use Encode qw(:all);
 
 BEGIN {
 	use Exporter ();
