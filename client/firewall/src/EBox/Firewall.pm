@@ -788,33 +788,6 @@ sub logging
     return  $self->get_bool('logging');
 }
 
-
-
-# Method: onInstall
-#
-# 	Method to execute the first time the module is installed.
-#
-sub onInstall
-{
-	EBox::init();
-
-	my $fw = EBox::Global->instance()->modInstance('firewall');
-	$fw->setInternalService('eBox administration', 'accept');
-	$fw->setInternalService('ssh', 'accept');
-
-	$fw->saveConfigRecursive();
-}
-
-# Method: onRemove
-#
-# 	Method to execute before the module is uninstalled
-#
-sub onRemove
-{
-	EBox::init();
-
-}
-
 # Method: menu 
 #
 #       Overrides EBox::Module method.
