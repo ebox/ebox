@@ -6,11 +6,7 @@
 
 #DEBHELPER#
 
-onRemove()
-{
-       perl -e 'use EBox::UsersAndGroups; EBox::UsersAndGroups::onRemove();'
-	
-}
+
 
 remove_database()
 {
@@ -28,7 +24,6 @@ remove_database()
 case "$1" in
 	remove)
 		kill `pidof gconfd-2` >/dev/null 2>&1 || true
-		#onRemove
 
         remove_database
 
