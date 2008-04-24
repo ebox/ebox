@@ -110,9 +110,23 @@ sub ldapCon {
 
 
 	if ((not defined $self->{ldap}) or $reconnect) {
-		$self->{ldap} = Net::LDAP->new (LDAPI) or
+		# We try to connect 5 times in 5 seconds, as we might need to 
+		# give slapd some time to accept connections after a
+		# slapd restart
+		my $connected = undef;
+		for (0..4) {
+			$self->{ldap} = Net::LDAP->new (LDAPI);
+			if ($self->{ldap}) {
+				$connected = 1;
+				last;
+			} else {
+				sleep (1);
+			}	
+		}
+		unless ($connected) {
 			throw EBox::Exceptions::Internal(
 					"Can't create ldapi connection");
+		}
 		$self->{ldap}->bind(ROOTDN, password => getPassword());
 	}
 
