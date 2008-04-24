@@ -155,7 +155,6 @@ sub _addUserLdapAttrs
 
 				     sambaHomePath        => _smbHomes() . $user,
 
-				     sambaProfilePath     => _smbProfiles . $user,
 				     sambaPrimaryGroupSID => $sid . '-' . SMBGROUP,
 				     sambaLMPassword      => $lm,
 				     sambaNTPassword      => $nt,

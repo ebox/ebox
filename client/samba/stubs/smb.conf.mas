@@ -53,7 +53,7 @@ use EBox::Gettext;
  logon drive = H:
  logon home =
 %  if ($roaming) {
- logon path = \\<% $netbios %>\%U
+ logon path = \\<% $netbios %>\profiles\%U
 % } else {
  logon path = "" 
 % }
