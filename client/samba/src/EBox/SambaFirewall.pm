@@ -51,7 +51,12 @@ sub output
 			$r = "-m state --state NEW -o $ifc  ".
 				"-p udp --sport $port -j ACCEPT";
 			push(@rules, $r);
-
+			$r = "-m state --state NEW -o $ifc  ".
+				"-p tcp --dport $port -j ACCEPT";
+			push(@rules, $r);
+			$r = "-m state --state NEW -o $ifc  ".
+				"-p udp --dport $port -j ACCEPT";
+			push(@rules, $r);
 		}
 	}
 	
