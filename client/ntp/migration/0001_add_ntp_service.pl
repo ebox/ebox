@@ -1,14 +1,5 @@
 #!/usr/bin/perl
 
-#	Migration between gconf data version 0 to 1
-#
-#	In version 1, a new model has been created to store firewall rules and it
-#	lives in another module called services. In previous versions
-#	servies were stored in firewall.
-#	
-#	This migration script tries to populate the services model with the
-#	stored services in firewall
-#
 package EBox::Migration;
 use base 'EBox::MigrationBase';
 
