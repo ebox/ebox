@@ -69,6 +69,7 @@ stubs/Makefile
 stubs/apache.mas
 tools/Makefile
 www/Makefile
+migration/Makefile
 Makefile
 ])
 
