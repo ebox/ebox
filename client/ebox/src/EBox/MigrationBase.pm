@@ -82,7 +82,18 @@ sub runGConf
 }
 
 
-
+# Method: addInternalService
+#
+#  Helper method to add new internal services to the service module and related
+#  firewall rules
+#
+#
+#  Named Parameters:
+#    name - name of the service
+#    protocol - protocol used by the service
+#    sourcePort - source port used by the service (default : any)
+#    destinationPort - destination port used by the service (default : any)
+#    target - target for the firewall rule (default: allow)
 sub addInternalService
 {
   my ($self, %params) = @_;
