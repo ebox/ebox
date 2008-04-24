@@ -5,16 +5,13 @@
 # Load debconf
 . /usr/share/debconf/confmodule
 
-onInstall() {
-
-	perl -e 'use EBox::UsersAndGroups; EBox::UsersAndGroups::onInstall();'
-} 
 
 case "$1" in
 	configure)
 		kill `pidof gconfd-2` >/dev/null 2>&1 || true
 
-		onInstall
+		# Migrate data if needed
+		/usr/share/ebox/ebox-migrate /usr/share/ebox-usersandgroups/migration/
 
 		invoke-rc.d ebox users restart
 

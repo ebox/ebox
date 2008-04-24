@@ -1526,53 +1526,6 @@ sub _removePasswds
   unlink $tmpFile;
 }
 
-# Method: onInstall 
-#
-#	This method is meant to be used when the module is installed
-#	for first time. So far it is responsible to add the ldap
-#	service to the firewall module. It is a class method.
-#
-sub onInstall
-{
-	EBox::init();
-
-	my $global = EBox::Global->instance();
-	my $fw = $global->modInstance('firewall');
-
-    my $serviceMod = EBox::Global->modInstance('services');
-
-	if (not $serviceMod->serviceExists('name' => 'ldap')) {
-		 $serviceMod->addService('name' => 'ldap',
-			'protocol' => 'tcp',
-			'sourcePort' => 'any',
-			'destinationPort' => 389,
-			'internal' => 0);
-
-        $serviceMod->saveConfig();
-		
-	} else {
-		EBox::info("Not adding ldap service as it already exists");
-	}
-
-    $fw->setInternalService('ldap', 'deny');
-
-
-	$fw->saveConfig();
-
-}
-
-# Method: onRemove 
-#
-#	This method is meant to be used when the module is removed. 
-#	So far it is responsible to remve the ldap service 
-#	from the firewall module. It is a class method
-#
-sub onRemove 
-{
-	EBox::init();
-
-
-}
 
 
 1;

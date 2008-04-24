@@ -68,6 +68,7 @@ schemas/Makefile
 stubs/Makefile
 stubs/slapd.conf.mas
 tools/Makefile
+migration/Makefile
 Makefile
 ])
 
