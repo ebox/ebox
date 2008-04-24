@@ -45,7 +45,7 @@ sub _create
     my $class = shift;
     my $self = $class->SUPER::_create(name => 'services',
             title => __n('Services'),
-            domain => 'ebox-objects',
+            domain => 'ebox-services',
             @_);
     $self->{'serviceModel'} = 
         new EBox::Services::Model::ServiceTable(
