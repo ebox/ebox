@@ -64,6 +64,7 @@ src/templates/Makefile
 stubs/Makefile
 tools/Makefile
 schemas/Makefile
+migration/Makefile
 Makefile
 ])
 

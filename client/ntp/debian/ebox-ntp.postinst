@@ -2,11 +2,6 @@
 
 #DEBHELPER#
 
-onInstall() {
-
-    perl -e 'use EBox::NTP; EBox::NTP::onInstall();'
-}
-
 case "$1" in
 	configure)
 		# install gconf schemas
@@ -16,8 +11,9 @@ case "$1" in
 		if [ -z "$2" ] ; then
 			/usr/share/ebox-ntp/ebox-timezone-import
 		fi
-
-		onInstall
+           
+                # Migrate data if needed
+		/usr/share/ebox/ebox-migrate /usr/share/ebox-ntp/migration/
 
 		invoke-rc.d ebox apache restart
 esac
