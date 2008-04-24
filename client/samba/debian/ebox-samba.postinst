@@ -2,10 +2,6 @@
 
 #DEBHELPER#
 
-onInstall() {
-
-	perl -e 'use EBox::Samba; EBox::Samba::onInstall();'
-}
 
 case "$1" in
 	configure)
@@ -14,14 +10,12 @@ case "$1" in
         # FIXME
         initctl list >/dev/null  2>&1 || true
 
-		# migrate data if needed
-#		/usr/share/ebox/ebox-migrate /usr/share/ebox-samba/migration/	
+      # migrate data if needed
+		/usr/share/ebox/ebox-migrate /usr/share/ebox-samba/migration/	
 
         # Restart eBox apache
         invoke-rc.d ebox apache restart || true
 
-        # run the onInstall method in the module
-		onInstall
 
     ;;
 

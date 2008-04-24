@@ -1409,46 +1409,4 @@ sub _facilitiesForDiskUsage
 
 }
 
-# Method: onInstall 
-#
-#	This method is meant to be used when the module is installed
-#	for first time. So far it is responsible to add the ldap
-#	service to the firewall module. It is a class method.
-#
-sub onInstall
-{
-	EBox::init();
-
-	my $global = EBox::Global->instance();
-	my $fw = $global->modInstance('firewall');
-
-	my $serviceMod = EBox::Global->modInstance('services');
-
-	if (not $serviceMod->serviceExists('name' => 'samba')) {
-		my @services;
-		for my $port (qw(137 138 139 445)) {
-			push (@services, { 'protocol' => 'tcp/udp', 
-					'sourcePort' => 'any',
-					'destinationPort' => $port });
-		}
-		$serviceMod->addMultipleService(
-				'name' => 'samba', 
-				'internal' => 1,
-				'description' =>  __d('File sharing (Samba) protocol'),
-				'domain' => 'ebox-samba',
-				'services' => \@services);
-
-		$serviceMod->saveConfig();
-
-	} else {
-		EBox::info("Not adding samba service as it already exists");
-	}
-
-	$fw->setInternalService('samba', 'accept');
-
-
-	$fw->saveConfig();
-
-}
-
 1;
