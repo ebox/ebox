@@ -245,16 +245,19 @@ sub removePkgs # (@pkgs)
 {
 	my ($self, @pkgs) = @_;
 
-        $self->_isModLocked();
+	$self->_isModLocked();
 
 	my $cmd ='/usr/bin/apt-get remove --purge --no-download -q --yes ';
 	$cmd .= join(" ", @pkgs);
 	try {
 		root($cmd);
+		$self->listUpgradablePkgs(1);
+		$self->listEBoxPkgs(1);
+		root("invoke.rc.d ebox apache restart");
 	} catch EBox::Exceptions::Internal with {
 		throw EBox::Exceptions::External(__('An error ocurred while '.
-			'removing components. If the error persists or eBox '.
-			'stops working properly, seek technical support.'));
+					'removing components. If the error persists or eBox '.
+					'stops working properly, seek technical support.'));
 	};
 }
 
