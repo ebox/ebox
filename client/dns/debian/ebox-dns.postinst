@@ -4,18 +4,11 @@ set -e
 
 #DEBHELPER#
 
-onInstall() {
-
-        perl -e 'use EBox::DNS; EBox::DNS::onInstall();'
-}
 
 
 case "$1" in
 	configure)
 		kill `pidof gconfd-2` >/dev/null 2>&1 || true
-
-        # run the onInstall method in the module
-        onInstall
 
         # Migrate data if needed
         /usr/share/ebox/ebox-migrate /usr/share/ebox-dns/migration/
