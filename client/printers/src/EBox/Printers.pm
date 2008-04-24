@@ -1347,41 +1347,5 @@ sub isStandaloneCupsEnabled
 
 }
 
-# Method: onInstall 
-#
-#	This method is meant to be used when the module is installed
-#	for first time. So far it is responsible to add the ldap
-#	service to the firewall module. It is a class method.
-#
-sub onInstall
-{
-	EBox::init();
-
-	my $global = EBox::Global->instance();
-	my $fw = $global->modInstance('firewall');
-
-    my $serviceMod = EBox::Global->modInstance('services');
-
-	if (not $serviceMod->serviceExists('name' => 'ipp')) {
-		 $serviceMod->addService('name' => 'ipp',
-            'domain' => 'ebox-printers',
-            'description' => __d('Cups printer server port'),
-			'protocol' => 'tcp',
-			'sourcePort' => 'any',
-			'destinationPort' => 631,
-			'internal' => 0);
-
-        $serviceMod->saveConfig();
-		
-	} else {
-		EBox::info("Not adding ipp service as it already exists");
-	}
-
-    $fw->setInternalService('ipp', 'accept');
-
-
-	$fw->saveConfig();
-
-}
 
 1;

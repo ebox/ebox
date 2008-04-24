@@ -2,10 +2,6 @@
 
 #DEBHELPER#
 
-onInstall() {
-    perl -e 'use EBox::Printers; EBox::Printers::onInstall();'
-} 
-
 
 case "$1" in
     configure)
@@ -16,7 +12,7 @@ case "$1" in
          # add ebox to lp to read cups logs
         adduser --quiet ebox lp
 
-        onInstall
+	/usr/share/ebox/ebox-migrate /usr/share/ebox-printers/migration/
 
         # Restart eBox apache
         invoke-rc.d ebox apache restart || true

@@ -64,6 +64,7 @@ stubs/Makefile
 schemas/Makefile
 tools/Makefile
 tools/sqllog/Makefile
+migration/Makefile
 Makefile
 ])
 
