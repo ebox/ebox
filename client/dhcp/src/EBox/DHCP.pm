@@ -63,7 +63,6 @@ use Net::IP;
 use HTML::Mason;
 use Error qw(:try);
 use Perl6::Junction qw(any);
-use File::Path;
 
 # Module local conf stuff
 use constant DHCPCONFFILE => "/etc/dhcp3/dhcpd.conf";
@@ -215,57 +214,6 @@ sub statusSummary
 	my $self = shift;
 	return new EBox::Summary::Status('dhcp', 'DHCP',
 		EBox::Service::running(DHCP_SERVICE), $self->service);
-}
-
-# Method: onInstall
-#
-# 	Static method to execute the first time the module is
-# 	installed.
-#
-sub onInstall
-{
-    EBox::init();
-
-    # Create user conf dir
-    mkdir (CONF_DIR, 0755);
-
-    _addDHCPService();
-    _addTFTPService();
-
-    my $fw = EBox::Global->modInstance('firewall');
-    $fw->setInternalService('dhcp', 'accept');
-    $fw->setInternalService('tftp', 'accept');
-    $fw->saveConfigRecursive();
-}
-
-# Method: onRemove
-#
-# 	Static method to execute before the module is uninstalled
-#
-sub onRemove
-{
-    EBox::init();
-
-    my $serviceMod = EBox::Global->modInstance('services');
-    my $fwMod = EBox::Global->modInstance('firewall');
-
-    if ($serviceMod->serviceExists('name' => 'dhcp')) {
-        $serviceMod->removeService('name' => 'dhcp');
-    } else {
-        EBox::info("Not removing dhcp service as it already removed");
-    }
-
-    if ($serviceMod->serviceExists('name' => 'tftp')) {
-        $serviceMod->removeService('name' => 'tftp');
-    } else {
-        EBox::info("Not removing tftp service as it already removed");
-    }
-
-    $fwMod->saveConfigRecursive();
-
-    # Remove user defined conf dir
-    File::Path::rmtree( CONF_DIR );
-
 }
 
 # Method: menu
@@ -1533,66 +1481,8 @@ sub _thinClientOption # (option, iface)
 
 }
 
-sub _addDHCPService
-{
-	my $serviceMod = EBox::Global->modInstance('services');
-
-	if (not $serviceMod->serviceExists('name' => 'dhcp')) {
-		 $serviceMod->addService('name' => 'dhcp',
-                        'description' => __('Dynamic Host Configuration Protocol'),
-			'protocol' => 'udp',
-			'sourcePort' => 'any',
-			'destinationPort' => 67,
-			'internal' => 1,
-			'readOnly' => 1);
-
-	} else {
-		 $serviceMod->setService('name' => 'dhcp',
-                        'description' => __('Dynamic Host Configuration Protocol'),
-			'protocol' => 'udp',
-			'sourcePort' => 'any',
-			'destinationPort' => 67,
-			'internal' => 1,
-			'readOnly' => 1);
-
-		EBox::info("Not adding dhcp services as it already exists");
-	}
-
-    $serviceMod->save();
-
-}
-
-# Add tftp service on ebox-services module
-sub _addTFTPService
-{
-    my $serviceMod = EBox::Global->modInstance('services');
-
-    if (not $serviceMod->serviceExists('name' => 'tftp')) {
-        $serviceMod->addService('name' => 'tftp',
-                                'description' => __('Trivial File Transfer Protocol'),
-                                'protocol' => 'udp',
-                                'sourcePort' => 'any',
-                                'destinationPort' => 69,
-                                'internal' => 1,
-                                'readOnly' => 1);
-
-    } else {
-        $serviceMod->setService('name' => 'tftp',
-                                'description' => __('Trivial File Transfer Protocol'),
-                                'protocol' => 'udp',
-                                'sourcePort' => 'any',
-                                'destinationPort' => 69,
-                                'internal' => 1,
-                                'readOnly' => 1);
-
-        EBox::info("Not adding tftp service as it already exists");
-    }
-
-    $serviceMod->save();
-
-}
-
 # Configure the firewall rules to add
+# XXX maybe this is dead code?
 sub _configureFirewall {
 	my $self = shift;
 	my $fw = EBox::Global->modInstance('firewall');
@@ -1666,6 +1556,16 @@ sub _nStaticIfaces
   my $staticIfaces = grep  { $net->ifaceMethod($_) eq 'static' } @{$ifaces};
 
   return $staticIfaces;
+}
+
+
+# Method:  userConfDir
+#
+#  Returns:
+#  path to the user configuration dir
+sub userConfDir
+{
+  return CONF_DIR;
 }
 
 
