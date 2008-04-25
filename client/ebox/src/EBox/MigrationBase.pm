@@ -127,11 +127,13 @@ sub _addService
         throw EBox::Exceptions::MissingArgument('name');
     exists $params{protocol} or
         throw EBox::Exceptions::MissingArgument('protocol');
+    exists $params{protocol} or
+        throw EBox::Exceptions::MissingArgument('translationDomain');
     exists $params{sourcePort} or
         $params{sourcePort} = 'any';
     exists $params{destinationPort} or
         $params{destinationPort} = 'any';
-
+   
     my $serviceMod = EBox::Global->modInstance('services');
 
     if (not $serviceMod->serviceExists('name' => $params{name})) {
@@ -139,6 +141,7 @@ sub _addService
                 'protocol' => $params{protocol},
                 'sourcePort' => $params{sourcePort},
                 'destinationPort' => $params{destinationPort},
+                'translationDomain' => $params{translationDomain},
                 'internal' => 1,
                 'readOnly' => 1
                 );
@@ -148,6 +151,7 @@ sub _addService
                 'protocol' => $params{protocol},
                 'sourcePort' => $params{sourcePort},
                 'destinationPort' => $params{destinationPort},
+                'translationDomain' => $params{translationDomain},
                 'internal' => 1,
                 'readOnly' => 1);
 
