@@ -203,6 +203,7 @@ sub serviceConfiguration
 #	destinationPort - same as source
 #   internal - boolean, internal services can't be modified from the UI
 #   readOnly - boolean, set the row unremovable from the UI
+#   translationDomain - eBox module domain for i18n
 #
 #	Example:
 #

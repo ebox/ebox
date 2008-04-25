@@ -238,6 +238,7 @@ sub availablePort
 #   destinationPort - same as source
 #   internal - booelan, to indicate if the service is internal or not
 #   readOnly - the service can't be deleted or modified
+#   translationDomain - eBox module domain for i18
 #
 #   Example:
 #
@@ -465,9 +466,14 @@ sub _serviceParams
     my $description = delete $params{'description'};
     my $internal = $params{'internal'};
     my $readonly = $params{'readOnly'};
+    my $translationDomain;
+    if (exists $params{'translationDomain'}) {
+        $translationDomain = $params{'translationDomain'};
+    }
     
    return ('name' => $name, 'description' => $description,
-           'internal' => $internal, 'readOnly' => $readonly);
+           'internal' => $internal, 'readOnly' => $readonly,
+           'translationDomain' => $translationDomain);
  
 }
 
