@@ -1119,7 +1119,7 @@ sub sharedDirectories
   } @{ $self->groupShareDirectories() };
 
   my $users = EBox::Global->modInstance('users');
-  defined $users or throw EBox::Exceptions::Internal('Can not get users and groups module');
+  defined $users or throw EBox::Exceptions::Internal('Cannot get users and groups module');
 
   my @homedirs = map {  $_->{homeDirectory}} $users->users();
   push @dirs, @homedirs;

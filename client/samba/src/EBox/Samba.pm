@@ -148,7 +148,7 @@ sub usedFiles
 	},
 	{	
 		'file' => '/etc/ldap/slapd.conf',
-		'reason' => __('To add two new scehamas and the set ACLs'),
+		'reason' => __('To add two new schemas and the set ACLs'),
 		'module' => 'samba'
 	},
     {	
@@ -159,7 +159,7 @@ sub usedFiles
 	},
     {	
 		'file' => '/etc/ldap.conf',
-		'reason' => __('To let NSS know hot to access  LDAP accounts'),
+		'reason' => __('To let NSS know how to access LDAP accounts'),
 		'module' => 'samba'
 	},
     {	
@@ -335,7 +335,7 @@ sub isRunning
 {
 	my $self = shift;
 	
-	return EBox::Service::running(SMBDSERVICE) and 
+	return EBox::Service::running(SMBDSERVICE) and
 		EBox::Service::running(NMBDSERVICE);
 }
 
