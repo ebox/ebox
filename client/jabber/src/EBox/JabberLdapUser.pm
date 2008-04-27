@@ -67,7 +67,11 @@ sub _userAddOns
 
 sub _includeLDAPSchemas
 {
-        my $self = shift;
+    my $self = shift;
+
+	my $jabber = EBox::Global->modInstance('jabber');
+	return [] unless ($jabber->isConfigured());
+
 	my @schemas = SCHEMAS;
 	return \@schemas;
 }
