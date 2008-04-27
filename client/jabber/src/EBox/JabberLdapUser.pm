@@ -70,7 +70,7 @@ sub _includeLDAPSchemas
     my $self = shift;
 
 	my $jabber = EBox::Global->modInstance('jabber');
-	return [] unless ($jabber->isConfigured());
+	return [] unless ($jabber->configured());
 
 	my @schemas = SCHEMAS;
 	return \@schemas;
