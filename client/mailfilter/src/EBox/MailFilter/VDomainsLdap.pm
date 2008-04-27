@@ -407,6 +407,9 @@ sub _vdomainAddOns() {
 
 sub _includeLDAPSchemas {
        my $self = shift;
+
+       my $mailfilter =  EBox::Global->modInstance('mailfilter');
+       return [] unless ($mailfilter->configured());
        my @schemas = SCHEMAS;
       
        return \@schemas;
