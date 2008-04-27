@@ -546,9 +546,12 @@ sub _getActualMDSize() {
 
 sub _includeLDAPSchemas {
        my $self = shift;
-       my @schemas = SCHEMAS;
-      
-       return \@schemas;
+
+	   return [] unless (EBox::Global->modInstance('mail')->configured());
+
+	   my @schemas = SCHEMAS;
+
+	   return \@schemas;
 }
 
 # Method: _createMaildir
