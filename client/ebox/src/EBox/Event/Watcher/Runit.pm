@@ -35,6 +35,7 @@ use EBox::Event::Watcher::Base;
 use EBox::Exceptions::Internal;
 use EBox::Gettext;
 use EBox::Service;
+use EBox::Global;
 
 # Core modules
 use Error qw(:try);
