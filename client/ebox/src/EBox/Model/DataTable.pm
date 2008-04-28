@@ -1024,7 +1024,7 @@ sub removeRow
 	# the effects its actions will have.
 	if ((not $force) and $self->table()->{'automaticRemove'}) {
             my $manager = EBox::Model::ModelManager->instance();
-            $manager->warnIfIdIsUsed($self->tableName(), $id);
+            $manager->warnIfIdIsUsed($self->contextName(), $id);
 #            $self->warnIfIdUsed($id);
 	}
 
