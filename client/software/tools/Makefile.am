@@ -2,7 +2,8 @@
 
 SUBDIRS =  cron
 
-pkgdata_SCRIPTS =  ebox-update-packages ebox-software-enable
+pkgdata_SCRIPTS =  ebox-update-packages ebox-remove-packages \
+                   ebox-software-enable
 
 MAINTAINERCLEANFILES=Makefile.in
 
