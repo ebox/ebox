@@ -424,8 +424,8 @@ sub setNewTimeZone # (continent, country))
 	$self->set_string('country', $country);
 	root("rm /etc/localtime");
 	root($command);
-	my $global = EBox::Global->getInstance(1);
-	$self->_restartAllServices;
+#	my $global = EBox::Global->getInstance(1);
+#	$self->_restartAllServices;
 }	
 
 sub statusSummary
