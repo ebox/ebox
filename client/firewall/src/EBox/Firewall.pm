@@ -95,8 +95,8 @@ sub actions
 	return [ 
 	{
 		'action' => __('Flush previous firewall rules'),
-		'reason' => __('The eBox firewall will flush any previous firewall rule ' .
-					' which have been added manually or by another tool'),
+		'reason' => __('The eBox firewall will flush any previous firewall ' .
+					' rules which have been added manually or by another tool'),
 		'module' => 'firewall'
 	},
 	{
