@@ -44,10 +44,12 @@ function updatePage (xmlHttp) {
       }
 
 
-       // change 'Save Changes' menu to reflect possible changes		
-       var finishClass = response.changed;
-       var finishAnchor = document.getElementById('changes_menu');
-       finishAnchor.className = finishClass;
+	if (response.changed) {
+           // change 'Save Changes' menu to reflect possible changes		
+           var finishClass = response.changed;
+           var finishAnchor = document.getElementById('changes_menu');
+           finishAnchor.className = finishClass;
+       }
    }
 
 }
