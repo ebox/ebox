@@ -1697,6 +1697,7 @@ sub generateInterfaces
 	my $manager = new EBox::ServiceModule::Manager();
 	if ($manager->skipModification('network', $file)) {
 		EBox::info("Skipping modification of $file");
+        return;
 	}
 
 	#writing /etc/network/interfaces
