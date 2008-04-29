@@ -22,7 +22,7 @@ $fw->save();'
 #db_set debconf/frontend noninteractive
 	
 # Add ebox debian sources
-cat > /etc/apt/sources.list <<EOF
-deb http://ppa.launchpad.net/juruen/ubuntu hardy main
-EOF
+#cat > /etc/apt/sources.list <<EOF
+#deb http://ppa.launchpad.net/juruen/ubuntu hardy main
+#EOF
 
