@@ -39,7 +39,6 @@ sub new
 	my $class = shift;
 	my $self  = {};
 	$self->{ldap} = EBox::Ldap->instance();
-	$self->{mailfilter} =  EBox::Global->modInstance('mailfilter');
 	bless($self, $class);
 	return $self;
 }
@@ -47,7 +46,9 @@ sub new
 sub _moduleConfigured
 {
     my ($self) = @_;
-    return $self->{mailfilter}->configured();
+    my $mf =  EBox::Global->modInstance('mailfilter');
+
+    return $mf->configured();
 }
 
 sub _vdomainAttr
