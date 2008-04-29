@@ -39,10 +39,16 @@ sub new
 	my $class = shift;
 	my $self  = {};
 	$self->{ldap} = EBox::Ldap->instance();
+	$self->{mailfilter} =  EBox::Global->modInstance('mailfilter');
 	bless($self, $class);
 	return $self;
 }
 
+sub _moduleConfigured
+{
+    my ($self) = @_;
+    return $self->{mailfilter}->configured();
+}
 
 sub _vdomainAttr
 {
@@ -326,6 +332,8 @@ sub setAntivirus
 
 sub _addVDomain() {
   my ($self, $vdomain) = @_;
+  
+  return unless ($self->_moduleConfigured());
 
   my $ldap = $self->{ldap};
   my $dn =  $self->vdomainDn($vdomain);
@@ -350,6 +358,8 @@ sub _delVDomain()
 {
   my ($self, $vdomain) = @_;
 
+  return unless ($self->_moduleConfigured());
+
   my $ldap = $self->{ldap};
   my $dn =  $self->vdomainDn($vdomain);
 
@@ -366,6 +376,8 @@ sub _delVDomainWarning() {
 
 sub _vdomainAddOns() {
   my ($self, $vdomain) = @_;
+
+  return unless ($self->_moduleConfigured());
 
   my $mailfilter =  EBox::Global->modInstance('mailfilter');
   my $antivirus = $mailfilter->antivirus();
@@ -408,8 +420,8 @@ sub _vdomainAddOns() {
 sub _includeLDAPSchemas {
        my $self = shift;
 
-       my $mailfilter =  EBox::Global->modInstance('mailfilter');
-       return [] unless ($mailfilter->configured());
+       return unless ($self->_moduleConfigured());
+
        my @schemas = SCHEMAS;
       
        return \@schemas;
