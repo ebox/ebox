@@ -42,6 +42,12 @@ function updatePage (xmlHttp) {
                        $('error-progress-message').update( response.errorMsg );
              }
       }
+
+
+       // change 'Save Changes' menu to reflect possible changes		
+       var finishClass = response.changed;
+       var finishAnchor = document.getElementById('changes_menu');
+       finishAnchor.className = finishClass;
    }
 
 }
