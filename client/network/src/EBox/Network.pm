@@ -55,8 +55,8 @@ use EBox::Gettext;
 #use EBox::LogAdmin qw( :all );
 use File::Basename;
 
-
-use EBox::Network::Report::ByteRate;
+# XXX uncomment when DynLoader bug with locales is fixed
+# use EBox::Network::Report::ByteRate;
 
 
 sub _create
@@ -135,17 +135,19 @@ sub modelClasses
                           directory => 'multigwrulestable',
                          ],
           },
-          {
-           class      => 'EBox::Network::Model::ByteRateEnableForm',
-           parameters => [
-                          enableTitle  => __('Activate traffic rate monitor'),
-                          domain       => 'ebox-network',
-                          modelDomain  => 'Network',
-                         ],
-          },
-	  'EBox::Network::Model::ByteRateSettings',
-	  'EBox::Network::Model::ByteRateGraph',
-	  'EBox::Network::Model::ByteRateGraphControl',
+
+# XXX uncomment when DynLoader bug with locales is fixed
+ #          {
+#            class      => 'EBox::Network::Model::ByteRateEnableForm',
+#            parameters => [
+#                           enableTitle  => __('Activate traffic rate monitor'),
+#                           domain       => 'ebox-network',
+#                           modelDomain  => 'Network',
+#                          ],
+#           },
+# 	  'EBox::Network::Model::ByteRateSettings',
+# 	  'EBox::Network::Model::ByteRateGraph',
+# 	  'EBox::Network::Model::ByteRateGraphControl',
 	 ];
 }
 
@@ -1943,8 +1945,9 @@ sub _regenConfig
 	$self->_multigwRoutes();
 	$self->_cleanupVlanIfaces();
 
-	# regenerate config for the bit rate report
-	EBox::Network::Report::ByteRate->_regenConfig();
+	# XXX uncomment when DynLoader bug with locales is fixed
+# 	# regenerate config for the bit rate report
+# 	EBox::Network::Report::ByteRate->_regenConfig();
 }
 
 sub stopService
@@ -1965,6 +1968,8 @@ sub stopService
 		} catch EBox::Exceptions::Internal with {};
 	}
 
+# XXX uncomment when DynLoader bug with locales is fixed
+#	EBox::Network::Report::ByteRate->stopService();
 
 }
 
@@ -2384,10 +2389,13 @@ sub summary
 		}
 	}
 	$composite->add($item);
-        my $monSummary = EBox::Network::Report::ByteRate->summary();
-        if ( defined($monSummary) ) {
-            $composite->add($monSummary);
-        }
+
+	
+# XXX uncomment when DynLoader bug with locales is fixed
+#         my $monSummary = EBox::Network::Report::ByteRate->summary();
+#         if ( defined($monSummary) ) {
+#             $composite->add($monSummary);
+#         }
 
         return $composite;
 }
@@ -2418,9 +2426,12 @@ sub menu
 	$folder->add(new EBox::Menu::Item('url' => 
 						'Network/View/MultiGwRulesDataTable',
 					  'text' => __('Balance traffic')));
-	$folder->add(new EBox::Menu::Item('url' => 
-						'Network/Composite/ByteRate',
-					  'text' => __('Traffic rate monitor')));
+
+
+# XXX uncomment when DynLoader bug with locales is fixed
+# 	$folder->add(new EBox::Menu::Item('url' => 
+# 						'Network/Composite/ByteRate',
+# 					  'text' => __('Traffic rate monitor')));
 
 
 
