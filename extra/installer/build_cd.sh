@@ -22,6 +22,8 @@ done
 popd
 
 
+echo "Installer image created: $ISO_IMAGE"
+
 # XXX remove this step with new apt-key package
 # remove release signature
 #find $BUILD_DIR -name Release.gpg | xargs -n 1 rm -vf

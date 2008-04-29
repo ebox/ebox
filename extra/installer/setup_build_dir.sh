@@ -17,5 +17,7 @@ rm -rf $CD_BUILD_DIR || exit 1
 cp -r $MOUNTDIR $CD_BUILD_DIR || exit 1
 chmod a+w -R $CD_BUILD_DIR || exit 1
 
-umount $MOUNTDIR || exit 1
+sudo umount $MOUNTDIR || exit 1
 rmdir $MOUNTDIR
+
+echo "CD Installer build directory generated from contents of $ISO"
