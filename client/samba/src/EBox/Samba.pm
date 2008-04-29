@@ -149,7 +149,7 @@ sub usedFiles
 	{	
 		'file' => '/etc/ldap/slapd.conf',
 		'reason' => __('To add two new schemas and the set ACLs'),
-		'module' => 'samba'
+		'module' => 'users'
 	},
     {	
 		'file' => '/etc/nsswitch.conf',
