@@ -76,7 +76,7 @@ sub saveAllModulesAction
 		      title    => __('Saving changes'),
 		      text     => __('Saving changes in modules'),
 		      currentItemCaption  =>  __("Current module"),
-		      itemsLeftMessage  => __('modules left to change'),
+		      itemsLeftMessage  => __('modules saved'),
 		      endNote  =>  __('Changes saved'),
                       errorNote => __('Some modules reported error when saving changes '
                                       . '. More information on the logs'),
@@ -100,7 +100,7 @@ sub revokeAllModulesAction
 		      title    => __('Revoking changes'),
 		      text     => __('Revoking changes in modules'),
 		      currentItemCaption  =>  __("Current module"),
-		      itemsLeftMessage  => __('modules left to revoke'),
+		      itemsLeftMessage  => __('modules revoked'),
 		      endNote  =>  __('Changes revoked'),
                       errorNote => __('Some modules reported error when discarding changes '
                                       . '. More information on the logs'),
