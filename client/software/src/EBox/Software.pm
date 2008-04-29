@@ -457,8 +457,6 @@ sub _packageDepends
     my $output = root($aptCmd);
 
 
-    EBox::debug(Dumper $output);
-
     my @packages = grep {
 	$_ =~ m/
               ^$header\s      # requested operation
