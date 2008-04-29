@@ -192,7 +192,7 @@ sub usedFiles
     {	
 		'file' => '/etc/ldap/slapd.conf',
 		'reason' => __('To add the LDAP schemas used by eBox mail'),
-		'module' => 'mail'
+		'module' => 'users'
 	}
 	];
 }
