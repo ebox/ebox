@@ -113,9 +113,14 @@ sub usedFiles
 		    'file' =>   AMAVIS_CONF_FILE,
 		    'reason' => __('To configure amavis'),
 		    'module' => 'mailfilter'
-		   },
-		  );
- 
+            },
+            {
+            'file' => '/etc/ldap/slapd.conf',
+            'reason' => __('To add the LDAP schemas used by eBox mailfilter'),
+            'module' => 'users'
+            }
+          );
+
   push @usedFiles, EBox::MailFilter::ClamAV::usedFiles();
   push @usedFiles, EBox::MailFilter::SpamAssassin::usedFiles();
 
