@@ -375,8 +375,6 @@ sub saveAllModules
 		};
 	}
 
-	EBox::debug("apache $apache");
-
 	# FIXME - tell the CGI to inform the user that apache is restarting
 	if ($apache) {
 		$progress->setMessage('apache');
@@ -384,15 +382,11 @@ sub saveAllModules
 
 		my $mod = $self->modInstance('apache');
 		try {
-		    EBox::debug("bef ave");
 			$mod->save();
 		} catch EBox::Exceptions::Internal with {
-		    my $ex = shift;
-		    EBox::debug("ex $ex");
 			$failed .= "apache";
 		};
 
-		EBox::debug("end apache");
 	}
 	
 	if ($failed eq "") {
