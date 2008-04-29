@@ -30,12 +30,14 @@ use base qw(
 use constant ALLIFACES => qw(sit tun tap lo irda eth wlan vlan);
 use constant IGNOREIFACES => qw(sit tun tap lo irda);
 use constant IFNAMSIZ => 16; #Max length name for interfaces
+use constant INTERFACES_FILE => '/etc/network/interfaces';
 
 use Net::IP;
 use EBox::NetWrappers qw(:all);
 use EBox::Validate qw(:all);
 use EBox::Config;
 use EBox::Order;
+use EBox::ServiceModule::Manager;
 use EBox::Exceptions::InvalidData;
 use EBox::Exceptions::DataExists;
 use EBox::Exceptions::DataInUse;
@@ -89,6 +91,21 @@ sub actions
 		'action' => __('Enable eBox DHCP hook'),
 		'reason' => __('It will take care of adding the default route' .
 				' given by a DHCP server to the default route table. '),
+		'module' => 'network'
+	}
+	];
+}
+
+# Method: usedFiles
+#
+# 	Override EBox::ServiceModule::ServiceInterface::usedFiles
+#
+sub usedFiles
+{
+	return [ 
+	{	
+		'file' => INTERFACES_FILE,
+		'reason' => __('eBox will set your network configuration'),
 		'module' => 'network'
 	}
 	];
@@ -1671,11 +1688,17 @@ sub _generateResolver
 sub generateInterfaces
 {
 	my $self = shift;
-	my $file = EBox::Config::tmp . "/interfaces";
+	my $file = INTERFACES_FILE; 
+	my $tmpfile = EBox::Config::tmp . '/interfaces';
 	my $iflist = $self->allIfacesWithRemoved();
 
+	my $manager = new EBox::ServiceModule::Manager();
+	if ($manager->skipModification('network', $file)) {
+		EBox::info("Skipping modification of $file");
+	}
+
 	#writing /etc/network/interfaces
-	open(IFACES, ">", $file) or
+	open(IFACES, ">", $tmpfile) or
 		throw EBox::Exceptions::Internal("Could not write on $file");
 	print IFACES "auto lo";
 	foreach (@{$iflist}) {
@@ -1708,6 +1731,9 @@ sub generateInterfaces
 		}
 	}
 	close(IFACES);
+
+	root("cp $tmpfile $file");
+	$manager->updateFileDigest('network', $file);
 }
 
 sub _generateRoutes
@@ -1827,7 +1853,7 @@ sub _regenConfig
 
 	my $gateway = $self->gateway;
 	my $skipdns = undef;
-	my $file = EBox::Config::tmp . "/interfaces";
+	my $file = INTERFACES_FILE;
 
 	try {
 		root("/sbin/modprobe 8021q");
@@ -1925,7 +1951,11 @@ sub stopService
 {
 	my $self = shift;
 
-	my $file = EBox::Config::tmp . "/interfaces";
+	EBox::Network::Report::ByteRate->stopService();
+
+	return unless ($self->configured());
+
+	my $file = INTERFACES_FILE;
 	my $iflist = $self->allIfaces();
 	foreach my $if (@{$iflist}) {
 		try {
@@ -1935,7 +1965,7 @@ sub stopService
 		} catch EBox::Exceptions::Internal with {};
 	}
 
-	EBox::Network::Report::ByteRate->stopService();
+
 }
 
 #internal use functions
