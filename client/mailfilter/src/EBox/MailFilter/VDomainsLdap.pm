@@ -421,7 +421,7 @@ sub _vdomainAddOns() {
 sub _includeLDAPSchemas {
        my $self = shift;
 
-       return unless ($self->_moduleConfigured());
+       return [] unless ($self->_moduleConfigured());
 
        my @schemas = SCHEMAS;
       
