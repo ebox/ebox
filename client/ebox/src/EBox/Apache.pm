@@ -113,7 +113,14 @@ sub _daemon # (action)
 	} elsif ($action eq 'start') {
 		EBox::Sudo::root('/usr/share/ebox/ebox-apache2ctl start');
 	} elsif ($action eq 'restart') {
-		exec(EBox::Config::pkgdata . 'ebox-apache-restart');
+	    my $restartCmd = EBox::Config::pkgdata . 'ebox-apache-restart';
+	    if ($fork) {
+		exec($restartCmd);
+	    }
+	    else {
+		EBox::Sudo::root($restartCmd);
+	    }
+
 	}
 
 	if ($fork) {
