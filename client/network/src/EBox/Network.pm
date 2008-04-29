@@ -1697,7 +1697,7 @@ sub generateInterfaces
 	my $manager = new EBox::ServiceModule::Manager();
 	if ($manager->skipModification('network', $file)) {
 		EBox::info("Skipping modification of $file");
-        return;
+		return;
 	}
 
 	#writing /etc/network/interfaces
@@ -1710,6 +1710,7 @@ sub generateInterfaces
 			print IFACES " " . $_;
 		}
 	}
+	my ($gwIface, $gwIP) = $self->_defaultGwAndIface();
 	print IFACES "\niface lo inet loopback\n";
 	foreach my $ifname (@{$iflist}) {
 		my $method = $self->ifaceMethod($ifname);
@@ -1731,6 +1732,10 @@ sub generateInterfaces
 				"\n";
 			print IFACES "\tbroadcast " . 
 				$self->ifaceBroadcast($ifname) . "\n";
+            if (defined($gwIface) and defined($gwIP) and ($gwIface eq $ifname))
+            {
+                print IFACES "\tgateway $gwIP\n";
+            }
 		}
 	}
 	close(IFACES);
@@ -1866,12 +1871,6 @@ sub _regenConfig
 	} catch EBox::Exceptions::Internal with {};
 
 	$self->DHCPGatewayCleanUpFix();
-	my $dhcpgw = $self->DHCPGateway();
-	unless ($dhcpgw and ($dhcpgw ne '')) {
-		try {
-			root("/sbin/ip route del default table default");
-		} catch EBox::Exceptions::Internal with {};
-	}
 
 	#bring down changed interfaces
 	my $iflist = $self->allIfacesWithRemoved();
@@ -1929,6 +1928,18 @@ sub _regenConfig
 		}
 	}
 
+	my $dhcpgw = $self->DHCPGateway();
+	unless ($dhcpgw and ($dhcpgw ne '')) {
+		try {
+			root("/sbin/ip route del default table default");
+		} catch EBox::Exceptions::Internal with {};
+		try {
+			root("/sbin/ip route del default");
+		} catch EBox::Exceptions::Internal with {};
+	
+	}
+
+
 
 	my $multipathCmd = $self->_multipathCommand();
 	if ($gateway) {
@@ -1955,7 +1966,8 @@ sub stopService
 {
 	my $self = shift;
 
-	EBox::Network::Report::ByteRate->stopService();
+	# XXX uncomment when DynLoader bug with locales is fixed
+	# EBox::Network::Report::ByteRate->stopService();
 
 	return unless ($self->configured());
 
@@ -2497,6 +2509,19 @@ sub gateways
 
 	return $gatewayModel->gateways();
 
+}
+
+sub _defaultGwAndIface
+{
+	my ($self) = @_;
+
+	my $row = $self->gatewayModel()->find('default' => 1);
+
+	if ($row) {
+		return ($row->{'interface'}, $row->{'ip'});
+	} else {
+		return (undef, undef);
+	}
 }
 
 
