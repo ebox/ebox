@@ -8,9 +8,6 @@
 
 
 
-# don't start samba with its script
-update-rc.d -f samba remove
-
 # stop samba 
 invoke-rc.d samba stop
 

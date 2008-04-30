@@ -90,12 +90,6 @@ sub actions
 {
 	return [ 
 	{
-		'action' => __('Remove Samba init script link'),
-		'reason' => __('eBox will take care of starting and stopping ' .
-						'the service.'),
-		'module' => 'samba'
-	},
-	{
 		'action' => __('Create Samba home directory for users and groups'),
 		'reason' => __('eBox will create the home directories for Samba ' .
 						'users and groups under /home/samba.'),
