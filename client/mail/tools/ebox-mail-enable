@@ -24,7 +24,8 @@ mv /etc/postfix/sasl/smtp.key /etc/postfix/sasl/smtp-key.pem
 mv /etc/postfix/sasl/smtp.cert /etc/postfix/sasl/smtp.pem
 rm /etc/postfix/sasl/smtp.pem
 
-# Generate aliases
+# Generate mail aliases
+touch /etc/postfix/main.cf # newaliases fails if no main.cf file is present
 newaliases
 
 # regenerate slapd.conf
@@ -36,8 +37,6 @@ invoke-rc.d slapd restart
 # populate ldap
 /usr/share/ebox-mail/ebox-mail-ldap update
 
-# generate mail aliases
-/usr/sbin/postalias /etc/aliases
 
 # restart mail to generate configuration files
 invoke-rc.d ebox mail restart
