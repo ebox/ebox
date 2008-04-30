@@ -337,31 +337,9 @@ sub _amavisdIsRunning
 sub service
 {
   my ($self) = @_;
-  return $self->get_bool('active');
+  return $self->isEnabled();
 }
 
-#
-# Method: setService
-#
-#  Enable/Disable the service.
-#
-# Parameters:
-#
-#  active - true or false
-#
-sub setService 
-{
-	my ($self, $active) = @_;
-	($active and $self->service()) and return;
-	(!$active and !$self->service()) and return;
-
-	if (not $active) {
-	  $self->_assureFilterNotInUse();
-	}
-
-
-	$self->set_bool('active', $active);
-}
 
 
 
