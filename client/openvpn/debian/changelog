@@ -1,3 +1,10 @@
+ebox-openvpn (0.11.99-0ubuntu3~ppa1) hardy; urgency=low
+
+  * Backport 0.11.100 patch to fix issue that prevented openVPNs from 
+    starting.
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 10 Apr 2008 15:48:28 +0200
+
 ebox-openvpn (0.11.99-0ubuntu2) hardy; urgency=low
 
   * Create eBox openVPN Diffie-Hellman file
