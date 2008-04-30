@@ -20,9 +20,8 @@ dpkg-statoverride --add postfix sasl 710 $SASLAUTHD
 
 # Create certificates for smptd
 /usr/share/ebox-mail/ebox-create-certificate /etc/postfix/sasl/
-mv /etc/postfix/sasl/smtp.key /etc/postfix/sasl/smtp-key.pem
-mv /etc/postfix/sasl/smtp.cert /etc/postfix/sasl/smtp.pem
-rm /etc/postfix/sasl/smtp.pem
+mv /etc/postfix/sasl/smtp.key /etc/postfix/sasl/smtpd-key.pem
+mv /etc/postfix/sasl/smtp.cert /etc/postfix/sasl/smtpd.pem
 
 # Generate mail aliases
 touch /etc/postfix/main.cf # newaliases fails if no main.cf file is present
