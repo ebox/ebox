@@ -1,5 +1,2 @@
-pre-start script
-    invoke-rc.d nmbd stop
-end script
 exec /usr/sbin/nmbd -F
 respawn
