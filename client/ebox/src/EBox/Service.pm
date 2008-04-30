@@ -76,12 +76,15 @@ sub running # (daemon)
 
 	my $output = root("status $daemon");
 	my $status = @{$output}[0];
+	# TODO: Parse different exit status:
+	# 		Pre-start
+	# 		Post-start
+	# 		....
+	# 		Not it's running or stopped
 	if ($status =~ m{^$daemon .* running}) {
 		return 1;
-	} elsif ($status =~ m{^$daemon .*stop}) {
-		return undef;
 	} else {
-		throw EBox::Exceptions::Internal("Error getting status: $daemon");
+		return undef;
 	}
 }
 
