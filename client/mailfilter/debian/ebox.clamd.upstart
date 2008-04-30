@@ -1,4 +1,6 @@
 pre-start script
+    invoke-rc.d clamav-freshclam stop
+    invoke-rc.d clamav-daemon stop
     DIR=/var/run/clamav
     USER=clamav
     if [ ! -d "$DIR" ]; then

@@ -83,14 +83,8 @@ sub actions
 {
   return [ 
 	  {
-	   'action' => __('Remove amavis, clamd, freshclamd and spamd init script links'),
-	   'reason' => __('eBox will take care of starting and stopping ' .
-			  'the services.'),
-	   'module' => 'mailfilter',
-	  },
-	  {
 	   'action' => __('Add clamav user to amavis group'),
-	   'reason' => __('Clamav need access to amavis fiels to properly scan mail'),
+	   'reason' => __('Clamav need access to amavis fields to properly scan mail'),
 	   'module' => 'mailfilter',
 	  },
 	  {
