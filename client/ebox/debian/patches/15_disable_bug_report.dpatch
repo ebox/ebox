@@ -1,0 +1,23 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 15_disable_bug_report.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Disable bug report for security reasons
+
+@DPATCH@
+
+Index: ebox/src/EBox/SysInfo.pm
+===================================================================
+--- ebox/src/EBox/SysInfo.pm	(revisión: 10021)
++++ ebox/src/EBox/SysInfo.pm	(copia de trabajo)
+@@ -148,8 +148,8 @@
+ 	$folder->add(new EBox::Menu::Item('url' => 'EBox/Halt',
+ 					  'text' => __('Halt/Reboot')));
+ 
+-	$folder->add(new EBox::Menu::Item('url' => 'EBox/Bug',
+-					  'text' => __('Bug report')));
++#	$folder->add(new EBox::Menu::Item('url' => 'EBox/Bug',
++#					  'text' => __('Bug report')));
+ 
+ 
+ 

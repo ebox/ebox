@@ -12,3 +12,4 @@
 12_ebox_init
 13_backup_configured_modules
 14_fix_backup_creation_mask
+15_disable_bug_report
