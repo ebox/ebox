@@ -1,2 +1,6 @@
+pre-start script
+    /etc/init.d/ntp stop
+end script
+
 respawn
 exec /usr/sbin/ntpd -n -g
