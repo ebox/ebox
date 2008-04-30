@@ -1,8 +1,4 @@
 #!/bin/bash
 
-# don't start dhcp with its script
-update-rc.d -f dhcp3-server remove
-
 # stop dhcp3-server if it's running as a normal service
 invoke-rc.d dhcp3-server stop
-
