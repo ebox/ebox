@@ -1,9 +1,5 @@
 #!/bin/bash
 
-
-# don't start cups with its script
-update-rc.d -f cupsys remove
-
 # stop cups
 invoke-rc.d cupsys stop
 

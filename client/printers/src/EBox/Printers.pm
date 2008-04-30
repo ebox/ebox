@@ -70,12 +70,6 @@ sub actions
 {
 	return [ 
 	{
-		'action' => __('Remove Cups init script link'),
-		'reason' => __('eBox will take care of starting and stopping ' .
-						'the service'),
-		'module' => 'printers'
-	},
-	{
 		'action' => __('Create spool directory for printers'),
 		'reason' => __('eBox will create a spool directory ' .
 						'under /var/spool/samba'),
