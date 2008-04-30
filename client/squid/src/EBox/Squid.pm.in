@@ -136,23 +136,6 @@ sub DGIsRunning
 	return EBox::Service::running('ebox.dansguardian');
 }
 
-# Method: actions
-#
-# 	Override EBox::ServiceModule::ServiceInterface::actions
-#
-sub actions
-{
-	return [ 
-	{
-		'action' => __('Remove squid and dansguardian init script links'),
-		'reason' => __('eBox will take care of starting and stopping ' .
-						'the services.'),
-		'module' => 'squid'
-	}
-    ];
-}
-
-
 # Method: usedFiles
 #
 #	Override EBox::ServiceModule::ServiceInterface::usedFiles

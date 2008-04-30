@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# don't start neither squid nor dansguardian with its init script
-update-rc.d -f squid remove
-update-rc.d -f dansguardian remove
-
 # stop daemons 
 invoke-rc.d squid stop
 invoke-rc.d dansguardian stop

@@ -1,3 +1,5 @@
-
+pre-start script
+    invoke-rc.d dansguardian stop
+end script
 exec /usr/sbin/dansguardian -N
 respawn
