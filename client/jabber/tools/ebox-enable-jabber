@@ -3,9 +3,6 @@
 # copy LDAP schemas
 cp /usr/share/ebox-jabber/*.schema /etc/ldap/schema
 
-# don't start jabber2-ldap-bdb  with its script
-update-rc.d -f jabberd2-ldap-bdb remove
-
 # stop jabberd2-ldap-bdb  if it's running as a normal service
 invoke-rc.d jabberd2-ldap-bdb  stop
 

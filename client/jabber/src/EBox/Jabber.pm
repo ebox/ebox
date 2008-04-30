@@ -68,12 +68,6 @@ sub actions
 {
 	return [ 
 	{
-		'action' => __('Remove jabberd2 init script links'),
-		'reason' => __('eBox will take care of starting and stopping ' .
-						'the services.'),
-		'module' => 'jabber'
-	},
-	{
 		'action' => __('Copy jabber ldap schema to /etc/ldap/schemas'),
 		'reason' => __('eBox will need this schema to store jabber users'),
 		'module' => 'jabber'
