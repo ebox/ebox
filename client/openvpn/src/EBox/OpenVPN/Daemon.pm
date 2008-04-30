@@ -430,7 +430,7 @@ sub setRipPasswd
 {
   my ($self, $passwd) = @_;
   $passwd or 
-    throw EBox::Exceptions::Internal('You must supply a non-empty password');
+    throw EBox::Exceptions::External(__('You must supply a non-empty password'));
 
   $self->setConfString('ripPasswd', $passwd);
 }

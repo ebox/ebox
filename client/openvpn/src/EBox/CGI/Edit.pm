@@ -10,7 +10,7 @@ use EBox::OpenVPN;
 use Perl6::Junction qw(any);
 
 my @serverProperties = qw(subnet subnetNetmask port proto certificate  clientToClient local service tlsRemote pullRoutes ripPasswd);
-my @regularAccessorsAndMutators =  qw(port proto certificate  clientToClient local service tlsRemote pullRoutes ripPasswd);
+my @regularAccessorsAndMutators =  qw(port proto certificate  clientToClient local service tlsRemote pullRoutes);
 
 sub new # (error=?, msg=?, cgi=?)
 {
