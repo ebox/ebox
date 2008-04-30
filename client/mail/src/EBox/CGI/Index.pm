@@ -72,7 +72,6 @@ sub _process($) {
 	my @deniedobjs = @{$mail->deniedObj};
 	my @allowedobjs = @{$mail->allowedObj};
 	
-	push (@array, 'active'		=> $self->_inService('active'));
 	push (@array, 'relay'		=> $mail->relay());
 	push (@array, 'maxmsgsize'		=> $mail->getMaxMsgSize());
 

@@ -1,7 +1,6 @@
 <!-- vim: ts=4 sw=4 filetype=mason
 -->
 <%args>
-	$active
 	$relay
 	$maxmsgsize
 
@@ -34,11 +33,12 @@ use EBox::Gettext;
 <& mail/mailtabs.mas, selected => $menu, filter => $filterservice &>
 
 % if ($menu eq 'services') {
-	<& mail/enable.mas, title => __('Mail service settings'), active => $active &>
-% if ($active eq 'yes') {
+  <h3><% __('Mail service settings') %></h3>
+  <div class="help"><%__('TLS support is required by the authentication system')%></div>
+      <table class="formTable">
+       <form action='MailSettings' method='post'>
 	<& mail/smtptls.mas, title => __('TLS for SMTP server'), smtptls => $smtptls &>
 	<& mail/sasl.mas, title => __('Require authentication'), sasl => $saslservice, smtptls => $smtptls &>
-% }
 	<tr>
 	<td></td>
 	<td>
@@ -260,6 +260,11 @@ while (my ($name, $propierties) = each %availableFilters) {
        value => $name,
        printableValue => $propierties->{prettyName},
    };
+
+   if ($propierties->{disabled}) {
+      $option->{disabled} = 'disabled';
+  }
+
    push @selectFilterOptions, $option;
 
 };

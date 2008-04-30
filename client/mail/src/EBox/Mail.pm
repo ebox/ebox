@@ -1056,7 +1056,7 @@ sub setService
 	($active xor $self->service($service)) or return;
 
 	if ($service eq 'active') {
-		$self->enableService($active);
+	    throw EBox::Exceptions::Internal("active service must be enabled via module status menu");
 	} else {	
 		$self->set_bool($service, $active);
 	}
