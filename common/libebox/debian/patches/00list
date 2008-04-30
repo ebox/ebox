@@ -1,3 +1,4 @@
 01_set_multiple_groups
 02_fix_interpolation_warning
 03_abstract_daemon_tmp_dir
+04_disable_debug

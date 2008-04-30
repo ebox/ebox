@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04_disable_debug.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Disable debug by default
+
+@DPATCH@
+
+Index: libebox/conf/99ebox.conf
+===================================================================
+--- libebox/conf/99ebox.conf	(revisión: 9984)
++++ libebox/conf/99ebox.conf	(copia de trabajo)
+@@ -28,7 +28,7 @@
+ group = adm
+ 
+ # debug mode [required]. yes|no
+-debug = yes 
++debug = no
+ 
+ # default error cgi
+ default_error_cgi = EBox::CGI::Base
