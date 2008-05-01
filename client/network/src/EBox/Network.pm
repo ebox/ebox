@@ -153,11 +153,12 @@ sub modelClasses
 
 
 
-sub compositeClasses
-{
-  return [
-	  'EBox::Network::Composite::ByteRate',
-	 ];
+# XXX uncomment when DynLoader bug with locales is fixed
+#sub compositeClasses
+#{
+#  return [
+#	  'EBox::Network::Composite::ByteRate',
+#	 ];
 
 }
 
