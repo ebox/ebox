@@ -71,9 +71,7 @@ stripe('dataTable', '#ecf5da', '#ffffff');
             <% $printableName %>
         </td>
         <td style="color:#888">
-%   for my $printable (@{$mod->{'printableDepends'}}) {
-        <% $printable %> 
-%   }
+        <% join(', ', @{$mod->{'printableDepends'}}) %> 
         </td>
         <td class='tcenter'>
 %   if (not $depends) {
