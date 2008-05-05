@@ -39,7 +39,7 @@ sub _addFirewallRule
     my $fwMod = EBox::Global->modInstance('firewall');
     $fwMod->addOutputService( decision => 'accept', 
             destination =>  {destination_any => 'any'},
-            service => { inverse => 1, value => $servId},
+            service => { inverse => 0, value => $servId},
             description => __d('rule to allow apt updates'));
 
     $servMod->saveConfig();
