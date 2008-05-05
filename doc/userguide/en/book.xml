@@ -22,6 +22,7 @@
 <!ENTITY ch19     SYSTEM "ch19.xml">
 <!ENTITY ch20     SYSTEM "ch20.xml">
 ]>
+<!-- TODO: logs and events modules -->
 
 <book id='ebox' lang='en'>
   <title>eBox users guide</title>
