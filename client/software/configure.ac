@@ -55,6 +55,7 @@ AC_DEFINE_DIR(PERLPATH, perlpath)
 AM_PO_SUBDIRS
 
 AC_CONFIG_FILES([
+migration/Makefile
 tools/Makefile
 tools/cron/Makefile
 src/Makefile
