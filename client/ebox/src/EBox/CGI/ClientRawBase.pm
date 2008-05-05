@@ -121,8 +121,11 @@ sub _print_warning
 	$r->custom_response(DATA_IN_USE_STATUS, "");
 
 	my $filename = EBox::Config::templates . '/dataInUse.mas';
+	my $output;
 	my $interp = HTML::Mason::Interp->new(comp_root => 
-						EBox::Config::templates);
+						EBox::Config::templates,
+						out_method => \$output);
+					
 	my $comp = $interp->make_component(comp_file => $filename);
 	my @params = ();
 	push(@params, 'warning' => $text);
@@ -130,6 +133,8 @@ sub _print_warning
 	push(@params, 'params' => $self->paramsAsHash());
 	$interp->exec($comp, @params);
 
+	$r->status(DATA_IN_USE_STATUS);
+	$r->custom_response(DATA_IN_USE_STATUS, $output);
 }
 
 # TODO Refactor this stuff as it's used in the auth process too
