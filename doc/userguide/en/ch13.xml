@@ -19,8 +19,7 @@
 			<varlistentry>
 				<term>Services</term>
 				<listitem>
-					<para>Choosing services tab, we can enable or
-					disable mail server, ask for authentication
+					<para>Choosing services tab, we may ask for authentication
 					to mail users or allow free access, and use
 					(or not) TLS to cipher communications between
 					server and client. Also, you can enable POP3

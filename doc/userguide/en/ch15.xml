@@ -72,13 +72,20 @@
 		     </para>
 
 		     <para>
-		      In case of having an IP address with more than one name associated to it, you can add <emphasis>aliases</emphasis> right below the first host name added.
+		      In case of having an IP address with more than
+                      one name associated to it, you can add
+                      <emphasis>aliases</emphasis> right below the
+                      first host name added.
 		     </para>
 		    </listitem>
 		   </varlistentry>
 
 		 </variablelist>
 
+                 <para>Moreover, reverse mapping is done as well
+                 automatically. Every host which has an IP address
+                 associated with, the inverse relation is done as
+                 well.</para>
 		</section>
 
 </chapter>
