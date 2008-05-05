@@ -56,69 +56,6 @@ sub _create
 	return $self;
 }
 
-# Method: actions
-#
-# 	Override EBox::ServiceModule::ServiceInterface::actions
-#
-sub actions
-{
-  return [ 
-	  {
-	   'action' => __(q{Add rule to firewall to allow HTTP connections}),
-	   'reason' => __(q{eBox needs to access package repositories via HTTP to download packages}),
-	   'module' => 'software',
-	  },
-#	  {
-#	   'action' => __(q{Change configuration of dpkg and ucf}),
-#	   'reason' => __(q{The new configuration is needed to always preserve old configuration files}),
-#	   'module' => 'software',
-#	  },
-	  {
-	   'action' => __(q{Change software packages repositories}),
-	   'reason' => __('The software module needs to add custom repositories: '.
-                      '{repo}', repo => 
-                      'deb http://ppa.launchpad.net/juruen/ubuntu hardy main'),
-	   'module' => 'software',
-	  },
-#	  {
-#	   'action' => __(q{Change debconf configuration}),
-#	   'reason' => __(q{eBox software module uses non-interactive mode and a critical priority}),
-#	   'module' => 'software',
-#	  },
-
-	 ];
-}
-
-
-# Method: usedFiles 
-#
-# 	Override EBox::ServiceModule::ServiceInterface::files
-#
-sub usedFiles 
-{
-  my @usedFiles = (
-#		   {	
-#		    'file' =>   '/etc/dpkg/dpkg.cfg',
-#		    'reason' => __(q{To make sure dpkg prefers to preserver old configuration file}),
-#		    'module' => 'software'
-#		   },
-#		   {	
-#		    'file' =>   '/etc/ucf.conf',
-#		    'reason' => __(q{To make sure ucf prefers to preserver old configuration file}),
-#		    'module' => 'software'
-#		   },
-		   {	
-		    'file' =>   '/etc/apt/sources.list',
-		    'reason' => __(q{To add custom repositories}),
-		    'module' => 'software'
-		   },
-		  );
- 
-
-
-   return \@usedFiles;
-}
-
 # Method: enableActions 
 #
 # 	Override EBox::ServiceModule::ServiceInterface::enableActions
