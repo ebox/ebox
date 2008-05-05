@@ -106,7 +106,7 @@
       You might inspect several system-defined services prior to add
       your own ones. Anyway, a user-defined service may be created
       when additional network services be installed on top of an eBox
-      installation, for example introducing a <emphasis>NNTP (Network News
+      installation, for example introducing <emphasis>FTP (File
       Transfer Protocol)</emphasis> service.
     </para>
     <example id="serv-conf-example">
