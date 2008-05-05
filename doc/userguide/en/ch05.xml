@@ -28,12 +28,12 @@
       </menuchoice>.
     </para>
     <para>
-      As you may notice, there are several ones which
+      As you may notice, there are several services which
       have been created by eBox for you. These services are used by
       eBox modules afterwards. For instance, <emphasis>dhcp</emphasis>
       service is described as an internal service called
-      '<emphasis>Dynamic Host Configuration Protocol</emphasis>'. As
-      you may notice, this service is read-only as it is already
+      '<emphasis>Dynamic Host Configuration Protocol</emphasis>'.This
+      service is read-only as it is already
       managed by dhcp module automatically. Each service has a
       configuration where the service protocol, well-known source and
       destination ports are set. There are three special services

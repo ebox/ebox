@@ -311,7 +311,7 @@
           <title>Module status</title>
           <para>
             Each eBox module status is managed from here instead of
-            having to enable every module from its configuration
+            having to enable every module from one of its configuration
             page. This allows us to have in a single sight which
             modules are enabled analogously the module summary in
             Summary page. Each eBox module is disabled by default
@@ -321,7 +321,7 @@
           </para>
           <para>
             There are modules which depends on another to be
-            enabled. In a typical installation, the squid module has a
+            enabled. In a typical installation, for example, the squid module has a
             chain of dependencies to be enabled as shown: squid ->
             firewall -> network. So to enable Squid module, firstly
             the dependant modules must be enabled first. A module may
@@ -340,7 +340,7 @@
             would not be committed.
            </para>
           <para>
-            Every time a user make a modification in any file, eBox
+            Every time a user make a modification in an eBox-controlled file, eBox
             will realise that a change may be done when saving
             changes. And it will ask you again to override your
             changes. This monitoring is only done on those modules
@@ -348,7 +348,7 @@
             through eBox UI, no more dialogues of this kind will be shown.
           </para>
           <para>
-            In order to disable a module, just click status column of
+            In order to disable a module, just click <guilabel>status</guilabel> column of
             the desired module. If the module is a dependency from
             other modules, this action will disable them as well.
          </para>
