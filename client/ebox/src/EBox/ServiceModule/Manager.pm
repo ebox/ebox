@@ -81,7 +81,7 @@ sub moduleStatus
     my $change = undef;
     #for my $mod (@{$global->modInstancesOfType(CLASS)}) {
     for my $modName (@{$self->_dependencyTree()}) {
-	my $mod = $global->modInstance($modName);
+        my $mod = $global->modInstance($modName);
         my $status = {};
         $status->{'configured'} = $mod->configured();
         $status->{'depends'} = $self->dependencyEnabled($mod->name());
@@ -91,7 +91,7 @@ sub moduleStatus
         $status->{'printableDepends'} = $self->printableDepends($mod->name());
         unless ($status->{'configured'} and $status->{'depends'}) {
             $status->{'status'} = undef;
-	    $mod->enableService(undef);
+            $mod->enableService(undef);
         }
         push (@mods, $status); 
     }
@@ -383,6 +383,7 @@ sub _fileId
     my $modPath = GCONF_DIR. $file->{'module'};
     for my $dir ($gconf->st_all_dirs($modPath)) {
         my $hashEntry = $gconf->st_hash_from_dir("$dir");
+        next unless (exists $hashEntry->{'file'});
         return basename($dir) if ($hashEntry->{'file'} eq $file->{'file'});
     }
 
@@ -504,7 +505,8 @@ sub _updateMD5
     my $modPath = GCONF_DIR. $file->{'module'};
     for my $dir ($gconf->st_all_dirs($modPath)) {
         my $hashEntry = $gconf->st_hash_from_dir($dir);
-        next unless ($hashEntry->{'file'} eq $file->{'file'});
+        next unless (exists $hashEntry->{'file'}
+                     and $hashEntry->{'file'} eq $file->{'file'});
         my $stDigest = $hashEntry->{'digest'};
 
         return if ($stDigest eq $currDigest);
