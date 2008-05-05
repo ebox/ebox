@@ -9,7 +9,8 @@
 		<para>Through
 		<menuchoice>
 			<guimenu>Users</guimenu>
-		</menuchoice>
+                        <guimenuitem>Add user</guimenuitem>
+                </menuchoice>
 		is possible to create eBox users and modify their
 		configuration.</para>
 
@@ -17,11 +18,15 @@
 		information on the form, at the configuration window, and click
 		<guibutton>Create</guibutton>. There are fields to enter user name,
                 real name, user	comments, its password (with confirmation) and its
-                user group which will belong to.</para>
+                user group which will belong to, if any.</para>
 
-		<para>After this, configuration for each created user can be modified,
-                selecting the user from the selection list and click at
-                <guibutton>Edit</guibutton>.</para> 
+		<para>After that, configuration for each created user can be modified,
+                selecting the user from the table available at
+                <menuchoice>
+                  <guimenu>Users</guimenu>
+                  <guimenuitem>Edit User</guimenuitem>
+                </menuchoice>
+                and click on <guiicon>Pencil</guiicon> icon.</para> 
 
 		<para>User edit window is dynamic, which means that its content can
 		change depending on the eBox modules installed. There are two parts
@@ -34,7 +39,8 @@
 		dependencies with the installed modules. Between these parts, new
 		information about each installed and enabled eBox modules can appear,
 		including user-related options about: mail accounts, file sharing,
-		printers sharing...</para>
+		printers sharing...Each section is explained in the
+                module which belongs to.</para>
 	</section>
 
 	<section id='sect-users-groups'>
@@ -58,8 +64,7 @@
 		includes the same two blocks: first one to edit comment group and
 		choose which users belongs to the group, and the
 		second one to <guibutton>Delete</guibutton> the
-		selected group and
-                all the dependencies
+		selected group and all the dependencies
 		with the installed modules. Between these two parts, group-related
 		information of each eBox module installed, will be shown here.</para>
 	</section>

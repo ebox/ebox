@@ -12,9 +12,8 @@
 	<guimenu>File sharing</guimenu>
       </menuchoice>
       .
-      To activate file sharing, just select from the status list, at the
-      upper configuration page, "Enabled" status and accept the changes
-      clicking at "Change".
+      To activate file sharing, check out <xref
+      linkend="sect-mod-status"/> for details on how to do it.
     </para>
 
     <para>
@@ -65,6 +64,25 @@
 	</varlistentry>
       </variablelist>
     </para>
+    <para>
+      This list of settings makes only sense in PDC mode:
+      <variablelist>
+        <varlistentry>
+          <term>Roaming profiles</term>
+          <listitem>
+            <para>Roaming profiles are a set of directories which
+            contains a set of configuration settings from a Windows
+            machine which belongs to the domain. Those directories are
+            stored in the server host if this option is
+            enabled. Default value is disabled because of the LAN
+            traffic overload when starting up a machine since every
+            directory should be downloaded from the server which may
+            include mail boxes and more data...
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
   </section>
 
   <section id='sect-shared-files'>
@@ -100,7 +118,7 @@
     <note>
       <para>
 	The current file permission allows to read, write and
-	execute a file to the owner and read and write to the
+	execute a file to the owner and read, write and execute to the
 	group. Regarding to subdirectories, the setgid bit is set, so
 	subdirectories group owner will be the group. Furthermore, the
 	new subdirectories will have full access to the group.
