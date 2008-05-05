@@ -17,7 +17,7 @@
 		</para>
 
 		<para>
-                 The firewall has different behavior with 
+                 The firewall has different behaviour with 
 		external or internal network interfaces.
 		<!--TODO: qué hace eBox con los interfaces externos-->
 		</para>
@@ -96,55 +96,120 @@
 			<guimenu>Firewall</guimenu>
 			<guimenuitem>Packet filter</guimenuitem>
 		</menuchoice>
-		you can configure general packet filter rules or
-		define them to each network object.
+		you can configure packet filter rules. You may use the
+                abstractions provided above such as network services (<xref
+                linkend="ch-services"/>) and network objects (<xref
+                linkend="ch-objects"/>).  Using these concepts enhance
+                the rules flexibility and clearness, reducing the amount.
 		</para>
 
-		<para>At configuration window we can establish a deny
-		policy for network packets. If you select this deny
-		policy, it will be notified to the sender that the
-		packet will be denied on destination. If you select an
-		ignorance policy for network packets, they will be
-		filtered and discarded without any notification.
-		</para>
+                <para>At first sight, we have five different traffic flows
+                to set your firewall rules to them.
+                <variablelist>
+                  <varlistentry>
+                    <term>From internal networks to eBox</term>
+                    <listitem><para>These rules are meant to control
+                    access from internal network interfaces to
+                    services running on your eBox machine. Several
+                    eBox modules may add filtering rules for you to
+                    manage eBox services easily.</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>For internal networks</term>
+                    <listitem><para>These rules allow you to control
+                    access from your internal networks to the
+                    Internet, and traffic between your internal
+                    networks.</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Coming out from eBox</term>
+                    <listitem><para>These rules allow you to control
+                    access from eBox to external
+                    services.</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>From external networks to eBox</term>
+                    <listitem><para>These rules allow you to control
+                    access from external networks to services running
+                    on your eBox machine.
+                    </para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>From external networks to internal networks</term>
+                    <listitem><para>These rules allow you to control
+                    access from external networks to internal
+                    networks.
+                    </para></listitem>
+                  </varlistentry>
+                </variablelist>
+                Take into account to the last two set of rules that it
+                is granted access to untrusted networks to your
+                managed networks. This may compromise your network
+                security. As eBox secure by default policy recommends,
+                do not modify these rules unless you know what you are
+                doing. The figure <xref
+                linkend="fig-firewall"/> try to make up the concept:
+                </para>
+                <figure id="fig-firewall">
+                  <title>Firewall rules</title>
+                  <mediaobject>
+                    <imageobject>
+                      <imagedata fileref="images/firewall.png"
+                                 format="PNG"/>
+                    </imageobject>
+                  </mediaobject>
+                </figure>
 
-		<para>
-		Making a click on Packet filer rules, you can access
-		to a rule list for the eBox firewall. Each rule can be
-		enabled or disabled without remove it. These rules,
-		will be applied from top to bottom, so order could be
-		important. On each rule, you can select its
-		transmission protocol, which action to apply if a
-		packet matches this rule (accept it or deny it),
-		origin address and port and destination address and
-		port. When specifying an address or a port, you can
-		choose which ones belongs to the rule or which not, to
-		enhance its flexibility and clearness of the rules,
-		reducing the amount.
-		</para>
+		<para>The deny policy for eBox firewall is a
+                ignorance one. Every denied packet is filtered and
+                discarded without any notification.</para>
 
-		<para>
-		Inside <guilabel>Default rules
-		configuration</guilabel>, we can establish rules to be
-		applied by default to each eBox object. This includes
-		a general policy for the object, denying or accepting
-		some services allowed to select from a list. It also
-		includes the creation of a specific rules list for the
-		object, which allow or deny connections with a
-		protocol, a destination address (with a network mask)
-		and certain ports. These rules can be enabled or
-		disabled without removing them, as in eBox filtering rules</para>
-
-		<para>
-		At the bottom, we can choose an eBox network object
-		from the selection list, and clicking on "Go", to
-		apply the specified packet filtering rules. Between
-		the selectable options for network objects we find:
-		fix a specific policy or use a global policy,
-		accepting or denying some services, from the Services
-		selection list, and create rules for the object in the
-		same way they are created for the global policy.
-		</para>
+                <para>Every set of rules define a fixed behaviour for
+                the traffic flows that they apply. These rules will be
+                matched from top to the bottom, thus order is
+                important and it may modify any time. Each rule consists of these fields, some of
+                them are only available to several rule set by
+                construction:
+                <variablelist>
+                  <varlistentry>
+                    <term>Decision</term>
+                    <listitem><para>Accept or deny. This explicitly
+                    accepts or denies a traffic flow.</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Source</term>
+                    <listitem><para>The traffic flow origin. It may be
+                    a network object or a single IP address. This
+                    field is available for every rule set except for
+                    "Filtering rules for traffic coming out from
+                    eBox"</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Destination</term>
+                    <listitem><para>The traffic flow target. It may be
+                    a network object or a single IP address. This
+                    field is available for "For internal networks",
+                    "Coming out from eBox" and "From external networks
+                    to internal networks" filtering
+                    rules.</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Service</term>
+                    <listitem><para>The traffic flow service as it is
+                    described in <xref linkend="ch-services"/>. The
+                    match could be inverse one, i.e. the inverse "any"
+                    service is "all" service. This is a compulsory
+                    field, therefore in order to create a new rule, it
+                    is required to have a network service. If it does
+                    not exist, you must make up previously.</para></listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>Description</term>
+                    <listitem><para>An optional description to ease
+                    the firewall rule set management.</para></listitem>
+                  </varlistentry>
+                </variablelist>
+                </para>
 	</section>
 
 </chapter>
