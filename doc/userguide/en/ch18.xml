@@ -22,7 +22,7 @@
     </para>
     <para>
       OpenVPN module can configure eBox as OpenVPN server as well as
-      client. As many servers/clients as you want can be
+      client. As many servers/clients as you want may be
       configured.
     </para>
   </section>
@@ -93,7 +93,7 @@
 	</para>
 	<para>
 	  Afterward, you should add advertised networks, which are
-	  those which authorized OpenVPN clients will be able to access. In
+	  those which authorised OpenVPN clients will be able to access. In
 	  order to achieve so, you need to have these advertised
 	  networks reachable. You can set them on editing the chosen
 	  OpenVPN server. In our scenario, you should add local
@@ -101,46 +101,29 @@
 	</para>
 	<para>
 	  Now it is high time to configure clients. An OpenVPN
-	  client can be configured with the following example file:
+	  client may be configure using our bundles which are
+          available in <guilabel>Servers</guilabel> table and click on
+          <guiicon>Down arrow</guiicon> icon. Two Operating Systems
+          bundles have been created, choose the one you use. If you
+          are using a BSD-like environment such as
+          <trademark>MacOS</trademark>, choose
+          <emphasis>Linux</emphasis> system. Choose those client
+          certificate to give to the client and set the external IP
+          address to the VPN clients must connect. eBox will try to
+          guess it using an Internet Web service. If the selected
+          system is <trademark>Windows</trademark>, the OpenVPN
+          installer for Win32 is included as well. It gives you an
+          archive to be distributed to the client.
 	</para>
-	<example id="example-conf-file">
-	  <title>OpenVPN client configuration example file</title>
-	  <programlisting><![CDATA[
-client
-
-dev tap
-# Under Status page, you can see the interface address and the port
-# where OpenVPN is listening to
-remote <iface_address> <port>
-# Under Status page, you can see the protocol as well
-proto <protocol>
-
-####
-# All certificates should be downloaded from eBox Certification
-# Authority interface and then upload to the client machines.
-# Each user certificate created should match with only one machine.
-####
-
-# CA certificate
-ca <ca_cert_file>
-# Client certificate
-cert <client_cert_file>
-# Client private key
-key <client_private_key_file>
-
-# Other options
-comp-lzo
-nobind
-]]>
-	  </programlisting>
-	</example>
 	<para>
-	  This example configuration can be passed to OpenVPN daemon
-	  with the following command: <command>openvpn --config
+	  The bundle includes the configuration file and the required
+          files to start the VPN connection. For instance, in Linux,
+          just decompress the archive and run into the newly created
+          directory the following command: <command>openvpn --config
 	  filename</command>. Now you have access to client 3 from 
 	  two remote clients. Connecting each other remote clients is
 	  necessary to to set <guilabel>Allow client-to-client
-	  connections</guilabel>  checkbox within OpenVPN
+	  connections</guilabel>  check-box within OpenVPN
 	  server configuration. In order to check the configuration
 	  is correct, you can see the routing table where advertised
 	  networks are added to <literal>tapX</literal> virtual
@@ -151,7 +134,7 @@ nobind
       <title>Connect two offices with eBox and OpenVPN</title>
       <para>
 	This second scenario tries to picture a common use case for
-	eBox. Two offices in different networks need to be connected
+	eBox. Two offices in different networks require to be connected
 	through a private network. To do so, we are going to use
 	eBox in both local networks as gateways and one as an OpenVPN
 	client and another as a server. The following figure tries to
@@ -170,17 +153,23 @@ nobind
 	Our aim is to connect client 1 in LAN 1 with client 2 in LAN 2
 	as if they were under the same local network. Therefore we need
 	to set up the OpenVPN server as we do in
-	<xref linkend="sect-roadwarrior" />. However, just one change 
+	<xref linkend="sect-roadwarrior" />. However, just a pair of changes 
 	is needed setting on option <literal>Allow eBox-to-eBox tunnels</literal> to exchange routes
-	among eBox machines.
+	among eBox machines and <literal>eBox-to-eBox-tunnel
+        password</literal> password to perform a little more secure
+        environment among the two offices.
       </para>
       <para>
 	In order to configure eBox as OpenVPN client, we can do it at
 	<guilabel>Create new client</guilabel> button within
 	<guimenu>OpenVPN</guimenu> menu. We should set client's
-	name, the OpenVPN server address and protocol/port pair and
-	the corresponding certificates. You can obtain this
-	information analogously to the one shown above. When you save
+	name and active. You may set the client configuration manually
+        giving the required information or automatically using the
+        bundle giving by the server as we have done in <xref
+        linkend="sect-roadwarrior"/>. The former requires the server service
+        address, required certificates and server's tunnel password as
+        well, and the latter this information is extracted
+        automatically from the bundle. When you save
 	changes, in status summary, you can see the new OpenVPN
 	daemon in LAN 2 running as a client with the connection target to the
 	other eBox within LAN 1.

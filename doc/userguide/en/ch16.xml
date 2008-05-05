@@ -15,9 +15,9 @@
 		a local network or with external connection. It also handles
 		authentication per-user, allowing or not its access to each one.</para>
 		
-		<para>If you want to enable Jabber server, enter on its configuration
-		page and select, from the upper part, "Enabled" option from the
-		selection list.</para>
+		<para>If you want to enable Jabber server, check out
+                <xref linkend="sect-mod-status"/> for details to do so.
+                </para>
 
 		<para>You can configure Jabber server behavior by setting these options:
 			<variablelist>
