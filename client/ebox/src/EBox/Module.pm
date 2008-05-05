@@ -207,6 +207,7 @@ sub _saveConfigRecursive
 
     my $modInstance = EBox::Global->modInstance($module);
     $modInstance->saveConfig();
+    $global->modRestarted($module);
 }
 
 
