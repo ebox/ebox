@@ -484,6 +484,29 @@ sub _adminDumbness
 
   }
 
+# Enable/disable watchers and dispatchers to restore backup
+sub _prepareRestoreBackup
+{
+    my ($self) = @_;
+
+    my $eventModel = $self->configureEventModel();
+    my @enableEvents =  map { $_->{'eventWatcher'} } 
+    @{$eventModel->findAllValue (enabled => 1)};
+    my @disableEvents =  map { $_->{'eventWatcher'} } 
+    @{$eventModel->findAllValue (enabled => 0)};
+
+    my $dispatcherModel = $self->configureDispatcherModel();
+    my @enableDispatchers =  map { $_->{'eventDispatcher'} } 
+    @{$dispatcherModel->findAllValue (enabled => 1)};
+    my @disableDispatchers =  map { $_->{'eventDispatcher'} } 
+    @{$dispatcherModel->findAllValue (enabled => 0)};
+
+    $self->set_list('watcher_to_enable', 'string', \@enableEvents);
+    $self->set_list('watcher_to_disable', 'string', \@disableEvents);
+    $self->set_list('dispatcher_to_enable', 'string', \@enableDispatchers);
+    $self->set_list('dispatcher_to_disable', 'string', \@disableDispatchers);
+}
+
 # Submit the files to the correct directories
 sub _submitEventElements
   {
@@ -657,5 +680,25 @@ sub _configurationComposite
       return $self->{confComposite};
 
   }
+
+
+# Method:  restoreConfig
+#
+#   Restore its configuration from the backup file.
+#
+# Parameters:
+#  dir - Directory where are located the backup files
+#
+sub restoreConfig
+  {
+
+    my ($self, $dir) = @_;
+
+    # Call super
+    $self->SUPER::restoreConfig($dir);
+
+    $self->_prepareRestoreBackup();
+  }
+
 
 1;
