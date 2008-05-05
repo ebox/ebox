@@ -354,7 +354,7 @@
             El estado de cada módulo de eBox se maneja desde aquí en
             vez de tener que habilitar cada módulo desde una de sus
             páginas de configuración. Esto permite tener a simple
-            vista que módulos están habilitados de manera analoga como
+            vista que módulos están habilitados de manera análoga como
             se hace con el sumario de cada módulo en la página de
             sumario. Cada módulo eBox es deshabilitado por defecto
             incluyendo módulos como Red (<xref linkend="ch-network"/>)
