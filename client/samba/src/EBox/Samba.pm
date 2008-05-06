@@ -27,7 +27,7 @@ use EBox::Sudo qw( :all );
 use EBox::Global;
 use EBox::Ldap;
 use EBox::Service;
-use EBox::SambaLdapUser;
+use EBox::SambaLdapUser qw(PROFILESPATH);
 use EBox::UsersAndGroups;
 use EBox::Network;
 use EBox::SambaFirewall;
@@ -1045,13 +1045,14 @@ sub dumpConfig
   my ($self, $dir) = @_;
 
   $self->_dumpSharesTree($dir);
+  $self->_dumpProfiles($dir);
 }
 
 sub restoreConfig
 {
   my ($self, $dir) = @_;
 
-  $self->_loadSharesTree($dir);
+  $self->_loadSharesTree($dir);  $self->_loadProfiles($dir);
   $self->_fixLeftoverSharedDirectories();
   $self->fixSIDs();
   
@@ -1113,6 +1114,38 @@ sub _loadSharesTree
   } 
 }
 
+
+sub _dumpProfiles
+{
+    my ($self, $dir) = @_;
+    my $archive = $self->_profilesArchive($dir);
+
+    (-d PROFILESPATH) or
+	return;
+
+    my $tarCommand = "/bin/tar -cf $archive --bzip2 --atime-preserve --absolute-names --preserve --same-owner " . PROFILESPATH;
+    EBox::Sudo::root($tarCommand);
+}
+
+
+sub _loadProfiles
+{
+    my ($self, $dir) = @_;
+    my $archive = $self->_profilesArchive($dir);
+
+    (-e $archive) or
+	return;
+
+    my $tarCommand = "/bin/tar -xf $archive --bzip2 --atime-preserve --absolute-names --preserve --same-owner";
+    EBox::Sudo::root($tarCommand);
+}
+
+
+sub _profilesArchive
+{
+    my ($self, $dir) = @_;
+    return "$dir/profiles.tgz";
+}
 
 sub fixSIDs
 {
