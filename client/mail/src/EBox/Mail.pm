@@ -375,21 +375,46 @@ sub _fqdn
 sub isRunning
 {
 	my ($self, $service) = @_;
-	if ($service eq 'active') {
-		my $t = new Proc::ProcessTable;
-		foreach my $proc (@{$t->table}) {
-			($proc->fname eq 'master') and return 1;
+	
+	if (not defined($service)) {
+		return undef unless $self->_postfixIsRunning();
+		if ($self->service('pop') and not $self->_popIsRunning()) {
+			return undef;
 		}
+		if ($self->service('imap') and not $self->_imapIsRunning()) {
+			return undef;
+		}
+		return 1;
+	} elsif ($service eq 'active') {
+		return $self->_postfixIsRunning();
 	} elsif ($service eq 'pop') {
-		return $self->pidFileRunning(POPPIDFILE);
+		return $self->_popIsRunning(); 
 	} elsif ($service eq 'imap') {
-		return $self->pidFileRunning(IMAPPIDFILE);
-	} else {
-		return undef;
+		return $self->_imapIsRunning();
 	}
 }
 
+sub _popIsRunning
+{
+	my ($self) = @_;
+	return $self->pidFileRunning(POPPIDFILE);
+}
 
+sub _imapIsRunning
+{
+	my ($self) = @_;
+	return $self->pidFileRunning(IMAPPIDFILE);
+}
+
+sub _postfixIsRunning
+{
+	my ($self, $service) = @_;
+	my $t = new Proc::ProcessTable;
+	foreach my $proc (@{$t->table}) {
+		($proc->fname eq 'master') and return 1;
+	}
+	return undef;
+}
 
 # Method: externalFiltersFromModules
 #
