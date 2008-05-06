@@ -1,6 +1,14 @@
 0.11.100
 	+ Bugfix. Fix issue with event filters and empty hashes
 	+ Bugfix. Cache stuff in log and soap watcher to avoid memory leaks
+	+ Bugfix. Fix bug that prevented the user from being warned when a row to
+	  be deleted is being used by other model
+	+ Bugfix. Add missing use of EBox::Global in State event watcher
+	+ Added progress screen, now pogress screen keeps track of the changed
+	  state of the modules and change the top page element properly
+	+ Do not exec() to restart apache outside mod_perl
+	+ Improve apache restart script
+	+ Improve progress screen 
 0.11.99
 	+ DataTable contains the property 'enableProperty' to set a column
 	called 'enabled' to enable/disable rows from the user point of
