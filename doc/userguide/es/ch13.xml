@@ -21,8 +21,7 @@
 				<term>Servicios</term>
 				<listitem>
 					<para>
-					En la pestaña de servicios se permite habilitar o deshabilitar
-					el servidor de correo, requerir autenticación para los usuarios
+					En la pestaña de servicios se permite requerir autenticación para los usuarios
 					que se conecten al servidor de correo o permitir acceso libre y
 					utilizar o no TLS para cifrar la comunicación SMTP con el servidor. 
 					También se permite desde aquí habilitar POP3 e IMAP así como
