@@ -15,7 +15,7 @@
       Los servicios de red se usan en los módulos de cortafuegos
       (<xref linkend="ch-firewall"/>) y el módulo de moldeado de
       tráfico <!-- FIXME: ch-ts when it's done -->. De todas maneras,
-      como base de la filosofía eBx cada característica que use un
+      como base de la filosofía eBox cada característica que use un
       servicio de red debe tener en cuenta a este módulo para
       funcionar y facilitar la vida al administrador.
     </para>
@@ -36,10 +36,10 @@
       Host Configuration Protocol</emphasis>'. Este servicio es de
       sólo lectura ya que es gestionado automáticamente por el módulo
       dhcp. Cada servicio tiene una configuración donde se configuran
-      el protocol y los puertos conocidos tanto origen como destino
+      el protocolo y los puertos conocidos tanto origen como destino
       del flujo. Hay tres servicios especiales para definir una
-      abstración genérica cada cada servicio
-      (<emphasis>any</emphasis>) y cada servicio TCP/UDP. Se han
+      abstracción genérica cada cada servicio
+      (<emphasis>cualquiera</emphasis>) y cada servicio TCP/UDP. Se han
       introducido para manejar fácilmente reglas definidas en otros
       módulos.
     </para>
@@ -60,11 +60,11 @@
         </varlistentry>
         <varlistentry>
           <term>Interno</term>
-          <listitem><para>Caundo un servicio de red se marca como
+          <listitem><para>Cuando un servicio de red se marca como
           interno, los pares protocolo/puerto que pertenecen a dicho
           servicio serán marcados como ocupados y por tanto no estarán
           disponibles para otros servicios.
-          </para></listitem>>
+          </para></listitem>
         </varlistentry>
         <varlistentry>
           <term>Configuración</term>
@@ -72,9 +72,83 @@
             <para>La configuración del servicio es un parámetro
             múltiple que contiene los siguientes tres elementos:
             </para>
+            <variablelist>
+              <varlistentry>
+                <term>Protocolo</term>
+                <listitem><para>Es el protocolo de Internet cuyos
+                valores pueden ser: TCP/UDP, TCP, UDP, GRE, ICMP o
+                "cualquiera". Si el protocolo es GRE o ICMP, entonces
+                no se puede poner ningún puerto ya que no tiene
+                sentido según la construcción del
+                protocolo.</para></listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Puerto origen</term>
+                <listitem>
+                  <para>El puerto origen bien conocido cuyo
+                  valor puede ser uno de los siguientes:</para>
+                  <itemizedlist>
+                    <listitem><formalpara>
+                      <title>Cualquiera</title>
+                      <para>Indica cualquier puerto para ese protocolo o
+                      conjunto de ellos</para>
+                    </formalpara></listitem>
+                    <listitem><formalpara>
+                      <title>Un puerto</title>
+                      <para>Indica un único puerto para ese protocolo o
+                      conjunto de ellos</para>
+                    </formalpara></listitem>
+                    <listitem><formalpara>
+                      <title>Rango de puertos</title>
+                      <para>Indica un rango de puertos incluyendo los
+                      extremos para ese protocolo o conjunto de ellos</para>
+                    </formalpara></listitem>
+                  </itemizedlist>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>Puerto destino</term>
+                <listitem><para>De manera análoga al puerto origen,
+                los mismos elementos aparecen en el puerto destino.
+                </para></listitem>
+              </varlistentry>
+            </variablelist>
           </listitem>
         </varlistentry>
       </variablelist>
+      Quizás recorriendo varios de los servicios definidos por el
+      sistema antes de añadir los propios pueda ayudar. De todas
+      maneras, se puede un servicio definido por un usuario cuando se
+      instalen servicios de red adicionales para instalar encima de
+      una instalación de eBox. Por ejemplo, introduciendo el servicio
+      <emphasis>FTP (File Transfer Protocol)</emphasis>.
     </para>
+    <example id="serv-conf-example">
+      <title>Ejemplo de configuración de servicio</title>
+      <itemizedlist>
+        <listitem><formalpara><title>Nombre servicio</title><para>ftp</para></formalpara></listitem>
+        <listitem><formalpara><title>Descripción</title><para>File Transfer Protocol</para></formalpara></listitem>
+        <listitem><formalpara><title>Interno</title><para>sí</para></formalpara></listitem>
+        <listitem>
+          <formalpara>
+            <title>Configuración:</title>
+            <para>
+              <itemizedlist>
+                <listitem><para>
+                  protocolo: tcp, puerto origen: cualquiera, puerto destino:
+                  20 (<emphasis>Define el canal de control de conexión</emphasis>) </para>
+                </listitem>
+                <listitem>
+                  <para>protocolo: tcp, puerto origen: cualquiera,
+                  puerto destino: 21 (<emphasis>Define el canal de
+                  flujo de datos</emphasis>)</para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </example>
+
   </section>
 </chapter>
