@@ -446,6 +446,13 @@ sub freeViface
   $self->freeIface($viface); 
 }
 
+sub changeIfaceExternalProperty # (iface, external)
+{
+   my ($self, $iface, $external) = @_;
+   # no effect for openvpn clients. Except that the server may not be reacheable
+   # anymore but we don't check this in any moment..
+   return;
+}
 
 sub _availableIfaces
 {

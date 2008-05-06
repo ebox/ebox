@@ -26,7 +26,7 @@ sub requiredParameters
 {
     my ($self) = @_;
     if ($self->param('create')) {
-	[qw(service create name subnet subnetNetmask port proto  certificate )];
+	[qw(service create name subnet subnetNetmask port proto certificate masquerade)];
     }
     else {
 	return [];
@@ -57,11 +57,16 @@ sub masonParameters
     my $openvpn = EBox::Global->modInstance('openvpn');
 
     my $network = EBox::Global->modInstance('network');
-    my $externalIfaces = $network->ExternalIfaces();
+    my $ifaces = $network->ifaces();
 
+
+    my $externalIfaces = $network->ExternalIfaces();
+    my $allIfacesInternal =  (@{ $externalIfaces } == 0) ? 1 : 0;
+ 
     return [
 	    availableCertificates => $openvpn->availableCertificates(),
-	    localInterfaces       => $externalIfaces,
+	    localInterfaces       => $ifaces,
+	    allIfacesInternal     => $allIfacesInternal,
 	    disabled              => $disabled,
 	   ];
 }

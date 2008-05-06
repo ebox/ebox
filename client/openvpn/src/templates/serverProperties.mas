@@ -28,7 +28,7 @@ my $tlsRemoteInput = [
 		     ];
 
 my @localOptions = map { { value => $_ } } @localInterfaces; 
-push @localOptions,  { value => '', printableValue => __('All external interfaces'), };
+push @localOptions,  { value => '', printableValue => __('All network interfaces'), };
 # if the local interface does not exist (was removed by force) put in
 # int the options to avoid confusion about the actual value
 if ($properties{local}) {
@@ -62,7 +62,12 @@ my @tableElements  = (
        ],					 
       $certificateInput,	
       $tlsRemoteInput,
-
+		      
+      [ 
+       name =>  'masquerade',
+       printableName => __('Network Address Translation'),
+       input => 'checkbox',
+      ],
 		      
       [ name => 'clientToClient',    printableName => __('Allow client-to-client connections'), 
 	input => 'checkbox' ,

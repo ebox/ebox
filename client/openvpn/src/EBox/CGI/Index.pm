@@ -40,15 +40,10 @@ sub masonParameters
     
     my $noCA = $openVPN->CAIsReady() ? 0 : 1;
 
-    my $network = EBox::Global->modInstance('network');
-    my $externalIfaces = $network->ExternalIfaces();
-
-
     return [ 
 	    servers => \@servers, 
 	    clients => \@clients, 
 	    noCA => $noCA,  
-	    externalIfaces => $externalIfaces,
 	   ];
 }
 

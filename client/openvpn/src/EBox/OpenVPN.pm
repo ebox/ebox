@@ -263,7 +263,7 @@ sub notifyDaemonDeletion
 {
   my ($self, $name, %params) = @_;
   $self  or throw EBox::Exceptions::MissingArgument("you must call this on a object");
-  $name  or throw EBox::Exceptions::MissingArgument("you must supply the name of the daemon to delete");
+  $name  or throw EBox::Exceptions::MissingArgument("you must supply the name of tssub firewalhe daemon to delete");
   exists $params{daemonClass} or
     throw EBox::Exceptions::MissingArgument('daemonClass');
 
@@ -896,18 +896,40 @@ sub firewallHelper
 
     my $service = $self->service();
 
-    my @ifaces = map {
-      $_->iface()
-    }  $self->activeDaemons() ;
+    my @activeDaemons =  $self->activeDaemons() ;
 
-    my $portsByProto = $self->_portsByProtoFromServers($self->activeServers); 
+    my @ifaces = map {
+       $_->iface();
+    } @activeDaemons;
+    
+    my @ports = map {
+	my $port = $_->port();
+	my $proto = $_->proto();
+	my $external = $_->runningOnInternalIface ? 0 : 1;
+	
+	{ port => $port, proto => $proto, external => $external }
+    }  @activeDaemons;
+    
+
+    my @networksToMasquerade = map {
+	my $network = $_->subnet();
+	my $mask    = $_->subnetNetmask();
+	my $cidrNet = EBox::NetWrappers::to_network_with_mask($network, $mask);
+	$cidrNet
+    } grep {
+	$_->masquerade() and $_->can('subnet')
+    } @activeDaemons;
+
+
     my $serversToConnect = $self->_serversToConnect();
 
     my $firewallHelper = new EBox::OpenVPN::FirewallHelper (
 							    service          => $service,
 							    ifaces           => \@ifaces,
-							    portsByProto     => $portsByProto,
+							    ports     => \@ports,
 							    serversToConnect => $serversToConnect,
+							    networksToMasquerade => \@networksToMasquerade,
+							    
 							   );
     return $firewallHelper;
 }
@@ -1316,6 +1338,12 @@ sub freeViface
 {
   my ($self, @params) = @_;
   return $self->_invokeOnDaemons('freeViface', @params);
+}
+
+sub changeIfaceExternalProperty # (iface, external)
+{
+   my ($self, @params) = @_;
+  return $self->_invokeOnDaemons('changeIfaceExternalProperty', @params);     
 }
 
 

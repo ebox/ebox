@@ -135,6 +135,8 @@ sub setUpConfiguration : Test(setup)
 
     EBox::OpenVPN::Test::fakeInterfaces();
     EBox::OpenVPN::Test::fakeFirewall();
+    EBox::OpenVPN::Test::fakeNetworkModule();
+
 
     my $openvpn = EBox::Global->modInstance('openvpn');
 
@@ -145,7 +147,8 @@ sub setUpConfiguration : Test(setup)
 					 subnetNetmask => '255.255.255.0', 
 					 port => 3000, 
 					 proto => 'tcp',  
-					 certificate => 'serverCertificate'
+					 certificate => 'serverCertificate',
+				         masquerade => 0,
 					);
 
     $self->{server} = $server;

@@ -5,7 +5,7 @@ templatedir = @TEMPLATESPATH@/openvpn
 
 template_DATA =  index.mas \
                  create.mas edit.mas delete.mas serverProperties.mas \
-                 caRequired.mas externalIfaceRequired.mas \
+                 caRequired.mas \
                  createClient.mas editClient.mas clientProperties.mas fixedTdFormTable.mas\
                  clientBundle.mas
 

@@ -89,21 +89,25 @@ sub _checkPortIsAvailable
     my ($self, $proto, $port, $localIface) = @_;
     validate_pos(@_, 1, 1, 1, 1);
 
-      # we must check we haven't already set the same port to avoid usesPort
-      # false positive
-    if ( ($port == $self->port()) and ($proto eq $self->proto)  ) {
-      if (defined $localIface) {
-	my $currentLocalIface = $self->local();
-	if (not defined $currentLocalIface) {
-	  return 1;
+    # we must check we haven't already set the same port to avoid usesPort
+    # false positive
+    my $oldPort  = $self->port();
+    my $oldProto = $self->proto;
+    if ( defined $oldPort and defined $oldProto) {
+	if (($port == $oldPort) and ($proto eq $oldProto)  ) {
+	    if (defined $localIface) {
+		my $currentLocalIface = $self->local();
+		if (not defined $currentLocalIface) {
+		    return 1;
+		}
+		elsif ($currentLocalIface eq $localIface) {
+		    return 1;
+		}
+	    }
+	    else {
+		return 1;	
+	    }
 	}
-	elsif ($currentLocalIface eq $localIface) {
-	  return 1;
-	}
-      }
-      else {
-	return 1;	
-      }
     }
 
 
@@ -163,15 +167,21 @@ sub _checkLocal
 
   my $network = EBox::Global->modInstance('network');
 
-  # XXX the ifaceMethod call is needed for #395
-  if ((!$network->ifaceIsExternal($iface)) || ($network->ifaceMethod($iface) eq 'notset')) {
-    if ($network->ifaceExists($iface)) {
-      throw EBox::Exceptions::External(__x('OpenVPN can only listen on a external interface. The interface {iface} does not exist'), iface => $iface);
-    } 
-    else {
-      throw EBox::Exceptions::External(__x('OpenVPN can only listen on a external interface. The interface {iface} is  internal'), iface => $iface);
-    }
+  if (not $network->ifaceExists($iface) ) {
+      throw EBox::Exceptions::External(__x('The interface {iface} does not exist'), iface => $iface);
+  } 
+  
+  if ($network->ifaceMethod($iface) eq 'notset') {
+      throw EBox::Exceptions::External(__x('The interface {iface} is not configured'), iface => $iface);
   }
+
+  if (not $network->ifaceIsExternal($iface)) {
+      $self->masquerade or
+	        throw EBox::Exceptions::External(
+                   __('VPN server can only run in a internal interface if network address translation option is active') 
+                );
+  }
+
 }
 
 # Method: local
@@ -579,6 +589,68 @@ sub service
    return $self->getConfBool('active');
 }
 
+
+
+sub masquerade
+{
+    my ($self) = @_;
+    return $self->getConfBool('masquerade');
+}
+
+
+sub setMasquerade
+{
+    my ($self, $value) = @_;
+
+    if (not $value) {
+	if ($self->runningOnInternalIface()) {
+	    throw EBox::Exceptions::External(
+	       __('VPN servers running on a internal interface should have network address translation option active')
+					    );
+	}
+    }
+
+    $self->setConfBool('masquerade', $value);
+
+}
+
+
+sub runningOnInternalIface
+{
+    my ($self) = @_;
+
+    my $local = $self->local();
+    
+    if ($local) {
+	my $network = EBox::Global->modInstance('network');
+	return not $network->ifaceIsExternal($local);
+    }
+    else {
+	# server listen in all ifaces
+	return $self->_allIfacesAreInternal();
+    }
+
+}
+
+
+sub _allIfacesAreInternal
+{
+    my ($self) = @_;
+    
+    my $network = EBox::Global->modInstance('network');
+
+    my @ifaces = grep {
+	$network->ifaceMethod($_) ne 'notset';
+    } @{ $network->ifaces() };
+
+
+    foreach my $iface (@ifaces) {
+	return 0 if $network->ifaceIsExternal($iface);
+    }
+
+    return 1;
+}
+
 # Method: advertisedNets
 #
 #  gets the nets wich will be advertised to client as reacheable thought the server
@@ -715,9 +787,11 @@ sub setInternal
 #  port           - server's port
 #  proto          - server's proto
 #  certificate    - CN of server's certificate
+#  masquerade   - masquerade option
 #  local          - local interface to listen on *(optional)*
 #  advertisedNets - advertised nets 
 #  tlsRemote      - tls remote option
+#  
 #  pullRoutes     - wether pull routes from clientes or not
 #  ripPasswd      - rip password used to secure the routes' pulling
 sub init
@@ -729,6 +803,7 @@ sub init
     (exists $params{port} ) or throw EBox::Exceptions::External __("The server requires a port number");
     (exists $params{proto}) or throw EBox::Exceptions::External __("A IP protocol must be specified for the server");
     (exists $params{certificate}) or throw EBox::Exceptions::External __("A  server certificate must be specified");
+    (exists $params{masquerade}) or throw EBox::Exceptions::External __("The masquerade parameter must be specified");
     if (exists $params{pullRoutes} and $params{pullRoutes}) {
       ($params{ripPasswd}) or
 	throw EBox::Exceptions::External(
@@ -736,14 +811,13 @@ sub init
 					);
     }
 
-    my $network = EBox::Global->modInstance('network');
-    my $externalIfaces = $network->ExternalIfaces();
-    if (not @{ $externalIfaces } ) {
+    
+    if ($self->_allIfacesAreInternal  and (not $params{masquerade})) {
       throw  EBox::Exceptions::External(
-			 __('Cannot create the OpenVPN server because there is not any external network interface available')
+					__('Cannot create the OpenVPN server because there is neither any external network interface available or network address  translation active')
 				       );
     }
-      
+
 
 
     $self->setSubnetAndMask($params{subnet}, $params{subnetNetmask});
@@ -751,6 +825,9 @@ sub init
     $self->setProto($params{proto});
     $self->setPort($params{port});
     $self->setCertificate($params{certificate});    
+
+    # masquerade must be setted before than local port
+    $self->setMasquerade($params{masquerade});
 
     my @noFundamentalAttrs = qw(local clientToClient advertisedNets tlsRemote pullRoutes ripPasswd  internal); 
     push @noFundamentalAttrs, 'service'; # service must be always the last attr so if there is a error before the server is not activated
@@ -906,11 +983,37 @@ sub freeViface
   $self->freeIface($viface);
 }
 
+
+sub changeIfaceExternalProperty # (iface, external)
+{
+   my ($self, $iface, $external) = @_;
+
+    # only we can break configuration if a external passes
+  # to internal and masquerade is not set
+   
+
+   $external and return; 
+
+   my $local = $self->local();
+   if ($local) {
+       # check if the change is for another iface..
+       return undef if $iface ne $local;
+   }
+   else {
+       # if we listen all ifaces, if at least is one that is not internal
+       # masquerading will not be compulsive
+       return undef if not $self->_allIfacesAreInternal() 
+   }
+   
+   return ( $self->masquerade) ?  undef : 1;
+}
+
 sub _onlyListenOnIface
 {
   my ($self, $iface) = @_;
 
-  if ($iface eq $self->local()) {
+  my $local = $self->local();
+  if ($local and ($iface eq $self->local() )) {
     return 1;
   }
   else { 

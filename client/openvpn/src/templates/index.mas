@@ -2,7 +2,6 @@
 @servers
 @clients
 
-@externalIfaces
 $noCA => 0
 </%args>
 <%init>
@@ -15,9 +14,6 @@ my $clientsShowed = @clients;
 <h3> <% __('Servers') %> </h3>
 % if ($noCA) {
   <& /openvpn/caRequired.mas &>
-% }
-% elsif (not @externalIfaces) {
- <& /openvpn/externalIfaceRequired.mas &>
 % }
 % else {
 <& serversList, servers => \@servers &>

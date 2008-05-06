@@ -104,7 +104,11 @@ sub fakeNetworkModule
 
   my $ifaceExistsSub_r = sub {
     my ($self, $iface) = @_;
-    return ($iface eq $anyInternalIfaces) or ($iface eq $anyExternalIfaces);
+
+    return 1 if grep { $iface eq $_ } @externalIfaces;
+    return 1 if grep { $iface eq $_ } @internalIfaces;
+
+    return 0;
   };
 
   my $ifaceIsExternalSub_r = sub {
@@ -112,6 +116,11 @@ sub fakeNetworkModule
     return  ($iface eq $anyExternalIfaces);
   };
 
+  my $ifacesSub_r = sub {
+      my ($self) = @_;
+      my @ifaces = (@externalIfaces, @internalIfaces);
+      return \@ifaces;
+  };
 
 
   fakeEBoxModule(
@@ -122,7 +131,9 @@ sub fakeNetworkModule
 			  ifaceExists     => $ifaceExistsSub_r,
 			  ExternalIfaces  => sub { return \@externalIfaces },
 			  InternalIfaces  => sub { return \@internalIfaces },
-			  ifaceMethod     => sub { return 'anythingButNonSet' }, # this if for bug #395
+			  ifaces          => $ifacesSub_r,
+			  ifaceMethod     => sub { return 'anythingButNonSet' },# this if for bug #395
+
 			 ],
 		);
 
@@ -177,6 +188,7 @@ sub setUpConfiguration : Test(setup)
 
     fakeInterfaces();
     fakeFirewall();
+    fakeNetworkModule();
 }
 
 
@@ -468,9 +480,9 @@ sub newAndRemoveServerTest  : Test(26)
   
   my @serversNames = qw(server1 sales staff_vpn );
   my %serversParams = (
-			 server1 => [service => 1, subnet => '10.8.0.0', subnetNetmask => '255.255.255.0', port => 3000, proto => 'tcp',  certificate => 'serverCertificate',  type => 'one2many'],
-			 sales => [service => 0, subnet => '10.8.0.0', subnetNetmask => '255.255.255.0', port => 3001, proto => 'tcp',  certificate => 'serverCertificate',  type => 'one2many'],
-			 staff_vpn => [service => 1, subnet => '10.8.0.0', subnetNetmask => '255.255.255.0', port => 3002, proto => 'tcp',  certificate => 'serverCertificate',  type => 'one2many'],
+			 server1 => [service => 1, subnet => '10.8.0.0', subnetNetmask => '255.255.255.0', port => 3000, proto => 'tcp',  certificate => 'serverCertificate',  masquerade => 0],
+			 sales => [service => 0, subnet => '10.8.0.0', subnetNetmask => '255.255.255.0', port => 3001, proto => 'tcp',  certificate => 'serverCertificate',  masquerade => 0],
+			 staff_vpn => [service => 1, subnet => '10.8.0.0', subnetNetmask => '255.255.255.0', port => 3002, proto => 'tcp',  certificate => 'serverCertificate',  masquerade => 1],
 
 			 );
 
