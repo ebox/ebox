@@ -1099,7 +1099,7 @@ sub _setDriverOptionsToFile($$)
 	$printerid or return {};
 	
 	my $ppd = EBox::Config::tmp . "/$manufacturer-$printerid-$driver.ppd";
-	command("foomatic-ppdfile -w -p $printerid -d $driver > $ppd");
+	command("foomatic-ppdfile -w -p $printerid -d $driver > '$ppd'");
 	my $db = new Foomatic::DB;
 	my $dat = $db->getdat($driver, $printerid);
 
@@ -1115,7 +1115,7 @@ sub _setDriverOptionsToFile($$)
 
 	$db->ppdsetdefaults($ppd);
 	my $info = $self->_printerInfo($id);
-	root("/bin/mv $ppd " .  CUPSPPD . $info->{name} . ".ppd");
+	root("/bin/mv '$ppd' " .  CUPSPPD . $info->{name} . ".ppd");
 }
 
 sub printerJobs # (printerid, completed)
