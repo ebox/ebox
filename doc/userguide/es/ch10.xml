@@ -1,5 +1,3 @@
-	<!-- vim: ts=2 sw=2 tw=75
--->
 <chapter id="ch-users">
 
 	<title>Gestión de usuarios</title>
@@ -12,6 +10,7 @@
 		A través de 
 		<menuchoice>
 			<guimenu>Usuarios</guimenu>
+                        <guimenuitem>Añadir Usuario</guimenuitem>
 		</menuchoice>
 		es posible crear usuarios de eBox y modificar la 
 		configuración asignada a cada uno de ellos.
@@ -24,14 +23,18 @@
 		<guibutton>Crear</guibutton>. 
 		Hay campos para introducir nombre de usuario, nombre real, 
 		un comentario sobre el usuario, su contraseña (con confirmación) 
-		y el grupo al que pertenecerá. 
+		y el grupo al que pertenecerá, si existe. 
 		</para>
 
 		<para>
 		Posteriormente, la configuración de cada usuario creado 
-		puede ser modificada seleccionando el usuario en la lista
-		desplegable inferior y haciendo click en 
-		<guibutton>Editar</guibutton>.
+		puede ser modificada seleccionando el usuario en la
+                tabla disponible en
+                <menuchoice>
+                  <guimenu>Usuarios</guimenu>
+                  <guimenuitem>Editar Usuario</guimenuitem>
+                </menuchoice> y pinchar en el icono que muestra el
+                <guiicon>lápiz</guiicon>.
 		</para>
 
 		<para>
@@ -39,15 +42,16 @@
 		decir que su contenido cambiará dependiendo de los módulos 
 		que estén instalados en eBox. Hay dos bloques que serán fijos
 		dentro de la ventana: en la parte superior se mostrara la información
-		general del usuario para permitir su modifición, incluyendo 
+		general del usuario para permitir su modificación, incluyendo 
 		comentario,	nombre y contraseña (con confirmación); en la parte
-		inferior aparecerá un boton Eliminar usuario que borrará el 
+		inferior aparecerá un botón Eliminar usuario que borrará el 
 		usuario de eBox, así como sus dependencias con los módulos
 		instalados. Entre estos dos bloques puede aparecer información 
 		referente a cada uno de los módulos de eBox que se encuentren
 		instalados y habilitados y puedan ofrecer servicio a usuarios de
 		manera individualizada: cuentas de correo, compartición de
-		archivos, acceso a impresoras...
+		archivos, acceso a impresoras... Cada módulo tiene una
+                sección donde explica su interacción con usuarios y grupos.
 		</para>
 	</section>
 
@@ -65,7 +69,7 @@
 		</para>
 
 		<para>
-		Para crera un grupo nuevo sólo es necesario introducir un
+		Para crear un grupo nuevo sólo es necesario introducir un
 		nombre de grupo, un comentario sobre el grupo (opcional) y
 		hacer click en el botón Crear.
 		</para>
@@ -73,7 +77,7 @@
 		<para>
 		Si se desea editar un grupo, al igual que para la edición de 
 		usuarios, simplemente hay que seleccionarlo en la lista desplegable 
-		inferior y pulsar el boton Editar.
+		inferior y pulsar el botón Editar.
 		</para>
 
 		<para>

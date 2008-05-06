@@ -13,10 +13,8 @@
 	      <guimenu>Compartir ficheros</guimenu>
 	    </menuchoice>
 	    .
-	    Para activar la compartición de ficheros simplemente seleccione
-	    de la lista desplegable de estados, en la parte superior
-	    de la ventana de configuración, el estado habilitado y acepte
-	    el cambio pulsando en cambiar.
+	    Para activar la compartición de ficheros, visita la <xref
+            linkend="sect-mod-status"/> para saber como hacerlo.
 	  </para>
 	  
 	  <para>
@@ -74,6 +72,28 @@
 	      </varlistentry>
 	    </variablelist>
 	  </para>
+          <para>
+            Esta lista de parámetros sólo tienen sentido en el modo
+            PDC:
+            <variablelist>
+              <varlistentry>
+                <term>Perfiles móviles</term>
+                <listitem>
+                  <para>Los perfiles móviles son un conjunto de
+                  directorios que contienen una serie de
+                  configuraciones de una máquina
+                  <trademark>Windows</trademark> que pertenece a el
+                  dominio. Esos directorios se guardan en el servidor
+                  si esta opción está habilitada. El valor por defecto
+                  es deshabilitarlo a causa de la sobrecarga en el
+                  tráfico de la red local cuando se inicia la máquina
+                  ya que cada directorio, el cual puede contener
+                  buzones de correo y más información, se debe descargar a la
+                  máquina cliente.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </para>
 	</section>
 
 	<section id='sect-shared-files'>
@@ -111,8 +131,8 @@
 	  <note>
 	    <para>
 	      Los permisos actuales para los ficheros permiten leer,
-	      escribir y ejecutar al propietario y leer y escribir a
-	      los usuarios del grupo. Respecto a los subdirectorios,
+	      escribir y ejecutar al propietario y leer, escribir y
+              ejecutar a los usuarios del grupo. Respecto a los subdirectorios,
 	      el bit setgid está puesto, así que el propio de los
 	      subdirectorios del grupo será el propio grupo. Además,
 	      el acceso será total para el grupo.
