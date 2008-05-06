@@ -1,5 +1,3 @@
-	<!-- vim: ts=2 sw=2 tw=75
--->
 <chapter id="ch-time">
 
 	<title>Servidor NTP</title>
@@ -8,18 +6,16 @@
 		<!-- NTP->Server -->
 		<title>Servidor NTP</title>
 
-		<para>
-	  El servidor de fecha y hora sólo puede ser activado o 
-		desactivado en la pantalla de configuración a la que se puede
-		acceder a través de 
-			<menuchoice>
-				<guimenu>Servidor NTP</guimenu>
-			</menuchoice>
+		<para> El servidor de fecha y hora sólo puede ser activado o 
+                desactivado en <menuchoice><guimenu>Estado de los
+                módulos</guimenu></menuchoice> pinchando en
+                "Habilitar" en su fila correspondiente como se explica
+                en <xref linkend="sect-mod-status"/>.
 		</para>
 
 		<para>
 		Si se encuentra activado, los clientes que tengan eBox 
-		como servidor NTP	mantendrán sincronizada su configuración horaria 
+		como servidor NTP mantendrán sincronizada su configuración horaria 
 		con la que posea eBox, que a su vez puede ser configurada siguiendo
 		las instrucciones que se indican en
 		<link linkend='sect-ebox-datetime'>Configuración horaria</link>
