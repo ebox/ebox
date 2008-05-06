@@ -103,45 +103,26 @@
 	</para>
 	<para>
 	  Es momento de configurar los clientes. Un cliente OpenVPN 
-	  puede configurarse con el siguiente fichero de configuración
-	  de ejemplo:
+	  puede configurarse con nuestros paquetes que están
+          disponibles en la tabla <guilabel>Servidores</guilabel> y
+          pinga en el icono <guiicon>Flecha para abajo</guiicon>. Dos
+          paquetes para dos sistemas operativos se han creado, elije
+          uno de ellos. Si usas un entorno BSD-like como
+          <trademark>MacOS</trademark>, elije el sistema
+          <emphasis>Linux</emphasis>. Elijo aquellos certificados que
+          dar al cliente  y establece la dirección IP externa a la
+          cual los clientes VPN se deben conectar. eBox tratará de
+          adivinarla usando un servicio Web. Si el sistema
+          seleccionado es <trademark>Windows</trademark>, el
+          instalador de OpenVPN para Win32 se incluye también. Te da
+          un archivo para ser distribuido al cliente.
 	</para>
-	<example id="example-conf-file">
-	  <title>Fichero ejemplo de configuración de un cliente
-	    OpenVPN</title>
-	  <programlisting><![CDATA[
-client
-
-dev tap
-# En la página de Estado, se puede observar la dirección del interfaz
-# y el puerto en el que tu servidor OpenVPN está escuchando
-remote <direccion_del_interfaz> <puerto>
-# También en la misma página se puede ver el protocolo
-proto <protocolo>
-
-####
-# Todos los certificados deben descargarse del interfaz de eBox 
-# para la autoridad de certificación para luego subirse a la máquinas
-# clientes. Cada certificado creado debe ser utilizado por una única
-# máquina.
-####
-
-# Certificado de la Autoridad
-ca <fichero_ca_cert>
-# Certificado del cliente
-cert <fichero_cliente_cert>
-# Clave privada del cliente
-key <fichero_cliente_clave_privada>
-
-# Otras opciones
-comp-lzo
-nobind
-]]>
-	  </programlisting>
-	</example>
 	<para>
-	  Esta configuración ejemplo puede pasarse al demonio OpenVPN
-	  con el siguiente comando: <command>openvpn --config
+          Este paquete incluye el fichero de configuración y los
+          ficheros necesarios para comenzar una conexión VPN. Por
+          ejemplo, en Linux, simplemente descomprime el archivo y
+          ejecuta dentro del recientemente creado directorio el 
+          el siguiente comando: <command>openvpn --config
 	  filename</command>. Ahora tenemos acceso al cliente 3 desde 
 	  los dos clientes remotos. Para conectar entre sí los clientes
 	  remotos, necesitamos activar la opción <guilabel>
@@ -176,19 +157,25 @@ nobind
 	cliente 2 en la LAN 2 como si estuviesen en la misma red
 	local. Por tanto, debemos configurar un servidor OpenVPN
 	como hacemos en <xref linkend="sect-roadwarrior" />. Sin
-	embargo, se necesita hacer un pequeño cambio habilitando
+	embargo, se necesita hacer dos pequeños cambios habilitando
 	la opción <literal> Permitir túneles eBox a eBox</literal>
-	para intercambiar rutas entre máquinas eBox.
+	para intercambiar rutas entre máquinas eBox y
+        <literal>contraseña túnel eBox a eBox</literal> para establecer la
+        conexión en un entorno un poco más seguro entre las dos oficinas.
       </para>
       <para>
 	Para configurar eBox como un cliente OpenVPN, podemos hacerlo
 	a través del botón <guilabel>Crear un nuevo cliente</guilabel>
-	dentro del menú <guimenu>OpenVPN</guimenu>. Se deben dar el
-	nombre del cliente, la dirección, puerto y protocolo del
-	servidor OpenVPN donde está la otra eBox y los certificados
-	correspondientes. Se pueden obtener de manera análoga a la
-	explicada anteriormente. Cuando salvas los cambios, en el
-	sumario, se puede ver un nuevo demonio OpenVPN en la red 2
+	dentro del menú <guimenu>OpenVPN</guimenu>. Debes dar un
+        nombre al cliente y si lo activas. Puedes establecer la
+        configuración del cliente manualmente o automáticamente usando
+        el paquete dado por el servidor VPN como hemos hecho en la
+        <xref linkend="sect-roadwarrior"/>. En la primera opción se
+        pide el par protocolo/puerto donde escucha el servidor así
+        como su dirección IP, los certificados y la contraseña del
+        túnel, en cambio, en el segundo caso esta información es
+        obtenida directamente desde el paquete. Cuando salvas los
+        cambios, en el sumario, se puede ver un nuevo demonio OpenVPN en la red 2
 	ejecutándose como cliente con la conexión objetivo dirigido a
 	la otra eBox dentro de la LAN 1.
       </para>
