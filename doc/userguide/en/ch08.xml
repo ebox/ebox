@@ -131,7 +131,7 @@
                           sites which are not in the domains list
                           overriding default allowance policy. It also let
                           block those sites which does not have a
-                          fully qualified name and, therefore, they use
+                          fully qualified name (FQDN) and, therefore, they use
                         an IP address to access to their content</para>
                       </listitem>
                     </varlistentry>

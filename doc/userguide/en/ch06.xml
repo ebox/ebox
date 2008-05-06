@@ -168,7 +168,7 @@
                 <para>Every set of rules define a fixed behaviour for
                 the traffic flows that they apply. These rules will be
                 matched from top to the bottom, thus order is
-                important. Each rule consists of these fields, some of
+                important. Each rule consists of these following fields, some of
                 them are only available to several rule set by
                 construction:
                 <variablelist>
@@ -199,7 +199,7 @@
                     <listitem><para>The traffic flow service as it is
                     described in <xref linkend="ch-services"/>. The
                     match could be inverse one, i.e. the inverse "any"
-                    service is "all" service. This is a compulsory
+                    service is "none" service. This is a compulsory
                     field, therefore in order to create a new rule, it
                     is required to have a network service. If it does
                     not exist, you must make up previously.</para></listitem>

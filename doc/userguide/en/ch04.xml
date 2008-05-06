@@ -30,7 +30,7 @@
                 <para>
                   You may add as many objects you want. A name must be
                   provided to the object. After that, you may enter
-                  into <emphasis>members</emphasis> field where you
+                  into <emphasis><guilabel>members</guilabel></emphasis> field where you
                   may define:
 
                   <itemizedlist>

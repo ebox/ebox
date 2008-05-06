@@ -71,7 +71,7 @@
           <term>Roaming profiles</term>
           <listitem>
             <para>Roaming profiles are a set of directories which
-            contains a set of configuration settings from a Windows
+            contains a set of configuration settings from a <trademark>Windows</trademark>
             machine which belongs to the domain. Those directories are
             stored in the server host if this option is
             enabled. Default value is disabled because of the LAN
