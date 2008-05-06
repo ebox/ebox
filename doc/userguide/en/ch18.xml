@@ -156,7 +156,7 @@
 	<xref linkend="sect-roadwarrior" />. However, just a pair of changes 
 	is needed setting on option <literal>Allow eBox-to-eBox tunnels</literal> to exchange routes
 	among eBox machines and <literal>eBox-to-eBox-tunnel
-        password</literal> password to perform a little more secure
+        password</literal> to perform a little more secure
         environment among the two offices.
       </para>
       <para>

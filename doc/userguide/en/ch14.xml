@@ -123,9 +123,7 @@
           <para>Range lists can be created with some values you would
           like to assign to network hosts. These lists must not have matches
           between them and every allocatable addresses must belong to
-          the available range shown above the ranges list. If no list
-          is created, every range will be used to assign addresses to the
-          network.</para>
+          the available range shown above the ranges list.</para>
         </listitem>
       </varlistentry>
       <varlistentry>

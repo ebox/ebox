@@ -4,7 +4,7 @@
 		<title>DNS service</title>
 
 		<para>
-		The DNS service can work just as as a DNS cache server, or
+		The DNS service can work just as a DNS cache server, or
 		as a proper DNS server to answer queries for your local
 		domains
 		</para>

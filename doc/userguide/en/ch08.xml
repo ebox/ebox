@@ -123,7 +123,7 @@
                         you require to change. The domain name does
                         not require the "www" string. For instance,
                         you add as allowed domain
-                        "http://www.warp.es", we'd set "warp.es"
+                        "www.warp.es", we'd set "warp.es"
                         domain.
                         </para>
                         <para>
@@ -154,5 +154,4 @@
           be applied previously to the eBox global policy for the selected
           objects.</para>
         </section>
-
 </chapter>

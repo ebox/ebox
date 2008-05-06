@@ -74,7 +74,7 @@
                 <term>Protocol</term>
                 <listitem><para>The Internet protocol which may set
                 one of these values: TCP/UDP, TCP, UDP, GRE, ICMP or
-                any. If the protocol is set to GRE or ICMP, then it is
+                "any". If the protocol is set to GRE or ICMP, then it is
                 banned to set any port since it is banned by protocol
                 construction</para></listitem>
               </varlistentry>
@@ -84,13 +84,18 @@
                   <para>A well-known source port may contain
                   one of the following:</para>
                   <itemizedlist>
-                    <listitem><para>Any which indicates any port for
-                    that protocol or set of them</para></listitem>
-                    <listitem><para>Single port which indicates a single port for
-                    that protocol or set of them</para></listitem>
-                    <listitem><para>Port range which indicates a port
+                    <listitem><formalpara>
+                      <title>Any</title><para>Indicates any port for
+                      that protocol or set of them</para></formalpara>
+                    </listitem>
+                    <listitem><formalpara><title>Single
+                    port</title><para>Indicates a single port for
+                    that protocol or set of them</para></formalpara>
+                    </listitem>
+                    <listitem><formalpara><title>Port range</title><para>Indicates a port
                     range including all of them for
-                    that protocol or set of them</para></listitem>
+                    that protocol or set of them</para></formalpara>
+                    </listitem>
                   </itemizedlist>
                 </listitem>
               </varlistentry>
@@ -112,22 +117,26 @@
     <example id="serv-conf-example">
       <title>Service configuration example</title>
       <itemizedlist>
-        <listitem><para>Service name: ftp</para></listitem>
-        <listitem><para>Description: File Transfer Protocol</para></listitem>
-        <listitem><para>Internal: yes</para></listitem>
+        <listitem><formalpara><title>Service name</title><para>ftp</para></formalpara></listitem>
+        <listitem><formalpara><title>Description</title><para>File Transfer Protocol</para></formalpara></listitem>
+        <listitem><formalpara><title>Internal</title><para>yes</para></formalpara></listitem>
         <listitem>
-          <para>Configuration:</para>
-            <itemizedlist>
-              <listitem><para>
-                protocol: tcp, source port: any, destination port:
-                20 (<emphasis>Define the control connection channel</emphasis>) </para>
-              </listitem>
-              <listitem>
-                <para>protocol: tcp, source port: any,
-                destination port: 21 (<emphasis>Define the data flow connection
-                channel</emphasis>)</para>
-              </listitem>
-            </itemizedlist>
+          <formalpara>
+            <title>Configuration:</title>
+            <para>
+              <itemizedlist>
+                <listitem><para>
+                  protocol: tcp, source port: any, destination port:
+                  20 (<emphasis>Define the control connection channel</emphasis>) </para>
+                </listitem>
+                <listitem>
+                  <para>protocol: tcp, source port: any,
+                  destination port: 21 (<emphasis>Define the data flow connection
+                  channel</emphasis>)</para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </formalpara>
         </listitem>
       </itemizedlist>
     </example>

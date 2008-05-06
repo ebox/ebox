@@ -97,9 +97,10 @@
 			<guimenuitem>Packet filter</guimenuitem>
 		</menuchoice>
 		you can configure packet filter rules. You may use the
-                abstractions provided above such as network services (<xref
-                linkend="ch-services"/>) and network objects (<xref
-                linkend="ch-objects"/>).  Using these concepts enhance
+                abstractions provided above such as <link
+                linkend="ch-services">network services</link> and
+                <link linkend="ch-objects">network objects</link>.
+                Using these concepts enhances
                 the rules flexibility and clearness, reducing the amount.
 		</para>
 
@@ -151,7 +152,7 @@
                 linkend="fig-firewall"/> try to make up the concept:
                 </para>
                 <figure id="fig-firewall">
-                  <title>Firewall rules</title>
+                  <title>Firewall rules set</title>
                   <mediaobject>
                     <imageobject>
                       <imagedata fileref="images/firewall.png"
@@ -167,7 +168,7 @@
                 <para>Every set of rules define a fixed behaviour for
                 the traffic flows that they apply. These rules will be
                 matched from top to the bottom, thus order is
-                important and it may modify any time. Each rule consists of these fields, some of
+                important. Each rule consists of these fields, some of
                 them are only available to several rule set by
                 construction:
                 <variablelist>
