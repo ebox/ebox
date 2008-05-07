@@ -1,5 +1,5 @@
 pre-start script
-    /etc/init.d/ntp stop
+    /etc/init.d/ntp stop || true
 end script
 
 respawn
