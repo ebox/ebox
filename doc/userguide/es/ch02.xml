@@ -340,10 +340,9 @@
 		<warning>
 			<para>
 			Al realizar un cambio en la configuración
-                        horaria del sistema se reiniciarán todos los
-                        servicios de eBox. Es posible que tu sistema
+                        horaria del sistema, es posible que tu sistema
                         se vuelva inestable, por ello es mejor
-                        reiniciar la máquina.
+                        reiniciar la máquina tras salvar cambios.
 			</para>
 		</warning>
 	</section>

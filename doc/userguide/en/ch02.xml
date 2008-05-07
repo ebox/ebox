@@ -299,10 +299,8 @@
 		</para>
 
 		<warning>
-			<para>When you make a change on the system date/time
-			configuration, every eBox service will be
-			restarted. It's possible your system becomes
-			unstable, so you'd better to restart the whole machine.
+			<para>When you make a change, it is possible your system becomes
+			unstable, so you'd better to restart the whole machine after saving changes.
 			</para>
 		</warning>
 	</section>
