@@ -42,6 +42,7 @@ use EBox::MailFilter::FirewallHelper;
 use EBox::MailVDomainsLdap;
 use EBox::Validate;
 use EBox::Config;
+use EBox::Global;
 
 use constant {
   AMAVIS_SERVICE                 => 'ebox.amavisd-new',
@@ -144,11 +145,50 @@ sub serviceModuleName
 #
 #   Override EBox::ServiceModule::ServiceInterface::enableModDepends
 #
+#  The mail dependency only exists bz we need the ldap mail data or we wil lrun
+#  in error when seting mail domains options
 sub enableModDepends 
 {
-    return ['firewall', 'mail'];
+    return ['network', 'mail'];
 }
 
+
+# we override enableService bz we have to take care than mailfilter is not
+# disabled when is used by the mail module
+sub enableService
+{
+    my ($self, $status) = @_;
+
+    if (not $status) {
+	# check than mailfilter is not used by mail
+	if ($self->_usedByEBoxMail()) {
+	    throw EBox::Exceptions::External(
+                __('Cannot disable the mailfilter module because is used as filter by the mail module')
+					    );
+	}
+    }
+
+
+    return $self->SUPER::enableService($status);
+}
+
+
+sub _usedByEBoxMail
+{
+    my ($self) = @_;
+
+    my $global = EBox::Global->getInstance();
+    $global->modExists('mail') or
+	  return 0;
+
+    my $mail = $global->modInstance('mail');
+
+    $mail->isEnabled() or 
+	return 0;
+
+    my $filter = $mail->externalFilter();
+    return $filter eq MAILFILTER_NAME;
+}
 
 #
 # Method: antivirus
