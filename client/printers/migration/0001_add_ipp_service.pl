@@ -100,6 +100,7 @@ sub runGConf
   $self->addInternalService(
 			    'name' => 'ipp',
 			    'description' => __d('Cups printer server port'),
+			    'translationDomain' => 'ebox-printers',
 			    'protocol' => 'tcp',
 			    'sourcePort' => 'any',
 			    'destinationPort' => 631,

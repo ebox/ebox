@@ -114,7 +114,8 @@ sub runGConf
 
   $self->addInternalService(
 			    'name' => 'tftp',
-			    'description' => __('Trivial File Transfer Protocol'),
+			    'description' => __d('Trivial File Transfer Protocol'),
+			    'translationDomain' => 'ebox-dhcp',
 			    'protocol' => 'udp',
 			    'sourcePort' => 'any',
 			    'destinationPort' => 69,
@@ -122,7 +123,8 @@ sub runGConf
 
   $self->addInternalService(
 			    'name' => 'dhcp',
-			    'description' => __('Dynamic Host Configuration Protocol'),
+			    'description' => __d('Dynamic Host Configuration Protocol'),
+			    'translationDomain' => 'ebox-dhcp',
 			    'protocol' => 'udp',
 			    'sourcePort' => 'any',
 			    'destinationPort' => 67,

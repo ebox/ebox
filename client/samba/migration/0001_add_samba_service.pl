@@ -111,7 +111,7 @@ sub _addSambaService
 				    'name' => 'samba', 
 				    'internal' => 1,
 				    'description' =>  __d('File sharing (Samba) protocol'),
-				    'domain' => 'ebox-samba',
+				    'translationDomain' => 'ebox-samba',
 				    'services' => \@services);
 
     $serviceMod->saveConfig();
