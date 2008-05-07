@@ -1,13 +1,5 @@
 #!/bin/bash 
 
-#  don't start amavis, clamav and spamassassin with the init script
-MAILFILTER_SERVICES='spamassassin'
-for SERVICE in $MAILFILTER_SERVICES; do
-    invoke-rc.d    $SERVICE stop  
-    update-rc.d -f $SERVICE remove
-done
-
-
 
 # move out old amavis conf files
 mv /etc/amavis/conf.d /etc/amavis/conf.d.old

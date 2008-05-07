@@ -16,7 +16,7 @@ use constant {
   CLAMAVPIDFILE			=> '/var/run/clamav/clamd.pid',
   CLAMD_INIT			=> '/etc/init.d/clamav-daemon',
   CLAMD_SERVICE                  => 'ebox.clamd',
-  CLAMD_CONF_FILE               => '/etc/clamav/clamd.conf',
+  CLAMD_CONF_FILE               => '/etc/clamav/ebox.clamd.conf',
 
   CLAMD_SOCKET                  => '/var/run/clamav/clamd.ctl',
 
@@ -46,11 +46,11 @@ sub _mailfilterModule
 sub usedFiles
 {
   return (
-	  {
-	   file => CLAMD_CONF_FILE,
-	   reason => __(' To configure clamd daemon'),
-	   module => 'mailfilter',
-	  },
+# 	  {
+# 	   file => CLAMD_CONF_FILE,
+# 	   reason => __(' To configure clamd daemon'),
+# 	   module => 'mailfilter',
+# 	  },
 	  {
 	   file => FRESHCLAM_CONF_FILE,
 	   reason => __('To configure freshclam updater daemon'),
