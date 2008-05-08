@@ -159,8 +159,9 @@ sub modelClasses
 #  return [
 #	  'EBox::Network::Composite::ByteRate',
 #	 ];
+#
+#}
 
-}
 
 # Method: IPAddressExists
 #
