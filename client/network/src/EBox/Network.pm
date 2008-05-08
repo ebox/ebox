@@ -22,7 +22,6 @@ use warnings;
 use base qw(
             EBox::GConfModule 
 			EBox::Model::ModelProvider
-			EBox::Model::CompositeProvider
 			EBox::ServiceModule::ServiceInterface
            ); 
 
