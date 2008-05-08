@@ -1099,7 +1099,7 @@ sub _revokeRestore
 sub _migratePackage
 {
 	my ($self, $package) = @_;
-	my $migrationdir = EBox::Config::lib() . "/$package/migration";
+	my $migrationdir = EBox::Config::share() . "/$package/migration";
 	
 	if (-d $migrationdir) {
 		my $migration = EBox::Config::pkgdata() . '/ebox-migrate';
