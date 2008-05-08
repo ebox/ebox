@@ -221,8 +221,24 @@ sub serviceModuleName
 #
 sub enableModDepends 
 {
-    return ['network', 'users'];
+    my ($self) = @_;
+    my @depends =  ('network', 'users');
+
+    if ($self->service('filter') ) {
+	my $name = $self->externalFilter();
+	if ($name ne 'custom') { # we cannot get deps from a custom module
+	    my $filterMod = $self->_filterAttr($name, 'module', 0);
+	    if ($filterMod) {
+		push @depends, $filterMod;
+	    }
+	}
+    }
+
+
+    return \@depends;
 }
+
+
 
 # Method: modelClasses
 #
@@ -453,7 +469,13 @@ sub setExternalFilter
 				       __x('Unknown filter {filter}',
 					   filter => $filter,
 					  )
-				      )
+				      );
+    $filters_r->{$filter}->{active} or
+      throw EBox::Exceptions::External(
+				       __x('Filter {filter} is inactive',
+					   filter => $filter,
+					  )
+				      );
   }
 
   $self->set_string('external_filter_name', $filter);
@@ -484,7 +506,9 @@ sub _assureCustomFilter
 
 sub _filterAttr
 {
-  my ($self, $name, $attr) = @_;
+  my ($self, $name, $attr, $onlyActive) = @_;
+  defined $onlyActive or
+      $onlyActive = 1;
 
 
   my $filters_r = $self->externalFiltersFromModules();
@@ -494,7 +518,15 @@ sub _filterAttr
       __('The mail filter does not exist. Please set another mail filter or disable it'
 	 )
 				    );
-  
+  if ($onlyActive) {
+      if (not $filters_r->{$name}->{active}) {
+	  throw EBox::Exceptions::External(
+					   __('The mail filter $name is not active. Please set another mail filter or disable it')
+				    );  
+      }
+  }
+
+
 
   my $value =  $filters_r->{$name}->{$attr};
   defined $value or
@@ -1046,9 +1078,12 @@ sub _stopService
 sub _regenConfig
 {
 	my $self = shift;
-	my @services = ('active', 'pop', 'imap');
-	$self->_setMailConf;
 
+	if ($self->service) {
+	    $self->_setMailConf;
+	}
+
+	my @services = ('active', 'pop', 'imap');
 	foreach (@services) {
 		$self->_doDaemon($_);
 	}

@@ -261,7 +261,7 @@ while (my ($name, $propierties) = each %availableFilters) {
        printableValue => $propierties->{prettyName},
    };
 
-   if ($propierties->{disabled}) {
+   if (not $propierties->{active}) {
       $option->{disabled} = 'disabled';
   }
 

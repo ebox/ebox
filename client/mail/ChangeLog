@@ -1,5 +1,9 @@
 0.11.100
 	+ Create certificate for smtpd server
+	+ Disabled filter appears in the filter lists as disabled
+	(previously they don't appear at all)
+	+ Module activation dependency with module which provides the
+	acitve filter
 0.11.99
 	+ Add mail dispatcher to notify eBox events using this SMTP server
 	+ Enhanced strings

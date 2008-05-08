@@ -149,46 +149,21 @@ sub serviceModuleName
 #  in error when seting mail domains options
 sub enableModDepends 
 {
-    return ['network', 'mail'];
-}
+    my ($self) = @_;
+    my @depends = qw(network);
 
-
-# we override enableService bz we have to take care than mailfilter is not
-# disabled when is used by the mail module
-sub enableService
-{
-    my ($self, $status) = @_;
-
-    if (not $status) {
-	# check than mailfilter is not used by mail
-	if ($self->_usedByEBoxMail()) {
-	    throw EBox::Exceptions::External(
-                __('Cannot disable the mailfilter module because is used as filter by the mail module')
-					    );
+    my $mail = EBox::Global->modInstance('mail');
+    if ($mail) {
+	if (not $mail->configured()) {
+	    push @depends, 'mail';
 	}
     }
 
 
-    return $self->SUPER::enableService($status);
+    return \@depends;;
 }
 
 
-sub _usedByEBoxMail
-{
-    my ($self) = @_;
-
-    my $global = EBox::Global->getInstance();
-    $global->modExists('mail') or
-	  return 0;
-
-    my $mail = $global->modInstance('mail');
-
-    $mail->isEnabled() or 
-	return 0;
-
-    my $filter = $mail->externalFilter();
-    return $filter eq MAILFILTER_NAME;
-}
 
 #
 # Method: antivirus
@@ -231,6 +206,7 @@ sub _regenConfig
 {
   my ($self) = @_;
   my $service = $self->service();
+
 
   $self->antivirus()->writeConf($service);
   $self->antispam()->writeConf();
@@ -877,18 +853,16 @@ sub mailFilter
 {
   my ($self) = @_;
 
-  if (not $self->service) {
-    return undef;
-  }
-
 
   my $name       = $self->mailFilterName;
+  my $active     = $self->service ? 1 : 0;
   my %properties = (
 		     address     => '127.0.0.1',
 		     port        => $self->port(),
 		     forwardPort => $self->fwport,
 		     prettyName  => __('eBox internal mail filter'),
 		     module      => $self->name,
+		     active      => $active,
 		    );
 
   
