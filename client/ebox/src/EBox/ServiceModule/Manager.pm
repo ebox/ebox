@@ -29,6 +29,7 @@ use warnings;
 
 
 use EBox::Sudo qw(:all);
+use EBox::Global;
 
 use Error qw(:try);
 use File::Basename;
@@ -483,7 +484,8 @@ sub updateModuleDigests
     my @files;
     for my $file (@{$mod->usedFiles()}) { 
         $self->_updateMD5($file);
-        push (@files, "${modName}_" . $self->_fileId($file));
+        my $module = $file->{'module'};
+        push (@files, "${module}_" . $self->_fileId($file));
 
     }
 
@@ -539,6 +541,32 @@ sub  _getMD5
     chomp $md5;
 
     return $md5;
+}
+
+# Method: enableAllModules
+#
+#	This method enables all modules implementing 
+#	EBox::ServiceModule::ServiceInterface
+#
+sub enableAllModules
+{
+    my ($self) = @_;
+
+    my $global = EBox::Global->getInstance();
+    for my $modName (@{$self->_dependencyTree()}) {
+        $module->setConfigured(1);
+        $module->enableService(1);
+        $self->updateModuleDigests($modName);
+        try {
+            $module->enableActions();
+        } otherwise {
+            $module->setConfigured(undef);
+            $module->enableService(undef);
+            EBox::warn("Falied to enable module $modName");
+        }
+        $self->updateModuleDigests($modName);
+    }
+
 }
 
 1;
