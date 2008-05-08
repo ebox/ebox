@@ -554,6 +554,7 @@ sub enableAllModules
 
     my $global = EBox::Global->getInstance();
     for my $modName (@{$self->_dependencyTree()}) {
+        my $module = $global->modInstance($modName);
         $module->setConfigured(1);
         $module->enableService(1);
         $self->updateModuleDigests($modName);
