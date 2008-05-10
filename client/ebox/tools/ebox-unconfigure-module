@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/usr/bin/perl
 
 use EBox;
 use EBox::Global;
