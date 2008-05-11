@@ -1,17 +1,5 @@
 #!/bin/bash
 
-# allow eBox to fetch packages via http
-perl -e '
-use EBox;
-use EBox::Global;
-EBox::init();
-my $global = EBox::Global->getInstance();
-exit (0) unless ($global->modExists("firewall"));
-eval "use EBox::Firewall"; 
-my $fw = EBox::Global->modInstance("firewall");
-$fw->addOutputRule("tcp",80);
-$fw->save();'
-
 # make sure dpkg prefers to preserver old configuration files
 #echo "force-confold" > /etc/dpkg/dpkg.cfg
 # make sure ucf prefers to preserver old configuration files
