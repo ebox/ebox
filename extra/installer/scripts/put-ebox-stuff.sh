@@ -13,5 +13,4 @@ test -d $CD_EBOX_DIR || mkdir -p $CD_EBOX_DIR
 
 rm -rf $CD_EBOX_DIR/*
 
-cp $DATA_DIR/ebox-installer $DATA_DIR/prepare-ebox-install.sh $CD_EBOX_DIR/
-cp $DATA_DIR/inittab $DATA_DIR/locale.gen $CD_EBOX_DIR/
+cp $DATA_DIR/* $CD_EBOX_DIR/
