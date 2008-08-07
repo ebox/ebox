@@ -42,19 +42,19 @@ accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/dansguardian.pl'
 nonstandarddelimiter = on
 
 
-usecustombannedimage = 1
-custombannedimagefile = '/etc/dansguardian/transparent1x1.gif'
+usecustombannedimage = on
+custombannedimagefile = '/usr/share/dansguardian/transparent1x1.gif'
 
 
 
 filtergroups = 1
-filtergroupslist = '/etc/dansguardian/filtergroupslist'
+filtergroupslist = '/etc/dansguardian/lists/filtergroupslist'
 
 # Authentication files location
-bannediplist = '/etc/dansguardian/bannediplist'
-exceptioniplist = '/etc/dansguardian/exceptioniplist'
-banneduserlist = '/etc/dansguardian/banneduserlist'
-exceptionuserlist = '/etc/dansguardian/exceptionuserlist'
+bannediplist = '/etc/dansguardian/lists/bannediplist'
+exceptioniplist = '/etc/dansguardian/lists/exceptioniplist'
+banneduserlist = '/etc/dansguardian/lists/banneduserlist'
+exceptionuserlist = '/etc/dansguardian/lists/exceptionuserlist'
 
 showweightedfound = on
 
@@ -73,9 +73,9 @@ phrasefiltermode = 2
 
 preservecase = 0
 
-hexdecodecontent = 0
+hexdecodecontent = off
 
-forcequicksearch = 0
+forcequicksearch = off
 
 reverseaddresslookups = off
 
@@ -90,6 +90,22 @@ maxcontentfiltersize = 256
 usernameidmethodproxyauth = on
 usernameidmethodntlm = off # **NOT IMPLEMENTED**
 usernameidmethodident = off
+maxcontentramcachescansize = 2000
+
+maxcontentfilecachescansize = 20000
+
+filecachedir = '/tmp'
+
+
+deletedownloadedtempfiles = on
+
+
+initialtrickledelay = 20
+
+trickledelay = 10
+
+downloadmanager = '/etc/dansguardian/downloadmanagers/default.conf'
+
 
 preemptivebanning = off
 
@@ -112,6 +128,7 @@ maxsparechildren = 32
 
 maxagechildren = 500
 
+maxips = 0
 ipcfilename = '/tmp/.dguardianipc'
 
 urlipcfilename = '/tmp/.dguardianurlipc'
