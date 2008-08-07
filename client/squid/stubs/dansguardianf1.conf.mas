@@ -15,11 +15,13 @@ bannedurllist = '/etc/dansguardian/lists/bannedurllist'
 greyurllist = '/etc/dansguardian/lists/greyurllist'
 exceptionurllist = '/etc/dansguardian/lists/exceptionurllist'
 bannedregexpurllist = '/etc/dansguardian/lists/bannedregexpurllist'
+bannedregexpurllist = '/etc/dansguardian/lists/bannedregexpurllist'
+exceptionregexpurllist = '/etc/dansguardian/lists/exceptionregexpurllist'
 bannedextensionlist = '/etc/dansguardian/bannedextensionlist'
 bannedmimetypelist = '/etc/dansguardian/bannedmimetypelist'
 picsfile = '/etc/dansguardian/lists/pics'
 contentregexplist = '/etc/dansguardian/lists/contentregexplist'
-
+urlregexplist = '/etc/dansguardian/lists/urlregexplist'
 
 
 # 50 is for young children,  100 for old children,  160 for young adults.
