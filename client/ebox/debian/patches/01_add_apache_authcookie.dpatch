@@ -1,0 +1,3991 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_add_apache_authcookie.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to add Apache::AuthCookie
+
+@DPATCH@
+
+diff -Naur ebox-0.12-old/configure ebox-0.12-new/configure
+--- ebox-0.12-old/configure	2008-08-10 16:08:11.000000000 +0200
++++ ebox-0.12-new/configure	2008-08-10 16:09:48.000000000 +0200
+@@ -3590,7 +3590,7 @@
+ 
+ 
+ 
+-ac_config_files="$ac_config_files stubs/apache.mas stubs/Makefile tools/Makefile tools/sqllog/Makefile tools/cron/Makefile doc/Makefile src/Makefile src/libexec/Makefile src/templates/ajax/Makefile src/templates/ajax/viewer/Makefile src/templates/common/Makefile src/templates/login/Makefile src/templates/logout/Makefile src/templates/logs/Makefile src/templates/report/Makefile src/templates/Makefile src/EBox/Makefile src/EBox/t/Makefile src/EBox/interactiveTest/Makefile src/EBox/Backup/Makefile src/EBox/Backup/testdata/Makefile src/EBox/Common/Makefile src/EBox/Common/Model/Makefile src/EBox/Event/Makefile src/EBox/Event/Dispatcher/Makefile src/EBox/Event/Dispatcher/t/Makefile src/EBox/Event/Watcher/Makefile src/EBox/Event/Watcher/t/Makefile src/EBox/Events/Makefile src/EBox/Events/Model/Makefile src/EBox/Events/Model/Dispatcher/Makefile src/EBox/Events/Model/t/Makefile src/EBox/Events/Model/Watcher/Makefile src/EBox/ServiceModule/Makefile src/EBox/Report/Makefile src/EBox/Report/t/Makefile src/EBox/Report/t/testdata/Makefile src/EBox/GConfModule/Makefile src/EBox/GConfModule/t/Makefile src/EBox/Global/Makefile src/EBox/Logs/Makefile src/EBox/Logs/Model/Makefile src/EBox/Logs/Composite/Makefile src/EBox/Model/Makefile src/EBox/Model/Row/Makefile src/EBox/Model/t/Makefile src/EBox/Model/CompositeProvider/Makefile src/EBox/Model/ModelProvider/Makefile src/EBox/Model/ProviderBase/Makefile src/EBox/Model/DataForm/Makefile src/EBox/Model/DataTable/Makefile src/EBox/Model/Composite/Makefile src/EBox/Model/DataForm/t/Makefile src/EBox/Types/Makefile src/EBox/Types/File/Makefile src/EBox/Types/t/Makefile src/EBox/Types/Union/Makefile src/EBox/ProgressIndicator/Makefile src/EBox/Global/t/Makefile src/EBox/Test/Makefile src/EBox/Test/t/Makefile src/EBox/CGI/Makefile src/EBox/CGI/EBox/Makefile src/EBox/CGI/Controller/Makefile src/EBox/CGI/Controller/Downloader/Makefile src/EBox/CGI/ServiceModule/Makefile src/EBox/CGI/View/Makefile src/EBox/CGI/Login/Makefile src/EBox/CGI/Logout/Makefile src/EBox/CGI/Logs/Makefile src/EBox/CGI/Summary/Makefile src/EBox/CGI/Report/Makefile src/EBox/Summary/Makefile schemas/Makefile conf/Makefile conf/logrotate/ebox conf/logrotate/Makefile conf/.gconf.path migration/Makefile migration/events/Makefile migration/logs/Makefile www/Makefile Makefile"
++ac_config_files="$ac_config_files stubs/apache.mas stubs/Makefile tools/Makefile tools/sqllog/Makefile tools/cron/Makefile doc/Makefile src/Makefile src/libexec/Makefile src/templates/ajax/Makefile src/templates/ajax/viewer/Makefile src/templates/common/Makefile src/templates/login/Makefile src/templates/logout/Makefile src/templates/logs/Makefile src/templates/report/Makefile src/templates/Makefile src/EBox/Makefile src/EBox/t/Makefile src/EBox/interactiveTest/Makefile src/EBox/Backup/Makefile src/EBox/Backup/testdata/Makefile src/EBox/Common/Makefile src/EBox/Common/Model/Makefile src/EBox/Event/Makefile src/EBox/Event/Dispatcher/Makefile src/EBox/Event/Dispatcher/t/Makefile src/EBox/Event/Watcher/Makefile src/EBox/Event/Watcher/t/Makefile src/EBox/Events/Makefile src/EBox/Events/Model/Makefile src/EBox/Events/Model/Dispatcher/Makefile src/EBox/Events/Model/t/Makefile src/EBox/Events/Model/Watcher/Makefile src/EBox/ServiceModule/Makefile src/EBox/Report/Makefile src/EBox/Report/t/Makefile src/EBox/Report/t/testdata/Makefile src/EBox/ThirdParty/Makefile src/EBox/ThirdParty/Apache2/Makefile src/EBox/ThirdParty/Apache2/AuthCookie/Makefile src/EBox/GConfModule/Makefile src/EBox/GConfModule/t/Makefile src/EBox/Global/Makefile src/EBox/Logs/Makefile src/EBox/Logs/Model/Makefile src/EBox/Logs/Composite/Makefile src/EBox/Model/Makefile src/EBox/Model/Row/Makefile src/EBox/Model/t/Makefile src/EBox/Model/CompositeProvider/Makefile src/EBox/Model/ModelProvider/Makefile src/EBox/Model/ProviderBase/Makefile src/EBox/Model/DataForm/Makefile src/EBox/Model/DataTable/Makefile src/EBox/Model/Composite/Makefile src/EBox/Model/DataForm/t/Makefile src/EBox/Types/Makefile src/EBox/Types/File/Makefile src/EBox/Types/t/Makefile src/EBox/Types/Union/Makefile src/EBox/ProgressIndicator/Makefile src/EBox/Global/t/Makefile src/EBox/Test/Makefile src/EBox/Test/t/Makefile src/EBox/CGI/Makefile src/EBox/CGI/EBox/Makefile src/EBox/CGI/Controller/Makefile src/EBox/CGI/Controller/Downloader/Makefile src/EBox/CGI/ServiceModule/Makefile src/EBox/CGI/View/Makefile src/EBox/CGI/Login/Makefile src/EBox/CGI/Logout/Makefile src/EBox/CGI/Logs/Makefile src/EBox/CGI/Summary/Makefile src/EBox/CGI/Report/Makefile src/EBox/Summary/Makefile schemas/Makefile conf/Makefile conf/logrotate/ebox conf/logrotate/Makefile conf/.gconf.path migration/Makefile migration/events/Makefile migration/logs/Makefile www/Makefile Makefile"
+ 
+ 
+ ac_config_files="$ac_config_files po/Makefile"
+@@ -4231,6 +4231,9 @@
+     "src/EBox/Report/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/Report/Makefile" ;;
+     "src/EBox/Report/t/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/Report/t/Makefile" ;;
+     "src/EBox/Report/t/testdata/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/Report/t/testdata/Makefile" ;;
++    "src/EBox/ThirdParty/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/ThirdParty/Makefile" ;;
++    "src/EBox/ThirdParty/Apache2/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/ThirdParty/Apache2/Makefile" ;;
++    "src/EBox/ThirdParty/Apache2/AuthCookie/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/ThirdParty/Apache2/AuthCookie/Makefile" ;;
+     "src/EBox/GConfModule/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/GConfModule/Makefile" ;;
+     "src/EBox/GConfModule/t/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/GConfModule/t/Makefile" ;;
+     "src/EBox/Global/Makefile") CONFIG_FILES="$CONFIG_FILES src/EBox/Global/Makefile" ;;
+diff -Naur ebox-0.12-old/configure.ac ebox-0.12-new/configure.ac
+--- ebox-0.12-old/configure.ac	2008-08-04 12:14:53.000000000 +0200
++++ ebox-0.12-new/configure.ac	2008-08-10 13:00:38.000000000 +0200
+@@ -128,6 +128,9 @@
+ src/EBox/Report/Makefile
+ src/EBox/Report/t/Makefile
+ src/EBox/Report/t/testdata/Makefile
++src/EBox/ThirdParty/Makefile
++src/EBox/ThirdParty/Apache2/Makefile
++src/EBox/ThirdParty/Apache2/AuthCookie/Makefile
+ src/EBox/GConfModule/Makefile
+ src/EBox/GConfModule/t/Makefile
+ src/EBox/Global/Makefile
+diff -Naur ebox-0.12-old/po/Makefile.am ebox-0.12-new/po/Makefile.am
+--- ebox-0.12-old/po/Makefile.am	2008-08-10 16:08:06.000000000 +0200
++++ ebox-0.12-new/po/Makefile.am	2008-08-10 16:09:46.000000000 +0200
+@@ -173,6 +173,8 @@
+  ./src/EBox/Model/Composite/Test.pm \
+  ./src/EBox/Loggerd.pm \
+  ./src/EBox/GConfModule.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie.pm \
+  ./src/EBox/Event/Dispatcher/Log.pm \
+  ./src/EBox/Event/Dispatcher/Jabber.pm \
+  ./src/EBox/Event/Dispatcher/RSS.pm \
+@@ -348,6 +350,8 @@
+  ./src/EBox/Model/Composite/Test.pm \
+  ./src/EBox/Loggerd.pm \
+  ./src/EBox/GConfModule.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie.pm \
+  ./src/EBox/Event/Dispatcher/Log.pm \
+  ./src/EBox/Event/Dispatcher/Jabber.pm \
+  ./src/EBox/Event/Dispatcher/RSS.pm \
+diff -Naur ebox-0.12-old/po/Makefile.in ebox-0.12-new/po/Makefile.in
+--- ebox-0.12-old/po/Makefile.in	2008-08-10 16:08:12.000000000 +0200
++++ ebox-0.12-new/po/Makefile.in	2008-08-10 16:09:49.000000000 +0200
+@@ -317,6 +317,8 @@
+  ./src/EBox/Model/Composite/Test.pm \
+  ./src/EBox/Loggerd.pm \
+  ./src/EBox/GConfModule.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie.pm \
+  ./src/EBox/Event/Dispatcher/Log.pm \
+  ./src/EBox/Event/Dispatcher/Jabber.pm \
+  ./src/EBox/Event/Dispatcher/RSS.pm \
+@@ -492,6 +494,8 @@
+  ./src/EBox/Model/Composite/Test.pm \
+  ./src/EBox/Loggerd.pm \
+  ./src/EBox/GConfModule.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm \
++ ./src/EBox/ThirdParty/Apache2/AuthCookie.pm \
+  ./src/EBox/Event/Dispatcher/Log.pm \
+  ./src/EBox/Event/Dispatcher/Jabber.pm \
+  ./src/EBox/Event/Dispatcher/RSS.pm \
+diff -Naur ebox-0.12-old/src/EBox/Auth.pm ebox-0.12-new/src/EBox/Auth.pm
+--- ebox-0.12-old/src/EBox/Auth.pm	2008-08-10 16:04:25.000000000 +0200
++++ ebox-0.12-new/src/EBox/Auth.pm	2008-05-12 19:10:26.000000000 +0200
+@@ -19,7 +19,7 @@
+ use strict;
+ use warnings;
+ 
+-use base qw(Apache2::AuthCookie);
++use base qw(EBox::ThirdParty::Apache2::AuthCookie);
+ 
+ use EBox;
+ use EBox::Config;
+diff -Naur ebox-0.12-old/src/EBox/Makefile.am ebox-0.12-new/src/EBox/Makefile.am
+--- ebox-0.12-old/src/EBox/Makefile.am	2008-06-25 16:13:46.000000000 +0200
++++ ebox-0.12-new/src/EBox/Makefile.am	2008-08-10 13:10:58.000000000 +0200
+@@ -16,7 +16,7 @@
+ 
+ 
+ SUBDIRS = Backup CGI Common GConfModule interactiveTest Event Events Global Logs \
+-	Model   ProgressIndicator Report Summary t Test Types ServiceModule
++	Model   ProgressIndicator Report Summary t Test ThirdParty Types ServiceModule
+ 
+ SOURCES = $(nobase_perl_DATA)
+ 
+diff -Naur ebox-0.12-old/src/EBox/Makefile.in ebox-0.12-new/src/EBox/Makefile.in
+--- ebox-0.12-old/src/EBox/Makefile.in	2008-08-10 16:08:13.000000000 +0200
++++ ebox-0.12-new/src/EBox/Makefile.in	2008-08-10 16:09:50.000000000 +0200
+@@ -175,7 +175,7 @@
+ 
+ nobase_perl_DATA = $(mods)
+ SUBDIRS = Backup CGI Common GConfModule interactiveTest Event Events Global Logs \
+-	Model   ProgressIndicator Report Summary t Test Types ServiceModule
++	Model   ProgressIndicator Report Summary t Test ThirdParty Types ServiceModule
+ 
+ SOURCES = $(nobase_perl_DATA)
+ EXTRA_DIST = $(mods)
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile	2008-08-10 16:10:10.000000000 +0200
+@@ -0,0 +1,345 @@
++# Makefile.in generated by automake 1.10.1 from Makefile.am.
++# src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.  Generated from Makefile.in by configure.
++
++# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
++# 2003, 2004, 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
++# This Makefile.in is free software; the Free Software Foundation
++# gives unlimited permission to copy and/or distribute it,
++# with or without modifications, as long as this notice is preserved.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
++# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
++# PARTICULAR PURPOSE.
++
++
++
++
++pkgdatadir = $(datadir)/ebox
++pkglibdir = $(libdir)/ebox
++pkgincludedir = $(includedir)/ebox
++am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
++install_sh_DATA = $(install_sh) -c -m 644
++install_sh_PROGRAM = $(install_sh) -c
++install_sh_SCRIPT = $(install_sh) -c
++INSTALL_HEADER = $(INSTALL_DATA)
++transform = $(program_transform_name)
++NORMAL_INSTALL = :
++PRE_INSTALL = :
++POST_INSTALL = :
++NORMAL_UNINSTALL = :
++PRE_UNINSTALL = :
++POST_UNINSTALL = :
++subdir = src/EBox/ThirdParty/Apache2/AuthCookie
++DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
++ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
++am__aclocal_m4_deps = $(top_srcdir)/m4/definedir.m4 \
++	$(top_srcdir)/m4/ebox.m4 $(top_srcdir)/m4/gconf-2.m4 \
++	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/perlmodules.m4 \
++	$(top_srcdir)/m4/po.m4 $(top_srcdir)/configure.ac
++am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
++	$(ACLOCAL_M4)
++mkinstalldirs = $(install_sh) -d
++CONFIG_CLEAN_FILES =
++DIST_SOURCES =
++am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
++am__vpath_adj = case $$p in \
++    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
++    *) f=$$p;; \
++  esac;
++am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
++am__installdirs = "$(DESTDIR)$(perldir)"
++nobase_perlDATA_INSTALL = $(install_sh_DATA)
++DATA = $(nobase_perl_DATA)
++DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ACLOCAL = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run aclocal-1.10
++AMTAR = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run tar
++AUTOCONF = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run autoconf
++AUTOHEADER = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run autoheader
++AUTOMAKE = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run automake-1.10
++AWK = gawk
++CGIPATH = /usr/share/ebox/cgi/
++CONFPATH = /var/lib/ebox/conf
++CSSPATH = /usr/share/ebox/www/css
++CYGPATH_W = echo
++DATADIR = /usr/share
++DEFS = -DPACKAGE_NAME=\"EBox\" -DPACKAGE_TARNAME=\"ebox\" -DPACKAGE_VERSION=\"0.12\" -DPACKAGE_STRING=\"EBox\ 0.12\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"ebox\" -DVERSION=\"0.12\" -DDATADIR=\"/usr/share\" -DSYSCONFDIR=\"/etc\" -DLOCALSTATEDIR=\"/var\" -DLIBDIR=\"/usr/lib\" -DPERLPATH=\"/usr/share/perl5/\"
++DYNAMICIMAGESPATH = 
++DYNAMICWWWPATH = /var/lib/ebox/dynamicwww
++ECHO_C = 
++ECHO_N = -n
++ECHO_T = 
++ETCPATH = /etc/ebox
++GCONFTOOL = 
++GCONF_SCHEMA_CONFIG_SOURCE = 
++GCONF_SCHEMA_FILE_DIR = 
++GMSGFMT = /usr/bin/msgfmt
++IMAGESPATH = /usr/share/ebox/www/images
++INSTALL = /usr/bin/install -c
++INSTALL_DATA = ${INSTALL} -m 644
++INSTALL_PROGRAM = ${INSTALL}
++INSTALL_SCRIPT = ${INSTALL}
++INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
++LIBDIR = /usr/lib
++LIBOBJS = 
++LIBS = 
++LOCALSTATEDIR = /var
++LOGPATH = /var/log/ebox
++LTLIBOBJS = 
++MAINT = #
++MAKEINFO = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run makeinfo
++MKDIR_P = /bin/mkdir -p
++MKINSTALLDIRS = $(top_builddir)/config/mkinstalldirs
++MSGFMT = /usr/bin/msgfmt
++MSGMERGE = /usr/bin/msgmerge
++PACKAGE = ebox
++PACKAGE_BUGREPORT = 
++PACKAGE_NAME = EBox
++PACKAGE_STRING = EBox 0.12
++PACKAGE_TARNAME = ebox
++PACKAGE_VERSION = 0.12
++PATH_SEPARATOR = :
++PERL = 
++PERLPATH = /usr/share/perl5/
++SCHEMASPATH = /usr/share/ebox/schemas
++SET_MAKE = 
++SHELL = /bin/sh
++STRIP = 
++STUBSPATH = /usr/share/ebox/stubs
++SYSCONFDIR = /etc
++TEMPLATESPATH = /usr/share/ebox/templates
++USE_NLS = yes
++VARPATH = /var
++VERSION = 0.12
++WWWPATH = /usr/share/ebox/www/
++XGETTEXT = /usr/bin/xgettext
++abs_builddir = /tmp/builder/ebox-0.12/src/EBox/ThirdParty/Apache2/AuthCookie
++abs_srcdir = /tmp/builder/ebox-0.12/src/EBox/ThirdParty/Apache2/AuthCookie
++abs_top_builddir = /tmp/builder/ebox-0.12
++abs_top_srcdir = /tmp/builder/ebox-0.12
++am__leading_dot = .
++am__tar = ${AMTAR} chof - "$$tardir"
++am__untar = ${AMTAR} xf -
++bindir = ${exec_prefix}/bin
++build_alias = i486-linux-gnu
++builddir = .
++datadir = ${datarootdir}
++datarootdir = ${prefix}/share
++docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
++dvidir = ${docdir}
++exec_prefix = ${prefix}
++host_alias = 
++htmldir = ${docdir}
++includedir = ${prefix}/include
++infodir = ${prefix}/share/info
++install_sh = $(SHELL) /tmp/builder/ebox-0.12/config/install-sh
++libdir = ${exec_prefix}/lib
++libexecdir = ${prefix}/lib/ebox
++localedir = ${datarootdir}/locale
++localstatedir = /var
++mandir = ${prefix}/share/man
++mkdir_p = /bin/mkdir -p
++oldincludedir = /usr/include
++pdfdir = ${docdir}
++prefix = /usr
++program_transform_name = s,x,x,
++psdir = ${docdir}
++sbindir = ${exec_prefix}/sbin
++sharedstatedir = ${prefix}/com
++srcdir = .
++sysconfdir = /etc
++target_alias = 
++top_builddir = ../../../../..
++top_srcdir = ../../../../..
++perldir = /usr/share/perl5//EBox/ThirdParty/Apache2/AuthCookie
++mods = Util.pm
++nobase_perl_DATA = $(mods)
++SOURCES = $(nobase_perl_DATA)
++EXTRA_DIST = $(mods)
++MAINTAINERCLEANFILES = Makefile.in
++all: all-am
++
++.SUFFIXES:
++$(srcdir)/Makefile.in: # $(srcdir)/Makefile.am  $(am__configure_deps)
++	@for dep in $?; do \
++	  case '$(am__configure_deps)' in \
++	    *$$dep*) \
++	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
++		&& exit 0; \
++	      exit 1;; \
++	  esac; \
++	done; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/AuthCookie/Makefile'; \
++	cd $(top_srcdir) && \
++	  $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/AuthCookie/Makefile
++.PRECIOUS: Makefile
++Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
++	@case '$?' in \
++	  *config.status*) \
++	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
++	  *) \
++	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
++	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
++	esac;
++
++$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++$(top_srcdir)/configure: # $(am__configure_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++$(ACLOCAL_M4): # $(am__aclocal_m4_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++install-nobase_perlDATA: $(nobase_perl_DATA)
++	@$(NORMAL_INSTALL)
++	test -z "$(perldir)" || $(MKDIR_P) "$(DESTDIR)$(perldir)"
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
++	  $(am__vpath_adj) \
++	  echo " $(nobase_perlDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(perldir)/$$f'"; \
++	  $(nobase_perlDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(perldir)/$$f"; \
++	done
++
++uninstall-nobase_perlDATA:
++	@$(NORMAL_UNINSTALL)
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  $(am__vpath_adj) \
++	  echo " rm -f '$(DESTDIR)$(perldir)/$$f'"; \
++	  rm -f "$(DESTDIR)$(perldir)/$$f"; \
++	done
++tags: TAGS
++TAGS:
++
++ctags: CTAGS
++CTAGS:
++
++
++distdir: $(DISTFILES)
++	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	list='$(DISTFILES)'; \
++	  dist_files=`for file in $$list; do echo $$file; done | \
++	  sed -e "s|^$$srcdirstrip/||;t" \
++	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
++	case $$dist_files in \
++	  */*) $(MKDIR_P) `echo "$$dist_files" | \
++			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   sort -u` ;; \
++	esac; \
++	for file in $$dist_files; do \
++	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -d $$d/$$file; then \
++	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
++	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
++	    fi; \
++	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
++	  else \
++	    test -f $(distdir)/$$file \
++	    || cp -p $$d/$$file $(distdir)/$$file \
++	    || exit 1; \
++	  fi; \
++	done
++check-am: all-am
++check: check-am
++all-am: Makefile $(DATA)
++installdirs:
++	for dir in "$(DESTDIR)$(perldir)"; do \
++	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
++	done
++install: install-am
++install-exec: install-exec-am
++install-data: install-data-am
++uninstall: uninstall-am
++
++install-am: all-am
++	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
++
++installcheck: installcheck-am
++install-strip:
++	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
++	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
++	  `test -z '$(STRIP)' || \
++	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
++mostlyclean-generic:
++
++clean-generic:
++
++distclean-generic:
++	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
++
++maintainer-clean-generic:
++	@echo "This command is intended for maintainers to use"
++	@echo "it deletes files that may require special tools to rebuild."
++	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
++clean: clean-am
++
++clean-am: clean-generic mostlyclean-am
++
++distclean: distclean-am
++	-rm -f Makefile
++distclean-am: clean-am distclean-generic
++
++dvi: dvi-am
++
++dvi-am:
++
++html: html-am
++
++info: info-am
++
++info-am:
++
++install-data-am: install-nobase_perlDATA
++
++install-dvi: install-dvi-am
++
++install-exec-am:
++
++install-html: install-html-am
++
++install-info: install-info-am
++
++install-man:
++
++install-pdf: install-pdf-am
++
++install-ps: install-ps-am
++
++installcheck-am:
++
++maintainer-clean: maintainer-clean-am
++	-rm -f Makefile
++maintainer-clean-am: distclean-am maintainer-clean-generic
++
++mostlyclean: mostlyclean-am
++
++mostlyclean-am: mostlyclean-generic
++
++pdf: pdf-am
++
++pdf-am:
++
++ps: ps-am
++
++ps-am:
++
++uninstall-am: uninstall-nobase_perlDATA
++
++.MAKE: install-am install-strip
++
++.PHONY: all all-am check check-am clean clean-generic distclean \
++	distclean-generic distdir dvi dvi-am html html-am info info-am \
++	install install-am install-data install-data-am install-dvi \
++	install-dvi-am install-exec install-exec-am install-html \
++	install-html-am install-info install-info-am install-man \
++	install-nobase_perlDATA install-pdf install-pdf-am install-ps \
++	install-ps-am install-strip installcheck installcheck-am \
++	installdirs maintainer-clean maintainer-clean-generic \
++	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
++	uninstall-am uninstall-nobase_perlDATA
++
++# Tell versions [3.59,3.63) of GNU make to not export all variables.
++# Otherwise a system limit (for SysV at least) may be exceeded.
++.NOEXPORT:
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.am ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.am
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.am	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.am	2008-08-10 12:58:59.000000000 +0200
+@@ -0,0 +1,14 @@
++## Process this file with automake to produce Makefile.in
++
++perldir = @PERLPATH@/EBox/ThirdParty/Apache2/AuthCookie
++
++mods = Util.pm
++
++nobase_perl_DATA = $(mods)
++
++
++SOURCES = $(nobase_perl_DATA)
++
++EXTRA_DIST = $(mods)
++
++MAINTAINERCLEANFILES = Makefile.in
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.in ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.in
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.in	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Makefile.in	2008-08-10 16:09:51.000000000 +0200
+@@ -0,0 +1,345 @@
++# Makefile.in generated by automake 1.10.1 from Makefile.am.
++# @configure_input@
++
++# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
++# 2003, 2004, 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
++# This Makefile.in is free software; the Free Software Foundation
++# gives unlimited permission to copy and/or distribute it,
++# with or without modifications, as long as this notice is preserved.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
++# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
++# PARTICULAR PURPOSE.
++
++@SET_MAKE@
++
++VPATH = @srcdir@
++pkgdatadir = $(datadir)/@PACKAGE@
++pkglibdir = $(libdir)/@PACKAGE@
++pkgincludedir = $(includedir)/@PACKAGE@
++am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
++install_sh_DATA = $(install_sh) -c -m 644
++install_sh_PROGRAM = $(install_sh) -c
++install_sh_SCRIPT = $(install_sh) -c
++INSTALL_HEADER = $(INSTALL_DATA)
++transform = $(program_transform_name)
++NORMAL_INSTALL = :
++PRE_INSTALL = :
++POST_INSTALL = :
++NORMAL_UNINSTALL = :
++PRE_UNINSTALL = :
++POST_UNINSTALL = :
++subdir = src/EBox/ThirdParty/Apache2/AuthCookie
++DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
++ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
++am__aclocal_m4_deps = $(top_srcdir)/m4/definedir.m4 \
++	$(top_srcdir)/m4/ebox.m4 $(top_srcdir)/m4/gconf-2.m4 \
++	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/perlmodules.m4 \
++	$(top_srcdir)/m4/po.m4 $(top_srcdir)/configure.ac
++am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
++	$(ACLOCAL_M4)
++mkinstalldirs = $(install_sh) -d
++CONFIG_CLEAN_FILES =
++DIST_SOURCES =
++am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
++am__vpath_adj = case $$p in \
++    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
++    *) f=$$p;; \
++  esac;
++am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
++am__installdirs = "$(DESTDIR)$(perldir)"
++nobase_perlDATA_INSTALL = $(install_sh_DATA)
++DATA = $(nobase_perl_DATA)
++DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ACLOCAL = @ACLOCAL@
++AMTAR = @AMTAR@
++AUTOCONF = @AUTOCONF@
++AUTOHEADER = @AUTOHEADER@
++AUTOMAKE = @AUTOMAKE@
++AWK = @AWK@
++CGIPATH = @CGIPATH@
++CONFPATH = @CONFPATH@
++CSSPATH = @CSSPATH@
++CYGPATH_W = @CYGPATH_W@
++DATADIR = @DATADIR@
++DEFS = @DEFS@
++DYNAMICIMAGESPATH = @DYNAMICIMAGESPATH@
++DYNAMICWWWPATH = @DYNAMICWWWPATH@
++ECHO_C = @ECHO_C@
++ECHO_N = @ECHO_N@
++ECHO_T = @ECHO_T@
++ETCPATH = @ETCPATH@
++GCONFTOOL = @GCONFTOOL@
++GCONF_SCHEMA_CONFIG_SOURCE = @GCONF_SCHEMA_CONFIG_SOURCE@
++GCONF_SCHEMA_FILE_DIR = @GCONF_SCHEMA_FILE_DIR@
++GMSGFMT = @GMSGFMT@
++IMAGESPATH = @IMAGESPATH@
++INSTALL = @INSTALL@
++INSTALL_DATA = @INSTALL_DATA@
++INSTALL_PROGRAM = @INSTALL_PROGRAM@
++INSTALL_SCRIPT = @INSTALL_SCRIPT@
++INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
++LIBDIR = @LIBDIR@
++LIBOBJS = @LIBOBJS@
++LIBS = @LIBS@
++LOCALSTATEDIR = @LOCALSTATEDIR@
++LOGPATH = @LOGPATH@
++LTLIBOBJS = @LTLIBOBJS@
++MAINT = @MAINT@
++MAKEINFO = @MAKEINFO@
++MKDIR_P = @MKDIR_P@
++MKINSTALLDIRS = @MKINSTALLDIRS@
++MSGFMT = @MSGFMT@
++MSGMERGE = @MSGMERGE@
++PACKAGE = @PACKAGE@
++PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
++PACKAGE_NAME = @PACKAGE_NAME@
++PACKAGE_STRING = @PACKAGE_STRING@
++PACKAGE_TARNAME = @PACKAGE_TARNAME@
++PACKAGE_VERSION = @PACKAGE_VERSION@
++PATH_SEPARATOR = @PATH_SEPARATOR@
++PERL = @PERL@
++PERLPATH = @PERLPATH@
++SCHEMASPATH = @SCHEMASPATH@
++SET_MAKE = @SET_MAKE@
++SHELL = @SHELL@
++STRIP = @STRIP@
++STUBSPATH = @STUBSPATH@
++SYSCONFDIR = @SYSCONFDIR@
++TEMPLATESPATH = @TEMPLATESPATH@
++USE_NLS = @USE_NLS@
++VARPATH = @VARPATH@
++VERSION = @VERSION@
++WWWPATH = @WWWPATH@
++XGETTEXT = @XGETTEXT@
++abs_builddir = @abs_builddir@
++abs_srcdir = @abs_srcdir@
++abs_top_builddir = @abs_top_builddir@
++abs_top_srcdir = @abs_top_srcdir@
++am__leading_dot = @am__leading_dot@
++am__tar = @am__tar@
++am__untar = @am__untar@
++bindir = @bindir@
++build_alias = @build_alias@
++builddir = @builddir@
++datadir = @datadir@
++datarootdir = @datarootdir@
++docdir = @docdir@
++dvidir = @dvidir@
++exec_prefix = @exec_prefix@
++host_alias = @host_alias@
++htmldir = @htmldir@
++includedir = @includedir@
++infodir = @infodir@
++install_sh = @install_sh@
++libdir = @libdir@
++libexecdir = @libexecdir@
++localedir = @localedir@
++localstatedir = @localstatedir@
++mandir = @mandir@
++mkdir_p = @mkdir_p@
++oldincludedir = @oldincludedir@
++pdfdir = @pdfdir@
++prefix = @prefix@
++program_transform_name = @program_transform_name@
++psdir = @psdir@
++sbindir = @sbindir@
++sharedstatedir = @sharedstatedir@
++srcdir = @srcdir@
++sysconfdir = @sysconfdir@
++target_alias = @target_alias@
++top_builddir = @top_builddir@
++top_srcdir = @top_srcdir@
++perldir = @PERLPATH@/EBox/ThirdParty/Apache2/AuthCookie
++mods = Util.pm
++nobase_perl_DATA = $(mods)
++SOURCES = $(nobase_perl_DATA)
++EXTRA_DIST = $(mods)
++MAINTAINERCLEANFILES = Makefile.in
++all: all-am
++
++.SUFFIXES:
++$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
++	@for dep in $?; do \
++	  case '$(am__configure_deps)' in \
++	    *$$dep*) \
++	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
++		&& exit 0; \
++	      exit 1;; \
++	  esac; \
++	done; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/AuthCookie/Makefile'; \
++	cd $(top_srcdir) && \
++	  $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/AuthCookie/Makefile
++.PRECIOUS: Makefile
++Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
++	@case '$?' in \
++	  *config.status*) \
++	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
++	  *) \
++	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
++	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
++	esac;
++
++$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++$(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++install-nobase_perlDATA: $(nobase_perl_DATA)
++	@$(NORMAL_INSTALL)
++	test -z "$(perldir)" || $(MKDIR_P) "$(DESTDIR)$(perldir)"
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
++	  $(am__vpath_adj) \
++	  echo " $(nobase_perlDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(perldir)/$$f'"; \
++	  $(nobase_perlDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(perldir)/$$f"; \
++	done
++
++uninstall-nobase_perlDATA:
++	@$(NORMAL_UNINSTALL)
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  $(am__vpath_adj) \
++	  echo " rm -f '$(DESTDIR)$(perldir)/$$f'"; \
++	  rm -f "$(DESTDIR)$(perldir)/$$f"; \
++	done
++tags: TAGS
++TAGS:
++
++ctags: CTAGS
++CTAGS:
++
++
++distdir: $(DISTFILES)
++	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	list='$(DISTFILES)'; \
++	  dist_files=`for file in $$list; do echo $$file; done | \
++	  sed -e "s|^$$srcdirstrip/||;t" \
++	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
++	case $$dist_files in \
++	  */*) $(MKDIR_P) `echo "$$dist_files" | \
++			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   sort -u` ;; \
++	esac; \
++	for file in $$dist_files; do \
++	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -d $$d/$$file; then \
++	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
++	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
++	    fi; \
++	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
++	  else \
++	    test -f $(distdir)/$$file \
++	    || cp -p $$d/$$file $(distdir)/$$file \
++	    || exit 1; \
++	  fi; \
++	done
++check-am: all-am
++check: check-am
++all-am: Makefile $(DATA)
++installdirs:
++	for dir in "$(DESTDIR)$(perldir)"; do \
++	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
++	done
++install: install-am
++install-exec: install-exec-am
++install-data: install-data-am
++uninstall: uninstall-am
++
++install-am: all-am
++	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
++
++installcheck: installcheck-am
++install-strip:
++	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
++	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
++	  `test -z '$(STRIP)' || \
++	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
++mostlyclean-generic:
++
++clean-generic:
++
++distclean-generic:
++	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
++
++maintainer-clean-generic:
++	@echo "This command is intended for maintainers to use"
++	@echo "it deletes files that may require special tools to rebuild."
++	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
++clean: clean-am
++
++clean-am: clean-generic mostlyclean-am
++
++distclean: distclean-am
++	-rm -f Makefile
++distclean-am: clean-am distclean-generic
++
++dvi: dvi-am
++
++dvi-am:
++
++html: html-am
++
++info: info-am
++
++info-am:
++
++install-data-am: install-nobase_perlDATA
++
++install-dvi: install-dvi-am
++
++install-exec-am:
++
++install-html: install-html-am
++
++install-info: install-info-am
++
++install-man:
++
++install-pdf: install-pdf-am
++
++install-ps: install-ps-am
++
++installcheck-am:
++
++maintainer-clean: maintainer-clean-am
++	-rm -f Makefile
++maintainer-clean-am: distclean-am maintainer-clean-generic
++
++mostlyclean: mostlyclean-am
++
++mostlyclean-am: mostlyclean-generic
++
++pdf: pdf-am
++
++pdf-am:
++
++ps: ps-am
++
++ps-am:
++
++uninstall-am: uninstall-nobase_perlDATA
++
++.MAKE: install-am install-strip
++
++.PHONY: all all-am check check-am clean clean-generic distclean \
++	distclean-generic distdir dvi dvi-am html html-am info info-am \
++	install install-am install-data install-data-am install-dvi \
++	install-dvi-am install-exec install-exec-am install-html \
++	install-html-am install-info install-info-am install-man \
++	install-nobase_perlDATA install-pdf install-pdf-am install-ps \
++	install-ps-am install-strip installcheck installcheck-am \
++	installdirs maintainer-clean maintainer-clean-generic \
++	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
++	uninstall-am uninstall-nobase_perlDATA
++
++# Tell versions [3.59,3.63) of GNU make to not export all variables.
++# Otherwise a system limit (for SysV at least) may be exceeded.
++.NOEXPORT:
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie/Util.pm	2008-08-10 12:53:59.000000000 +0200
+@@ -0,0 +1,76 @@
++package EBox::ThirdParty::Apache2::AuthCookie::Util;
++
++use strict;
++use vars '$VERSION';
++
++$VERSION = do { my @r = (q$Revision: 222 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r }; # must be all one line, for MakeMaker
++
++# -- expires() shamelessly taken from CGI::Util
++sub expires {
++    my($time,$format) = @_;
++    $format ||= 'http';
++
++    my(@MON)=qw/Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec/;
++    my(@WDAY) = qw/Sun Mon Tue Wed Thu Fri Sat/;
++
++    # pass through preformatted dates for the sake of expire_calc()
++    $time = expire_calc($time);
++    return $time unless $time =~ /^\d+$/;
++
++    # make HTTP/cookie date string from GMT'ed time
++    # (cookies use '-' as date separator, HTTP uses ' ')
++    my($sc) = ' ';
++    $sc = '-' if $format eq "cookie";
++    my($sec,$min,$hour,$mday,$mon,$year,$wday) = gmtime($time);
++    $year += 1900;
++    return sprintf("%s, %02d$sc%s$sc%04d %02d:%02d:%02d GMT",
++                   $WDAY[$wday],$mday,$MON[$mon],$year,$hour,$min,$sec);
++}
++
++# -- expire_calc() shamelessly taken from CGI::Util
++# This internal routine creates an expires time exactly some number of
++# hours from the current time.  It incorporates modifications from 
++# Mark Fisher.
++sub expire_calc {
++    my($time) = @_;
++    my(%mult) = ('s'=>1,
++                 'm'=>60,
++                 'h'=>60*60,
++                 'd'=>60*60*24,
++                 'M'=>60*60*24*30,
++                 'y'=>60*60*24*365);
++    # format for time can be in any of the forms...
++    # "now" -- expire immediately
++    # "+180s" -- in 180 seconds
++    # "+2m" -- in 2 minutes
++    # "+12h" -- in 12 hours
++    # "+1d"  -- in 1 day
++    # "+3M"  -- in 3 months
++    # "+2y"  -- in 2 years
++    # "-3m"  -- 3 minutes ago(!)
++    # If you don't supply one of these forms, we assume you are
++    # specifying the date yourself
++    my($offset);
++    if (!$time || (lc($time) eq 'now')) {
++        $offset = 0;
++    } elsif ($time=~/^\d+/) {
++        return $time;
++    } elsif ($time=~/^([+-]?(?:\d+|\d*\.\d*))([mhdMy]?)/) {
++        $offset = ($mult{$2} || 1)*$1;
++    } else {
++        return $time;
++    }
++    return (time+$offset);
++}
++
++# escape embedded CR, LF, TAB's to prevent possible XSS attacks.
++# see http://www.securiteam.com/securityreviews/5WP0E2KFGK.html
++sub escape_destination {
++    my $text = shift;
++
++    $text =~ s/([\r\n\t])/sprintf("%%%02X", ord $1)/ge;
++
++    return $text;
++}
++
++1;
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie.pm ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie.pm
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/AuthCookie.pm	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/AuthCookie.pm	2008-08-10 12:54:39.000000000 +0200
+@@ -0,0 +1,1081 @@
++package EBox::ThirdParty::Apache2::AuthCookie;
++
++use strict;
++
++use Carp;
++use CGI '3.12';
++use mod_perl2 '1.9922';
++
++use EBox::ThirdParty::Apache2::AuthCookie::Util;
++use Apache2::RequestRec;
++use Apache2::RequestUtil;
++use Apache2::Log;
++use Apache2::Access;
++use Apache2::Response;
++use Apache2::Util;
++use APR::Table;
++use Apache2::Const qw(:common M_GET HTTP_FORBIDDEN HTTP_MOVED_TEMPORARILY);
++use vars qw($VERSION);
++
++# $Id: AuthCookie.pm 227 2008-04-16 14:59:56Z mschout $
++$VERSION = '3.12';
++
++sub recognize_user {
++    my ($self, $r) = @_;
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    my $auth_type = $r->auth_type;
++    my $auth_name = $r->auth_name;
++
++    return DECLINED unless $auth_type and $auth_name;
++
++    return DECLINED unless $r->headers_in->get('Cookie');
++
++    my $cookie = $self->key($r);
++    my $cookie_name = $self->cookie_name($r);
++
++    $r->server->log_error("cookie $cookie_name is $cookie")
++        if $debug >= 2;
++
++    return DECLINED unless $cookie;
++
++    my ($user,@args) = $auth_type->authen_ses_key($r, $cookie);
++
++    if ($user and scalar @args == 0) {
++        $r->server->log_error("user is $user") if $debug >= 2;
++
++        # send cookie with update expires timestamp if session timeout is on
++        if (my $expires = $r->dir_config("${auth_name}SessionTimeout")) {
++            $self->send_cookie($r, $cookie, {expires => $expires});
++        }
++
++        $r->user($user);
++    }
++    elsif (scalar @args > 0 and $auth_type->can('custom_errors')) {
++        return $auth_type->custom_errors($r, $user, @args);
++    }
++
++    return OK;
++}
++
++sub cookie_name {
++    my ($self, $r) = @_;
++
++    my $auth_type = $r->auth_type;
++    my $auth_name = $r->auth_name;
++
++    my $cookie_name = $r->dir_config("${auth_name}CookieName") ||
++                      "${auth_type}_${auth_name}";
++
++    return $cookie_name;
++}
++
++sub handle_cache {
++    my ($self, $r) = @_;
++
++    my $auth_name = $r->auth_name;
++
++    return unless $auth_name;
++
++    unless ($r->dir_config("${auth_name}Cache")) {
++        $r->no_cache(1);
++        $r->err_headers_out->set(Pragma => 'no-cache');
++    }
++}
++
++sub remove_cookie {
++    my ($self, $r) = @_;
++
++    my $cookie_name = $self->cookie_name($r);
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    my $str = $self->cookie_string(
++        request => $r,
++        key     => $cookie_name,
++        value   => '',
++        expires => 'Mon, 21-May-1971 00:00:00 GMT'
++    );
++
++    $r->err_headers_out->add("Set-Cookie" => "$str");
++    $r->server->log_error("removed_cookie ".
++                          $r->err_headers_out->get("Set-Cookie"))
++        if $debug >= 2;
++}
++
++# convert current request to GET
++sub _convert_to_get {
++    my ($self, $r, $args) = @_;
++
++    return unless $r->method eq 'POST';
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    $r->server->log_error("Converting POST -> GET") if $debug >= 2;
++
++    my @pairs =();
++    while (my ($name, $value) = each %$args) {
++        # we dont want to copy login data, only extra data
++        next if $name eq 'destination'
++             or $name =~ /^credential_\d+$/;
++
++        $value = '' unless defined $value;
++        for my $v (split /\0/, $value) {
++            push @pairs, escape_uri($r, $name) . '=' . escape_uri($r, $v);
++        }
++    }
++
++    $r->args(join '&', @pairs) if scalar(@pairs) > 0;
++
++    $r->method('GET');
++    $r->method_number(M_GET);
++    $r->headers_in->unset('Content-Length');
++}
++
++sub escape_uri {
++    my ($r, $string) = @_;
++    return EBox::ThirdParty::Apache2::AuthCookie::Util::escape_path($string, $r->pool);
++}
++
++# get GET or POST data and return hash containing the data.
++sub _get_form_data {
++    my ($self, $r) = @_;
++
++    my $data = '';
++
++    my $cgi = CGI->new($r);
++
++    return $cgi->Vars();
++}
++
++sub login {
++    my ($self, $r) = @_;
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    my $auth_type = $r->auth_type;
++    my $auth_name = $r->auth_name;
++
++    my %args = $self->_get_form_data($r);
++
++    if ($r->method eq 'POST') {
++        $self->_convert_to_get($r, \%args);
++    }
++
++    unless (exists $args{'destination'}) {
++        $r->server->log_error("No key 'destination' found in form data");
++        $r->subprocess_env('AuthCookieReason', 'no_cookie');
++        return $auth_type->login_form($r);
++    }
++
++    # Get the credentials from the data posted by the client
++    my @credentials;
++    for (my $i = 0; exists $args{"credential_$i"}; $i++) {
++        my $key = "credential_$i";
++        $r->server->log_error("$key $args{$key}") if $debug >= 2;
++        push @credentials, $args{$key};
++    }
++
++    # save creds in pnotes so login form script can use them if it wants to
++    $r->pnotes("${auth_name}Creds", \@credentials);
++
++    # Exchange the credentials for a session key.
++    my $ses_key = $self->authen_cred($r, @credentials);
++    unless ($ses_key) {
++        $r->server->log_error("Bad credentials") if $debug >= 2;
++        $r->subprocess_env('AuthCookieReason', 'bad_credentials');
++        $r->uri($args{'destination'});
++        return $auth_type->login_form($r);
++    }
++
++    if ($debug >= 2) {
++        defined $ses_key ? $r->server->log_error("ses_key $ses_key")
++                         : $r->server->log_error("ses_key undefined");
++    }
++
++    $self->send_cookie($r, $ses_key);
++
++    $self->handle_cache($r);
++
++    if ($debug >= 2) {
++        $r->server->log_error("redirect to $args{destination}");
++    }
++
++    $r->headers_out->set(
++        "Location" => $self->untaint_destination($args{'destination'}));
++
++    return HTTP_MOVED_TEMPORARILY;
++}
++
++sub untaint_destination {
++    my ($self, $dest) = @_;
++
++    return EBox::ThirdParty::Apache2::AuthCookie::Util::escape_destination($dest);
++}
++
++sub logout {
++    my ($self,$r) = @_;
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    $self->remove_cookie($r);
++
++    $self->handle_cache($r);
++}
++
++sub authenticate {
++    my ($auth_type, $r) = @_;
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    $r->server->log_error("auth_type " . $auth_type) if ($debug >= 3);
++
++    unless ($r->is_initial_req) {
++        if (defined $r->prev) {
++            # we are in a subrequest.  Just copy user from previous request.
++            $r->user( $r->prev->user );
++        }
++        return OK;
++    }
++
++    if ($debug >= 3) {
++        $r->server->log_error("r=$r authtype=". $r->auth_type);
++    }
++
++    if ($r->auth_type ne $auth_type) {
++        # This location requires authentication because we are being called,
++        # but we don't handle this AuthType.
++        $r->server->log_error("AuthType mismatch: $auth_type =/= ".$r->auth_type) if $debug >= 3;
++        return DECLINED;
++    }
++
++    # Ok, the AuthType is $auth_type which we handle, what's the authentication
++    # realm's name?
++    my $auth_name = $r->auth_name;
++    $r->server->log_error("auth_name $auth_name") if $debug >= 2;
++    unless ($auth_name) {
++        $r->server->log_error("AuthName not set, AuthType=$auth_type", $r->uri);
++        return SERVER_ERROR;
++    }
++
++    # Get the Cookie header. If there is a session key for this realm, strip
++    # off everything but the value of the cookie.
++    my $ses_key_cookie = $auth_type->key($r) || '';
++
++    $r->server->log_error("ses_key_cookie " . $ses_key_cookie) if $debug >= 1;
++    $r->server->log_error("uri " . $r->uri) if $debug >= 2;
++
++    if ($ses_key_cookie) {
++        my ($auth_user, @args) = $auth_type->authen_ses_key($r, $ses_key_cookie);
++
++        if ($auth_user and scalar @args == 0) {
++            # We have a valid session key, so we return with an OK value.
++            # Tell the rest of Apache what the authentication method and
++            # user is.
++
++            $r->ap_auth_type($auth_type);
++            $r->user($auth_user);
++            $r->server->log_error("user authenticated as $auth_user")
++                if $debug >= 1;
++
++            # send new cookie if SessionTimeout is on
++            if (my $expires = $r->dir_config("${auth_name}SessionTimeout")) {
++                $auth_type->send_cookie($r, $ses_key_cookie,
++                                        {expires => $expires});
++            }
++
++            return OK;
++        }
++        elsif (scalar @args > 0 and $auth_type->can('custom_errors')) {
++            return $auth_type->custom_errors($r, $auth_user, @args);
++        }
++        else {
++            # There was a session key set, but it's invalid for some reason. So,
++            # remove it from the client now so when the credential data is posted
++            # we act just like it's a new session starting.
++            $auth_type->remove_cookie($r);
++            $r->subprocess_env('AuthCookieReason', 'bad_cookie');
++        }
++    }
++    else {
++        $r->subprocess_env('AuthCookieReason', 'no_cookie');
++    }
++
++    # This request is not authenticated, but tried to get a protected
++    # document.  Send client the authen form.
++    return $auth_type->login_form($r);
++}
++
++sub login_form {
++    my ($self, $r) = @_;
++
++    my $auth_name = $r->auth_name;
++
++    my %args = $self->_get_form_data($r);
++
++    if ($r->method eq 'POST') {
++        $self->_convert_to_get($r, \%args);
++    }
++
++    # There should be a PerlSetVar directive that gives us the URI of
++    # the script to execute for the login form.
++
++    my $authen_script;
++    unless ($authen_script = $r->dir_config($auth_name . "LoginScript")) {
++        $r->server->log_error("PerlSetVar '${auth_name}LoginScript' not set", $r->uri);
++        return SERVER_ERROR;
++    }
++
++    $r->custom_response(HTTP_FORBIDDEN, $authen_script);
++
++    return HTTP_FORBIDDEN;
++}
++
++sub satisfy_is_valid {
++    my ($auth_type, $r, $satisfy) = @_;
++
++    $satisfy = lc $satisfy;
++
++    if ($satisfy eq 'any' or $satisfy eq 'all') {
++        return 1;
++    }
++    else {
++        my $auth_name = $r->auth_name;
++        $r->server->log_error("PerlSetVar ${auth_name}Satisfy $satisfy invalid",$r->uri);
++        return 0;
++    }
++}
++
++sub get_satisfy {
++    my ($auth_type, $r) = @_;
++
++    my $auth_name = $r->auth_name;
++
++    return lc $r->dir_config("${auth_name}Satisfy") || 'all';
++}
++
++sub authorize {
++    my ($auth_type, $r) = @_;
++
++    my $debug = $r->dir_config("AuthCookieDebug") || 0;
++
++    $r->server->log_error('authorize() for '.$r->uri()) if $debug >= 3;
++
++    return OK unless $r->is_initial_req; #only the first internal request
++
++    if ($r->auth_type ne $auth_type) {
++        $r->server->log_error("auth type mismatch $auth_type != ".$r->auth_type)
++            if $debug >= 3;
++        return DECLINED;
++    }
++
++    my $reqs_arr = $r->requires or return DECLINED;
++
++    my $user = $r->user;
++
++    $r->server->log_error("authorize user=$user type=$auth_type") if $debug >=3;
++
++    unless ($user) {
++        # user is either undef or =0 which means the authentication failed
++        $r->server->log_error("No user authenticated", $r->uri);
++        return HTTP_FORBIDDEN;
++    }
++
++    my $satisfy = $auth_type->get_satisfy($r);
++    return SERVER_ERROR unless $auth_type->satisfy_is_valid($r,$satisfy);
++    my $satisfy_all = $satisfy eq 'all';
++
++    my ($forbidden);
++    foreach my $req (@$reqs_arr) {
++        my ($requirement, $args) = split /\s+/, $req->{requirement}, 2;
++        $args = '' unless defined $args;
++        $r->server->log_error("requirement := $requirement, $args") if $debug >= 2;
++
++        if (lc($requirement) eq 'valid-user') {
++            if ($satisfy_all) {
++                next;
++            }
++            else {
++                return OK;
++            }
++        }
++
++        if ($requirement eq 'user') {
++            if ($args =~ m/\b$user\b/) {
++                next if $satisfy_all;
++                return OK; # satisfy any
++            }
++
++            $forbidden = 1;
++            next;
++        }
++
++        # Call a custom method
++        my $ret_val = $auth_type->$requirement($r, $args);
++        $r->server->log_error("$auth_type->$requirement returned $ret_val") if $debug >= 3;
++        if ($ret_val == OK) {
++            next if $satisfy_all;
++            return OK; # satisfy any
++        }
++
++        # Nothing succeeded, deny access to this user.
++        $forbidden = 1;
++    }
++
++    return $forbidden ? HTTP_FORBIDDEN : OK;
++}
++
++sub send_cookie {
++    my ($self, $r, $ses_key, $cookie_args) = @_;
++
++    $cookie_args = {} unless defined $cookie_args;
++
++    my $cookie_name = $self->cookie_name($r);
++
++    my $cookie = $self->cookie_string(
++        request => $r,
++        key     => $cookie_name,
++        value   => $ses_key,
++        %$cookie_args
++    );
++
++    my $auth_name = $r->auth_name;
++
++    # add a P3P header if user has configured it.
++    if (my $p3p = $r->dir_config("${auth_name}P3P")) {
++        $r->err_headers_out->set(P3P => $p3p);
++    }
++
++    $r->err_headers_out->add("Set-Cookie" => $cookie);
++}
++
++
++# cookie_string takes named parameters:
++#    request
++#    key
++#    value
++#    expires
++# 
++sub cookie_string {
++    my $self = shift;
++    my %p = @_;
++    for (qw/request key/) {
++        croak "missing required parameter $_" unless defined $p{$_};
++    }
++    # its okay if value is undef here.
++
++    my $r = $p{request};
++
++    $p{value} = '' unless defined $p{value};
++
++    my $string = sprintf '%s=%s', @p{'key','value'};
++
++    my $auth_name = $r->auth_name;
++
++    if (my $expires = $p{expires} || $r->dir_config("${auth_name}Expires")) {
++        $expires = EBox::ThirdParty::Apache2::AuthCookie::Util::expires($expires);
++        $string .= "; expires=$expires";
++    }
++
++    $string .= '; path=' . ( $self->get_cookie_path($r) || '/' );
++
++    if (my $domain = $r->dir_config("${auth_name}Domain")) {
++        $string .= "; domain=$domain";
++    }
++
++    if ($r->dir_config("${auth_name}Secure")) {
++        $string .= '; secure';
++    }
++
++    # HttpOnly is an MS extension.  See
++    # http://msdn.microsoft.com/workshop/author/dhtml/httponly_cookies.asp
++    if ($r->dir_config("${auth_name}HttpOnly")) {
++        $string .= '; HttpOnly';
++    }
++
++    return $string;
++}
++
++sub key {
++    my ($self, $r) = @_;
++
++    my $cookie_name = $self->cookie_name($r);
++
++    my $allcook = ($r->headers_in->get("Cookie") || "");
++
++    return ($allcook =~ /(?:^|\s)$cookie_name=([^;]*)/)[0];
++}
++
++sub get_cookie_path {
++    my ($self, $r) = @_;
++
++    my $auth_name = $r->auth_name;
++
++    return $r->dir_config("${auth_name}Path");
++}
++
++1;
++
++__END__
++
++=head1 NAME
++
++Apache2::AuthCookie - Perl Authentication and Authorization via cookies
++
++=head1 SYNOPSIS
++
++Make sure your mod_perl is at least 1.24, with StackedHandlers,
++MethodHandlers, Authen, and Authz compiled in.
++
++ # In httpd.conf or .htaccess:
++ PerlModule Sample::AuthCookieHandler
++ PerlSetVar WhatEverPath /
++ PerlSetVar WhatEverLoginScript /login.pl
++
++ # use to alter how "require" directives are matched. Can be "Any" or "All".
++ # If its "Any", then you must only match Any of the "require" directives. If
++ # its "All", then you must match All of the require directives. 
++ #
++ # Default: All
++ PerlSetVar WhatEverSatisfy Any
++ 
++ # The following line is optional - it allows you to set the domain
++ # scope of your cookie.  Default is the current domain.
++ PerlSetVar WhatEverDomain .yourdomain.com
++
++ # Use this to only send over a secure connection
++ PerlSetVar WhatEverSecure 1
++
++ # Use this if you want user session cookies to expire if the user
++ # doesn't request a auth-required or recognize_user page for some
++ # time period.  If set, a new cookie (with updated expire time)
++ # is set on every request.
++ PerlSetVar WhatEverSessionTimeout +30m
++
++ # to enable the HttpOnly cookie property, use HttpOnly.
++ # this is an MS extension.  See:
++ # http://msdn.microsoft.com/workshop/author/dhtml/httponly_cookies.asp
++ PerlSetVar WhatEverHttpOnly 1
++
++ # Usually documents are uncached - turn off here
++ PerlSetVar WhatEverCache 1
++
++ # Use this to make your cookies persistent (+2 hours here)
++ PerlSetVar WhatEverExpires +2h
++
++ # Use to make AuthCookie send a P3P header with the cookie
++ # see http://www.w3.org/P3P/ for details about what the value 
++ # of this should be
++ PerlSetVar WhatEverP3P "CP=\"...\""
++
++ # These documents require user to be logged in.
++ <Location /protected>
++  AuthType Sample::AuthCookieHandler
++  AuthName WhatEver
++  PerlAuthenHandler Sample::AuthCookieHandler->authenticate
++  PerlAuthzHandler Sample::AuthCookieHandler->authorize
++  require valid-user
++ </Location>
++
++ # These documents don't require logging in, but allow it.
++ <FilesMatch "\.ok$">
++  AuthType Sample::AuthCookieHandler
++  AuthName WhatEver
++  PerlFixupHandler Sample::AuthCookieHandler->recognize_user
++ </FilesMatch>
++
++ # This is the action of the login.pl script above.
++ <Files LOGIN>
++  AuthType Sample::AuthCookieHandler
++  AuthName WhatEver
++  SetHandler perl-script
++  PerlResponseHandler Sample::AuthCookieHandler->login
++ </Files>
++
++=head1 DESCRIPTION
++
++WARNING! This is an early version of B<Apache::AuthCookie> for mod_perl version
++2.  If you are running under mod_perl version 2, this module should be
++considered of beta quality.  If you are a subclass author and would like to see
++additional changes (besides those listed in README.modperl2) to the interface
++provided by this module under mod_perl version 2, please contact me at
++mschout@gkg.net.  The interface for mod_perl version 1 has not changed.
++
++B<Apache::AuthCookie> allows you to intercept a user's first
++unauthenticated access to a protected document. The user will be
++presented with a custom form where they can enter authentication
++credentials. The credentials are posted to the server where AuthCookie
++verifies them and returns a session key.
++
++The session key is returned to the user's browser as a cookie. As a
++cookie, the browser will pass the session key on every subsequent
++accesses. AuthCookie will verify the session key and re-authenticate
++the user.
++
++All you have to do is write a custom module that inherits from
++AuthCookie.  Your module is a class which implements two methods:
++
++=over 4
++
++=item C<authen_cred()>
++
++Verify the user-supplied credentials and return a session key.  The
++session key can be any string - often you'll use some string
++containing username, timeout info, and any other information you need
++to determine access to documents, and append a one-way hash of those
++values together with some secret key.
++
++=item C<authen_ses_key()>
++
++Verify the session key (previously generated by C<authen_cred()>,
++possibly during a previous request) and return the user ID.  This user
++ID will be fed to C<$r-E<gt>user()> to set Apache's idea of who's logged in.
++
++=back
++
++By using AuthCookie versus Apache's built-in AuthBasic you can design
++your own authentication system.  There are several benefits.
++
++=over 4
++
++=item 1.
++
++The client doesn't *have* to pass the user credentials on every
++subsequent access.  If you're using passwords, this means that the
++password can be sent on the first request only, and subsequent
++requests don't need to send this (potentially sensitive) information.
++This is known as "ticket-based" authentication.
++
++=item 2.
++
++When you determine that the client should stop using the
++credentials/session key, the server can tell the client to delete the
++cookie.  Letting users "log out" is a notoriously impossible-to-solve
++problem of AuthBasic.
++
++=item 3.
++
++AuthBasic dialog boxes are ugly.  You can design your own HTML login
++forms when you use AuthCookie.
++
++=item 4.
++
++You can specify the domain of a cookie using PerlSetVar commands.  For
++instance, if your AuthName is C<WhatEver>, you can put the command 
++
++ PerlSetVar WhatEverDomain .yourhost.com
++
++into your server setup file and your access cookies will span all
++hosts ending in C<.yourhost.com>.
++
++=item 5.
++
++You can optionally specify the name of your cookie using the C<CookieName>
++directive.  For instance, if your AuthName is C<WhatEver>, you can put the
++command
++
++ PerlSetVar WhatEverCookieName MyCustomName
++
++into your server setup file and your cookies for this AuthCookie realm will be
++named MyCustomName.  Default is AuthType_AuthName.
++
++=item 6.
++
++By default users must satisfy ALL of the C<require> directives.  If you
++want authentication to succeed if ANY C<require> directives are met, use the
++C<Satisfy> directive.  For instance, if your AuthName is C<WhatEver>, you can
++put the command
++
++ PerlSetVar WhatEverSatisfy Any
++
++into your server startup file and authentication for this realm will succeed if
++ANY of the C<require> directives are met.
++
++=back
++
++This is the flow of the authentication handler, less the details of the
++redirects. Two HTTP_MOVED_TEMPORARILY's are used to keep the client from
++displaying the user's credentials in the Location field. They don't really
++change AuthCookie's model, but they do add another round-trip request to the
++client.
++
++=for html
++<PRE>
++
++ (-----------------------)     +---------------------------------+
++ ( Request a protected   )     | AuthCookie sets custom error    |
++ ( page, but user hasn't )---->| document and returns            |
++ ( authenticated (no     )     | HTTP_FORBIDDEN. Apache abandons |      
++ ( session key cookie)   )     | current request and creates sub |      
++ (-----------------------)     | request for the error document. |<-+
++                               | Error document is a script that |  |
++                               | generates a form where the user |  |
++                 return        | enters authentication           |  |
++          ^------------------->| credentials (login & password). |  |
++         / \      False        +---------------------------------+  |
++        /   \                                   |                   |
++       /     \                                  |                   |
++      /       \                                 V                   |
++     /         \               +---------------------------------+  |
++    /   Pass    \              | User's client submits this form |  |
++   /   user's    \             | to the LOGIN URL, which calls   |  |
++   | credentials |<------------| AuthCookie->login().            |  |
++   \     to      /             +---------------------------------+  |
++    \authen_cred/                                                   |
++     \ function/                                                    |
++      \       /                                                     |
++       \     /                                                      |
++        \   /            +------------------------------------+     |
++         \ /   return    | Authen cred returns a session      |  +--+
++          V------------->| key which is opaque to AuthCookie.*|  |
++                True     +------------------------------------+  |
++                                              |                  |
++               +--------------------+         |      +---------------+
++               |                    |         |      | If we had a   |
++               V                    |         V      | cookie, add   |
++  +----------------------------+  r |         ^      | a Set-Cookie  |
++  | If we didn't have a session|  e |T       / \     | header to     |
++  | key cookie, add a          |  t |r      /   \    | override the  |
++  | Set-Cookie header with this|  u |u     /     \   | invalid cookie|
++  | session key. Client then   |  r |e    /       \  +---------------+
++  | returns session key with   |  n |    /  pass   \               ^    
++  | successive requests        |    |   /  session  \              |
++  +----------------------------+    |  /   key to    \    return   |
++               |                    +-| authen_ses_key|------------+
++               V                       \             /     False
++  +-----------------------------------+ \           /
++  | Tell Apache to set Expires header,|  \         /
++  | set user to user ID returned by   |   \       /
++  | authen_ses_key, set authentication|    \     /
++  | to our type (e.g. AuthCookie).    |     \   /
++  +-----------------------------------+      \ /
++                                              V
++         (---------------------)              ^
++         ( Request a protected )              |
++         ( page, user has a    )--------------+
++         ( session key cookie  )
++         (---------------------)
++
++
++ *  The session key that the client gets can be anything you want.  For
++    example, encrypted information about the user, a hash of the
++    username and password (similar in function to Digest
++    authentication), or the user name and password in plain text
++    (similar in function to HTTP Basic authentication).
++
++    The only requirement is that the authen_ses_key function that you
++    create must be able to determine if this session_key is valid and
++    map it back to the originally authenticated user ID.
++
++=for html
++</PRE>
++
++=head1 METHODS
++
++C<Apache::AuthCookie> has several methods you should know about.  Here
++is the documentation for each. =)
++
++=over 4
++
++=item * authenticate()
++
++This method is one you'll use in a server config file (httpd.conf,
++.htaccess, ...) as a PerlAuthenHandler.  If the user provided a
++session key in a cookie, the C<authen_ses_key()> method will get
++called to check whether the key is valid.  If not, or if there is no
++key provided, we redirect to the login form.
++
++=item * authorize()
++
++This will step through the C<require> directives you've given for
++protected documents and make sure the user passes muster.  The
++C<require valid-user> and C<require user joey-jojo> directives are
++handled for you.  You can implement custom directives, such as
++C<require species hamster>, by defining a method called C<species()>
++in your subclass, which will then be called.  The method will be
++called as C<$r-E<gt>species($r, $args)>, where C<$args> is everything
++on your C<require> line after the word C<species>.  The method should
++return OK on success and HTTP_FORBIDDEN on failure.
++
++=item * authen_cred()
++
++You must define this method yourself in your subclass of
++C<Apache::AuthCookie>.  Its job is to create the session key that will
++be preserved in the user's cookie.  The arguments passed to it are:
++
++ sub authen_cred ($$\@) {
++   my $self = shift;  # Package name (same as AuthName directive)
++   my $r    = shift;  # Apache request object
++   my @cred = @_;     # Credentials from login form
++
++   ...blah blah blah, create a session key...
++   return $session_key;
++ }
++
++The only limitation on the session key is that you should be able to
++look at it later and determine the user's username.  You are
++responsible for implementing your own session key format.  A typical
++format is to make a string that contains the username, an expiration
++time, whatever else you need, and an MD5 hash of all that data
++together with a secret key.  The hash will ensure that the user
++doesn't tamper with the session key.  More info in the Eagle book.
++
++=item * authen_ses_key()
++
++You must define this method yourself in your subclass of
++Apache::AuthCookie.  Its job is to look at a session key and determine
++whether it is valid.  If so, it returns the username of the
++authenticated user.
++
++ sub authen_ses_key ($$$) {
++   my ($self, $r, $session_key) = @_;
++   ...blah blah blah, check whether $session_key is valid...
++   return $ok ? $username : undef;
++ }
++
++Optionally, return an array of 2 or more items that will be passed to method
++custom_errors. It is the responsibility of this method to return the correct
++response to the main Apache module.
++
++=item * custom_errors($r,@_)
++
++Note: this interface is experimental.
++
++This method handles the server response when you wish to access the Apache
++custom_response method. Any suitable response can be used. this is
++particularly useful when implementing 'by directory' access control using
++the user authentication information. i.e.
++
++        /restricted
++                /one            user is allowed access here
++                /two            not here
++                /three          AND here
++
++The authen_ses_key method would return a normal response when the user attempts
++to access 'one' or 'three' but return (NOT_FOUND, 'File not found') if an
++attempt was made to access subdirectory 'two'. Or, in the case of expired
++credentials, (AUTH_REQUIRED,'Your session has timed out, you must login
++again').
++
++  example 'custom_errors'
++
++  sub custom_errors {
++    my ($self,$r,$CODE,$msg) = @_;
++    # return custom message else use the server's standard message
++    $r->custom_response($CODE, $msg) if $msg;
++    return($CODE);
++  }
++          
++  where CODE is a valid code from Apache::Constants
++
++=item * login()
++
++This method handles the submission of the login form.  It will call
++the C<authen_cred()> method, passing it C<$r> and all the submitted
++data with names like C<"credential_#">, where # is a number.  These will
++be passed in a simple array, so the prototype is
++C<$self-E<gt>authen_cred($r, @credentials)>.  After calling
++C<authen_cred()>, we set the user's cookie and redirect to the
++URL contained in the C<"destination"> submitted form field.
++
++=item * login_form($r)
++
++This method is responsible for displaying the login form. The default
++implementation will make an internal redirect and display the URL you
++specified with the C<PerlSetVar WhatEverLoginScript> configuration
++directive. You can overwrite this method to provide your own
++mechanism.
++
++=item * logout()
++
++This is simply a convenience method that unsets the session key for
++you.  You can call it in your logout scripts.  Usually this looks like
++C<$r-E<gt>auth_type-E<gt>logout($r);>.
++
++=item * send_cookie($r, $session_key)
++
++By default this method simply sends out the session key you give it.
++If you need to change the default behavior (perhaps to update a
++timestamp in the key) you can override this method.
++
++=item * recognize_user()
++
++If the user has provided a valid session key but the document isn't
++protected, this method will set C<$r-E<gt>user>
++anyway.  Use it as a PerlFixupHandler, unless you have a better idea.
++
++=item * key($r)
++
++This method will return the current session key, if any.  This can be
++handy inside a method that implements a C<require> directive check
++(like the C<species> method discussed above) if you put any extra
++information like clearances or whatever into the session key.
++
++=item * untaint_destination($self, $uri)
++
++This method returns a modified version of the destination parameter
++before embedding it into the response header. Per default it escapes
++CR, LF and TAB characters of the uri to avoid certain types of
++security attacks. You can override it to more limit the allowed
++destinations, e.g., only allow relative uris, only special hosts or
++only limited set of characters.
++
++=back
++
++=head1 EXAMPLE
++
++For an example of how to use Apache::AuthCookie, you may want to check
++out the test suite, which runs AuthCookie through a few of its paces.
++The documents are located in t/eg/, and you may want to peruse
++t/real.t to see the generated httpd.conf file (at the bottom of
++real.t) and check out what requests it's making of the server (at the
++top of real.t).
++
++=head1 THE LOGIN SCRIPT
++
++You will need to create a login script (called login.pl above) that
++generates an HTML form for the user to fill out.  You might generate
++the page using a ModPerl::Registry script, a HTML::Mason component, an Apache
++handler, or perhaps even using a static HTML page.  It's usually useful to
++generate it dynamically so that you can define the 'destination' field
++correctly (see below).
++
++The following fields must be present in the form:
++
++=over 4
++
++=item 1.
++
++The ACTION of the form must be /LOGIN (or whatever you defined in your
++server configuration as handled by the ->login() method - see example
++in the SYNOPSIS section).
++
++=item 2.
++
++The various user input fields (username, passwords, etc.) must be
++named 'credential_0', 'credential_1', etc. on the form.  These will
++get passed to your authen_cred() method.
++
++=item 3.
++
++You must define a form field called 'destination' that tells
++AuthCookie where to redirect the request after successfully logging
++in.  Typically this value is obtained from C<$r-E<gt>prev-E<gt>uri>.
++See the login.pl script in t/eg/.
++
++=back
++
++In addition, you might want your login page to be able to tell why
++the user is being asked to log in.  In other words, if the user sent
++bad credentials, then it might be useful to display an error message
++saying that the given username or password are invalid.  Also, it
++might be useful to determine the difference between a user that sent
++an invalid auth cookie, and a user that sent no auth cookie at all.  To
++cope with these situations, B<AuthCookie> will set
++C<$r-E<gt>subprocess_env('AuthCookieReason')> to one of the following values.
++
++=over 4
++
++=item I<no_cookie>
++
++The user presented no cookie at all.  Typically this means the user is
++trying to log in for the first time.
++
++=item I<bad_cookie>
++
++The cookie the user presented is invalid.  Typically this means that the user
++is not allowed access to the given page.
++
++=item I<bad_credentials>
++
++The user tried to log in, but the credentials that were passed are invalid.
++
++=back
++
++You can examine this value in your login form by examining
++C<$r-E<gt>prev-E<gt>subprocess_env('AuthCookieReason')> (because it's
++a sub-request).
++
++Of course, if you want to give more specific information about why
++access failed when a cookie is present, your C<authen_ses_key()>
++method can set arbitrary entries in C<$r-E<gt>subprocess_env>.
++
++=head1 THE LOGOUT SCRIPT
++
++If you want to let users log themselves out (something that can't be
++done using Basic Auth), you need to create a logout script.  For an example,
++see t/htdocs/docs/logout.pl.  Logout scripts may want to take advantage of
++AuthCookie's C<logout()> method, which will set the proper cookie headers in
++order to clear the user's cookie.  This usually looks like
++C<$r-E<gt>auth_type-E<gt>logout($r);>.
++
++Note that if you don't necessarily trust your users, you can't count
++on cookie deletion for logging out.  You'll have to expire some
++server-side login information too.  AuthCookie doesn't do this for
++you, you have to handle it yourself.
++
++=head1 ABOUT SESSION KEYS
++
++Unlike the sample AuthCookieHandler, you have you verify the user's
++login and password in C<authen_cred()>, then you do something
++like:
++
++    my $date = localtime;
++    my $ses_key = MD5->hexhash(join(';', $date, $PID, $PAC));
++
++save C<$ses_key> along with the user's login, and return C<$ses_key>.
++
++Now C<authen_ses_key()> looks up the C<$ses_key> passed to it and
++returns the saved login.  I use Oracle to store the session key and
++retrieve it later, see the ToDo section below for some other ideas.
++
++=head1 KNOWN LIMITATIONS
++
++If the first unauthenticated request is a POST, it will be changed to
++a GET after the user fills out the login forms, and POSTed data will
++be lost.
++
++=head2 TO DO
++
++=over 4
++
++=item *
++
++There ought to be a way to solve the POST problem in the LIMITATIONS
++section.  It involves being able to re-insert the POSTed content into
++the request stream after the user authenticates.
++
++It might be nice if the logout method could accept some parameters
++that could make it easy to redirect the user to another URI, or
++whatever.  I'd have to think about the options needed before I
++implement anything, though.
++
++=back
++
++=head1 CVS REVISION
++
++$Id: AuthCookie.pm 227 2008-04-16 14:59:56Z mschout $
++
++=head1 AUTHOR
++
++Michael Schout <mschout@gkg.net>
++
++Originally written by Eric Bartley <bartley@purdue.edu>
++
++versions 2.x were written by Ken Williams <ken@forum.swarthmore.edu>
++
++=head1 COPYRIGHT
++
++Copyright (c) 2000 Ken Williams. All rights reserved.
++
++This program is free software; you can redistribute it and/or modify it under
++the same terms as Perl itself.
++
++=head1 SEE ALSO
++
++L<perl(1)>, L<mod_perl(1)>, L<Apache(1)>.
++
++=cut
++
++# vim: sw=4 ts=4 ai et
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/Makefile ebox-0.12-new/src/EBox/ThirdParty/Apache2/Makefile
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/Makefile	2008-08-10 16:10:10.000000000 +0200
+@@ -0,0 +1,504 @@
++# Makefile.in generated by automake 1.10.1 from Makefile.am.
++# src/EBox/ThirdParty/Apache2/Makefile.  Generated from Makefile.in by configure.
++
++# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
++# 2003, 2004, 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
++# This Makefile.in is free software; the Free Software Foundation
++# gives unlimited permission to copy and/or distribute it,
++# with or without modifications, as long as this notice is preserved.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
++# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
++# PARTICULAR PURPOSE.
++
++
++
++
++pkgdatadir = $(datadir)/ebox
++pkglibdir = $(libdir)/ebox
++pkgincludedir = $(includedir)/ebox
++am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
++install_sh_DATA = $(install_sh) -c -m 644
++install_sh_PROGRAM = $(install_sh) -c
++install_sh_SCRIPT = $(install_sh) -c
++INSTALL_HEADER = $(INSTALL_DATA)
++transform = $(program_transform_name)
++NORMAL_INSTALL = :
++PRE_INSTALL = :
++POST_INSTALL = :
++NORMAL_UNINSTALL = :
++PRE_UNINSTALL = :
++POST_UNINSTALL = :
++subdir = src/EBox/ThirdParty/Apache2
++DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
++ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
++am__aclocal_m4_deps = $(top_srcdir)/m4/definedir.m4 \
++	$(top_srcdir)/m4/ebox.m4 $(top_srcdir)/m4/gconf-2.m4 \
++	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/perlmodules.m4 \
++	$(top_srcdir)/m4/po.m4 $(top_srcdir)/configure.ac
++am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
++	$(ACLOCAL_M4)
++mkinstalldirs = $(install_sh) -d
++CONFIG_CLEAN_FILES =
++DIST_SOURCES =
++RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
++	html-recursive info-recursive install-data-recursive \
++	install-dvi-recursive install-exec-recursive \
++	install-html-recursive install-info-recursive \
++	install-pdf-recursive install-ps-recursive install-recursive \
++	installcheck-recursive installdirs-recursive pdf-recursive \
++	ps-recursive uninstall-recursive
++am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
++am__vpath_adj = case $$p in \
++    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
++    *) f=$$p;; \
++  esac;
++am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
++am__installdirs = "$(DESTDIR)$(perldir)"
++nobase_perlDATA_INSTALL = $(install_sh_DATA)
++DATA = $(nobase_perl_DATA)
++RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
++  distclean-recursive maintainer-clean-recursive
++ETAGS = etags
++CTAGS = ctags
++DIST_SUBDIRS = $(SUBDIRS)
++DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ACLOCAL = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run aclocal-1.10
++AMTAR = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run tar
++AUTOCONF = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run autoconf
++AUTOHEADER = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run autoheader
++AUTOMAKE = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run automake-1.10
++AWK = gawk
++CGIPATH = /usr/share/ebox/cgi/
++CONFPATH = /var/lib/ebox/conf
++CSSPATH = /usr/share/ebox/www/css
++CYGPATH_W = echo
++DATADIR = /usr/share
++DEFS = -DPACKAGE_NAME=\"EBox\" -DPACKAGE_TARNAME=\"ebox\" -DPACKAGE_VERSION=\"0.12\" -DPACKAGE_STRING=\"EBox\ 0.12\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"ebox\" -DVERSION=\"0.12\" -DDATADIR=\"/usr/share\" -DSYSCONFDIR=\"/etc\" -DLOCALSTATEDIR=\"/var\" -DLIBDIR=\"/usr/lib\" -DPERLPATH=\"/usr/share/perl5/\"
++DYNAMICIMAGESPATH = 
++DYNAMICWWWPATH = /var/lib/ebox/dynamicwww
++ECHO_C = 
++ECHO_N = -n
++ECHO_T = 
++ETCPATH = /etc/ebox
++GCONFTOOL = 
++GCONF_SCHEMA_CONFIG_SOURCE = 
++GCONF_SCHEMA_FILE_DIR = 
++GMSGFMT = /usr/bin/msgfmt
++IMAGESPATH = /usr/share/ebox/www/images
++INSTALL = /usr/bin/install -c
++INSTALL_DATA = ${INSTALL} -m 644
++INSTALL_PROGRAM = ${INSTALL}
++INSTALL_SCRIPT = ${INSTALL}
++INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
++LIBDIR = /usr/lib
++LIBOBJS = 
++LIBS = 
++LOCALSTATEDIR = /var
++LOGPATH = /var/log/ebox
++LTLIBOBJS = 
++MAINT = #
++MAKEINFO = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run makeinfo
++MKDIR_P = /bin/mkdir -p
++MKINSTALLDIRS = $(top_builddir)/config/mkinstalldirs
++MSGFMT = /usr/bin/msgfmt
++MSGMERGE = /usr/bin/msgmerge
++PACKAGE = ebox
++PACKAGE_BUGREPORT = 
++PACKAGE_NAME = EBox
++PACKAGE_STRING = EBox 0.12
++PACKAGE_TARNAME = ebox
++PACKAGE_VERSION = 0.12
++PATH_SEPARATOR = :
++PERL = 
++PERLPATH = /usr/share/perl5/
++SCHEMASPATH = /usr/share/ebox/schemas
++SET_MAKE = 
++SHELL = /bin/sh
++STRIP = 
++STUBSPATH = /usr/share/ebox/stubs
++SYSCONFDIR = /etc
++TEMPLATESPATH = /usr/share/ebox/templates
++USE_NLS = yes
++VARPATH = /var
++VERSION = 0.12
++WWWPATH = /usr/share/ebox/www/
++XGETTEXT = /usr/bin/xgettext
++abs_builddir = /tmp/builder/ebox-0.12/src/EBox/ThirdParty/Apache2
++abs_srcdir = /tmp/builder/ebox-0.12/src/EBox/ThirdParty/Apache2
++abs_top_builddir = /tmp/builder/ebox-0.12
++abs_top_srcdir = /tmp/builder/ebox-0.12
++am__leading_dot = .
++am__tar = ${AMTAR} chof - "$$tardir"
++am__untar = ${AMTAR} xf -
++bindir = ${exec_prefix}/bin
++build_alias = i486-linux-gnu
++builddir = .
++datadir = ${datarootdir}
++datarootdir = ${prefix}/share
++docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
++dvidir = ${docdir}
++exec_prefix = ${prefix}
++host_alias = 
++htmldir = ${docdir}
++includedir = ${prefix}/include
++infodir = ${prefix}/share/info
++install_sh = $(SHELL) /tmp/builder/ebox-0.12/config/install-sh
++libdir = ${exec_prefix}/lib
++libexecdir = ${prefix}/lib/ebox
++localedir = ${datarootdir}/locale
++localstatedir = /var
++mandir = ${prefix}/share/man
++mkdir_p = /bin/mkdir -p
++oldincludedir = /usr/include
++pdfdir = ${docdir}
++prefix = /usr
++program_transform_name = s,x,x,
++psdir = ${docdir}
++sbindir = ${exec_prefix}/sbin
++sharedstatedir = ${prefix}/com
++srcdir = .
++sysconfdir = /etc
++target_alias = 
++top_builddir = ../../../..
++top_srcdir = ../../../..
++perldir = /usr/share/perl5//EBox/ThirdParty/Apache2
++mods = AuthCookie.pm
++nobase_perl_DATA = $(mods)
++SUBDIRS = AuthCookie 
++SOURCES = $(nobase_perl_DATA)
++EXTRA_DIST = $(mods)
++MAINTAINERCLEANFILES = Makefile.in
++all: all-recursive
++
++.SUFFIXES:
++$(srcdir)/Makefile.in: # $(srcdir)/Makefile.am  $(am__configure_deps)
++	@for dep in $?; do \
++	  case '$(am__configure_deps)' in \
++	    *$$dep*) \
++	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
++		&& exit 0; \
++	      exit 1;; \
++	  esac; \
++	done; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/Makefile'; \
++	cd $(top_srcdir) && \
++	  $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/Makefile
++.PRECIOUS: Makefile
++Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
++	@case '$?' in \
++	  *config.status*) \
++	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
++	  *) \
++	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
++	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
++	esac;
++
++$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++$(top_srcdir)/configure: # $(am__configure_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++$(ACLOCAL_M4): # $(am__aclocal_m4_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++install-nobase_perlDATA: $(nobase_perl_DATA)
++	@$(NORMAL_INSTALL)
++	test -z "$(perldir)" || $(MKDIR_P) "$(DESTDIR)$(perldir)"
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
++	  $(am__vpath_adj) \
++	  echo " $(nobase_perlDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(perldir)/$$f'"; \
++	  $(nobase_perlDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(perldir)/$$f"; \
++	done
++
++uninstall-nobase_perlDATA:
++	@$(NORMAL_UNINSTALL)
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  $(am__vpath_adj) \
++	  echo " rm -f '$(DESTDIR)$(perldir)/$$f'"; \
++	  rm -f "$(DESTDIR)$(perldir)/$$f"; \
++	done
++
++# This directory's subdirectories are mostly independent; you can cd
++# into them and run `make' without going through this Makefile.
++# To change the values of `make' variables: instead of editing Makefiles,
++# (1) if the variable is set in `config.status', edit `config.status'
++#     (which will cause the Makefiles to be regenerated when you run `make');
++# (2) otherwise, pass the desired values on the `make' command line.
++$(RECURSIVE_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	target=`echo $@ | sed s/-recursive//`; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    dot_seen=yes; \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done; \
++	if test "$$dot_seen" = "no"; then \
++	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
++	fi; test -z "$$fail"
++
++$(RECURSIVE_CLEAN_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	case "$@" in \
++	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
++	  *) list='$(SUBDIRS)' ;; \
++	esac; \
++	rev=''; for subdir in $$list; do \
++	  if test "$$subdir" = "."; then :; else \
++	    rev="$$subdir $$rev"; \
++	  fi; \
++	done; \
++	rev="$$rev ."; \
++	target=`echo $@ | sed s/-recursive//`; \
++	for subdir in $$rev; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done && test -z "$$fail"
++tags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
++	done
++ctags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
++	done
++
++ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
++	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonemtpy = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	mkid -fID $$unique
++tags: TAGS
++
++TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	here=`pwd`; \
++	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
++	  include_option=--etags-include; \
++	  empty_fix=.; \
++	else \
++	  include_option=--include; \
++	  empty_fix=; \
++	fi; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test ! -f $$subdir/TAGS || \
++	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
++	  fi; \
++	done; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	if test -z "$(ETAGS_ARGS)$$tags$$unique"; then :; else \
++	  test -n "$$unique" || unique=$$empty_fix; \
++	  $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
++	    $$tags $$unique; \
++	fi
++ctags: CTAGS
++CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	test -z "$(CTAGS_ARGS)$$tags$$unique" \
++	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
++	     $$tags $$unique
++
++GTAGS:
++	here=`$(am__cd) $(top_builddir) && pwd` \
++	  && cd $(top_srcdir) \
++	  && gtags -i $(GTAGS_ARGS) $$here
++
++distclean-tags:
++	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
++
++distdir: $(DISTFILES)
++	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	list='$(DISTFILES)'; \
++	  dist_files=`for file in $$list; do echo $$file; done | \
++	  sed -e "s|^$$srcdirstrip/||;t" \
++	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
++	case $$dist_files in \
++	  */*) $(MKDIR_P) `echo "$$dist_files" | \
++			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   sort -u` ;; \
++	esac; \
++	for file in $$dist_files; do \
++	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -d $$d/$$file; then \
++	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
++	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
++	    fi; \
++	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
++	  else \
++	    test -f $(distdir)/$$file \
++	    || cp -p $$d/$$file $(distdir)/$$file \
++	    || exit 1; \
++	  fi; \
++	done
++	list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test -d "$(distdir)/$$subdir" \
++	    || $(MKDIR_P) "$(distdir)/$$subdir" \
++	    || exit 1; \
++	    distdir=`$(am__cd) $(distdir) && pwd`; \
++	    top_distdir=`$(am__cd) $(top_distdir) && pwd`; \
++	    (cd $$subdir && \
++	      $(MAKE) $(AM_MAKEFLAGS) \
++	        top_distdir="$$top_distdir" \
++	        distdir="$$distdir/$$subdir" \
++		am__remove_distdir=: \
++		am__skip_length_check=: \
++	        distdir) \
++	      || exit 1; \
++	  fi; \
++	done
++check-am: all-am
++check: check-recursive
++all-am: Makefile $(DATA)
++installdirs: installdirs-recursive
++installdirs-am:
++	for dir in "$(DESTDIR)$(perldir)"; do \
++	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
++	done
++install: install-recursive
++install-exec: install-exec-recursive
++install-data: install-data-recursive
++uninstall: uninstall-recursive
++
++install-am: all-am
++	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
++
++installcheck: installcheck-recursive
++install-strip:
++	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
++	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
++	  `test -z '$(STRIP)' || \
++	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
++mostlyclean-generic:
++
++clean-generic:
++
++distclean-generic:
++	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
++
++maintainer-clean-generic:
++	@echo "This command is intended for maintainers to use"
++	@echo "it deletes files that may require special tools to rebuild."
++	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
++clean: clean-recursive
++
++clean-am: clean-generic mostlyclean-am
++
++distclean: distclean-recursive
++	-rm -f Makefile
++distclean-am: clean-am distclean-generic distclean-tags
++
++dvi: dvi-recursive
++
++dvi-am:
++
++html: html-recursive
++
++info: info-recursive
++
++info-am:
++
++install-data-am: install-nobase_perlDATA
++
++install-dvi: install-dvi-recursive
++
++install-exec-am:
++
++install-html: install-html-recursive
++
++install-info: install-info-recursive
++
++install-man:
++
++install-pdf: install-pdf-recursive
++
++install-ps: install-ps-recursive
++
++installcheck-am:
++
++maintainer-clean: maintainer-clean-recursive
++	-rm -f Makefile
++maintainer-clean-am: distclean-am maintainer-clean-generic
++
++mostlyclean: mostlyclean-recursive
++
++mostlyclean-am: mostlyclean-generic
++
++pdf: pdf-recursive
++
++pdf-am:
++
++ps: ps-recursive
++
++ps-am:
++
++uninstall-am: uninstall-nobase_perlDATA
++
++.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
++	install-strip
++
++.PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
++	all all-am check check-am clean clean-generic ctags \
++	ctags-recursive distclean distclean-generic distclean-tags \
++	distdir dvi dvi-am html html-am info info-am install \
++	install-am install-data install-data-am install-dvi \
++	install-dvi-am install-exec install-exec-am install-html \
++	install-html-am install-info install-info-am install-man \
++	install-nobase_perlDATA install-pdf install-pdf-am install-ps \
++	install-ps-am install-strip installcheck installcheck-am \
++	installdirs installdirs-am maintainer-clean \
++	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
++	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
++	uninstall-nobase_perlDATA
++
++# Tell versions [3.59,3.63) of GNU make to not export all variables.
++# Otherwise a system limit (for SysV at least) may be exceeded.
++.NOEXPORT:
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/Makefile.am ebox-0.12-new/src/EBox/ThirdParty/Apache2/Makefile.am
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/Makefile.am	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/Makefile.am	2008-08-10 12:56:19.000000000 +0200
+@@ -0,0 +1,17 @@
++## Process this file with automake to produce Makefile.in
++
++perldir = @PERLPATH@/EBox/ThirdParty/Apache2
++
++mods = AuthCookie.pm
++
++
++nobase_perl_DATA = $(mods)
++
++
++SUBDIRS = AuthCookie 
++
++SOURCES = $(nobase_perl_DATA)
++
++EXTRA_DIST = $(mods)
++
++MAINTAINERCLEANFILES = Makefile.in
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Apache2/Makefile.in ebox-0.12-new/src/EBox/ThirdParty/Apache2/Makefile.in
+--- ebox-0.12-old/src/EBox/ThirdParty/Apache2/Makefile.in	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Apache2/Makefile.in	2008-08-10 16:09:51.000000000 +0200
+@@ -0,0 +1,504 @@
++# Makefile.in generated by automake 1.10.1 from Makefile.am.
++# @configure_input@
++
++# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
++# 2003, 2004, 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
++# This Makefile.in is free software; the Free Software Foundation
++# gives unlimited permission to copy and/or distribute it,
++# with or without modifications, as long as this notice is preserved.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
++# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
++# PARTICULAR PURPOSE.
++
++@SET_MAKE@
++
++VPATH = @srcdir@
++pkgdatadir = $(datadir)/@PACKAGE@
++pkglibdir = $(libdir)/@PACKAGE@
++pkgincludedir = $(includedir)/@PACKAGE@
++am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
++install_sh_DATA = $(install_sh) -c -m 644
++install_sh_PROGRAM = $(install_sh) -c
++install_sh_SCRIPT = $(install_sh) -c
++INSTALL_HEADER = $(INSTALL_DATA)
++transform = $(program_transform_name)
++NORMAL_INSTALL = :
++PRE_INSTALL = :
++POST_INSTALL = :
++NORMAL_UNINSTALL = :
++PRE_UNINSTALL = :
++POST_UNINSTALL = :
++subdir = src/EBox/ThirdParty/Apache2
++DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
++ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
++am__aclocal_m4_deps = $(top_srcdir)/m4/definedir.m4 \
++	$(top_srcdir)/m4/ebox.m4 $(top_srcdir)/m4/gconf-2.m4 \
++	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/perlmodules.m4 \
++	$(top_srcdir)/m4/po.m4 $(top_srcdir)/configure.ac
++am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
++	$(ACLOCAL_M4)
++mkinstalldirs = $(install_sh) -d
++CONFIG_CLEAN_FILES =
++DIST_SOURCES =
++RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
++	html-recursive info-recursive install-data-recursive \
++	install-dvi-recursive install-exec-recursive \
++	install-html-recursive install-info-recursive \
++	install-pdf-recursive install-ps-recursive install-recursive \
++	installcheck-recursive installdirs-recursive pdf-recursive \
++	ps-recursive uninstall-recursive
++am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
++am__vpath_adj = case $$p in \
++    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
++    *) f=$$p;; \
++  esac;
++am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
++am__installdirs = "$(DESTDIR)$(perldir)"
++nobase_perlDATA_INSTALL = $(install_sh_DATA)
++DATA = $(nobase_perl_DATA)
++RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
++  distclean-recursive maintainer-clean-recursive
++ETAGS = etags
++CTAGS = ctags
++DIST_SUBDIRS = $(SUBDIRS)
++DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ACLOCAL = @ACLOCAL@
++AMTAR = @AMTAR@
++AUTOCONF = @AUTOCONF@
++AUTOHEADER = @AUTOHEADER@
++AUTOMAKE = @AUTOMAKE@
++AWK = @AWK@
++CGIPATH = @CGIPATH@
++CONFPATH = @CONFPATH@
++CSSPATH = @CSSPATH@
++CYGPATH_W = @CYGPATH_W@
++DATADIR = @DATADIR@
++DEFS = @DEFS@
++DYNAMICIMAGESPATH = @DYNAMICIMAGESPATH@
++DYNAMICWWWPATH = @DYNAMICWWWPATH@
++ECHO_C = @ECHO_C@
++ECHO_N = @ECHO_N@
++ECHO_T = @ECHO_T@
++ETCPATH = @ETCPATH@
++GCONFTOOL = @GCONFTOOL@
++GCONF_SCHEMA_CONFIG_SOURCE = @GCONF_SCHEMA_CONFIG_SOURCE@
++GCONF_SCHEMA_FILE_DIR = @GCONF_SCHEMA_FILE_DIR@
++GMSGFMT = @GMSGFMT@
++IMAGESPATH = @IMAGESPATH@
++INSTALL = @INSTALL@
++INSTALL_DATA = @INSTALL_DATA@
++INSTALL_PROGRAM = @INSTALL_PROGRAM@
++INSTALL_SCRIPT = @INSTALL_SCRIPT@
++INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
++LIBDIR = @LIBDIR@
++LIBOBJS = @LIBOBJS@
++LIBS = @LIBS@
++LOCALSTATEDIR = @LOCALSTATEDIR@
++LOGPATH = @LOGPATH@
++LTLIBOBJS = @LTLIBOBJS@
++MAINT = @MAINT@
++MAKEINFO = @MAKEINFO@
++MKDIR_P = @MKDIR_P@
++MKINSTALLDIRS = @MKINSTALLDIRS@
++MSGFMT = @MSGFMT@
++MSGMERGE = @MSGMERGE@
++PACKAGE = @PACKAGE@
++PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
++PACKAGE_NAME = @PACKAGE_NAME@
++PACKAGE_STRING = @PACKAGE_STRING@
++PACKAGE_TARNAME = @PACKAGE_TARNAME@
++PACKAGE_VERSION = @PACKAGE_VERSION@
++PATH_SEPARATOR = @PATH_SEPARATOR@
++PERL = @PERL@
++PERLPATH = @PERLPATH@
++SCHEMASPATH = @SCHEMASPATH@
++SET_MAKE = @SET_MAKE@
++SHELL = @SHELL@
++STRIP = @STRIP@
++STUBSPATH = @STUBSPATH@
++SYSCONFDIR = @SYSCONFDIR@
++TEMPLATESPATH = @TEMPLATESPATH@
++USE_NLS = @USE_NLS@
++VARPATH = @VARPATH@
++VERSION = @VERSION@
++WWWPATH = @WWWPATH@
++XGETTEXT = @XGETTEXT@
++abs_builddir = @abs_builddir@
++abs_srcdir = @abs_srcdir@
++abs_top_builddir = @abs_top_builddir@
++abs_top_srcdir = @abs_top_srcdir@
++am__leading_dot = @am__leading_dot@
++am__tar = @am__tar@
++am__untar = @am__untar@
++bindir = @bindir@
++build_alias = @build_alias@
++builddir = @builddir@
++datadir = @datadir@
++datarootdir = @datarootdir@
++docdir = @docdir@
++dvidir = @dvidir@
++exec_prefix = @exec_prefix@
++host_alias = @host_alias@
++htmldir = @htmldir@
++includedir = @includedir@
++infodir = @infodir@
++install_sh = @install_sh@
++libdir = @libdir@
++libexecdir = @libexecdir@
++localedir = @localedir@
++localstatedir = @localstatedir@
++mandir = @mandir@
++mkdir_p = @mkdir_p@
++oldincludedir = @oldincludedir@
++pdfdir = @pdfdir@
++prefix = @prefix@
++program_transform_name = @program_transform_name@
++psdir = @psdir@
++sbindir = @sbindir@
++sharedstatedir = @sharedstatedir@
++srcdir = @srcdir@
++sysconfdir = @sysconfdir@
++target_alias = @target_alias@
++top_builddir = @top_builddir@
++top_srcdir = @top_srcdir@
++perldir = @PERLPATH@/EBox/ThirdParty/Apache2
++mods = AuthCookie.pm
++nobase_perl_DATA = $(mods)
++SUBDIRS = AuthCookie 
++SOURCES = $(nobase_perl_DATA)
++EXTRA_DIST = $(mods)
++MAINTAINERCLEANFILES = Makefile.in
++all: all-recursive
++
++.SUFFIXES:
++$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
++	@for dep in $?; do \
++	  case '$(am__configure_deps)' in \
++	    *$$dep*) \
++	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
++		&& exit 0; \
++	      exit 1;; \
++	  esac; \
++	done; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/Makefile'; \
++	cd $(top_srcdir) && \
++	  $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Apache2/Makefile
++.PRECIOUS: Makefile
++Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
++	@case '$?' in \
++	  *config.status*) \
++	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
++	  *) \
++	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
++	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
++	esac;
++
++$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++$(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++install-nobase_perlDATA: $(nobase_perl_DATA)
++	@$(NORMAL_INSTALL)
++	test -z "$(perldir)" || $(MKDIR_P) "$(DESTDIR)$(perldir)"
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
++	  $(am__vpath_adj) \
++	  echo " $(nobase_perlDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(perldir)/$$f'"; \
++	  $(nobase_perlDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(perldir)/$$f"; \
++	done
++
++uninstall-nobase_perlDATA:
++	@$(NORMAL_UNINSTALL)
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_perl_DATA)'; for p in $$list; do \
++	  $(am__vpath_adj) \
++	  echo " rm -f '$(DESTDIR)$(perldir)/$$f'"; \
++	  rm -f "$(DESTDIR)$(perldir)/$$f"; \
++	done
++
++# This directory's subdirectories are mostly independent; you can cd
++# into them and run `make' without going through this Makefile.
++# To change the values of `make' variables: instead of editing Makefiles,
++# (1) if the variable is set in `config.status', edit `config.status'
++#     (which will cause the Makefiles to be regenerated when you run `make');
++# (2) otherwise, pass the desired values on the `make' command line.
++$(RECURSIVE_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	target=`echo $@ | sed s/-recursive//`; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    dot_seen=yes; \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done; \
++	if test "$$dot_seen" = "no"; then \
++	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
++	fi; test -z "$$fail"
++
++$(RECURSIVE_CLEAN_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	case "$@" in \
++	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
++	  *) list='$(SUBDIRS)' ;; \
++	esac; \
++	rev=''; for subdir in $$list; do \
++	  if test "$$subdir" = "."; then :; else \
++	    rev="$$subdir $$rev"; \
++	  fi; \
++	done; \
++	rev="$$rev ."; \
++	target=`echo $@ | sed s/-recursive//`; \
++	for subdir in $$rev; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done && test -z "$$fail"
++tags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
++	done
++ctags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
++	done
++
++ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
++	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonemtpy = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	mkid -fID $$unique
++tags: TAGS
++
++TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	here=`pwd`; \
++	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
++	  include_option=--etags-include; \
++	  empty_fix=.; \
++	else \
++	  include_option=--include; \
++	  empty_fix=; \
++	fi; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test ! -f $$subdir/TAGS || \
++	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
++	  fi; \
++	done; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	if test -z "$(ETAGS_ARGS)$$tags$$unique"; then :; else \
++	  test -n "$$unique" || unique=$$empty_fix; \
++	  $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
++	    $$tags $$unique; \
++	fi
++ctags: CTAGS
++CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	test -z "$(CTAGS_ARGS)$$tags$$unique" \
++	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
++	     $$tags $$unique
++
++GTAGS:
++	here=`$(am__cd) $(top_builddir) && pwd` \
++	  && cd $(top_srcdir) \
++	  && gtags -i $(GTAGS_ARGS) $$here
++
++distclean-tags:
++	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
++
++distdir: $(DISTFILES)
++	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	list='$(DISTFILES)'; \
++	  dist_files=`for file in $$list; do echo $$file; done | \
++	  sed -e "s|^$$srcdirstrip/||;t" \
++	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
++	case $$dist_files in \
++	  */*) $(MKDIR_P) `echo "$$dist_files" | \
++			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   sort -u` ;; \
++	esac; \
++	for file in $$dist_files; do \
++	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -d $$d/$$file; then \
++	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
++	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
++	    fi; \
++	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
++	  else \
++	    test -f $(distdir)/$$file \
++	    || cp -p $$d/$$file $(distdir)/$$file \
++	    || exit 1; \
++	  fi; \
++	done
++	list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test -d "$(distdir)/$$subdir" \
++	    || $(MKDIR_P) "$(distdir)/$$subdir" \
++	    || exit 1; \
++	    distdir=`$(am__cd) $(distdir) && pwd`; \
++	    top_distdir=`$(am__cd) $(top_distdir) && pwd`; \
++	    (cd $$subdir && \
++	      $(MAKE) $(AM_MAKEFLAGS) \
++	        top_distdir="$$top_distdir" \
++	        distdir="$$distdir/$$subdir" \
++		am__remove_distdir=: \
++		am__skip_length_check=: \
++	        distdir) \
++	      || exit 1; \
++	  fi; \
++	done
++check-am: all-am
++check: check-recursive
++all-am: Makefile $(DATA)
++installdirs: installdirs-recursive
++installdirs-am:
++	for dir in "$(DESTDIR)$(perldir)"; do \
++	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
++	done
++install: install-recursive
++install-exec: install-exec-recursive
++install-data: install-data-recursive
++uninstall: uninstall-recursive
++
++install-am: all-am
++	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
++
++installcheck: installcheck-recursive
++install-strip:
++	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
++	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
++	  `test -z '$(STRIP)' || \
++	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
++mostlyclean-generic:
++
++clean-generic:
++
++distclean-generic:
++	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
++
++maintainer-clean-generic:
++	@echo "This command is intended for maintainers to use"
++	@echo "it deletes files that may require special tools to rebuild."
++	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
++clean: clean-recursive
++
++clean-am: clean-generic mostlyclean-am
++
++distclean: distclean-recursive
++	-rm -f Makefile
++distclean-am: clean-am distclean-generic distclean-tags
++
++dvi: dvi-recursive
++
++dvi-am:
++
++html: html-recursive
++
++info: info-recursive
++
++info-am:
++
++install-data-am: install-nobase_perlDATA
++
++install-dvi: install-dvi-recursive
++
++install-exec-am:
++
++install-html: install-html-recursive
++
++install-info: install-info-recursive
++
++install-man:
++
++install-pdf: install-pdf-recursive
++
++install-ps: install-ps-recursive
++
++installcheck-am:
++
++maintainer-clean: maintainer-clean-recursive
++	-rm -f Makefile
++maintainer-clean-am: distclean-am maintainer-clean-generic
++
++mostlyclean: mostlyclean-recursive
++
++mostlyclean-am: mostlyclean-generic
++
++pdf: pdf-recursive
++
++pdf-am:
++
++ps: ps-recursive
++
++ps-am:
++
++uninstall-am: uninstall-nobase_perlDATA
++
++.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
++	install-strip
++
++.PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
++	all all-am check check-am clean clean-generic ctags \
++	ctags-recursive distclean distclean-generic distclean-tags \
++	distdir dvi dvi-am html html-am info info-am install \
++	install-am install-data install-data-am install-dvi \
++	install-dvi-am install-exec install-exec-am install-html \
++	install-html-am install-info install-info-am install-man \
++	install-nobase_perlDATA install-pdf install-pdf-am install-ps \
++	install-ps-am install-strip installcheck installcheck-am \
++	installdirs installdirs-am maintainer-clean \
++	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
++	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
++	uninstall-nobase_perlDATA
++
++# Tell versions [3.59,3.63) of GNU make to not export all variables.
++# Otherwise a system limit (for SysV at least) may be exceeded.
++.NOEXPORT:
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Makefile ebox-0.12-new/src/EBox/ThirdParty/Makefile
+--- ebox-0.12-old/src/EBox/ThirdParty/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Makefile	2008-08-10 16:10:10.000000000 +0200
+@@ -0,0 +1,467 @@
++# Makefile.in generated by automake 1.10.1 from Makefile.am.
++# src/EBox/ThirdParty/Makefile.  Generated from Makefile.in by configure.
++
++# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
++# 2003, 2004, 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
++# This Makefile.in is free software; the Free Software Foundation
++# gives unlimited permission to copy and/or distribute it,
++# with or without modifications, as long as this notice is preserved.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
++# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
++# PARTICULAR PURPOSE.
++
++
++
++pkgdatadir = $(datadir)/ebox
++pkglibdir = $(libdir)/ebox
++pkgincludedir = $(includedir)/ebox
++am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
++install_sh_DATA = $(install_sh) -c -m 644
++install_sh_PROGRAM = $(install_sh) -c
++install_sh_SCRIPT = $(install_sh) -c
++INSTALL_HEADER = $(INSTALL_DATA)
++transform = $(program_transform_name)
++NORMAL_INSTALL = :
++PRE_INSTALL = :
++POST_INSTALL = :
++NORMAL_UNINSTALL = :
++PRE_UNINSTALL = :
++POST_UNINSTALL = :
++subdir = src/EBox/ThirdParty
++DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
++ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
++am__aclocal_m4_deps = $(top_srcdir)/m4/definedir.m4 \
++	$(top_srcdir)/m4/ebox.m4 $(top_srcdir)/m4/gconf-2.m4 \
++	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/perlmodules.m4 \
++	$(top_srcdir)/m4/po.m4 $(top_srcdir)/configure.ac
++am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
++	$(ACLOCAL_M4)
++mkinstalldirs = $(install_sh) -d
++CONFIG_CLEAN_FILES =
++SOURCES =
++DIST_SOURCES =
++RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
++	html-recursive info-recursive install-data-recursive \
++	install-dvi-recursive install-exec-recursive \
++	install-html-recursive install-info-recursive \
++	install-pdf-recursive install-ps-recursive install-recursive \
++	installcheck-recursive installdirs-recursive pdf-recursive \
++	ps-recursive uninstall-recursive
++RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
++  distclean-recursive maintainer-clean-recursive
++ETAGS = etags
++CTAGS = ctags
++DIST_SUBDIRS = $(SUBDIRS)
++DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ACLOCAL = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run aclocal-1.10
++AMTAR = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run tar
++AUTOCONF = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run autoconf
++AUTOHEADER = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run autoheader
++AUTOMAKE = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run automake-1.10
++AWK = gawk
++CGIPATH = /usr/share/ebox/cgi/
++CONFPATH = /var/lib/ebox/conf
++CSSPATH = /usr/share/ebox/www/css
++CYGPATH_W = echo
++DATADIR = /usr/share
++DEFS = -DPACKAGE_NAME=\"EBox\" -DPACKAGE_TARNAME=\"ebox\" -DPACKAGE_VERSION=\"0.12\" -DPACKAGE_STRING=\"EBox\ 0.12\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"ebox\" -DVERSION=\"0.12\" -DDATADIR=\"/usr/share\" -DSYSCONFDIR=\"/etc\" -DLOCALSTATEDIR=\"/var\" -DLIBDIR=\"/usr/lib\" -DPERLPATH=\"/usr/share/perl5/\"
++DYNAMICIMAGESPATH = 
++DYNAMICWWWPATH = /var/lib/ebox/dynamicwww
++ECHO_C = 
++ECHO_N = -n
++ECHO_T = 
++ETCPATH = /etc/ebox
++GCONFTOOL = 
++GCONF_SCHEMA_CONFIG_SOURCE = 
++GCONF_SCHEMA_FILE_DIR = 
++GMSGFMT = /usr/bin/msgfmt
++IMAGESPATH = /usr/share/ebox/www/images
++INSTALL = /usr/bin/install -c
++INSTALL_DATA = ${INSTALL} -m 644
++INSTALL_PROGRAM = ${INSTALL}
++INSTALL_SCRIPT = ${INSTALL}
++INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
++LIBDIR = /usr/lib
++LIBOBJS = 
++LIBS = 
++LOCALSTATEDIR = /var
++LOGPATH = /var/log/ebox
++LTLIBOBJS = 
++MAINT = #
++MAKEINFO = ${SHELL} /tmp/builder/ebox-0.12/config/missing --run makeinfo
++MKDIR_P = /bin/mkdir -p
++MKINSTALLDIRS = $(top_builddir)/config/mkinstalldirs
++MSGFMT = /usr/bin/msgfmt
++MSGMERGE = /usr/bin/msgmerge
++PACKAGE = ebox
++PACKAGE_BUGREPORT = 
++PACKAGE_NAME = EBox
++PACKAGE_STRING = EBox 0.12
++PACKAGE_TARNAME = ebox
++PACKAGE_VERSION = 0.12
++PATH_SEPARATOR = :
++PERL = 
++PERLPATH = /usr/share/perl5/
++SCHEMASPATH = /usr/share/ebox/schemas
++SET_MAKE = 
++SHELL = /bin/sh
++STRIP = 
++STUBSPATH = /usr/share/ebox/stubs
++SYSCONFDIR = /etc
++TEMPLATESPATH = /usr/share/ebox/templates
++USE_NLS = yes
++VARPATH = /var
++VERSION = 0.12
++WWWPATH = /usr/share/ebox/www/
++XGETTEXT = /usr/bin/xgettext
++abs_builddir = /tmp/builder/ebox-0.12/src/EBox/ThirdParty
++abs_srcdir = /tmp/builder/ebox-0.12/src/EBox/ThirdParty
++abs_top_builddir = /tmp/builder/ebox-0.12
++abs_top_srcdir = /tmp/builder/ebox-0.12
++am__leading_dot = .
++am__tar = ${AMTAR} chof - "$$tardir"
++am__untar = ${AMTAR} xf -
++bindir = ${exec_prefix}/bin
++build_alias = i486-linux-gnu
++builddir = .
++datadir = ${datarootdir}
++datarootdir = ${prefix}/share
++docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
++dvidir = ${docdir}
++exec_prefix = ${prefix}
++host_alias = 
++htmldir = ${docdir}
++includedir = ${prefix}/include
++infodir = ${prefix}/share/info
++install_sh = $(SHELL) /tmp/builder/ebox-0.12/config/install-sh
++libdir = ${exec_prefix}/lib
++libexecdir = ${prefix}/lib/ebox
++localedir = ${datarootdir}/locale
++localstatedir = /var
++mandir = ${prefix}/share/man
++mkdir_p = /bin/mkdir -p
++oldincludedir = /usr/include
++pdfdir = ${docdir}
++prefix = /usr
++program_transform_name = s,x,x,
++psdir = ${docdir}
++sbindir = ${exec_prefix}/sbin
++sharedstatedir = ${prefix}/com
++srcdir = .
++sysconfdir = /etc
++target_alias = 
++top_builddir = ../../..
++top_srcdir = ../../..
++SUBDIRS = Apache2  
++MAINTAINERCLEANFILES = Makefile.in
++all: all-recursive
++
++.SUFFIXES:
++$(srcdir)/Makefile.in: # $(srcdir)/Makefile.am  $(am__configure_deps)
++	@for dep in $?; do \
++	  case '$(am__configure_deps)' in \
++	    *$$dep*) \
++	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
++		&& exit 0; \
++	      exit 1;; \
++	  esac; \
++	done; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Makefile'; \
++	cd $(top_srcdir) && \
++	  $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Makefile
++.PRECIOUS: Makefile
++Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
++	@case '$?' in \
++	  *config.status*) \
++	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
++	  *) \
++	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
++	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
++	esac;
++
++$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++$(top_srcdir)/configure: # $(am__configure_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++$(ACLOCAL_M4): # $(am__aclocal_m4_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++# This directory's subdirectories are mostly independent; you can cd
++# into them and run `make' without going through this Makefile.
++# To change the values of `make' variables: instead of editing Makefiles,
++# (1) if the variable is set in `config.status', edit `config.status'
++#     (which will cause the Makefiles to be regenerated when you run `make');
++# (2) otherwise, pass the desired values on the `make' command line.
++$(RECURSIVE_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	target=`echo $@ | sed s/-recursive//`; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    dot_seen=yes; \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done; \
++	if test "$$dot_seen" = "no"; then \
++	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
++	fi; test -z "$$fail"
++
++$(RECURSIVE_CLEAN_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	case "$@" in \
++	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
++	  *) list='$(SUBDIRS)' ;; \
++	esac; \
++	rev=''; for subdir in $$list; do \
++	  if test "$$subdir" = "."; then :; else \
++	    rev="$$subdir $$rev"; \
++	  fi; \
++	done; \
++	rev="$$rev ."; \
++	target=`echo $@ | sed s/-recursive//`; \
++	for subdir in $$rev; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done && test -z "$$fail"
++tags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
++	done
++ctags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
++	done
++
++ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
++	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonemtpy = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	mkid -fID $$unique
++tags: TAGS
++
++TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	here=`pwd`; \
++	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
++	  include_option=--etags-include; \
++	  empty_fix=.; \
++	else \
++	  include_option=--include; \
++	  empty_fix=; \
++	fi; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test ! -f $$subdir/TAGS || \
++	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
++	  fi; \
++	done; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	if test -z "$(ETAGS_ARGS)$$tags$$unique"; then :; else \
++	  test -n "$$unique" || unique=$$empty_fix; \
++	  $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
++	    $$tags $$unique; \
++	fi
++ctags: CTAGS
++CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	test -z "$(CTAGS_ARGS)$$tags$$unique" \
++	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
++	     $$tags $$unique
++
++GTAGS:
++	here=`$(am__cd) $(top_builddir) && pwd` \
++	  && cd $(top_srcdir) \
++	  && gtags -i $(GTAGS_ARGS) $$here
++
++distclean-tags:
++	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
++
++distdir: $(DISTFILES)
++	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	list='$(DISTFILES)'; \
++	  dist_files=`for file in $$list; do echo $$file; done | \
++	  sed -e "s|^$$srcdirstrip/||;t" \
++	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
++	case $$dist_files in \
++	  */*) $(MKDIR_P) `echo "$$dist_files" | \
++			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   sort -u` ;; \
++	esac; \
++	for file in $$dist_files; do \
++	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -d $$d/$$file; then \
++	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
++	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
++	    fi; \
++	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
++	  else \
++	    test -f $(distdir)/$$file \
++	    || cp -p $$d/$$file $(distdir)/$$file \
++	    || exit 1; \
++	  fi; \
++	done
++	list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test -d "$(distdir)/$$subdir" \
++	    || $(MKDIR_P) "$(distdir)/$$subdir" \
++	    || exit 1; \
++	    distdir=`$(am__cd) $(distdir) && pwd`; \
++	    top_distdir=`$(am__cd) $(top_distdir) && pwd`; \
++	    (cd $$subdir && \
++	      $(MAKE) $(AM_MAKEFLAGS) \
++	        top_distdir="$$top_distdir" \
++	        distdir="$$distdir/$$subdir" \
++		am__remove_distdir=: \
++		am__skip_length_check=: \
++	        distdir) \
++	      || exit 1; \
++	  fi; \
++	done
++check-am: all-am
++check: check-recursive
++all-am: Makefile
++installdirs: installdirs-recursive
++installdirs-am:
++install: install-recursive
++install-exec: install-exec-recursive
++install-data: install-data-recursive
++uninstall: uninstall-recursive
++
++install-am: all-am
++	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
++
++installcheck: installcheck-recursive
++install-strip:
++	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
++	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
++	  `test -z '$(STRIP)' || \
++	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
++mostlyclean-generic:
++
++clean-generic:
++
++distclean-generic:
++	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
++
++maintainer-clean-generic:
++	@echo "This command is intended for maintainers to use"
++	@echo "it deletes files that may require special tools to rebuild."
++	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
++clean: clean-recursive
++
++clean-am: clean-generic mostlyclean-am
++
++distclean: distclean-recursive
++	-rm -f Makefile
++distclean-am: clean-am distclean-generic distclean-tags
++
++dvi: dvi-recursive
++
++dvi-am:
++
++html: html-recursive
++
++info: info-recursive
++
++info-am:
++
++install-data-am:
++
++install-dvi: install-dvi-recursive
++
++install-exec-am:
++
++install-html: install-html-recursive
++
++install-info: install-info-recursive
++
++install-man:
++
++install-pdf: install-pdf-recursive
++
++install-ps: install-ps-recursive
++
++installcheck-am:
++
++maintainer-clean: maintainer-clean-recursive
++	-rm -f Makefile
++maintainer-clean-am: distclean-am maintainer-clean-generic
++
++mostlyclean: mostlyclean-recursive
++
++mostlyclean-am: mostlyclean-generic
++
++pdf: pdf-recursive
++
++pdf-am:
++
++ps: ps-recursive
++
++ps-am:
++
++uninstall-am:
++
++.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
++	install-strip
++
++.PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
++	all all-am check check-am clean clean-generic ctags \
++	ctags-recursive distclean distclean-generic distclean-tags \
++	distdir dvi dvi-am html html-am info info-am install \
++	install-am install-data install-data-am install-dvi \
++	install-dvi-am install-exec install-exec-am install-html \
++	install-html-am install-info install-info-am install-man \
++	install-pdf install-pdf-am install-ps install-ps-am \
++	install-strip installcheck installcheck-am installdirs \
++	installdirs-am maintainer-clean maintainer-clean-generic \
++	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags \
++	tags-recursive uninstall uninstall-am
++
++# Tell versions [3.59,3.63) of GNU make to not export all variables.
++# Otherwise a system limit (for SysV at least) may be exceeded.
++.NOEXPORT:
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Makefile.am ebox-0.12-new/src/EBox/ThirdParty/Makefile.am
+--- ebox-0.12-old/src/EBox/ThirdParty/Makefile.am	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Makefile.am	2008-08-10 12:55:26.000000000 +0200
+@@ -0,0 +1,6 @@
++## Process this file with automake to produce Makefile.in
++
++SUBDIRS = Apache2  
++
++
++MAINTAINERCLEANFILES = Makefile.in
+diff -Naur ebox-0.12-old/src/EBox/ThirdParty/Makefile.in ebox-0.12-new/src/EBox/ThirdParty/Makefile.in
+--- ebox-0.12-old/src/EBox/ThirdParty/Makefile.in	1970-01-01 01:00:00.000000000 +0100
++++ ebox-0.12-new/src/EBox/ThirdParty/Makefile.in	2008-08-10 16:09:52.000000000 +0200
+@@ -0,0 +1,467 @@
++# Makefile.in generated by automake 1.10.1 from Makefile.am.
++# @configure_input@
++
++# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
++# 2003, 2004, 2005, 2006, 2007, 2008  Free Software Foundation, Inc.
++# This Makefile.in is free software; the Free Software Foundation
++# gives unlimited permission to copy and/or distribute it,
++# with or without modifications, as long as this notice is preserved.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
++# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
++# PARTICULAR PURPOSE.
++
++@SET_MAKE@
++VPATH = @srcdir@
++pkgdatadir = $(datadir)/@PACKAGE@
++pkglibdir = $(libdir)/@PACKAGE@
++pkgincludedir = $(includedir)/@PACKAGE@
++am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
++install_sh_DATA = $(install_sh) -c -m 644
++install_sh_PROGRAM = $(install_sh) -c
++install_sh_SCRIPT = $(install_sh) -c
++INSTALL_HEADER = $(INSTALL_DATA)
++transform = $(program_transform_name)
++NORMAL_INSTALL = :
++PRE_INSTALL = :
++POST_INSTALL = :
++NORMAL_UNINSTALL = :
++PRE_UNINSTALL = :
++POST_UNINSTALL = :
++subdir = src/EBox/ThirdParty
++DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
++ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
++am__aclocal_m4_deps = $(top_srcdir)/m4/definedir.m4 \
++	$(top_srcdir)/m4/ebox.m4 $(top_srcdir)/m4/gconf-2.m4 \
++	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/perlmodules.m4 \
++	$(top_srcdir)/m4/po.m4 $(top_srcdir)/configure.ac
++am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
++	$(ACLOCAL_M4)
++mkinstalldirs = $(install_sh) -d
++CONFIG_CLEAN_FILES =
++SOURCES =
++DIST_SOURCES =
++RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
++	html-recursive info-recursive install-data-recursive \
++	install-dvi-recursive install-exec-recursive \
++	install-html-recursive install-info-recursive \
++	install-pdf-recursive install-ps-recursive install-recursive \
++	installcheck-recursive installdirs-recursive pdf-recursive \
++	ps-recursive uninstall-recursive
++RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
++  distclean-recursive maintainer-clean-recursive
++ETAGS = etags
++CTAGS = ctags
++DIST_SUBDIRS = $(SUBDIRS)
++DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ACLOCAL = @ACLOCAL@
++AMTAR = @AMTAR@
++AUTOCONF = @AUTOCONF@
++AUTOHEADER = @AUTOHEADER@
++AUTOMAKE = @AUTOMAKE@
++AWK = @AWK@
++CGIPATH = @CGIPATH@
++CONFPATH = @CONFPATH@
++CSSPATH = @CSSPATH@
++CYGPATH_W = @CYGPATH_W@
++DATADIR = @DATADIR@
++DEFS = @DEFS@
++DYNAMICIMAGESPATH = @DYNAMICIMAGESPATH@
++DYNAMICWWWPATH = @DYNAMICWWWPATH@
++ECHO_C = @ECHO_C@
++ECHO_N = @ECHO_N@
++ECHO_T = @ECHO_T@
++ETCPATH = @ETCPATH@
++GCONFTOOL = @GCONFTOOL@
++GCONF_SCHEMA_CONFIG_SOURCE = @GCONF_SCHEMA_CONFIG_SOURCE@
++GCONF_SCHEMA_FILE_DIR = @GCONF_SCHEMA_FILE_DIR@
++GMSGFMT = @GMSGFMT@
++IMAGESPATH = @IMAGESPATH@
++INSTALL = @INSTALL@
++INSTALL_DATA = @INSTALL_DATA@
++INSTALL_PROGRAM = @INSTALL_PROGRAM@
++INSTALL_SCRIPT = @INSTALL_SCRIPT@
++INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
++LIBDIR = @LIBDIR@
++LIBOBJS = @LIBOBJS@
++LIBS = @LIBS@
++LOCALSTATEDIR = @LOCALSTATEDIR@
++LOGPATH = @LOGPATH@
++LTLIBOBJS = @LTLIBOBJS@
++MAINT = @MAINT@
++MAKEINFO = @MAKEINFO@
++MKDIR_P = @MKDIR_P@
++MKINSTALLDIRS = @MKINSTALLDIRS@
++MSGFMT = @MSGFMT@
++MSGMERGE = @MSGMERGE@
++PACKAGE = @PACKAGE@
++PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
++PACKAGE_NAME = @PACKAGE_NAME@
++PACKAGE_STRING = @PACKAGE_STRING@
++PACKAGE_TARNAME = @PACKAGE_TARNAME@
++PACKAGE_VERSION = @PACKAGE_VERSION@
++PATH_SEPARATOR = @PATH_SEPARATOR@
++PERL = @PERL@
++PERLPATH = @PERLPATH@
++SCHEMASPATH = @SCHEMASPATH@
++SET_MAKE = @SET_MAKE@
++SHELL = @SHELL@
++STRIP = @STRIP@
++STUBSPATH = @STUBSPATH@
++SYSCONFDIR = @SYSCONFDIR@
++TEMPLATESPATH = @TEMPLATESPATH@
++USE_NLS = @USE_NLS@
++VARPATH = @VARPATH@
++VERSION = @VERSION@
++WWWPATH = @WWWPATH@
++XGETTEXT = @XGETTEXT@
++abs_builddir = @abs_builddir@
++abs_srcdir = @abs_srcdir@
++abs_top_builddir = @abs_top_builddir@
++abs_top_srcdir = @abs_top_srcdir@
++am__leading_dot = @am__leading_dot@
++am__tar = @am__tar@
++am__untar = @am__untar@
++bindir = @bindir@
++build_alias = @build_alias@
++builddir = @builddir@
++datadir = @datadir@
++datarootdir = @datarootdir@
++docdir = @docdir@
++dvidir = @dvidir@
++exec_prefix = @exec_prefix@
++host_alias = @host_alias@
++htmldir = @htmldir@
++includedir = @includedir@
++infodir = @infodir@
++install_sh = @install_sh@
++libdir = @libdir@
++libexecdir = @libexecdir@
++localedir = @localedir@
++localstatedir = @localstatedir@
++mandir = @mandir@
++mkdir_p = @mkdir_p@
++oldincludedir = @oldincludedir@
++pdfdir = @pdfdir@
++prefix = @prefix@
++program_transform_name = @program_transform_name@
++psdir = @psdir@
++sbindir = @sbindir@
++sharedstatedir = @sharedstatedir@
++srcdir = @srcdir@
++sysconfdir = @sysconfdir@
++target_alias = @target_alias@
++top_builddir = @top_builddir@
++top_srcdir = @top_srcdir@
++SUBDIRS = Apache2  
++MAINTAINERCLEANFILES = Makefile.in
++all: all-recursive
++
++.SUFFIXES:
++$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
++	@for dep in $?; do \
++	  case '$(am__configure_deps)' in \
++	    *$$dep*) \
++	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
++		&& exit 0; \
++	      exit 1;; \
++	  esac; \
++	done; \
++	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Makefile'; \
++	cd $(top_srcdir) && \
++	  $(AUTOMAKE) --foreign  src/EBox/ThirdParty/Makefile
++.PRECIOUS: Makefile
++Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
++	@case '$?' in \
++	  *config.status*) \
++	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
++	  *) \
++	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
++	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
++	esac;
++
++$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++$(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
++	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++
++# This directory's subdirectories are mostly independent; you can cd
++# into them and run `make' without going through this Makefile.
++# To change the values of `make' variables: instead of editing Makefiles,
++# (1) if the variable is set in `config.status', edit `config.status'
++#     (which will cause the Makefiles to be regenerated when you run `make');
++# (2) otherwise, pass the desired values on the `make' command line.
++$(RECURSIVE_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	target=`echo $@ | sed s/-recursive//`; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    dot_seen=yes; \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done; \
++	if test "$$dot_seen" = "no"; then \
++	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
++	fi; test -z "$$fail"
++
++$(RECURSIVE_CLEAN_TARGETS):
++	@failcom='exit 1'; \
++	for f in x $$MAKEFLAGS; do \
++	  case $$f in \
++	    *=* | --[!k]*);; \
++	    *k*) failcom='fail=yes';; \
++	  esac; \
++	done; \
++	dot_seen=no; \
++	case "$@" in \
++	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
++	  *) list='$(SUBDIRS)' ;; \
++	esac; \
++	rev=''; for subdir in $$list; do \
++	  if test "$$subdir" = "."; then :; else \
++	    rev="$$subdir $$rev"; \
++	  fi; \
++	done; \
++	rev="$$rev ."; \
++	target=`echo $@ | sed s/-recursive//`; \
++	for subdir in $$rev; do \
++	  echo "Making $$target in $$subdir"; \
++	  if test "$$subdir" = "."; then \
++	    local_target="$$target-am"; \
++	  else \
++	    local_target="$$target"; \
++	  fi; \
++	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
++	  || eval $$failcom; \
++	done && test -z "$$fail"
++tags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
++	done
++ctags-recursive:
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) ctags); \
++	done
++
++ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
++	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonemtpy = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	mkid -fID $$unique
++tags: TAGS
++
++TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	here=`pwd`; \
++	if ($(ETAGS) --etags-include --version) >/dev/null 2>&1; then \
++	  include_option=--etags-include; \
++	  empty_fix=.; \
++	else \
++	  include_option=--include; \
++	  empty_fix=; \
++	fi; \
++	list='$(SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test ! -f $$subdir/TAGS || \
++	      tags="$$tags $$include_option=$$here/$$subdir/TAGS"; \
++	  fi; \
++	done; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	if test -z "$(ETAGS_ARGS)$$tags$$unique"; then :; else \
++	  test -n "$$unique" || unique=$$empty_fix; \
++	  $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
++	    $$tags $$unique; \
++	fi
++ctags: CTAGS
++CTAGS: ctags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
++		$(TAGS_FILES) $(LISP)
++	tags=; \
++	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
++	unique=`for i in $$list; do \
++	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
++	  done | \
++	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
++	      END { if (nonempty) { for (i in files) print i; }; }'`; \
++	test -z "$(CTAGS_ARGS)$$tags$$unique" \
++	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
++	     $$tags $$unique
++
++GTAGS:
++	here=`$(am__cd) $(top_builddir) && pwd` \
++	  && cd $(top_srcdir) \
++	  && gtags -i $(GTAGS_ARGS) $$here
++
++distclean-tags:
++	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
++
++distdir: $(DISTFILES)
++	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
++	list='$(DISTFILES)'; \
++	  dist_files=`for file in $$list; do echo $$file; done | \
++	  sed -e "s|^$$srcdirstrip/||;t" \
++	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
++	case $$dist_files in \
++	  */*) $(MKDIR_P) `echo "$$dist_files" | \
++			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
++			   sort -u` ;; \
++	esac; \
++	for file in $$dist_files; do \
++	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
++	  if test -d $$d/$$file; then \
++	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
++	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
++	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
++	    fi; \
++	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
++	  else \
++	    test -f $(distdir)/$$file \
++	    || cp -p $$d/$$file $(distdir)/$$file \
++	    || exit 1; \
++	  fi; \
++	done
++	list='$(DIST_SUBDIRS)'; for subdir in $$list; do \
++	  if test "$$subdir" = .; then :; else \
++	    test -d "$(distdir)/$$subdir" \
++	    || $(MKDIR_P) "$(distdir)/$$subdir" \
++	    || exit 1; \
++	    distdir=`$(am__cd) $(distdir) && pwd`; \
++	    top_distdir=`$(am__cd) $(top_distdir) && pwd`; \
++	    (cd $$subdir && \
++	      $(MAKE) $(AM_MAKEFLAGS) \
++	        top_distdir="$$top_distdir" \
++	        distdir="$$distdir/$$subdir" \
++		am__remove_distdir=: \
++		am__skip_length_check=: \
++	        distdir) \
++	      || exit 1; \
++	  fi; \
++	done
++check-am: all-am
++check: check-recursive
++all-am: Makefile
++installdirs: installdirs-recursive
++installdirs-am:
++install: install-recursive
++install-exec: install-exec-recursive
++install-data: install-data-recursive
++uninstall: uninstall-recursive
++
++install-am: all-am
++	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
++
++installcheck: installcheck-recursive
++install-strip:
++	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
++	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
++	  `test -z '$(STRIP)' || \
++	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
++mostlyclean-generic:
++
++clean-generic:
++
++distclean-generic:
++	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
++
++maintainer-clean-generic:
++	@echo "This command is intended for maintainers to use"
++	@echo "it deletes files that may require special tools to rebuild."
++	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
++clean: clean-recursive
++
++clean-am: clean-generic mostlyclean-am
++
++distclean: distclean-recursive
++	-rm -f Makefile
++distclean-am: clean-am distclean-generic distclean-tags
++
++dvi: dvi-recursive
++
++dvi-am:
++
++html: html-recursive
++
++info: info-recursive
++
++info-am:
++
++install-data-am:
++
++install-dvi: install-dvi-recursive
++
++install-exec-am:
++
++install-html: install-html-recursive
++
++install-info: install-info-recursive
++
++install-man:
++
++install-pdf: install-pdf-recursive
++
++install-ps: install-ps-recursive
++
++installcheck-am:
++
++maintainer-clean: maintainer-clean-recursive
++	-rm -f Makefile
++maintainer-clean-am: distclean-am maintainer-clean-generic
++
++mostlyclean: mostlyclean-recursive
++
++mostlyclean-am: mostlyclean-generic
++
++pdf: pdf-recursive
++
++pdf-am:
++
++ps: ps-recursive
++
++ps-am:
++
++uninstall-am:
++
++.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
++	install-strip
++
++.PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
++	all all-am check check-am clean clean-generic ctags \
++	ctags-recursive distclean distclean-generic distclean-tags \
++	distdir dvi dvi-am html html-am info info-am install \
++	install-am install-data install-data-am install-dvi \
++	install-dvi-am install-exec install-exec-am install-html \
++	install-html-am install-info install-info-am install-man \
++	install-pdf install-pdf-am install-ps install-ps-am \
++	install-strip installcheck installcheck-am installdirs \
++	installdirs-am maintainer-clean maintainer-clean-generic \
++	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags \
++	tags-recursive uninstall uninstall-am
++
++# Tell versions [3.59,3.63) of GNU make to not export all variables.
++# Otherwise a system limit (for SysV at least) may be exceeded.
++.NOEXPORT:
