@@ -1,0 +1,38 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_ldap_conf_backend.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: An interim patch to force using the file backend in ldap until it's 
+## DP: supported by eBox
+
+@DPATCH@
+
+diff -Naur ebox-usersandgroups-0.11.svn11184/tools/ebox-ldap-admin ebox-usersandgroups-0.11.svn11184-intrepid/tools/ebox-ldap-admin
+--- ebox-usersandgroups-0.11.svn11184/tools/ebox-ldap-admin	2008-05-12 19:10:26.000000000 +0200
++++ ebox-usersandgroups-0.11.svn11184-intrepid/tools/ebox-ldap-admin	2008-08-13 12:02:11.000000000 +0200
+@@ -36,6 +36,13 @@
+ invoke-rc.d slapd stop
+ rm -rf /var/lib/ldap/*
+ 
++# move away old conf
++mv /etc/ldap/slapd.d/ /etc/ldap/slapd.d.$(date +%F-%T).bak
++
++# workaround wrong permissions in /var/run/slapd which
++# prevent us from connecting to the unix socket
++chmod a+rx /var/run/slapd
++
+ # Add slapd default
+ cp /usr/share/ebox-usersandgroups/slapd.default /etc/default/slapd
+ 
+diff -Naur ebox-usersandgroups-0.11.svn11184/tools/slapd.default ebox-usersandgroups-0.11.svn11184-intrepid/tools/slapd.default
+--- ebox-usersandgroups-0.11.svn11184/tools/slapd.default	2008-05-12 19:10:26.000000000 +0200
++++ ebox-usersandgroups-0.11.svn11184-intrepid/tools/slapd.default	2008-08-13 10:31:16.000000000 +0200
+@@ -2,7 +2,7 @@
+ # default (/etc/ldap/slapd.conf). If using the cn=config backend to store
+ # configuration in LDIF, set this variable to the directory containing the
+ # cn=config data.
+-SLAPD_CONF=
++SLAPD_CONF="/etc/ldap/slapd.conf"
+ 
+ # System account to run the slapd server under. If empty the server
+ # will run as root.
