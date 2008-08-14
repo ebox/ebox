@@ -1,9 +1,9 @@
 0.12
-0.11.102
 	+ Bugfix: Checkbox for unlimited size is unchecked, the field
 	mentioned, i.e. Size (MB) is activated.
 	+ Use the new MVC framework
 	+ Add postfix to sasl group instead of dpkg-stateoverriding stuff
+	+ Use eBox OID number in LDAP schemas
 0.11.101
 	+ Fixed bug when removing users in non-quota installations
 	+ Do not remove init rc scripts
