@@ -48,6 +48,7 @@ use constant MAXUSERLENGTH  => 24;
 use constant MAXGROUPLENGTH => 24;
 use constant MAXPWDLENGTH   => 15;
 use constant DEFAULTGROUP   => '__USERS__';
+use constant CONFLDIF       => '/etc/ldap/eboxldap.ldif';
  
 sub _create 
 {
@@ -72,7 +73,7 @@ sub actions
     return [ 
             {
              'action' => __('Your current openLDAP database will be replaced ' .
-                            'and backuped in /var/backups/slapd'),
+                            'and backuped in /var/backups/slapd-preebox'),
                 'reason' => __('eBox will initialize openLDAP to store its database. ' .
                                'It will also overwrite your current configuration'),
              'module' => 'users'
@@ -93,7 +94,7 @@ sub usedFiles
              'module' => 'users'
             },
         {       
-         'file' => '/etc/ldap/slapd.conf',
+         'file' => '/etc/ldap/eboxldap.ldif',
          'reason' => __('To configure the openLDAP database with dc ' .
                         ' entry, rootpw, rootdn, schemas and ACLs used by '.
                         ' the LDAP based eBox modules'),
@@ -136,9 +137,15 @@ sub _regenConfig
     push (@array, 'schemas' => $self->allLDAPIncludes);
     push (@array, 'acls'    => $self->allLDAPAcls);
     
-    
-    $self->writeConfFile($self->{ldap}->slapdConfFile, 
-                         "/usersandgroups/slapd.conf.mas", \@array);
+    my $fileAttrs = {
+        mode => '0600',
+        uid   => 0,
+        gid   => 0,
+    };
+
+    $self->writeConfFile(CONFLDIF, 
+                         "/usersandgroups/slapd.conf.mas", 
+                         \@array, $fileAttrs);
 }
 
 

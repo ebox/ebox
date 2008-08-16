@@ -1,5 +1,6 @@
 #!/bin/bash
 
+umask 077
 # Function stolen from slapd.config in slapd package
 create_password_hash() {
   perl -e '
@@ -35,6 +36,16 @@ echo "Pass is: $PASS, Crypto is: $CRYPTPASS";
 # remove current database
 invoke-rc.d slapd stop
 rm -rf /var/lib/ldap/*
+# Add new config
+test -d /etc/ldap/slapd.d/ && rm -rf /etc/ldap/slapd.d/*
+test -d /etc/ldap/slapd.d/ ||  mkdir -p 700 /etc/ldap/slapd.d
+slapadd -b 'cn=config' -q -F /etc/ldap/slapd.d/ < /etc/ldap/eboxldap.ldif
+chown -R openldap:openldap /etc/ldap/slapd.d
+
+# workaround wrong permissions in /var/run/slapd which
+# prevent us from connecting to the unix socket
+chmod a+rx /var/run/slapd
+
 
 # Add slapd default
 cp /usr/share/ebox-usersandgroups/slapd.default /etc/default/slapd

@@ -46,7 +46,7 @@ sub init
         }
     }
 
-    # Modify /etc/ldap/slapd.conf
+    # Modify /etc/ldap/eboxldap.ldif
     gen_config();
 
      # Add dc=ebox and cn=admin,dc=ebox with proper password
