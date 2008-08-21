@@ -20,8 +20,9 @@ use warnings;
 
 use EBox::Config;
 use EBox::Exceptions::DeprecatedMethod;
-use POSIX qw(setuid setgid setlocale LC_ALL LC_NUMERIC);
 use English;
+use File::Slurp;
+use POSIX qw(setuid setgid setlocale LC_ALL LC_NUMERIC);
 
 my $loginit = 0;
 
@@ -119,6 +120,43 @@ sub init
 	my $user = EBox::Config::user();
 	my $uid = getpwnam($user);
 	setuid($uid) or die "Cannot change user to $user";
+        dbusInit();
+}
+
+# Method: dbusInit
+#
+#      Initialise a dbus daemon, if it's not already done. We store
+#      one for root and one for eBox user.
+#
+#
+sub dbusInit
+{
+    my $confFile;
+    if ( POSIX::getuid() == 0) {
+        $confFile = EBox::Config::conf() . 'dbus-root-session.conf';
+    } else {
+        $confFile = EBox::Config::conf() . 'dbus-ebox-session.conf';
+    }
+    my ($dbusAddress, $dbusDaemonPid, $launchNew) = (0, 0, 1);
+
+    if ( -r $confFile ) {
+        my @lines = File::Slurp::read_file($confFile);
+        ($dbusAddress) = $lines[0] =~ m:DBUS_SESSION_BUS_ADDRESS=(.*)\s:;
+        ($dbusDaemonPid) = $lines[1] =~ m:DBUS_SESSION_BUS_PID=(.*)\s:;
+    }
+
+    if ( $dbusDaemonPid ) {
+        # TODO: dbus-send
+        `ps --pid $dbusDaemonPid`;
+        $launchNew = $?;
+    }
+    if ( $launchNew ) {
+        system("dbus-launch > $confFile 2> /dev/null");
+        chmod(0660, $confFile);
+        $dbusAddress = EBox::Config::configkeyFromFile('DBUS_SESSION_BUS_ADDRESS', $confFile);
+    }
+
+    $ENV{DBUS_SESSION_BUS_ADDRESS} = $dbusAddress;
 }
 
 1;
