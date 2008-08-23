@@ -121,7 +121,7 @@ sub init
 	my $user = EBox::Config::user();
 	my $uid = getpwnam($user);
 	setuid($uid) or die "Cannot change user to $user";
-	dbusInit();
+        dbusInit();
 }
 
 # Method: dbusInit
@@ -132,34 +132,29 @@ sub init
 #
 sub dbusInit
 {
-	my $confFile;
-	if ( POSIX::getuid() == 0) {
-		$confFile = EBox::Config::conf() . 'dbus-root-session.conf';
-	} else {
-		$confFile = EBox::Config::conf() . 'dbus-ebox-session.conf';
-	}
-	my ($dbusAddress, $dbusDaemonPid, $launchNew) = (0, 0, 1);
+    my $confFile;
+    if ( POSIX::getuid() == 0) {
+        $confFile = EBox::Config::conf() . 'dbus-root-session.conf';
+    } else {
+        $confFile = EBox::Config::conf() . 'dbus-ebox-session.conf';
+    }
+    my ($dbusAddress, $dbusDaemonPid, $launchNew) = (0, 0, 1);
 
-	if ( -r $confFile ) {
-		$dbusAddress = EBox::Config::configkeyFromFile(
-				'DBUS_SESSION_BUS_ADDRESS', $confFile);
-		$dbusDaemonPid = EBox::Config::configkeyFromFile(
-				'DBUS_SESSION_BUS_PID', $confFile);
-	}
+    if ( -r $confFile ) {
+        $dbusAddress = EBox::Config::configkeyFromFile(
+			'DBUS_SESSION_BUS_ADDRESS', $confFile);
+        $dbusDaemonPid = EBox::Config::configkeyFromFile(
+			'DBUS_SESSION_BUS_PID', $confFile);
+    }
 
-	if ( $dbusDaemonPid ) {
-		# TODO: dbus-send
-		`ps --pid $dbusDaemonPid`;
-		$launchNew = $?;
-	}
-	if ( $launchNew ) {
-		system( EBox::Config::pkgdata() .  DBUS_CMD . " $confFile");
-		chmod(0660, $confFile);
-		$dbusAddress = EBox::Config::configkeyFromFile(
-				'DBUS_SESSION_BUS_ADDRESS', $confFile);
-	}
+    # TODO: dbus-send would be cooler than kill
+    unless ( $dbusDaemonPid and (kill 0, $dbusDaemonPid) ) {
+        system( EBox::Config::pkgdata() .  DBUS_CMD . " $confFile");
+        chmod(0660, $confFile);
+        $dbusAddress = EBox::Config::configkeyFromFile('DBUS_SESSION_BUS_ADDRESS', $confFile);
+    }
 
-	$ENV{DBUS_SESSION_BUS_ADDRESS} = $dbusAddress;
+    $ENV{DBUS_SESSION_BUS_ADDRESS} = $dbusAddress;
 }
 
 1;
