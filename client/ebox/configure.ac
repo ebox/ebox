@@ -128,9 +128,6 @@ src/EBox/ServiceModule/Makefile
 src/EBox/Report/Makefile
 src/EBox/Report/t/Makefile
 src/EBox/Report/t/testdata/Makefile
-src/EBox/ThirdParty/Makefile
-src/EBox/ThirdParty/Apache2/Makefile
-src/EBox/ThirdParty/Apache2/AuthCookie/Makefile
 src/EBox/GConfModule/Makefile
 src/EBox/GConfModule/t/Makefile
 src/EBox/Global/Makefile

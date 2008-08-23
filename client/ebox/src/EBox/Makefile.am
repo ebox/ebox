@@ -14,12 +14,18 @@ mods = AbstractDBEngine.pm Apache.pm Auth.pm Backup.pm DBEngineFactory.pm \
 
 nobase_perl_DATA = $(mods)
 
+authcookiedir =  @PERLPATH@/EBox
+nobase_authcookie_DATA = ThirdParty/Apache2/AuthCookie.pm
+
+authutildir =  @PERLPATH@/EBox
+nobase_authutil_DATA = ThirdParty/Apache2/AuthCookie/Util.pm
+
 
 SUBDIRS = Backup CGI Common GConfModule interactiveTest Event Events Global Logs \
-	Model   ProgressIndicator Report Summary t Test ThirdParty Types ServiceModule
+	Model   ProgressIndicator Report Summary t Test Types ServiceModule
 
-SOURCES = $(nobase_perl_DATA)
+SOURCES = $(nobase_perl_DATA) $(nobase_authcookie_DATA) $(nobase_authutil_DATA)
 
-EXTRA_DIST = $(mods)
+EXTRA_DIST = $(mods) ThirdParty
 
 MAINTAINERCLEANFILES = Makefile.in
