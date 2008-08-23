@@ -1207,16 +1207,3 @@ diff -Naur ebox-hardy/src/EBox/ThirdParty/Apache2/AuthCookie.pm ebox-intrepid/sr
 +=cut
 +
 +# vim: sw=4 ts=4 ai et
-diff -Naur ebox-hardy/stubs/apache.mas.in ebox-intrepid/stubs/apache.mas.in
---- ebox-hardy/stubs/apache.mas.in	2008-08-12 12:03:34.000000000 +0200
-+++ ebox-intrepid/stubs/apache.mas.in	2008-08-21 15:19:38.000000000 +0200
-@@ -208,6 +208,9 @@
- 	PerlHandler EBox::Auth->login
- </Files>
- 
-+PerlChildInitHandler EBox::dbusInit
-+PassEnv DBUS_SESSION_BUS_ADDRESS
-+ 
- <Directory @CGIPATH@>
-    <IfModule mod_ssl.c>
- 	   SSLOptions +StdEnvVars
