@@ -1,0 +1,75 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_dbus_gconf.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to support the new gconf version using dbus
+
+@DPATCH@
+
+diff -Naur ebox-hardy/stubs/apache.mas.in ebox-intrepid/stubs/apache.mas.in
+--- ebox-hardy/stubs/apache.mas.in	2008-08-12 12:03:34.000000000 +0200
++++ ebox-intrepid/stubs/apache.mas.in	2008-08-21 15:19:38.000000000 +0200
+@@ -208,6 +208,9 @@
+ 	PerlHandler EBox::Auth->login
+ </Files>
+ 
++PerlChildInitHandler EBox::dbusInit
++PassEnv DBUS_SESSION_BUS_ADDRESS
++ 
+ <Directory @CGIPATH@>
+    <IfModule mod_ssl.c>
+ 	   SSLOptions +StdEnvVars
+diff -Naur ebox-hardy/tools/ebox-dbus-launch ebox-intrepid/tools/ebox-dbus-launch
+--- ebox-hardy/tools/ebox-dbus-launch	1970-01-01 01:00:00.000000000 +0100
++++ ebox-intrepid/tools/ebox-dbus-launch	2008-08-23 13:37:11.000000000 +0200
+@@ -0,0 +1,38 @@
++#!/usr/bin/perl
++# Script: ebox-dbus-launch
++#
++# This script is used to launch dbus in order to be used by gconf
++# Since the gconf package shipped in Intrepid, gconf uses D-BUS instead
++# of a unix socket in /tmp
++#
++# Why do we need to use this script?
++#
++# The gconf library can be used for first time within apache. If we
++# don't wrap the call to dbus, the new dbus daemon spawned will inherit
++# the Apache's file descriptors, and it will prevent it from starting
++# as the listening socket will be busy.
++#
++# What we do here is closing all file descriptors and open the first
++# argument as STDOUT to dump the d-bus configuration.
++#
++#
++# Parameters:
++#
++# output - output file to store the d-bus configuration
++#
++use POSIX;
++
++use constant DBUS_CMD => 'dbus-launch';
++
++POSIX::setsid();
++
++opendir(my $dir, "/proc/$$/fd");
++while (defined(my $fd = readdir($dir))) {
++	next unless ($fd =~ /^\d+$/);
++	eval('POSIX::close($fd)');
++}
++open(STDOUT, '> ' . $ARGV[0]);
++open(STDERR, '> /dev/null');
++open(STDIN, '/dev/null');
++
++exec DBUS_CMD;
+diff -Naur ebox-hardy/tools/Makefile.am ebox-intrepid/tools/Makefile.am
+--- ebox-hardy/tools/Makefile.am	2008-05-12 19:10:26.000000000 +0200
++++ ebox-intrepid/tools/Makefile.am	2008-08-23 13:37:11.000000000 +0200
+@@ -3,7 +3,7 @@
+ 
+ pkgdata_SCRIPTS =  ebox-apache2ctl ebox-apache-restart ebox-sql-table ebox-migrate ebox-sudoers ebox ebox-runit ebox-sudoers-friendly ebox-clean-gconf ebox-create-certificate ebox-make-backup ebox-restore-backup ebox-unblock-exec ebox-passwd \
+   ebox-logs-enable ebox-set-locale \
+-  ebox-global-action ebox-unconfigure-module
++  ebox-global-action ebox-unconfigure-module ebox-dbus-launch
+ 
+ MAINTAINERCLEANFILES = Makefile.in
+ 
