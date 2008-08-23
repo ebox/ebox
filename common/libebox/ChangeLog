@@ -13,6 +13,7 @@
 	+ Add spinner gif to modalbox window
 	+ Assure that a dbus-daemon is running every time a new eBox
 	session is started because gconfd requirement
+	+ Make EBox::Config::configKeyFromFile non-greedy to parse values properly
 0.11.102
 	+ Added `override_user_modification` configuration parameter to
 	avoid user modification checkings and override them without asking
