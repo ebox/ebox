@@ -73,3 +73,16 @@ diff -Naur ebox-hardy/tools/Makefile.am ebox-intrepid/tools/Makefile.am
  
  MAINTAINERCLEANFILES = Makefile.in
  
+diff -Naur ebox-hardy/tools/Makefile.in ebox-intrepid/tools/Makefile.in
+--- ebox-hardy/tools/Makefile.in	2008-08-23 17:03:47.000000000 +0200
++++ ebox-intrepid/tools/Makefile.in	2008-08-23 17:00:38.000000000 +0200
+@@ -161,7 +161,7 @@
+ SUBDIRS = sqllog cron
+ pkgdata_SCRIPTS = ebox-apache2ctl ebox-apache-restart ebox-sql-table ebox-migrate ebox-sudoers ebox ebox-runit ebox-sudoers-friendly ebox-clean-gconf ebox-create-certificate ebox-make-backup ebox-restore-backup ebox-unblock-exec ebox-passwd \
+   ebox-logs-enable ebox-set-locale \
+-  ebox-global-action ebox-unconfigure-module
++  ebox-global-action ebox-unconfigure-module ebox-dbus-launch
+
+ 
+ MAINTAINERCLEANFILES = Makefile.in
+ EXTRA_DIST = $(pkgdata_SCRIPTS)

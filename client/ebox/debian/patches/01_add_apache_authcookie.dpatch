@@ -1207,3 +1207,128 @@ diff -Naur ebox-hardy/src/EBox/ThirdParty/Apache2/AuthCookie.pm ebox-intrepid/sr
 +=cut
 +
 +# vim: sw=4 ts=4 ai et
+diff -Naur ebox-hardy/src/EBox/Makefile.in ebox-intrepid/src/EBox/Makefile.in
+--- ebox-0.11-hardy/src/EBox/Makefile.in	2008-08-23 16:45:36.000000000 +0200
++++ ebox-0.12-intrepid/src/EBox/Makefile.in	2008-08-23 16:52:34.000000000 +0200
+@@ -55,9 +55,13 @@
+     *) f=$$p;; \
+   esac;
+ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+-am__installdirs = "$(DESTDIR)$(perldir)"
++am__installdirs = "$(DESTDIR)$(authcookiedir)" \
++	"$(DESTDIR)$(authutildir)" "$(DESTDIR)$(perldir)"
++nobase_authcookieDATA_INSTALL = $(install_sh_DATA)
++nobase_authutilDATA_INSTALL = $(install_sh_DATA)
+ nobase_perlDATA_INSTALL = $(install_sh_DATA)
+-DATA = $(nobase_perl_DATA)
++DATA = $(nobase_authcookie_DATA) $(nobase_authutil_DATA) \
++	$(nobase_perl_DATA)
+ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
+   distclean-recursive maintainer-clean-recursive
+ ETAGS = etags
+@@ -174,11 +178,15 @@
+ 	TestStubs.pm MigrationBase.pm 
+ 
+ nobase_perl_DATA = $(mods)
++authcookiedir = @PERLPATH@/EBox
++nobase_authcookie_DATA = ThirdParty/Apache2/AuthCookie.pm
++authutildir = @PERLPATH@/EBox
++nobase_authutil_DATA = ThirdParty/Apache2/AuthCookie/Util.pm
+ SUBDIRS = Backup CGI Common GConfModule interactiveTest Event Events Global Logs \
+ 	Model   ProgressIndicator Report Summary t Test Types ServiceModule
+ 
+-SOURCES = $(nobase_perl_DATA)
+-EXTRA_DIST = $(mods)
++SOURCES = $(nobase_perl_DATA) $(nobase_authcookie_DATA) $(nobase_authutil_DATA)
++EXTRA_DIST = $(mods) ThirdParty
+ MAINTAINERCLEANFILES = Makefile.in
+ all: all-recursive
+ 
+@@ -212,6 +220,44 @@
+ 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
+ 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
++install-nobase_authcookieDATA: $(nobase_authcookie_DATA)
++	@$(NORMAL_INSTALL)
++	test -z "$(authcookiedir)" || $(MKDIR_P) "$(DESTDIR)$(authcookiedir)"
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_authcookie_DATA)'; for p in $$list; do \
++	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
++	  $(am__vpath_adj) \
++	  echo " $(nobase_authcookieDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(authcookiedir)/$$f'"; \
++	  $(nobase_authcookieDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(authcookiedir)/$$f"; \
++	done
++
++uninstall-nobase_authcookieDATA:
++	@$(NORMAL_UNINSTALL)
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_authcookie_DATA)'; for p in $$list; do \
++	  $(am__vpath_adj) \
++	  echo " rm -f '$(DESTDIR)$(authcookiedir)/$$f'"; \
++	  rm -f "$(DESTDIR)$(authcookiedir)/$$f"; \
++	done
++install-nobase_authutilDATA: $(nobase_authutil_DATA)
++	@$(NORMAL_INSTALL)
++	test -z "$(authutildir)" || $(MKDIR_P) "$(DESTDIR)$(authutildir)"
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_authutil_DATA)'; for p in $$list; do \
++	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
++	  $(am__vpath_adj) \
++	  echo " $(nobase_authutilDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(authutildir)/$$f'"; \
++	  $(nobase_authutilDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(authutildir)/$$f"; \
++	done
++
++uninstall-nobase_authutilDATA:
++	@$(NORMAL_UNINSTALL)
++	@$(am__vpath_adj_setup) \
++	list='$(nobase_authutil_DATA)'; for p in $$list; do \
++	  $(am__vpath_adj) \
++	  echo " rm -f '$(DESTDIR)$(authutildir)/$$f'"; \
++	  rm -f "$(DESTDIR)$(authutildir)/$$f"; \
++	done
+ install-nobase_perlDATA: $(nobase_perl_DATA)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(perldir)" || $(MKDIR_P) "$(DESTDIR)$(perldir)"
+@@ -410,7 +456,7 @@
+ all-am: Makefile $(DATA)
+ installdirs: installdirs-recursive
+ installdirs-am:
+-	for dir in "$(DESTDIR)$(perldir)"; do \
++	for dir in "$(DESTDIR)$(authcookiedir)" "$(DESTDIR)$(authutildir)" "$(DESTDIR)$(perldir)"; do \
+ 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+ 	done
+ install: install-recursive
+@@ -456,7 +502,8 @@
+ 
+ info-am:
+ 
+-install-data-am: install-nobase_perlDATA
++install-data-am: install-nobase_authcookieDATA \
++	install-nobase_authutilDATA install-nobase_perlDATA
+ 
+ install-dvi: install-dvi-recursive
+ 
+@@ -490,7 +537,8 @@
+ 
+ ps-am:
+ 
+-uninstall-am: uninstall-nobase_perlDATA
++uninstall-am: uninstall-nobase_authcookieDATA \
++	uninstall-nobase_authutilDATA uninstall-nobase_perlDATA
+ 
+ .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
+ 	install-strip
+@@ -502,11 +550,13 @@
+ 	install-am install-data install-data-am install-dvi \
+ 	install-dvi-am install-exec install-exec-am install-html \
+ 	install-html-am install-info install-info-am install-man \
++	install-nobase_authcookieDATA install-nobase_authutilDATA \
+ 	install-nobase_perlDATA install-pdf install-pdf-am install-ps \
+ 	install-ps-am install-strip installcheck installcheck-am \
+ 	installdirs installdirs-am maintainer-clean \
+ 	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+ 	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
++	uninstall-nobase_authcookieDATA uninstall-nobase_authutilDATA \
+ 	uninstall-nobase_perlDATA
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
