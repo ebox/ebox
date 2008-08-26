@@ -54,9 +54,9 @@ diff -Naur ebox-usersandgroups-0.11.svn11195/src/EBox/UsersAndGroups.pm ebox-use
  }
  
  
-diff -Naur ebox-usersandgroups-0.11.svn11195/stubs/slapd.conf.mas ebox-usersandgroups-0.12/stubs/slapd.conf.mas
---- ebox-usersandgroups-0.11.svn11195/stubs/slapd.conf.mas	2008-08-14 11:30:15.000000000 +0200
-+++ ebox-usersandgroups-0.12/stubs/slapd.conf.mas	2008-08-16 23:00:32.000000000 +0200
+diff -Naur ebox-usersandgroups-0.11.svn11195/stubs/slapd.conf.mas.in ebox-usersandgroups-0.12/stubs/slapd.conf.mas.in
+--- ebox-usersandgroups-0.11.svn11195/stubs/slapd.conf.mas.in	2008-08-14 11:30:15.000000000 +0200
++++ ebox-usersandgroups-0.12/stubs/slapd.conf.mas.in	2008-08-16 23:00:32.000000000 +0200
 @@ -5,105 +5,1620 @@
          @acls
  	@schemas
