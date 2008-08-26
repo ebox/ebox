@@ -18,6 +18,8 @@
 	when a new eBox session is started
 	+ Pass DBUS_SESSION_BUS_ADDRESS environment variable in Apache to
 	children processes
+	+ Disable LogAdmin actions in `ebox-global-action` until LogAdmin
+	feature is completely done
 0.11.103
 	+ Modify EBox::Types::HasMany to create directory based on its row 
 	+ Add _setRelationship method to set up relationships between models
