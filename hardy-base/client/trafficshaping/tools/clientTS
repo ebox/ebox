@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Copyright (C) 2007 Warp Networks S.L.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+# Script to test traffic shaping module
+# Usage: clientTS
+
+SERVER_ADDR=192.168.11.2
+PORT=200
+PROTOCOL=UDP
+BIND_HOST=192.168.44.2
+
+readonly SERVER_ADDR PORT PROTOCOL BIND_HOST
+
+iperf --client $SERVER_ADDR --port=$PORT --format=k \
+      --bind=$BIND_HOST --time=60 --interval=1 --bandwidth=400k > \
+      shaper-traffic-1 &
+
+iperf --client $SERVER_ADDR --port=$(($PORT + 100)) --format=k \
+      --bind=$BIND_HOST --time=60 --interval=1 --bandwidth=400k > \
+     shaper-traffic-2 &
+
+iperf --client $SERVER_ADDR --port=$(($PORT + 200)) --format=k \
+      --bind=$BIND_HOST --time=60 --interval=1 --bandwidth=400k > \
+     shaper-traffic-3 &
+
+iperf --client $SERVER_ADDR --port=$(($PORT + 300)) --format=k \
+      --bind=$BIND_HOST --time=60 --interval=1 --bandwidth=400k > \
+     shaper-traffic-4 &
+
+iperf --client $SERVER_ADDR --port=$(($PORT + 400)) --format=k \
+      --bind=$BIND_HOST --time=60 --interval=1 --bandwidth=1000k > \
+     other-traffic &
+
+
+
+
+
+

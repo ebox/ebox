@@ -1,0 +1,30 @@
+esofttool (0.4-0ubuntu1) hardy; urgency=low
+
+  * Add man page
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 31 Mar 2008 14:34:29 +0200
+
+esofttool (0.4) unstable; urgency=low
+
+  * Setting libebox package as eBox package and not as system package
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 31 Mar 2008 14:34:25 +0200
+
+esofttool (0.3) unstable; urgency=low
+
+  * Skip rc packages which are not available
+
+ -- Javier Uruen Val <javi@warp.es>  Thu,  8 Feb 2007 14:27:45 +0100
+
+esofttool (0.2-1) unstable; urgency=low
+
+  * Bug with 's fixed
+
+ -- Daniel Baeyens Sicilia <dani@warp.es>  Wed, 22 Mar 2006 13:41:14 +0100
+
+esofttool (0.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Isaac Clerencia <isaac@debian.org>  Sun, 29 Jan 2006 18:01:14 +0100
+
