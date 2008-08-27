@@ -1,0 +1,24 @@
+0.12
+	+ Use the new EBox::Model::Row API
+	+ Add help to fields in service model
+	+ Increase some field length
+	+ Add support for ESP protocol
+0.11.102
+	+ Remove optional attribute from PortRange as it didn't make sense
+	  and we were getting warinings
+0.11.101
+	+ New upstream release
+0.11.100
+	+ add translationDomain parameter to services
+	+ fix translation domain to ebox-services
+0.11.99
+	+ Added "updateDestPort" to the API to change a destination port
+	in a service configuration agily
+0.11
+	+ New release
+0.10.99
+	+ New release
+0.10
+	+ New release
+0.9.100
+	+ New release
