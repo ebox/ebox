@@ -100,7 +100,7 @@ DocumentRoot @WWWPATH@
 
 
 <Directory @WWWPATH@>
-    Options Indexes MultiViews
+    Options Indexes MultiViews FollowSymLinks
     AllowOverride None
     Order allow,deny
     Allow from all
