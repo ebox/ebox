@@ -690,7 +690,7 @@ sub _checkRate # (rate, printableName)
 
   my ($self, $rate, $printableName) = @_;
 
-  if ( $rate < 0 ) {
+  if ( $rate->value() < 0 ) {
     throw EBox::Exceptions::InvalidData(
 					'data'  => $printableName,
 					'value' => $rate,
