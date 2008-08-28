@@ -24,19 +24,10 @@ images = images/delete.gif images/show.gif \
   images/spinner.gif
 
 js = js/csshover.htc js/common.js \
-  js/help.js js/table-helper.js js/prototype.js \
+  js/help.js js/table-helper.js \ 
   js/fileUpload.js js/image-helper.js \
   js/tabMenu.js  \
-  js/modalbox.js  js/prototype.js  \
-  js/scriptaculous/controls.js \
-  js/scriptaculous/unittest.js \
-  js/scriptaculous/sound.js \
-  js/scriptaculous/slider.js \
-  js/scriptaculous/builder.js \
-  js/scriptaculous/scriptaculous.js \
-  js/scriptaculous/effects.js \
-  js/scriptaculous/dragdrop.js
-
+  js/modalbox.js  
 
 
 css =   css/public.css    css/login.css css/modalbox.css
