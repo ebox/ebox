@@ -472,12 +472,13 @@ sub _updateUser
 
 # Method: modifyUser 
 #
-#       Modifies a user
+#       Modifies  user's attributes
 #   
 # Parameters:
 #       
 #       user - hash ref containing: 'user' (user name), 'fullname', 'password',
-#       and comment
+#       and comment. The only mandatory parameter is 'user' the other attribute
+#       parameters would be ignored if they are missing.
 #
 sub modifyUser # (\%user)
 {
@@ -612,13 +613,16 @@ sub userInfo # (user, entry)
 #
 #       Returns an array containing all the users (not system users)
 #
+# Parameters:
+#       system - show system groups (default: false)  
+#
 # Returns:
 #
 #       array - holding the users
 #
 sub users 
 {
-    my ($self) = @_;
+    my ($self, $system) = @_;
 
     my %args = (
                 base => $self->usersDn,
@@ -634,7 +638,10 @@ sub users
     my @users = ();
     foreach my $user ($result->sorted('uid'))
         {
-            next if ($user->get_value('uidNumber') < MINUID);
+            if (not $system) {
+                next if ($user->get_value('uidNumber') < MINUID);
+            }
+
             @users = (@users,  $self->userInfo($user->get_value('uid'),
                                                $user))          
         }

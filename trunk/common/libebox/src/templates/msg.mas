@@ -1,4 +1,0 @@
-<%args>
-	$msg
-</%args>
-<div class='note'><% $msg %></div>

@@ -1,8 +1,0 @@
-<%args>
-	$ldap
-	$pwd
-</%args>
-slaveDN="<% $ldap->{'rootdn'} %>"
-slavePw="<% $pwd %>"
-masterDN="<% $ldap->{'rootdn'} %>"
-masterPw="<% $pwd %>"

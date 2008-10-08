@@ -1,6 +1,7 @@
 #include <iostream>
-#include <sstream>
 #include <fstream>
+#include <sstream>
+#include <stdio.h>
 
 #include <set>
 #include <sys/stat.h>
@@ -35,9 +36,9 @@ std::set<const char *, ltstr> notfetched;
 std::set<const char *, ltstr> visited;
 
 void _initLog() {
-  const char *logPath ="/var/lib/ebox/log/esofttool.log";
+  const char *logPath ="/var/log/ebox/esofttool.log";
 
-  Log.open(logPath, std::fstream::app);
+  Log.open(logPath, std::fstream::trunc);
   if (! Log.is_open()) {
     std::cout << "Cannot open log file " << logPath << ". Aborting" << std::endl;
     exit (1);
@@ -45,9 +46,6 @@ void _initLog() {
 
   Log << "esofttool process begins" << std::endl;
 }
-
-  
-
 
 
 void init() {
@@ -70,11 +68,6 @@ void init() {
 	Plcy = new pkgPolicy(Cache);
 	Recs = new pkgRecords(*Cache);
 }
-
-
-
-
-
 
 
 
@@ -193,6 +186,148 @@ bool _pkgIsFetched(pkgCache::PkgIterator P) {
 	return true;
 }
 
+/*
+  Function: _escapeQuote
+
+      Escape single quotes with \\' from a string without modifying it
+
+  Parameters:
+      str - const std::string the string to escape quotes from
+
+  Returns:
+  
+      std::string - the string with the quotes escaped
+
+ */
+std::string _escapeQuote(const std::string str) {
+
+         uint pos;
+         std::string retStr(str);
+         pos = retStr.find("'",0);
+         while (pos != std::string::npos){
+           retStr.replace(pos,1,"\\'");
+           pos = retStr.find("'",pos+2);
+         }
+
+         return retStr;
+
+}
+
+/*
+  Function: _distributionId
+
+      The distribution identifier following the LSB conventions
+
+  Returns:
+  
+      std::string the string with the quotes escaped
+
+ */
+std::string _distributionId () {
+
+        std::ifstream lsbReleaseFile;
+        std::string line;
+
+        lsbReleaseFile.open("/etc/lsb-release", std::ifstream::in);
+        if (! lsbReleaseFile.is_open() ) {
+                Log << "No file /etc/lsb-release" << std::endl;
+                return NULL;
+        }
+        lsbReleaseFile >> line;
+        size_t foundPos = line.find('=');
+        if (foundPos == std::string::npos) {
+                Log << "No = is found" << std::endl;
+                return NULL;
+        }
+        std::string distroId = line.substr(foundPos + 1, std::string::npos);
+        return distroId;
+        
+}
+
+/*
+  Function: _securityUpdate
+
+      Check if the given package file is a security update or not
+
+  Parameters:
+      pkgFile - pkgCache::PkgFileIterator the package file to check
+
+  Returns:
+  
+      bool - true if it is a security update, false otherwise
+
+ */
+bool _securityUpdate(pkgCache::PkgFileIterator pkgFile) {
+
+        std::string distroId(_distributionId());
+        bool retValue;
+        if ( distroId.compare("Ubuntu") == 0 ) {
+          retValue = strstr(pkgFile.Archive(), "-security") != NULL; 
+        } else if ( distroId.compare("Debian") == 0 ) {
+          retValue = strstr(pkgFile.Site(), "security.debian.org") != NULL;
+        }
+        return retValue;
+ 
+}
+
+/*
+  Function: _changeLog
+
+      The changelog from the installed version till the version stored
+      in given fileName
+
+  Parameters:
+      fileName - const std::string the file path name to check the
+      changelog from
+
+      versionStr - const std::string the version string element
+
+  Returns:
+  
+      std::string - the paragraphs with the changelog
+
+ */
+std::string _changeLog(const std::string fileName, const std::string versionStr) {
+
+        /*
+          If the package is debian native, the version string has not - char
+          and the changelog file is only in changelog.gz
+        */
+        std::string changelogPath;
+        if ( versionStr.find('-') == std::string::npos ) {
+               changelogPath = "changelog.gz";
+        } else {
+               // Not native
+               changelogPath = "changelog.Debian.gz";
+        }
+  
+        std::string cmd("dpkg-deb --fsys-tarfile " + fileName
+                        + " | tar x --wildcards *" + changelogPath + " -O | zcat "
+                        + "| /usr/lib/dpkg/parsechangelog/debian "
+                        + " - | sed -n -e /Changes/,//p | sed -n -e '4,$p'");
+        std::string outputStr("");
+        FILE * output = popen(cmd.c_str(), "r");
+        if ( output == NULL ) {
+               perror("popen");
+               Log << "Couldn't popen command" << std::endl;
+               return "";
+        }
+
+        while( ! feof(output) ) {
+               char tmpStr[256];
+               fgets(tmpStr, 256, output);
+               outputStr.append(tmpStr);
+        }
+
+        int retVal = pclose(output);
+        if ( retVal == -1 ) {
+               perror("pclose");
+               Log << "Couldn't close popen stream" << std::endl;
+               return "";
+        }
+        return outputStr;
+}
+
 bool pkgIsFetched(pkgCache::PkgIterator P) {
 	visited.clear();
 	return _pkgIsFetched(P);
@@ -235,8 +370,7 @@ void listEBoxPkgs() {
 
 			pkgCache::VerIterator curverObject = Plcy->GetCandidateVer(P);
 			if (!P.CurrentVer() && (curverObject.end() == true)){
-			  Log << name << " only version availble is a removed one" << std::endl;
-			  
+			  Log << name << " only version available is a removed one" << std::endl;
 			  continue;
 			}
 			
@@ -278,13 +412,8 @@ void listEBoxPkgs() {
 			std::cout << "'avail' => '" << available << "'," << std::endl;
 			pkgRecords::Parser &P = Recs->Lookup(curverObject.FileList());
 			description = P.ShortDesc();
-			
-			uint pos;
-			pos = description.find("'",0);
-			while (pos != string::npos){
-				description.replace(pos,1,"\\'");
-				pos = description.find("'",pos+2);
-			}
+
+                        description = _escapeQuote(description);
 		
 			std::cout << "'description' => '" << description << "'" << std::endl;
 			std::cout << "}," << std::endl;
@@ -297,7 +426,8 @@ void listEBoxPkgs() {
 void listUpgradablePkgs() {
 	init();
 
-	Log << "Listing non-eBox upgradables packages.." << std::endl;
+	Log << "Listing non-eBox upgradables packages on "
+            << _distributionId() << " .." << std::endl;
 
 	std::cout << "my $result = [" << std::endl;
 
@@ -313,6 +443,8 @@ void listUpgradablePkgs() {
 		}
 		std::string name = P.Name();
 		std::string description;
+                std::string security("0");
+                std::string changelog("");
 		std::string arch;
 		std::string curver = P.CurrentVer().VerStr();
 		pkgCache::VerIterator curverObject = P.CurrentVer();
@@ -330,10 +462,24 @@ void listUpgradablePkgs() {
 		  Log << name << " has not any available version" << std::endl;
 		  continue;
 		}
+
 		std::stringstream file;
 		file << "/var/cache/apt/archives/" << P.Name() << "_" << curver << "_" << arch << ".deb";
 
 		std::string filename = file.str();
+                uint pos = filename.find(':');
+                if ( pos != std::string::npos ) {
+                  filename.replace(pos, 1, "%3a");
+                }
+
+                for(pkgCache::VerFileIterator verFile = curverObject.FileList();
+                    verFile.end() == false; verFile++) {
+                  if ( _securityUpdate(verFile.File()) ) {
+                    security.assign("1");
+                    changelog = _changeLog(filename, curver);
+                  }
+                }
+
 		std::string::size_type epoch = filename.find(":",0);
 		if(epoch != std::string::npos) filename.replace(epoch,1,"%3a");
 		struct stat stats;
@@ -356,17 +502,17 @@ void listUpgradablePkgs() {
 		}
 
 		description = Par.ShortDesc();
-	
-		uint pos;
-		pos = description.find("'",0);
-		while (pos != string::npos){
-			description.replace(pos,1,"\\'");
-			pos = description.find("'",pos+2);
-		}
+
+                // Escape quotes
+                description = _escapeQuote(description);
+                changelog   = _escapeQuote(changelog);
 		
 		std::cout << "{";
 		std::cout << "'name' => '" << name << "'," << std::endl;
-		std::cout << "'description' => '" << description << "'" << std::endl;
+		std::cout << "'description' => '" << description << "'," << std::endl;
+                std::cout << "'version' => '" << curver << "'," << std::endl;
+                std::cout << "'security' => '" << security << "'," << std::endl;
+                std::cout << "'changelog' => '" << changelog << "'" << std::endl;
 		std::cout << "}," << std::endl;
 
 	}

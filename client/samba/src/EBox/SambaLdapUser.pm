@@ -951,6 +951,7 @@ sub sambaDomainName
 	my %attrs = ( 
 			base => "dc=ebox", 
 			filter => "(objectclass=sambaDomain)", 
+			
 			scope => "sub"
 	    	    ); 
 	my $entry = $ldap->search(\%attrs)->pop_entry();
@@ -982,6 +983,7 @@ sub setSambaDomainName
 	my $ldap = $self->{ldap}; 
 	my $sid  = getSID();
 
+	my %domainAttrs = %{$self->_fetchDomainAttrs($domain)};
 	$self->deleteSambaDomainNameAttrs();
 	$self->deleteSambaDomains();
 
@@ -993,14 +995,40 @@ sub setSambaDomainName
 			'uidNumber'		=> $users->lastUid,
 			'gidNumber'		=> $users->lastGid,
 			'objectClass'		=> ['sambaDomain', 
-						    'sambaUnixidPool']
+						    'sambaUnixidPool'],
+			%domainAttrs
 			]
-		   );
+		);
 
 	my $dn = "sambaDomainName=$domain,dc=ebox";
 	$ldap->add($dn, \%attrs);
 }
 
+sub _fetchDomainAttrs
+{
+	my ($self, $domain) = @_;
+
+	my $ldap = EBox::Ldap->instance();
+
+	my @attrs = qw/sambaPwdHistoryLength sambaMaxPwdAge sambaLockoutThreshold/;
+	my $result = $ldap->search( 
+			{
+			base => $ldap->dn(),
+			filter => "sambaDomainName=$domain",
+			scope => 'sub',
+			attrs => [@attrs],
+			}
+			);
+
+	my $entry = $result->pop_entry();
+	return {} unless defined($entry);
+	my %attributes;
+	for my $attr (@attrs) {
+		$attributes{$attr} = $entry->get_value($attr);
+		return {} unless defined($attributes{$attr});
+	}
+	return \%attributes;
+}
 
 sub deleteSambaDomainNameAttrs
 {
@@ -1159,6 +1187,67 @@ sub updateNetbiosName
 					"\\\\$netbios\\profiles\\$username");
 	}
 }
+
+# Method: updateSIDEntries
+#	
+#		Check and correct if there's any user or group with a wrong SID. Note
+#		that depending on when the user/group is created the SID might change.
+#		This method should be run in regenConfig
+#
+#	
+sub updateSIDEntries
+{
+	my ($self) = @_;
+
+	my $users = EBox::Global->modInstance('users');
+	my $ldap = $self->{'ldap'};
+	my $userDN = $users->usersDn();
+	my $sid = uc(getSID());
+	$sid = uc($sid);
+
+	my %attrs = (
+			base   => $userDN,
+			filter => "(&(objectclass=sambaSamAccount)(!(sambaSID=$sid*)))",
+			attrs  => ['sambaSID', 'sambaPrimaryGroupSID', 'dn'],
+			scope  => 'sub'
+			);
+
+	my $result = $ldap->search(\%attrs);
+
+	for my $entry ($result->entries()) {
+		my $oldSID = $entry->get_value('sambaSID');
+		my $oldGroupSID = $entry->get_value('sambaPrimaryGroupSID');
+		my ($lastNumbers) = $oldSID =~ /.*-(\d+)$/;
+		my $newSID = "$sid-$lastNumbers";
+		my ($lastNumbersGroup) = $oldGroupSID =~ /.*-(\d+)$/;
+		my $newGroupSID = "$sid-$lastNumbersGroup";
+		$ldap->modifyAttribute($entry->dn(), 'sambaSID', $newSID);
+		$ldap->modifyAttribute($entry->dn(), 
+				'sambaPrimaryGroupSID', 
+				$newGroupSID);
+	}
+
+	my $groupDN = $users->groupsDn();
+	%attrs = (
+			base   => $groupDN,
+			filter => "(&(objectclass=sambaGroupMapping)(!(sambaSID=$sid*)))",
+			attrs  => ['sambaSID', 'cn'],
+			scope  => 'sub'
+			);
+
+	$result = $ldap->search(\%attrs);
+	my %groupsToSkip = ('Administrators' => 1, 'Account Operators' => 1,
+                            'Print Operators' => 1, 'Backup Operators' => 1, 'Replicators' => 1);
+
+	for my $entry ($result->entries()) {
+		next if $groupsToSkip{$entry->get_value('cn')};
+		my $oldSID = $entry->get_value('sambaSID');
+		my ($lastNumbers) = $oldSID =~ /.*-(\d+)$/;
+		my $newSID = "$sid-$lastNumbers";
+		$ldap->modifyAttribute($entry->dn(), 'sambaSID', $newSID);
+	}
+}
+
 
 sub _isSambaObject($$$) {
 	my $self = shift;

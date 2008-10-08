@@ -505,7 +505,11 @@ sub search {
 	
 	my $offset = $page * $pagesize;
 	$self->_addPager($offset, $pagesize);
+        $self->_addOrder("$timecol DESC");
+
 	$self->_addSelect('*');
+        
+
 	my @ret = @{$dbengine->query($self->_sqlStmnt())};
 	
 	my $hashret = {
@@ -568,10 +572,18 @@ sub _addDateFilter
 
 sub _addPager
 {
+    my ($self, $offset, $limit) = @_;
+    $self->{'sqlselect'}->{'offset'} = $offset;
+    $self->{'sqlselect'}->{'limit'} = $limit;
+}
 
-	my ($self, $offset, $limit) = @_;
-	$self->{'sqlselect'}->{'offset'} = $offset;
-	$self->{'sqlselect'}->{'limit'} = $limit;
+
+sub _addOrder
+{
+    my ($self, $order) = @_;
+
+    $self->{sqlselect}->{order} = $order;
+
 }
 
 sub _addTableName
@@ -620,6 +632,10 @@ sub _sqlStmnt {
 			push @params, $sql->{'filter'}->{$field};
 		}
 	}
+
+        if ($sql->{order}) {
+            $stmt .= 'ORDER BY ' . $sql->{order} . ' ';
+        }
 
         $stmt .= "OFFSET ? LIMIT ?";
 	push @params, $sql->{'offset'}, $sql->{'limit'};
@@ -820,15 +836,14 @@ sub purge
 
   # get the threshold date for each domain
   foreach my $row_r ( @{ $self->configureLogModel->rows() } ) {
-    my $valuesHash = $row_r->{plainValueHash};
-    my $lifeTime = $valuesHash->{'lifeTime'};
+    my $lifeTime = $row_r->valueByName('lifeTime');
     
     # if lifeTime == 0, it should never expire
     $lifeTime or
       next;
 
     my $threshold = $self->_thresholdDate($lifeTime);
-    $thresholdByDomain{$valuesHash->{'domain'}} = $threshold;
+    $thresholdByDomain{$row_r->valueByName('domain')} = $threshold;
   }
 
   # purge each domain
@@ -856,7 +871,7 @@ sub _purgeTable #(tablename, timecolumn, thresholdDate)
 {
   my ($self, $table, $timeCol, $thresholdDate) = @_;
 
-  my $sqlStatement = "DELETE FROM $table WHERE '$timeCol' < '$thresholdDate'";
+  my $sqlStatement = "DELETE FROM $table WHERE $timeCol < '$thresholdDate'";
   my $dbengine = EBox::DBEngineFactory::DBEngine();
   $dbengine->query($sqlStatement);
 }

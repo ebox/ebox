@@ -1,3 +1,14 @@
+0.12.4
+	+ Bugfix. Check and correct if there is a user or group with a wrong SID.
+	It's possible to run into that scenarion depending when the user/group is
+	created
+	+ Do not delete some domain attributes that are used to store password
+	attributes such us password length, expiration...
+0.12.3
+	+ Add configuration variable to enable/disable quota support
+	  as it might be really slow if we have many users
+0.12.2
+	+ Restore group share names when restoring a backup
 0.12.1
 	+ Leave Logon Home empty, as Logon Home = "" as stated by smb.conf
 	documentation doesn't seem to work
