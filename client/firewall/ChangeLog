@@ -1,3 +1,6 @@
+0.12.4
+	+ Bugfix. Do not apply rules to internal connections in "From external to
+	internal"
 0.12.3
 	+ Add rules to allow DHCP requests from interfaces configured via DHCP
 0.12.2
