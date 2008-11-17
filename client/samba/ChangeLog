@@ -1,5 +1,6 @@
-0.12.7
-	+ Support for exteran printers configured with CUPS
+0.12.6.100
+	+ Support for external printers configured with CUPS
+	+ Bugfix. Set users and groups suffix properly in smb.conf
 0.12.6
 	+ Bugfix. Fix typo in loginShell
 0.12.5
