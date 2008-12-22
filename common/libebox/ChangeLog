@@ -1,3 +1,6 @@
+0.12.2
+	+ Bugfix: Fix an issue with javascript and the union type that prevented
+	things like samba share UI from working ok
 0.12.1
 	+ Bugfix: Get logger from EBox category if it is not set explicity
 	to allow external programs to log using eBox log helper functions
