@@ -1,3 +1,6 @@
+0.12.6.101
+	+ Bugfix. roaming profiles are not created automatically when they are
+	disabled
 0.12.6.100
 	+ Support for external printers configured with CUPS
 	+ Bugfix. Set users and groups suffix properly in smb.conf
