@@ -1,3 +1,5 @@
+0.12.1
+	+ Bugfix. Remove mail exchangers that reference a deleted host name.
 0.12
 	+ Use the new EBox::Model::Row api
 	+ Load module capability in pre-start just like the bind9 init
