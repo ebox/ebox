@@ -1,0 +1,3 @@
+version=3
+
+http://ebox-platform.com/releases/sources/ebox-objects-(\d[\d_.-]+)\.tar.gz
