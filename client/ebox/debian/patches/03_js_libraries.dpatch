@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_js_libraries.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to add follow symlinks in js directory in order to  use 
+## DP: libjs-prototype and libjs-scriptaculous which are already packaged
+
+@DPATCH@
+
+diff -Nuar ebox-0.12/stubs/apache.mas.in ebox-0.12-intrepid/stubs/apache.mas.in
+--- ebox-0.12/stubs/apache.mas.in	2008-08-28 16:37:52.000000000 +0200
++++ ebox-0.12-intrepid/stubs/apache.mas.in	2008-08-28 16:29:26.000000000 +0200
+@@ -100,7 +100,7 @@
+ 
+ 
+ <Directory @WWWPATH@>
+-    Options Indexes MultiViews
++    Options Indexes MultiViews FollowSymLinks
+     AllowOverride None
+     Order allow,deny
+     Allow from all
