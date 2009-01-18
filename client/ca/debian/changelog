@@ -1,3 +1,9 @@
+ebox-ca (0.12-0ubuntu1~ppa4~jaunty2) jaunty; urgency=low
+
+  * Fix indentation in postinst
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 18 Jan 2009 18:15:08 +0100
+
 ebox-ca (0.12-0ubuntu1~ppa4~jaunty1) jaunty; urgency=low
 
   * Jaunty packaging
