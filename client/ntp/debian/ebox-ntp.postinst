@@ -11,11 +11,9 @@ case "$1" in
 		if [ -z "$2" ] ; then
 			/usr/share/ebox-ntp/ebox-timezone-import
 		fi
-           
-        # Migrate data if needed
+
+		# Migrate data if needed
 		/usr/share/ebox/ebox-migrate /usr/share/ebox-ntp/migration/
 esac
-
-
 
 exit 0
