@@ -1,3 +1,10 @@
+ebox-dns (0.12.1-0ubuntu1~ppa1~jaunty2) jaunty; urgency=low
+
+  * Fix indentation in postinst
+  * Do not restart apache, ebox trigger takes care of it
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 18 Jan 2009 18:25:01 +0100
+
 ebox-dns (0.12.1-0ubuntu1~ppa1~jaunty1) jaunty; urgency=low
 
   * Jaunty packaging
