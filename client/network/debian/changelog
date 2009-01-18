@@ -1,3 +1,11 @@
+ebox-network (0.12-0ubuntu1~ppa4~jaunty2) jaunty; urgency=low
+
+  * Do not restart apache, ebox trigger takes care of it
+  * Add '|| true' to ebox-network-netcfg as the installation process must continue
+    even if that script used to import the network configuration fails
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 18 Jan 2009 18:34:23 +0100
+
 ebox-network (0.12-0ubuntu1~ppa4~jaunty1) jaunty; urgency=low
 
   * Jaunty packaging
