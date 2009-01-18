@@ -1,3 +1,10 @@
+ebox (0.12.3.99-0ubuntu1~ppa1~jaunty2) jaunty; urgency=low
+
+  * Fix indentation in postinst
+  * Add trigger to restart apache when a new module is installed or removed
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 18 Jan 2009 18:27:59 +0100
+
 ebox (0.12.3.99-0ubuntu1~ppa1~jaunty1) jaunty; urgency=low
 
   * New upstream release
