@@ -116,6 +116,9 @@ case "$1" in
         
 
         ;;
+	triggered)
+        invoke-rc.d ebox apache restart || true
+        ;;
 esac
 
 
