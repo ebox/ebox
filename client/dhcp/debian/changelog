@@ -1,3 +1,9 @@
+ebox-dhcp (0.12.2-0ubuntu1~ppa1~jaunty2) jaunty; urgency=low
+
+  * Fix indentation in postinst
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 18 Jan 2009 18:19:19 +0100
+
 ebox-dhcp (0.12.2-0ubuntu1~ppa1~jaunty1) jaunty; urgency=low
 
   * Jaunty packaging
