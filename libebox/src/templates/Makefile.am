@@ -6,8 +6,8 @@ templatedir = $(datadir)/ebox/templates
 
 template_DATA = enable.mas error.mas language.mas msg.mas title.mas formTable.mas \
 	        legendTable.mas dataTable.mas presentationTable.mas  table.mas \
-		link.mas componentCall.mas htmlAttributes.mas readOnlyForm.mas
-
+		link.mas componentCall.mas htmlAttributes.mas readOnlyForm.mas \
+		graph.mas
 
 EXTRA_DIST = $(template_DATA)
 

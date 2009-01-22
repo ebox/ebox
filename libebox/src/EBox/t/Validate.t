@@ -211,7 +211,6 @@ sub checkIP6Test
 
 }
 
-
 sub checkCIDRTest
 {
   my @valid = (
@@ -223,6 +222,7 @@ sub checkCIDRTest
                  '192.168.34.12/0',
                  '192.168.34.12',
                  '34.32.25.1/24',
+                 ' 40.24.3.129/0',
                 );
 
 
@@ -241,6 +241,5 @@ sub checkCIDRTest
 
 
 }
-
 
 1;

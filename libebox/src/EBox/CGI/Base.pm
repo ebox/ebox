@@ -171,7 +171,7 @@ sub _print
 	$self->_header;
 	$self->_top;
 	$self->_menu;
-	print "</div><div id='limewrap'><div id='content'>";
+	print '<div id="limewrap"><div id="content">';
 	$self->_title;
 	$self->_error;
 	$self->_msg;
@@ -306,15 +306,15 @@ sub run
 	if ((defined($self->{redirect})) && (!defined($self->{error}))) {
 		my $request = Apache2::RequestUtil->request();
 		my $headers = $request->headers_in();
-		my $via = $headers->{'Via'}; 
+		my $via = $headers->{'Via'};
 		my $host= $headers->{'Host'};
-		my $fwhost = $headers->{'X-Forwaded-Host'};
-		# If the connection comes from a Proxy, 
-		# redirects with the Proxy IP address
+		my $fwhost = $headers->{'X-Forwarded-Host'};
+		# If the connection comes from a Proxy
+		# it redirects with the Proxy IP address
 		if (defined($via) and defined($fwhost)) {
-			$host = $fwhost; 
+			$host = $fwhost;
 		}
-		my $protocol; 
+		my $protocol;
 		if ($request->subprocess_env('https')) {
 			$protocol = 'https';
 		} else {
@@ -323,7 +323,7 @@ sub run
 		my $url = "$protocol://${host}/ebox/" . $self->{redirect};
 		print($self->cgi()->redirect($url));
 		return;
-	} 
+	}
 
 	
 
