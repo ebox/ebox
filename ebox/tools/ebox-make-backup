@@ -1,38 +1,124 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
+
 use strict;
 use warnings;
 
 use EBox;
 use EBox::Backup;
+use EBox::RemoteServices::Backup;
 use EBox::ProgressIndicator;
 
 use Error qw(:try);
 
+use Getopt::Long;
+
 EBox::init();
 
-my %params = @ARGV;
-(exists $params{'--progress-id'}) or 
-  die 'not progress indicator id supplied';
+# process cli
+my $progressId = undef;
 
-my $progressId = delete $params{'--progress-id'};
+my $remoteBackupName = undef;
+my $configBackup = 0;
+my $fullBackup   = 0;
+my $bugReport    = 0;
+
+my $description = undef;
+
+my $help = 0;;
+
+my $optionsOk = GetOptions(
+                           'progress-id:i'   => \$progressId,
+                           'config-backup'   => \$configBackup,
+                           'full-backup'     => \$fullBackup,
+                           'bug-report'      => \$bugReport,
+                           'description=s'   => \$description,
+                           'remote-backup=s' => \$remoteBackupName,
+                           'help'            => \$help,
+                          );
+
+if (not $optionsOk) {
+  print "Incorrect options\n";
+  print "$0 --help for usage instructions\n";
+  exit 1;
+}
+
+if ($help) {
+  usage();
+  exit 0;
+}
 
 
-my $progress = EBox::ProgressIndicator->retrieve($progressId);
 
 
-# put  progress indicator param
-$params{progress} = $progress;
+# see if we have incompatible operation modes
+my $incompatibleModes = grep { $_  }  ($configBackup, $fullBackup, $bugReport);
+if ($incompatibleModes > 1) {
+  die "You can only choose one backup mode from --config-backup,  --full-backup or --bug-report. (--config-restore is the default restore mode)";
+}
+
+
+
+my %params;
+
+if ($bugReport) {
+    my $incompatibleWithBug = grep { $_  }  ($description, $progressId);
+    if ($incompatibleWithBug) {
+        die "You have specified options incompatibles with the bug report mode)";
+    }
+}
+
+
+if ($progressId) {
+    my $progress = EBox::ProgressIndicator->retrieve($progressId);
+    
+    # put  progress indicator param
+    $params{progress} = $progress;
+}
+
+if (defined $description) {
+    $params{description} = $description;
+}
+
+
+if ($fullBackup) {
+    $params{fullBackup} = 1;
+}
 
 try {
-  EBox::Backup->makeBackup(%params);
+  my $file = EBox::Backup->makeBackup(%params);
+  if ($remoteBackupName) {
+    my $backupService = EBox::RemoteServices::Backup->new();
+    my $description = $params{description};
+    $backupService->sendRemoteBackup($file, $remoteBackupName, $description);
+  }
 }
 otherwise {
   my $ex = shift @_;
 
- $progress->setAsFinished(1, $ex->text);
+  if (exists $params{progress}) {
+    $params{progress}->setAsFinished(1, $ex->text);
+  }
 
   $ex->throw();
 };
 
+
+sub usage
+{
+  print <<END;
+  Usage:
+  $0  [OPTION\]... 
+  $0  --help
+  
+  Options:
+    --config-backup (default backup mode)
+    --full-backup
+    --bug-report
+
+    --description <description>
+    --remote-backup <name>
+    --progress-id (only needed for web framework)
+END
+}
 
 1;

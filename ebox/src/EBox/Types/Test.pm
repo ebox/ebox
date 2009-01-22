@@ -34,14 +34,25 @@ sub cloneTest
     lives_ok {
         $clone = $instance->clone();
     } 'cloning instance';
-    
-
     is_deeply $instance, $clone,
         'checking tht data is the same in original and clone';
     is ref $instance, ref $clone,
         'checking that original and clone are of the same class';
 }
 
+# Procedure: defaultValueOk
+#
+#    Check the default value for a class is the value assigned when no
+#    value is set for the type instance
+#
+# Parameters:
+#
+#    class - String the type class name
+#    value - the value for the class
+#
+#    params - hash extra parameters to set in constructor, it must be
+#    a single element 'extraNewParams' with the parameters
+#
 sub defaultValueOk
 {
     my ($class, $value, %params) = @_;
@@ -69,9 +80,6 @@ sub defaultValueOk
         $value,
        "Checking that default value $value was set correctly for $class";
 }
-
-
-
 
 sub createOk
 {

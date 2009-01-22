@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use EBox;
+use EBox::Config;
 use EBox::Global;
 use EBox::ProgressIndicator;
 use EBox::Exceptions::Internal;
@@ -49,7 +50,12 @@ try {
 otherwise {
   my $ex = shift @_;
 
- $progress->setAsFinished(1, $ex->text);
+  my $errorTxt = $ex->text();
+  if ( EBox::Config::configkey('debug') eq 'yes' ) {
+      $errorTxt .= $ex->stacktrace();
+  }
+
+  $progress->setAsFinished(1, $errorTxt);
 
   $ex->throw();
 };

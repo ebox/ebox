@@ -316,7 +316,6 @@ sub defaultStatus
     return undef;
 }
 
-
 sub _gconfModule
 {
     my ($self) = @_;

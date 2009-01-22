@@ -134,8 +134,12 @@ sub restartService
 
 	$log->info("Restarting service for module: " . $self->name);
 	try {
-		$self->_regenConfig('restart' => 1);
-	} finally {
+            $self->_regenConfig('restart' => 1);
+	} otherwise  {
+            my ($ex) = @_;
+            $log->error("Error restarting service: $ex");
+            throw $ex;
+        } finally {
 		$self->_unlock();
 	};
 }
@@ -850,7 +854,7 @@ sub writeConfFile # (file, component, params, defaults)
     my $comp = $interp->make_component(comp_file =>
                                          EBox::Config::stubs . "/" . $compname);
 
-    # Workaround bogus mason warnings, redirect stderr to /dev/null to not
+    # Workaround bogus mason warnings, redirect stderr to /dev/null not to
     # scare users. New mason version fixes this issue
     my $old_stderr;
     my $tmpErr = EBox::Config::tmp() . 'mason.err';
@@ -877,9 +881,9 @@ sub writeConfFile # (file, component, params, defaults)
         $gid  = exists $defaults->{gid}  ?  $defaults->{gid}   : 0;
     }
 
-    EBox::Sudo::root("/bin/mv $tmpfile  $file");
-    EBox::Sudo::root("/bin/chmod $mode $file");
-    EBox::Sudo::root("/bin/chown $uid.$gid $file");
+    EBox::Sudo::root("/bin/mv $tmpfile  '$file'");
+    EBox::Sudo::root("/bin/chmod $mode '$file'");
+    EBox::Sudo::root("/bin/chown $uid.$gid '$file'");
 
 
     if ($self->isa('EBox::ServiceModule::ServiceInterface')) {

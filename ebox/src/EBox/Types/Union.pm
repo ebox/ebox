@@ -255,12 +255,21 @@ sub compareToHash
 
 }
 
-
+# Method: isEqualTo
+#
+# Overrides:
+#
+#   <EBox::Types::Abstract::isEqualTo>
+#
 sub isEqualTo
 {
     my ($self, $newObject) = @_;
-
-    return ($self->printableValue() eq $newObject->printableValue());
+    my $comparison = $self->cmp($newObject);
+    if ( defined($comparison) ) {
+        return $comparison == 0;
+    } else {
+        return 0;
+    }
 }
 
 # Method: HTMLSetter
@@ -486,5 +495,37 @@ sub _setValue
     $AUTOLOAD = '_setValue';
     return $self->AUTOLOAD($selectedValue);
  }
+
+# Method: cmp
+#
+# Overrides:
+#
+#      <EBox::Types::Abstract::cmp>
+#
+# Returns:
+#
+#      -1 - if all simpler types from self are lower than compareType
+#
+#       0 - if all simpler types from self are equal to compareType
+#
+#       1 - if all simpler types from self are higher than compareType
+#
+#       undef - otherwise
+#
+sub cmp
+{
+    my ($self, $compareType) = @_;
+
+    unless ( (ref $self) eq (ref $compareType) ) {
+        return undef;
+    }
+
+
+    my $selfSelected = $self->subtype();
+    my $compareSelected = $compareType->subtype();
+
+
+    return $selfSelected->cmp($compareSelected);
+}
 
 1;
