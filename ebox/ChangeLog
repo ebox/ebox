@@ -1,5 +1,8 @@
+0.12.5
+	+ Bugfix: check if we must disable file modification checks in
+	Manager::skipModification 
 0.12.4
-	 + Bugfix. Configure logrotate to actually rotate ebox logs
+	+ Bugfix. Configure logrotate to actually rotate ebox logs
 0.12.3
 	+ Bug fix: use the new API in purge method. Now purging logs is working
 	again.
