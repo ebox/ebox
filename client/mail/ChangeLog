@@ -1,5 +1,7 @@
 0.12.2
-	+ Bugfix: Start POP3 over SSL (Port: 995)
+	+ Bugfix: Start POP3 and IMAP  over SSL (Port: 993 and 995)
+	+ Replaced courier with dovecot
+	+ Simpler interface to choose mail retrieval protocols
 0.12.1
 	+ Bugfix: Use EBox::Types::Union::Text for unlimited message size
 0.12

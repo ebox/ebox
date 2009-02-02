@@ -48,6 +48,16 @@ sub new
     return $self;
 }
 
+# Method: mailboxesDir
+#
+#  Returns:
+#    directory where the mailboxes resides 
+sub mailboxesDir
+{
+    return DIRVMAIL;
+}
+
+
 # Method: setUserAccount
 #
 #  This method sets a mail account to a user
@@ -597,15 +607,17 @@ sub _includeLDAPSchemas
 sub _createMaildir
 {
     my ($self, $lhs, $vdomain) = @_;
+    my $vdomainDir = "/var/vmail/$vdomain";
+    my $userDir   =  "$vdomainDir/$lhs/";
     
     root("/bin/mkdir -p /var/vmail");
     root("/bin/chmod 2775 /var/mail/");
     root("/bin/chown ebox.ebox /var/vmail/");
     
-    root("/bin/mkdir -p /var/vmail/$vdomain");
-    root("/bin/chown ebox.ebox /var/vmail/$vdomain");
-    root("/usr/bin/maildirmake /var/vmail/$vdomain/$lhs/");
-    root("/bin/chown ebox.ebox -R /var/vmail/$vdomain/$lhs/");
+    root("/bin/mkdir -p $vdomainDir");
+    root("/bin/chown ebox.ebox $vdomainDir");
+    root("/usr/bin/maildirmake.dovecot $userDir ebox");
+    root("/bin/chown ebox.ebox -R $userDir");
 }
 
 

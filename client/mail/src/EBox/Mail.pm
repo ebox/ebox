@@ -9,7 +9,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU General Public Licensema
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
@@ -18,11 +18,11 @@ package EBox::Mail;
 use strict;
 use warnings;
 
-use base qw(EBox::GConfModule EBox::LdapModule EBox::ObjectsObserver
+use base qw(EBox::GConfModule EBox::ServiceModule::ServiceInterface
+            EBox::LdapModule EBox::ObjectsObserver
             EBox::Model::ModelProvider EBox::Model::CompositeProvider
             EBox::FirewallObserver EBox::LogObserver
             EBox::Report::DiskUsageProvider 
-            EBox::ServiceModule::ServiceInterface
            );
 
 use EBox::Sudo qw( :all );
@@ -38,6 +38,7 @@ use EBox::MailUserLdap;
 use EBox::MailAliasLdap;
 use EBox::MailLogHelper;
 use EBox::MailFirewall;
+use EBox::Service;
 
 use EBox::Exceptions::InvalidData;
 
@@ -46,23 +47,15 @@ use Perl6::Junction qw(all);
 
 use constant MAILMAINCONFFILE                   => '/etc/postfix/main.cf';
 use constant MAILMASTERCONFFILE                 => '/etc/postfix/master.cf';
-use constant AUTHLDAPCONFFILE                   => '/etc/courier/authldaprc';
-use constant AUTHDAEMONCONFFILE                 => '/etc/courier/authdaemonrc';
-use constant POP3DCONFFILE                      => '/etc/courier/pop3d';
-use constant POP3DSSLCONFFILE                   => '/etc/courier/pop3d-ssl';
-use constant IMAPDCONFFILE                      => '/etc/courier/imapd';
-use constant IMAPDSSLCONFFILE                   => '/etc/courier/imapd-ssl';
-use constant SASLAUTHDDCONFFILE                 => '/etc/saslauthd.conf';
-use constant SASLAUTHDCONFFILE                  => '/etc/default/saslauthd';
-use constant SMTPDCONFFILE                      => '/etc/postfix/sasl/smtpd.conf';
+
+use constant DOVECOT_CONFFILE                   => '/etc/dovecot/dovecot.conf';
+use constant DOVECOT_LDAP_CONFFILE              =>  '/etc/dovecot/dovecot-ldap.conf';
+
 use constant MAILINIT                           => '/etc/init.d/postfix';
-use constant POPINIT                            => '/etc/init.d/courier-pop';
-use constant IMAPINIT                           => '/etc/init.d/courier-imap';
-use constant AUTHDAEMONINIT                     => '/etc/init.d/courier-authdaemon';
-use constant AUTHLDAPINIT                       => '/etc/init.d/courier-ldap';
-use constant POPPIDFILE                         => "/var/run/courier/pop3d.pid";
-use constant IMAPPIDFILE                        => "/var/run/courier/imapd.pid";
+
 use constant BYTES                              => '1048576';
+
+use constant DOVECOT_SERVICE                    => 'ebox.dovecot';
 
 
 use constant SERVICES => ('active', 'filter', 'pop', 'imap', 'sasl');
@@ -97,12 +90,6 @@ sub domain
 sub actions
 {
     return [
-            {
-              'action' => __('Add postfix to sasl group'),
-              'reason' => __('To allow postfix to connect with saslauthd via ' .
-                  'unix socket'),
-              'module' => 'mail'
-            },
             {
               'action' => __('Generate mail aliases'),
               'reason' =>
@@ -141,58 +128,20 @@ sub usedFiles
               'module' => 'mail'
             },
             {
-              'file' => AUTHDAEMONCONFFILE,
-              'reason' =>
-                __('To configure courier to authenticate against LDAP'),
+              'file' => DOVECOT_CONFFILE,
+              'reason' => __('To configure dovecot'),
               'module' => 'mail'
             },
             {
-              'file' => AUTHLDAPCONFFILE,
-              'reason' => __('To let courier know how to access LDAP'),
-              'module' => 'mail'
-            },
-            {
-              'file' => POP3DCONFFILE,
-              'reason' => __('To configure courier POP3'),
-              'module' => 'mail'
-            },
-            {
-              'file' => POP3DSSLCONFFILE,
-              'reason' => __('To configure POP3 with SSL support'),
-              'module' => 'mail'
-            },
-            {
-              'file' => IMAPDCONFFILE,
-              'reason' => __('To configure IMAP'),
-              'module' => 'mail'
-            },
-            {
-              'file' => IMAPDSSLCONFFILE,
-              'reason' => __('To configure IMAP with SSL support'),
-              'module' => 'mail'
-            },
-            {
-              'file' => SASLAUTHDDCONFFILE,
-              'reason' =>
-                __('To configure saslauthd to authenticate against LDAP '),
-              'module' => 'mail'
-            },
-            {
-              'file' => SASLAUTHDCONFFILE,
-              'reason' =>
-                __('To configure saslauthd to authenticate against LDAP '),
-              'module' => 'mail'
-            },
-            {
-              'file' => SMTPDCONFFILE,
-              'reason' => __('To configure saslauthd to use LDAP'),
+              'file' => DOVECOT_LDAP_CONFFILE,
+              'reason' =>  __('To configure dovecot to authenticate against LDAP'),
               'module' => 'mail'
             },
             {
               'file' => '/etc/ldap/slapd.conf',
               'reason' => __('To add the LDAP schemas used by eBox mail'),
               'module' => 'users'
-            }
+            } 
     ];
 }
 
@@ -347,8 +296,8 @@ sub _setMailConf
     push(@array, 'gidvmail', $self->{musers}->gidvmail());
     push(@array, 'sasl', $self->service('sasl'));
     push(@array, 'smtptls', $self->tlsSmtp());
-    push(@array, 'popssl', $self->sslPop());
-    push(@array, 'imapssl', $self->sslImap());
+    push(@array, 'popssl', $self->pop3s());
+    push(@array, 'imapssl', $self->imaps());
     push(@array, 'ldap', $ldap->ldapConf());
     push(@array, 'filter', $self->service('filter'));
     push(@array, 'ipfilter', $self->ipfilter());
@@ -363,47 +312,44 @@ sub _setMailConf
     $self->writeConfFile(MAILMASTERCONFFILE, "mail/master.cf.mas", \@array);
 
     @array = ();
-    push(@array, 'usersDN', $users->usersDn());
-    push(@array, 'rootDN', $self->{vdomains}->{ldap}->rootDn());
-    push(@array, 'rootPW', $self->{vdomains}->{ldap}->rootPw());
+    push(@array, 'uid', scalar(getpwnam('ebox')));
+    push(@array, 'gid', scalar(getgrnam('ebox')));
+    push(@array, 'protocols' , $self->_retrievalProtocols());
 
-    $self->writeConfFile(AUTHLDAPCONFFILE, 
-                         "mail/authldaprc.mas", 
-                         \@array, 
-                         $daemonMode
-                        );
 
-    $self->writeConfFile(AUTHDAEMONCONFFILE, 
-                         "mail/authdaemonrc.mas",
-                        [],
-                        $daemonMode);
-
-    $self->writeConfFile(IMAPDCONFFILE, "mail/imapd.mas");
-    $self->writeConfFile(POP3DCONFFILE, "mail/pop3d.mas");
+    $self->writeConfFile(DOVECOT_CONFFILE, "mail/dovecot.conf.mas",\@array);
 
     @array = ();
-    push(@array, 'popssl', $self->sslPop());
-    $self->writeConfFile(POP3DSSLCONFFILE, "mail/pop3d-ssl.mas", \@array);
-
-    @array = ();
-    push(@array, 'imapssl', $self->sslImap());
-    $self->writeConfFile(IMAPDSSLCONFFILE, "mail/imapd-ssl.mas",\@array);
-
-    @array = ();
-    push(@array, 'ldapi', $self->{vdomains}->{ldap}->ldapConf->{ldap});
-    push(@array, 'rootdn', $self->{vdomains}->{ldap}->rootDn());
-    push(@array, 'passdn', $self->{vdomains}->{ldap}->rootPw());
-    push(@array, 'usersdn', $users->usersDn());
-
-    $self->writeConfFile(SASLAUTHDDCONFFILE, 
-                         "mail/saslauthd.conf.mas",
-                         \@array,
-                         $daemonMode
-                        );
-
-    $self->writeConfFile(SASLAUTHDCONFFILE, "mail/saslauthd.mas");
-    $self->writeConfFile(SMTPDCONFFILE, "mail/smtpd.conf.mas");
+    push @array, ('usersDn', $users->usersDn());
+    $self->writeConfFile(DOVECOT_LDAP_CONFFILE, "mail/dovecot-ldap.conf.mas",\@array);
 }
+
+
+sub _retrievalProtocols
+{
+    my ($self) = @_;
+
+    my $model = $self->model('RetrievalServices');
+    return $model->activeProtocos();
+}
+
+sub pop3s
+{
+    my ($self) = @_;
+
+    my $model = $self->model('RetrievalServices');
+    return $model->pop3sValue();
+}
+
+sub imaps
+{
+    my ($self) = @_;
+
+    my $model = $self->model('RetrievalServices');
+    return $model->imapsValue();
+}
+
+
 
 sub _fqdn
 {
@@ -437,33 +383,28 @@ sub isRunning
     my ($self, $service) = @_;
 
     if (not defined($service)) {
-        return undef unless $self->_postfixIsRunning();
-        if ($self->service('pop') and not $self->_popIsRunning()) {
-            return undef;
+        if ($self->_dovecotService()) {
+            return undef unless $self->_dovecotIsRunning();
         }
-        if ($self->service('imap') and not $self->_imapIsRunning()) {
-            return undef;
-        }
-        return 1;
+
+        return $self->_postfixIsRunning();
     } elsif ($service eq 'active') {
         return $self->_postfixIsRunning();
     } elsif ($service eq 'pop') {
-        return $self->_popIsRunning();
+        return $self->_dovecotIsRunning();
     } elsif ($service eq 'imap') {
-        return $self->_imapIsRunning();
+        return $self->_dovecotIsRunning();
     }
 }
 
-sub _popIsRunning
-{
-    my ($self) = @_;
-    return $self->pidFileRunning(POPPIDFILE);
-}
 
-sub _imapIsRunning
+
+
+
+sub _dovecotIsRunning
 {
     my ($self) = @_;
-    return $self->pidFileRunning(IMAPPIDFILE);
+    return EBox::Service::running(DOVECOT_SERVICE);
 }
 
 sub _postfixIsRunning
@@ -674,34 +615,7 @@ sub _sslRetrievalServices
 {
     my ($self) = @_;
     my $retrievalServices = $self->model('RetrievalServices');
-    return $retrievalServices->ssl();
-}
-
-# Method: sslPop
-#
-#  This method returns the ssl level on pop, it could be: no, optional, required
-#
-# Returns:
-#
-#               string - with the level (no, optional, required)
-sub sslPop
-{
-    my ($self) = @_;
-    return $self->_sslRetrievalServices();
-}
-
-
-# Method: sslImap
-#
-#  This method returns the ssl level on imap, it could be: no, optional, required
-#
-# Returns:
-#
-#               string - with the level (no, optional, required)
-sub sslImap
-{
-    my ($self) = @_;
-    return $self->_sslRetrievalServices();
+    return $retrievalServices->pop3sValue() or $retrievalServices->imapsValue();
 }
 
 #
@@ -809,79 +723,91 @@ sub firewallHelper
     return undef;
 }
 
-sub _doDaemon
-{
-    my ($self, $service) = @_;
-    my @services = ('active', 'pop', 'imap');
 
-    if ($self->service($service) and $self->isRunning($service)) {
-        if ($service eq 'active') {
-            foreach (@services) {
-                $self->_daemon('restart',$_);
+
+
+sub _doPostfixDaemon
+{
+    my ($self, $action) = @_;
+    
+    if (not defined $action) {
+        if ($self->service('active') ) {
+            if ( $self->isRunning('active')) {
+                $action = 'restart';
             }
+            else {
+                $action = 'start';      
+            }
+        } else {
+            $action = 'stop';
         }
-        $self->_daemon('restart', $service);
-    } elsif ($self->service($service)) {
-        $self->_daemon('start', $service);
-    } elsif ($self->isRunning($service)) {
-        $self->_daemon('stop', $service);
     }
+
+
+    my $command =  EBox::Config::pkgdata() . 'ebox-unblock-exec ';
+    $command    .= MAILINIT . " " . $action;
+    root($command);
 }
 
-sub _command
+sub _doDovecotDaemon
 {
-    my ($self, $action, $service) = @_;
-    my $cmd = undef;
+    my ($self, $action) = @_;
 
-    $cmd = EBox::Config::pkgdata() . 'ebox-unblock-exec ';
-    if ($service eq 'active') {
-        $cmd .= MAILINIT . " " . $action;
-    } elsif ($service eq 'pop') {
-        $cmd .= POPINIT . " " . $action;
-    } elsif ($service eq 'imap') {
-        $cmd .= IMAPINIT . " " . $action;
-    } elsif ($service eq 'authdaemon') {
-        $cmd .= AUTHDAEMONINIT . " " . $action;
-    } elsif ($service eq 'authldap') {
-        $cmd .= AUTHLDAPINIT . " " . $action;
-    } else {
-        throw EBox::Exceptions::Internal("Bad service: $service");
+    if (not defined $action) {
+        my $service = $self->_dovecotService();
+        my $running = EBox::Service::running(DOVECOT_SERVICE);
+
+        if ($service) {
+            if ($running) {
+                $action = 'restart';
+            } else {
+                $action = 'start';            
+            }
+        } else {
+            $action = 'stop';
+        }
     }
 
-    EBox::debug($cmd);
-    return $cmd;
+
+    EBox::Service::manage(DOVECOT_SERVICE, $action);
 }
 
-sub _daemon
+
+sub _dovecotService
 {
-    my ($self, $action, $service) = @_;
+    my ($self) = @_;
 
-    my $command = $self->_command($action, $service);
-
-    if ( $action eq 'start') {
-        root($command);
-    } elsif ( $action eq 'stop') {
-        root($command);
-    } elsif ( $action eq 'reload') {
-        root($command);
-    } elsif ( $action eq 'restart') {
-        root($command);
-    } else {
-        throw EBox::Exceptions::Internal("Bad argument: $action");
+    # if main service is disabled, dovecot too!
+    if (not $self->service('active')) {
+        return undef;
     }
+
+    if ( @{ $self->_retrievalProtocols } > 0 ) {
+        return 1;
+    }
+
+    # dovecot is also needed for smtp auth
+    if ($self->saslService()) {
+        return 1;
+    }
+
+
+    return undef;
 }
 
 sub _stopService
 {
-    my $self = shift;
+    my ($self) = @_;
     if ($self->isRunning('active')) {
-        $self->_daemon('stop', 'active');
+        $self->_doPostfixDaemon('stop');
     }
+
+    $self->_doDovecotDaemon('stop');
 }
 
 sub _regenConfig
 {
-    my $self = shift;
+    my ($self) = @_;
 
     if ($self->service) {
         $self->_setMailConf;
@@ -889,13 +815,10 @@ sub _regenConfig
         $vdomainsLdap->regenConfig();
     }
 
-    my @services = ('active', 'pop', 'imap');
-    foreach (@services) {
-        $self->_doDaemon($_);
-    }
+    $self->_doDovecotDaemon(); 
+    $self->_doPostfixDaemon();
 
-    $self->_daemon('restart', 'authdaemon');
-    $self->_daemon('restart', 'authldap');
+
 }
 
 
@@ -925,11 +848,13 @@ sub service
     elsif ($service eq 'sasl') {
         return $self->saslService();
     }
-    elsif ($service eq 'pop') {
-        return $self->model('RetrievalServices')->pop3();
+    elsif ($service eq 'pop') { # that e
+        return $self->model('RetrievalServices')->pop3Value() or
+            $self->model('RetrievalServices')->pop3sValue();
     } 
     elsif ($service eq 'imap') {
-        return $self->model('RetrievalServices')->imap();
+        return $self->model('RetrievalServices')->imapValue() or
+            $self->model('RetrievalServices')->imapsValue();
     }
     elsif ($service eq 'filter') {
         return $self->externalFilter() ne 'none';
@@ -960,7 +885,7 @@ sub saslService
 #
 sub anyDaemonServiceActive
 {
-    my $self = shift;
+    my ($self) = @_;
     my @services = ('active', 'pop', 'imap');
 
     foreach (@services) {
@@ -1056,7 +981,7 @@ sub statusSummary
     my $self = shift;
     return
       new EBox::Summary::Status('mail', __('Mail system'),
-                                $self->isRunning('active'),
+                                $self->isRunning(),
                                 $self->service('active'));
 }
 
