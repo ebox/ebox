@@ -1,0 +1,58 @@
+<%doc>
+  Component for HTML select input
+
+   Parameters:
+       name  - name of the input
+       value - value of the input
+       options - this reference to a list contains all the available select's
+  options. Each option is represented a hash reference with this
+  keys:
+        value          - the value of the option
+        printableValue - the string who represent the value in the
+  GUI. Defaults to value
+        disabled       - boolean indicating if the option is enabled
+       or not
+  
+  You can pass also other HTML attributes as parameters.
+
+  
+</%doc>
+<%init>
+my $name = delete $ARGS{name};
+$name or die 'select control needs at least the name parameter';
+my $value = exists $ARGS{value} ? delete $ARGS{value} : '';
+
+my @options = exists $ARGS{options} ? @{  delete $ARGS{options} } : ();
+# disable the control if it isn't any option
+if (@options == 0) {
+  $ARGS{disabled} = 'disabled';
+}
+</%init>
+<select name="<% $name %>" <& /htmlAttributes.mas, %ARGS &>  >
+% foreach my $option (@options) {
+%  my $optionValue     = $option->{value};
+%  $option->{selected} = ($value eq $optionValue) ? 1 : 0;
+ <& .option, %{ $option  } &>
+% }
+</select>
+% return;
+
+<%def .option>
+<%args>
+$value
+$selected => 0
+$printableValue => undef
+$disabled => 0
+</%args>
+<%init>
+if (!defined $printableValue) {
+   $printableValue = $value;
+}
+my $selectedAttr = $selected ? 'selected="selected"' : '';
+my $disabledAttr = $disabled ? 'disabled="disabled"' : '';
+</%init>
+<option value="<% $value | h %>" <% $selectedAttr %> <% $disabledAttr %> >
+<% $printableValue %>
+</option>
+</%def>
+

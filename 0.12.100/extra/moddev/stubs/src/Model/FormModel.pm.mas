@@ -1,0 +1,116 @@
+<%args>
+    $mainClass
+    $modelName
+    $printableTableName
+    $rowName
+    $modelDomain
+    $modelType => 'form'
+    @fields => ()
+</%args>
+# Copyright  
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+# Class: <% $mainClass %>::Model::<% $modelName %>
+#   
+#   TODO: Document class
+#
+
+package <% $mainClass %>::Model::<% $modelName %>;
+
+use EBox::Gettext;
+use EBox::Validate qw(:all);
+
+% for my $field (@fields) {
+use EBox::Types::<% $field->{type} %>;
+% }
+
+use strict;
+use warnings;
+
+% if ($modelType eq 'form') {
+use base 'EBox::Model::DataForm';
+% } else {
+use base 'EBox::Model::DataTable';
+% }
+
+sub new 
+{
+        my $class = shift;
+        my %parms = @_;
+
+        my $self = $class->SUPER::new(@_);
+        bless($self, $class);
+
+        return $self;
+}
+
+% for my $field (@fields) {
+%   if ($field->{type} eq 'Select') {
+# Method: populate_<% $field->{name} %>
+#
+#   Callback function to fill out the values that can
+#   be picked from the <EBox::Types::Select> field <% $field->{name} %>
+#
+# Returns:
+#   
+#   Array ref of hash refs containing:
+#    
+#
+sub populate_<% $field->{name} %>
+{
+    return [ { value => 'value1', printableValue => 'value2'}];
+}
+%   }
+% }
+
+sub _table
+{
+
+    my @tableHead = 
+    ( 
+% for my $field (@fields) {
+%   if ($field->{type} eq 'Select') {
+        new EBox::Types::<% $field->{type} %>(
+            'fieldName' => '<% $field->{name} %>',
+            'printableName' => __('<% $field->{name} %>'),
+            'populate' => \&populate_<% $field->{name} %>,
+            'unique' => 1,
+            'editable' => 1
+        ),
+%   }   else {
+        new EBox::Types::<% $field->{type} %>(
+            'fieldName' => '<% $field->{name} %>',
+            'printableName' => __('<% $field->{name} %>'),
+            'size' => '8',
+            'unique' => 1,
+            'editable' => 1
+        ),
+%   }
+% }
+    );
+    my $dataTable = 
+    { 
+        'tableName' => '<% $modelName %>',
+        'printableTableName' => __('<% $printableTableName %>'),
+        'modelDomain' => '<% $modelDomain %>',
+        'defaultActions' => ['add', 'del', 'editField', 'changeView' ],
+        'tableDescription' => \@tableHead,
+        'help' => '', # FIXME
+    };
+
+    return $dataTable;
+}
+
+1;

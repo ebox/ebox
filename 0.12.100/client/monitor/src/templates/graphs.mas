@@ -1,0 +1,60 @@
+<%doc>
+  Show all the monitored graphs in a page
+
+Parameters:
+
+  graphs - array the data to use in graphs
+  period - String the time period to show
+
+</%doc>
+<%args>
+  @graphs
+  $period
+</%args>
+<%init>
+  use EBox::Monitor::Configuration;
+  my ($periodData) = grep { $_->{name} eq $period } @{EBox::Monitor::Configuration::TimePeriods()};
+</%init>
+<script type="text/javascript" src="/data/js/flotr.js"></script>
+<script type="text/javascript" src="/data/js/excanvas.js"></script>
+% foreach my $graph (@graphs) {
+<h3><% $graph->{title} %></h3>
+  <span id="timePeriod" style="display: none;" value='<% $period %>'></span>
+  <div class="help">
+    <% $graph->{help} %>
+  </div>
+  <div id="<% $graph->{id} %>_container">
+    <& /graph.mas,
+       id       => $graph->{id},
+       type     => $graph->{type},
+       series   => $graph->{series},
+       timetype => $periodData->{timeType},
+    &>
+  </div>
+% }
+<script type="text/javascript">
+function updateGraphs() {
+   // Time period is sent using the tab
+   var period = $('timePeriod').getAttribute('value');
+   var graphs = $$('div.graph');
+   graphs.each(function(graph) {
+       var url = '/ebox/Monitor/UpdateGraph';
+       var parts = graph.id.split('.');
+       new Ajax.Updater(graph.id + '_container', url,
+                        { method: 'get',
+                          asynchronous : true,
+                          evalScripts : true,
+                          parameters: { 'period'   : period,
+                                        'measure'  : parts[0],
+                                        'instance' : parts[1],
+                                        },
+                        });                                        
+   }); 
+}
+
+Event.observe(window, 'load', function() {
+  // Update graphs every 30s   
+  new PeriodicalExecuter(updateGraphs, 30);
+});
+
+</script>
