@@ -1,0 +1,1024 @@
+# ----de.po (ebox-mail 0.9)  ----Language =de translations for ebox-mail package.
+# Copyright (C) 2006 Warp S.L.
+# This file is distributed under the same license as the ebox-mail package.
+# Automatically generated, 2006.
+# ----de.po (ebox-mail 0.8.99)  ----Language =de translations for ebox-mail package.
+# Copyright (C) 2006 Warp S.L.
+# This file is distributed under the same license as the ebox-mail package.
+# Automatically generated, 2006.
+# , fuzzy
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-mail 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-01-21 10:14+0100\n"
+"PO-Revision-Date: 2008-11-24 01:07+0000\n"
+"Last-Translator: stefan gerstl <ebox@gerstl.cc>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:155
+msgid "Admin mail recipient"
+msgstr "Empfänger für E-Mails an den Administrator"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:168 src/EBox/Mail.pm:1053
+#: src/EBox/Mail.pm:1109 src/EBox/Mail.pm:1190
+msgid "Mail"
+msgstr "E-Mail"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:189
+#, perl-brace-format
+msgid "Cannot connect to {smtp} mail server"
+msgstr "Es konnte keine Verbindung zum Mailserver {smtp} hergestellt werden"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:230
+#, perl-brace-format
+msgid "Cannot connect to the server {hostname} to send the event through SMTP"
+msgstr ""
+"Es konnte keine Verbindung zum Mailserver {hostname} hergestellt werden, um "
+"das Ereignis mittels SMTP zu übermitteln"
+
+#: src/EBox/CGI/MQRequeue.pm:42 src/EBox/CGI/MQRemove.pm:42
+#: src/templates/qmanager.mas:17
+msgid "Queue ID"
+msgstr "ID der Warteschlange"
+
+#: src/EBox/CGI/CreateAlias.pm:42 src/EBox/CGI/DelAlias.pm:42
+#: src/EBox/CGI/CreateAccount.pm:42 src/EBox/CGI/DelAccount.pm:42
+msgid "username"
+msgstr "Benutzername"
+
+#: src/EBox/CGI/CreateAlias.pm:48
+msgid "maildrop"
+msgstr "E-Mails löschen"
+
+#: src/EBox/CGI/CreateAlias.pm:49 src/EBox/CGI/CreateGroupAlias.pm:48
+msgid "account name"
+msgstr "Kontoname"
+
+#: src/EBox/CGI/CreateAlias.pm:50 src/EBox/CGI/CreateGroupAlias.pm:49
+msgid "domain name"
+msgstr "Name der Domäne"
+
+#: src/EBox/CGI/DelAlias.pm:46
+msgid "mail alias"
+msgstr "E-Mail Alias"
+
+#: src/EBox/CGI/QueueManager.pm:34 src/EBox/CGI/QueueManager.pm:52
+#: src/EBox/Mail.pm:1135
+msgid "Queue Management"
+msgstr "Warteschlange verwalten"
+
+#: src/EBox/CGI/CreateAccount.pm:48 src/EBox/Mail/Model/VDomains.pm:81
+#: src/EBox/MailVDomainsLdap.pm:63 src/EBox/MailVDomainsLdap.pm:122
+msgid "virtual domain"
+msgstr "Virtuelle Domäne"
+
+#: src/EBox/CGI/CreateAccount.pm:50
+msgid "Mail address"
+msgstr "E-Mail Adresse"
+
+#: src/EBox/CGI/DelAccount.pm:46
+msgid "user mail"
+msgstr "Mail an Benutzer"
+
+#: src/EBox/CGI/CreateGroupAlias.pm:42 src/EBox/CGI/DelGroupAlias.pm:42
+msgid "group"
+msgstr "Gruppe"
+
+#: src/EBox/CGI/DelGroupAlias.pm:47
+msgid "group alias mail"
+msgstr "E-Mail Alias für Gruppe"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:126
+msgid "Subject"
+msgstr "Betreff"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:128
+#, perl-brace-format
+msgid "[EBox-event] An event has happened at {hostName}"
+msgstr "[eBox-Ereignis] Es hat sich etwas beim Server {hostName} ereignet"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:135 src/EBox/Mail.pm:1159
+msgid "To"
+msgstr "An"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:142
+msgid "Configure mail dispatcher"
+msgstr "Mailverteiler konfigurieren"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:147
+msgid ""
+"In order to configure the Mail event dispatcher is required to enable the "
+"mail service from eBox"
+msgstr ""
+"Um den Mailverteiler für eBox-Ereignisse zu konfigurieren, müssen Sie den E-"
+"Mail-Dienst der eBox aktivieren"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:150
+msgid "Mail dispatcher configuration updated"
+msgstr "Die Einstellungen für den Mailverteiler wurden aktualisiert"
+
+#: src/EBox/Mail/Model/SMTPAuth.pm:85
+msgid ""
+"Users will have to authenticate to be able to send mails through this server"
+msgstr ""
+"Benutzer müssen sich authentifizieren um Mails über diesen Server zu senden"
+
+#: src/EBox/Mail/Model/SMTPAuth.pm:93
+msgid "Authentication"
+msgstr "Authentifizierung"
+
+#: src/EBox/Mail/Model/SMTPAuth.pm:123
+msgid "Cannot require authentication when TLS is inactive"
+msgstr "Kann Authentifizierung nicht anfordern, wenn TLS deaktiviert ist"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:90
+msgid "Object"
+msgstr "Objekt"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:96
+msgid "Allow relay"
+msgstr "Erlaube Relaying"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:99
+#, fuzzy
+msgid ""
+"Tick this to allow the machines within the above object to send mails "
+"through this server."
+msgstr ""
+"Aktiviere dieses Kontrollfeld, um Rechnern innerhalb des oben genannten "
+"Objekts zu erlauben Mails über diesen Server zu schicken."
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:108
+msgid "Relay policy for network objects"
+msgstr "Weiterleitungs-Richtlinie für Netzwerk-Objekte"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:120
+msgid "object's relay policy"
+msgstr "Weiterleituns-Richtlinie des Objekts"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:121
+#, fuzzy
+msgid "You may allow mail relay per network object"
+msgstr "Hier können Sie die Mailweiterleitung für Netzwerk-Objekte erlauben"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:87
+msgid "Filter in use"
+msgstr "Verwendete Filter"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:94
+msgid "Custom filter's mail forward port"
+msgstr "Mailweiterleitungsport des benutzerdefinierter Filters"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:100
+msgid "Custom filter's IP address"
+msgstr "IP-Adresse des benutzerdefinierten Filters"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:106
+msgid "Custom filter's Port"
+msgstr "Port des benutzerdefinierten Filters"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:115
+msgid "Mail filter options"
+msgstr "Mail-Filter Optionen"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:135
+msgid "none"
+msgstr "keiner"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:136
+msgid "custom"
+msgstr "benutzerdefiniert"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:83
+msgid "Smarthost to send mail"
+msgstr "IP-Adresse eines Smarthost, der E-Mails versendet"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:90
+#, fuzzy
+msgid "Smarthost authentication"
+msgstr "Anmeldung erforderlich"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:95
+#, fuzzy
+msgid "None"
+msgstr "keiner"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:99
+msgid "User and password"
+msgstr ""
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:105
+msgid "User"
+msgstr ""
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:111
+msgid "Password"
+msgstr ""
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:123
+msgid "Maximum message size accepted"
+msgstr "Maximal erlaubte Nachrichtengrösse"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:127 src/templates/createaccount.mas:78
+#: src/templates/alias.mas:140
+msgid "Unlimited size"
+msgstr "Uneingeschränkt"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:131
+msgid "size in Mb"
+msgstr "Größe in MB"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:143
+msgid "Options"
+msgstr "Optionen"
+
+#: src/EBox/Mail/Model/VDomains.pm:57
+msgid "Name"
+msgstr "Name"
+
+#: src/EBox/Mail/Model/VDomains.pm:72
+msgid "Mail virtual domains"
+msgstr "Virtuelle Mail-Domäne"
+
+#: src/EBox/Mail/Model/VDomains.pm:83
+#, fuzzy
+msgid "Virtual domain added. You must save changes to use this domain"
+msgstr ""
+"Virtuelle Domäne hinzügefügt. Sie müssen die Änderungen speichern um diese "
+"Domäne zu nutzen"
+
+#: src/EBox/Mail/Model/VDomains.pm:113
+#, fuzzy
+msgid ""
+"You must enable the mail module in module status section in order to use it."
+msgstr ""
+"Sie müssen das Mail-Modul im Bereich Modul-Status aktivieren um es zu nutzen."
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:87
+msgid "SSL Support"
+msgstr "SSL-Unterstützung"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:96
+msgid "Mail retrieval services"
+msgstr "Dienst zur Mail-Abfage"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:114
+msgid "No"
+msgstr "Nein"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:115
+msgid "Optional"
+msgstr "Optional"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:116
+msgid "Required"
+msgstr "Erforderlich"
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:64
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:70
+msgid "Greylist duration (seconds)"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:78
+msgid "Retry window (hours)"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:79
+msgid ""
+"Time that will have the mail sender to retry before it will be greylisted "
+"again"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:87
+msgid "Entries time to live (days)"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:88
+msgid "Period after that unseen entries will be deleted"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:101
+#, fuzzy
+msgid "Greylist configuration"
+msgstr "Die Einstellungen für den Mailverteiler wurden aktualisiert"
+
+#: src/EBox/Mail/Composite/ServiceConfiguration.pm:88
+#: src/EBox/Mail/Composite/General.pm:77
+msgid "Mail server options"
+msgstr "Mail-Server Einstellungen"
+
+#: src/EBox/Mail/Greylist.pm:53
+msgid "To configure whitelist for greylisting"
+msgstr ""
+
+#: src/EBox/MailVDomainsLdap.pm:332
+msgid "Size quota"
+msgstr "Größenbeschränkung"
+
+#: src/EBox/MailVDomainsLdap.pm:424 src/EBox/MailVDomainsLdap.pm:430
+#: src/EBox/MailVDomainsLdap.pm:474 src/EBox/MailVDomainsLdap.pm:480
+#: src/EBox/Mail.pm:1327 src/EBox/MailUserLdap.pm:725
+#: src/EBox/MailUserLdap.pm:731 src/EBox/MailUserLdap.pm:793
+#: src/EBox/MailUserLdap.pm:799
+msgid "maildir size"
+msgstr "Grösse des Postfachs"
+
+#: src/EBox/MailAliasLdap.pm:59 src/EBox/MailAliasLdap.pm:64
+#: src/EBox/MailAliasLdap.pm:97 src/EBox/MailAliasLdap.pm:102
+#: src/EBox/MailAliasLdap.pm:140 src/EBox/MailUserLdap.pm:71
+#: src/EBox/MailUserLdap.pm:76
+msgid "mail account"
+msgstr "E-Mail-Konto"
+
+#: src/EBox/MailAliasLdap.pm:163 src/EBox/MailAliasLdap.pm:193
+#: src/EBox/MailAliasLdap.pm:228
+msgid "mail alias account"
+msgstr "Alias für Postfach"
+
+#: src/EBox/Mail.pm:78
+msgid "mail"
+msgstr "Mail"
+
+#: src/EBox/Mail.pm:112
+#, perl-brace-format
+msgid "Add {user} to {group} group"
+msgstr ""
+
+#: src/EBox/Mail.pm:114
+#, fuzzy, perl-brace-format
+msgid "To allow {daemon} to connect with {otherDaemon} via unix socket"
+msgstr "Um postfix die Verbindung zu saslauthd über unix socket zu erlauben"
+
+#: src/EBox/Mail.pm:120
+msgid "Generate mail aliases"
+msgstr "Neue Mail-Aliases erstellen"
+
+#: src/EBox/Mail.pm:122
+#, perl-brace-format
+msgid "eBox will execute {cmd}"
+msgstr ""
+
+#: src/EBox/Mail.pm:126
+msgid "Add LDAP schemas"
+msgstr "LDAP-Schemas hinzufügen"
+
+#: src/EBox/Mail.pm:128
+#, fuzzy, perl-brace-format
+msgid "eBox will add two LDAP schemas: {schema1} and {schema2}."
+msgstr ""
+"eBox wird zwei LDAP-Schemas hinzufügen: authldap.schema und eboximail.schema"
+
+#: src/EBox/Mail.pm:147
+msgid "To configure postfix"
+msgstr "Um postfix zu konfigurieren"
+
+#: src/EBox/Mail.pm:153
+msgid "To define how client programs connect to services in  postfix"
+msgstr ""
+"Um zu definieren, wie Client-Programme zu Diensten in _ _ postfix verbinden"
+
+#: src/EBox/Mail.pm:161
+msgid "To configure courier to authenticate against LDAP"
+msgstr "Um courier so zu konfigurieren, dass es sich am LDAP authentifiziert"
+
+#: src/EBox/Mail.pm:166
+msgid "To let courier know how to access LDAP"
+msgstr "Um courier mitzuteilen, wie es auf LDAP zugreift"
+
+#: src/EBox/Mail.pm:171
+msgid "To configure courier POP3"
+msgstr "Um courier POP3 zu konfigurieren"
+
+#: src/EBox/Mail.pm:176
+msgid "To configure POP3 with SSL support"
+msgstr "Um courier POP3 mit SSL-Unterstützung zu konfigurieren"
+
+#: src/EBox/Mail.pm:181
+msgid "To configure IMAP"
+msgstr "Um IMAP zu konfigurieren"
+
+#: src/EBox/Mail.pm:186
+msgid "To configure IMAP with SSL support"
+msgstr "Um IMAP mit SSL-Unterstützung zu konfigurieren"
+
+#: src/EBox/Mail.pm:192 src/EBox/Mail.pm:198
+msgid "To configure saslauthd to authenticate against LDAP "
+msgstr "Um saslauthd so zu konfigurieren, dass es sich am LDAP authentifiziert"
+
+#: src/EBox/Mail.pm:203
+msgid "To configure saslauthd to use LDAP"
+msgstr "Um saslauthd so zu konfigurieren, dass es LDAP verwendet"
+
+#: src/EBox/Mail.pm:208
+#, fuzzy
+msgid "To configure smart host authentication"
+msgstr "Um saslauthd so zu konfigurieren, dass es sich am LDAP authentifiziert"
+
+#: src/EBox/Mail.pm:213
+msgid "To add the LDAP schemas used by eBox mail"
+msgstr "Um LDAP-Schemas hinzuzufügen, welche von eBox Mail verwendet werden"
+
+#: src/EBox/Mail.pm:581
+msgid "Cannot change this parameter for a non-custom filter"
+msgstr ""
+"Dieser Parameter kann bei einen nicht benutzerdefinierten Filter nicht "
+"geändert werden"
+
+#: src/EBox/Mail.pm:596 src/EBox/Mail.pm:616
+msgid ""
+"The mail filter does not exist. Please set another mail filter or disable it"
+msgstr ""
+"Den Mailfilter gibt es nicht. Bitte wählen Sie einen anderen Mailfilter oder "
+"deaktivieren Sie es"
+
+#: src/EBox/Mail.pm:623
+#, fuzzy, perl-brace-format
+msgid ""
+"The mail filter {name} is not active. Please set another mail filter or "
+"disable it"
+msgstr ""
+"Den Mailfilter $name gibt es nicht. Bitte wählen Sie einen anderen "
+"Mailfilter oder deaktivieren Sie ihn"
+
+#: src/EBox/Mail.pm:1031
+msgid "POP3 service"
+msgstr "POP3-Dienst"
+
+#: src/EBox/Mail.pm:1033
+msgid "IMAP service"
+msgstr "IMAP-Dienst"
+
+#: src/EBox/Mail.pm:1067
+msgid "enabled"
+msgstr "aktiviert"
+
+#: src/EBox/Mail.pm:1067
+msgid "disabled"
+msgstr "deaktiviert"
+
+#: src/EBox/Mail.pm:1069 src/EBox/Mail.pm:1164
+msgid "Status"
+msgstr "Status"
+
+#: src/EBox/Mail.pm:1072
+#, fuzzy
+msgid "Mail server's filter"
+msgstr "Mail-Server Einstellungen"
+
+#: src/EBox/Mail.pm:1081 src/EBox/Mail.pm:1088
+#, fuzzy
+msgid "Filter type"
+msgstr "Filter"
+
+#: src/EBox/Mail.pm:1082
+msgid "Custom"
+msgstr "Benutzerdefiniert"
+
+#: src/EBox/Mail.pm:1084
+msgid "Address"
+msgstr "Adresse"
+
+#: src/EBox/Mail.pm:1115
+msgid "General"
+msgstr "Allgemein"
+
+#: src/EBox/Mail.pm:1122
+msgid "Virtual mail domains"
+msgstr "Virtuelle Mail-Domänen"
+
+#: src/EBox/Mail.pm:1128
+msgid "Greylist"
+msgstr ""
+
+#: src/EBox/Mail.pm:1156 src/templates/qmanager.mas:19
+msgid "Date"
+msgstr "Datum"
+
+#: src/EBox/Mail.pm:1157
+msgid "Message ID"
+msgstr "ID der Nachricht"
+
+#: src/EBox/Mail.pm:1158
+msgid "From"
+msgstr "Von"
+
+#: src/EBox/Mail.pm:1160
+msgid "From hostname"
+msgstr "Von Computername"
+
+#: src/EBox/Mail.pm:1161
+msgid "From host ip"
+msgstr "Von IP-Adresse"
+
+#: src/EBox/Mail.pm:1162 src/templates/qmanager.mas:18
+msgid "Size (bytes)"
+msgstr "Grösse (in Bytes)"
+
+#: src/EBox/Mail.pm:1163
+msgid "Relay"
+msgstr "Weiterleitung"
+
+#: src/EBox/Mail.pm:1165
+msgid "Event"
+msgstr "Ereignis"
+
+#: src/EBox/Mail.pm:1166
+msgid "Aditional Info"
+msgstr "Weitere Informationen"
+
+#: src/EBox/Mail.pm:1177
+msgid "Successful messages"
+msgstr "Erfolgreiche Nachrichten"
+
+#: src/EBox/Mail.pm:1178
+msgid "Maximum message size exceeded"
+msgstr "Maximale Nachrichtengrösse überschritten"
+
+#: src/EBox/Mail.pm:1179
+msgid "User quote exceeded"
+msgstr "Speicherplatz des Benutzers überschritten"
+
+#: src/EBox/Mail.pm:1180
+msgid "Relay access denied"
+msgstr "Zugriff auf Weiterleitung verweigert"
+
+#: src/EBox/Mail.pm:1181
+msgid "Account does not exist"
+msgstr "Dieses Konto gibt es nicht"
+
+#: src/EBox/Mail.pm:1182
+msgid "Host unreachable"
+msgstr "Computer nicht erreichbar"
+
+#: src/EBox/Mail.pm:1183
+msgid "Authentication error"
+msgstr "Fehler beim Anmelden"
+
+#: src/EBox/Mail.pm:1184
+msgid "Relay denied by the smarthost"
+msgstr ""
+
+#: src/EBox/Mail.pm:1185
+msgid "Greylisted"
+msgstr ""
+
+#: src/EBox/Mail.pm:1186
+msgid "Other events"
+msgstr "Andere Ereignisse"
+
+#: src/EBox/Mail.pm:1291
+msgid "Mailboxes"
+msgstr "Postfächer"
+
+#: src/EBox/MailUserLdap.pm:320
+msgid "This group has a mail alias"
+msgstr "Diese Gruppe hat ein E-Mail Alias"
+
+#: src/EBox/MailUserLdap.pm:347
+msgid "This user has a mail account"
+msgstr "Dieser Benutzer hat ein E-Mail Konto"
+
+#: migration/0001_add_firewall_services.pl:30
+msgid "eBox Mail System"
+msgstr "eBox Mail-System"
+
+#: src/templates/warnvd.mas:14
+msgid ""
+"The virtual domain you tried to delete contains data in the following "
+"modules. Please confirm you want to remove it and all its related data"
+msgstr ""
+"Die virtuelle Domäne, welche Sie löschen wollten hat weitere Daten in "
+"folgenden Modulen. Wollen Sie die Domäne mit allen dazugehörigen Daten "
+"löschen?"
+
+#: src/templates/warnvd.mas:29 src/templates/groupalias.mas:64
+#: src/templates/groupalias.mas:65 src/templates/alias.mas:22
+#: src/templates/alias.mas:23 src/templates/alias.mas:24
+#: src/templates/alias.mas:76 src/templates/alias.mas:77
+msgid "Delete"
+msgstr "Löschen"
+
+#: src/templates/warnvd.mas:32 src/templates/warnvdmdsize.mas:36
+#: src/templates/warnusermdsize.mas:26
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/templates/groupalias.mas:11
+msgid "Create alias mail account to group"
+msgstr "Ein E-Mail-Alias für eine Gruppe generieren"
+
+#: src/templates/groupalias.mas:16
+msgid ""
+"When the last member of a group is removed, the mail alias account will be "
+"deleted"
+msgstr ""
+"Wenn das letzte Mitglied einer Gruppe entfernt wurde, wird das E-Mail-Alias "
+"gelöscht"
+
+#: src/templates/groupalias.mas:21
+msgid ""
+"There are no users in the group or the users do not have a mail account, so "
+"an alias account cannot be created"
+msgstr ""
+"Entweder sind keine Benutzer in dieser Gruppe oder die Benutzer gibt es "
+"nicht, darum kann kein E-Mail-Alias erstellt werden"
+
+#: src/templates/groupalias.mas:48 src/templates/groupalias.mas:49
+#: src/templates/createaccount.mas:46 src/templates/createaccount.mas:47
+#: src/templates/alias.mas:63 src/templates/alias.mas:64
+#: src/templates/alias.mas:65
+msgid "Create"
+msgstr "Generieren"
+
+#: src/templates/groupalias.mas:54
+msgid "Mail alias settings"
+msgstr "Einstellungen für E-Mail-Alias"
+
+#: src/templates/moduleDisabled.mas:5
+msgid ""
+"The following settings only will take effect when the mail module is enabled"
+msgstr ""
+"Die folgenden Einstellungen werden nur angewendet, wenn der E-Mail-Dienst "
+"aktiviert ist"
+
+#: src/templates/warnvdmdsize.mas:33 src/templates/warnusermdsize.mas:23
+msgid "Change"
+msgstr "Ändern"
+
+#: src/templates/createaccount.mas:15
+msgid "Create mail account"
+msgstr "Neues E-Mail Konto"
+
+#: src/templates/createaccount.mas:23
+msgid "Account name"
+msgstr "Kontoname"
+
+#: src/templates/createaccount.mas:27
+msgid "Domain name"
+msgstr "Name der Domäne"
+
+#: src/templates/createaccount.mas:62
+msgid "Maildir size"
+msgstr "Postfachgrösse"
+
+#: src/templates/alias.mas:11
+msgid "Mail account settings"
+msgstr "Einstellungen des E-Mail Konto"
+
+#: src/templates/alias.mas:34
+msgid "Create mail aliases"
+msgstr "Neues E-Mail Alias"
+
+#: src/templates/alias.mas:39
+msgid "Mail alias"
+msgstr "E-Mail-Alias"
+
+#: src/templates/alias.mas:42
+msgid "Action"
+msgstr "Aktion"
+
+#: src/templates/alias.mas:126
+msgid "Default maildir size (MB)"
+msgstr "Grösse des Standardpostfachs (MB)"
+
+#: src/templates/alias.mas:151 src/templates/alias.mas:152
+msgid "Modify"
+msgstr "Ändern"
+
+#: src/templates/qmanager.mas:20
+msgid "Sender"
+msgstr "Absender"
+
+#: src/templates/qmanager.mas:21
+msgid "Recipients"
+msgstr "Empfänger"
+
+#: src/templates/qmanager.mas:22
+msgid "Message"
+msgstr "Nachricht"
+
+#: src/templates/qmanager.mas:23
+msgid "Operate"
+msgstr "Verarbeiten"
+
+#: src/templates/qmanager.mas:40 src/templates/qmanager.mas:41
+msgid "Requeue"
+msgstr "In Warteschlange einreihen"
+
+#: src/templates/qmanager.mas:45 src/templates/qmanager.mas:46
+msgid "Show Info"
+msgstr "Info anzeigen"
+
+#: src/templates/qmanager.mas:50 src/templates/qmanager.mas:51
+msgid "Remove"
+msgstr "Löschen"
+
+#: src/templates/qmanager.mas:63 src/templates/qmanager.mas:64
+msgid "Hide Info"
+msgstr "Info verbergen"
+
+#: src/templates/qmanager.mas:83 src/templates/qmanager.mas:84
+msgid "first"
+msgstr "Erster"
+
+#: src/templates/qmanager.mas:87 src/templates/qmanager.mas:88
+msgid "prev"
+msgstr "Vorheriger"
+
+#: src/templates/qmanager.mas:107 src/templates/qmanager.mas:108
+msgid "next"
+msgstr "Nächster"
+
+#: src/templates/qmanager.mas:111 src/templates/qmanager.mas:112
+msgid "last"
+msgstr "Letzter"
+
+#: src/templates/qmanager.mas:122
+msgid "There is no messages in queue or the service is stopped"
+msgstr ""
+"In dieser Warteschlange hat es keine Nachrichten oder der Dienst ist gestoppt"
+
+#: src/templates/account.mas:22
+msgid "Mail account"
+msgstr "Postfach"
+
+#: src/templates/account.mas:26
+msgid "Click here to create a new mail virtual domain"
+msgstr "Eine virtuelle Domäne hinzufügen"
+
+#~ msgid "Add postfix to sasl group"
+#~ msgstr "Füge postfix zur Gruppe sasl hinzu"
+
+#~ msgid "eBox will execute /usr/sbin/postalias /etc/aliases "
+#~ msgstr "eBox wird /usr/sbin/postalias /etc/aliases  ausführen"
+
+#~ msgid "Mail services"
+#~ msgstr "E-Mail-Dienste"
+
+#~ msgid "Mail system"
+#~ msgstr "E-Mail-System"
+
+#~ msgid "vdomain"
+#~ msgstr "Virtuelle Domäne"
+
+#~ msgid "Message size limit"
+#~ msgstr "Beschränkung der Nachrichtengrösse"
+
+#~ msgid "Virtual domain name"
+#~ msgstr "Name der virtuellen Domäne"
+
+#~ msgid "Maximum mail account size"
+#~ msgstr "Maximale Grösse des Postfachs"
+
+#~ msgid "relay"
+#~ msgstr "Weiterleitung"
+
+#~ msgid "remote IP"
+#~ msgstr "IP der Gegenstelle"
+
+#~ msgid "{ip} is not a valid ip address"
+#~ msgstr "{ip} ist keine gültige IP-Adresse"
+
+#~ msgid "{ip} cannot be reached by any configured interface"
+#~ msgstr ""
+#~ "{ip} kann durch keine der konfigurierten Netzwerkkarten erreicht werden"
+
+#~ msgid "{ip} can be reached by more than one configured interface"
+#~ msgstr ""
+#~ "{ip} kann durch mehr als eine konfigurierte Netzwerkkarte erreicht werden"
+
+#~ msgid "port"
+#~ msgstr "Port"
+
+#, fuzzy
+#~ msgid "Smarthost"
+#~ msgstr "P des Smarthost"
+
+#~ msgid "message size"
+#~ msgstr "Grösse der Nachricht"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "TLS support is required by the authentication system"
+#~ msgstr "TLS-Unterstützung wird vom Anmelde-System vorausgesetzt"
+
+#~ msgid "Services"
+#~ msgstr "Dienste"
+
+#~ msgid "Service"
+#~ msgstr "Dienst"
+
+#~ msgid "Apply Changes"
+#~ msgstr "Änderungen anwenden"
+
+#~ msgid ""
+#~ "A value of 0 for the maximum message size and maximum mail account size "
+#~ "stands for no size limitation."
+#~ msgstr ""
+#~ "Der Wert \"0\" für die Nachrichtengrösse oder Grösse des E-Mail-Konto "
+#~ "hebt die Beschränkung auf"
+
+#~ msgid "Maximum message size accepted by the mail server"
+#~ msgstr "Maximale Grösse der Nachrichten, die vom Server akzeptiert werden"
+
+#~ msgid "Size (MB)"
+#~ msgstr "Grösse (in MB)"
+
+#~ msgid ""
+#~ "You should move to allowed column those objects you want to allow sending "
+#~ "mail through this module."
+#~ msgstr ""
+#~ "Sie sollten die Objekte, welche E-Mails mit diesem Modul versenden "
+#~ "dürfen, in die Spalte \"Erlaubt\" veschieben"
+
+#~ msgid ""
+#~ "Choose the object whose state you want to change and click on the arrow "
+#~ "to move it to the desired column."
+#~ msgstr ""
+#~ "Wählen Sie das Objekt, dessen Status Sie ändern möchten und klicken Sie "
+#~ "auf die Pfeile, um es in die gewünschte Spalte zu verschieben"
+
+#~ msgid "Denied"
+#~ msgstr "Verweigert"
+
+#~ msgid "Empty list"
+#~ msgstr "Liste ist leer"
+
+#~ msgid "Allow"
+#~ msgstr "Erlauben"
+
+#~ msgid "Move selected objects to the allowed column"
+#~ msgstr "Bewegen Sie die gewählten Objekte in die Spalte \"Erlaubt\""
+
+#~ msgid "Deny"
+#~ msgstr "Verweigern"
+
+#~ msgid "Move selected objects to the denied column"
+#~ msgstr "Bewegen Sie die gewählten Objekte in die Spalte \"Verweigert\""
+
+#~ msgid "Apply"
+#~ msgstr "Anwenden"
+
+#~ msgid "Default maximum mail account size"
+#~ msgstr "Standardwert für Postfachgrösse"
+
+#~ msgid "Force the change to the existing accounts"
+#~ msgstr "Die Änderungen auf die vorhandenen Konten anwenden"
+
+#~ msgid "Maildir size for {vdomain} virtual domain"
+#~ msgstr "Postfachgrösse für die virtuelle Domäne {vdomain}"
+
+#, fuzzy
+#~ msgid "unlimited"
+#~ msgstr "Uneingeschränkt"
+
+#~ msgid "Add a new virtual domain"
+#~ msgstr "Eine virtuelle Domäne hinzufügen"
+
+#~ msgid "Default maildir size"
+#~ msgstr "Grösse des Standardpostfachs"
+
+#~ msgid "(MB)"
+#~ msgstr "(MB)"
+
+#~ msgid "Add"
+#~ msgstr "Hinzufügen"
+
+#, fuzzy
+#~ msgid "Unlimited"
+#~ msgstr "Uneingeschränkt"
+
+#~ msgid "Virtual domains list"
+#~ msgstr "Liste der virtuellen Domänen"
+
+#~ msgid "Maildir Size"
+#~ msgstr "Postfachgrösse"
+
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid "smarthost ip"
+#~ msgstr "P des Smarthost"
+
+#~ msgid "IP address of smarthost to send mail"
+#~ msgstr "IP-Adresse eines Smarthost, der E-Mails versendet"
+
+#~ msgid "mail system status"
+#~ msgstr "Status des E-Mail Systems"
+
+#~ msgid "Unknown filter {filter}"
+#~ msgstr "Unbekannter Filter {filter}"
+
+#~ msgid "Service status"
+#~ msgstr "Status des Dienstes"
+
+#~ msgid "Disabled"
+#~ msgstr "Deaktiviert"
+
+#~ msgid "Deleting virtual domain"
+#~ msgstr "Lösche virtuelle Domäne"
+
+#, fuzzy
+#~ msgid "There are no users in the group or the users do not "
+#~ msgstr ""
+#~ "#-#-#-#-#  de.po (ebox-mail 0.9)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  de.po (ebox-mail 0.8.99)  #-#-#-#-#\n"
+#~ "Entweder sind keine Benutzer in dieser Gruppe oder die Benutzer gibt es "
+#~ "nicht"
+
+#~ msgid "TLS for SMTP server"
+#~ msgstr "TLS (Transport Layer Security) für SMTP-Server"
+
+#~ msgid "POP3"
+#~ msgstr "POP3"
+
+#~ msgid "IMAP"
+#~ msgstr "IMAP"
+
+#~ msgid "Changing maildir size of"
+#~ msgstr "Ändern der Postfachgrösse von"
+
+#~ msgid "Page"
+#~ msgstr "Seite"
+
+#~ msgid "of"
+#~ msgstr "von"
+
+#~ msgid "Create mail alias to mail account"
+#~ msgstr "E-Mail Alias für dieses Konto erstellen"
+
+#~ msgid "module status"
+#~ msgstr "Status des Moduls"
+
+#~ msgid "External Filter"
+#~ msgstr "Externer Filter"
+
+#~ msgid "Local port"
+#~ msgstr "Lokaler Port"
+
+#~ msgid "Remote IP address"
+#~ msgstr "IP-Adresse der Gegenstelle"
+
+#~ msgid "Remote Port"
+#~ msgstr "Port der Gegenstelle"
+
+#~ msgid " is not a valid ip address"
+#~ msgstr "ist keine gültige IP-Adresse"
+
+#~ msgid " cannot be reached by any configured interface"
+#~ msgstr "Kann durch keines der konfigurierten Netzwerkkarten erreicht werden"
+
+#~ msgid " can be reached by more than one configured interface"
+#~ msgstr ""
+#~ "Kann durch mehr als eine konfigurierte Netzwerkkarte erreicht werden"
+
+#~ msgid ""
+#~ "The following settings only will take effect when the mail module will be "
+#~ "enabled"
+#~ msgstr ""
+#~ "Die folgenden Einstellungen werden nur angewendet, wenn das Modul "
+#~ "aktiviert ist"
+
+#~ msgid "There is not any message at the queue or the service is stopped"
+#~ msgstr ""
+#~ "In dieser Warteschlange hat es keine Nachrichten oder der Dienst ist "
+#~ "gestoppt"
+
+#~ msgid "Account do not exists"
+#~ msgstr "Konto gibt es nicht"
+
+#~ msgid "Virtual domains"
+#~ msgstr "Virtuelle Domänen"
+
+#~ msgid "Mail service settings"
+#~ msgstr "Einstellungen für E-Mail-Dienst"
+
+#~ msgid "Relay policy for objects"
+#~ msgstr "Weiterleitungspolitik für Objekte"
+
+#~ msgid "Allowed"
+#~ msgstr "Erlaubt"
+
+#~ msgid "Mail forward port"
+#~ msgstr "Mail an diesen Port weiterleiten"
+
+#~ msgid "Filter's IP address"
+#~ msgstr "IP-Adresse des Filters"
+
+#~ msgid "Filter's Port"
+#~ msgstr "Filterport"
