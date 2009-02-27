@@ -25,7 +25,8 @@ case "$1" in
         # restart apache
         invoke-rc.d ebox apache restart || true
 
-        # Workaround to make clamd apparmor work with our configuration 
+        # Disable clamd apparmor as it needs some tweaking to make it work with
+        # our configuration
         APP_PROFILE="/etc/apparmor.d/usr.sbin.clamd"
         if [ -f $APP_PROFILE ]; then
             sed -i 's:^/usr/sbin/clamd:/usr/sbin/clamd.off:' $APP_PROFILE || true 
