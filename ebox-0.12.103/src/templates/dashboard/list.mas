@@ -1,0 +1,47 @@
+<%args>
+    $namespace
+    $item
+    $i
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<tr>
+<td colspan='2'>
+% if(defined($item->{title})) {
+<div><% $item->{title} %></div> 
+% }
+% my $list_display = 'block';
+% my $none_display = 'block';
+% if(@{$item->{ids}}) {
+%   $none_display = 'none';
+% } else {
+%   $list_display = 'none';
+% }
+<table id='<% $namespace . '_' . $i . '_table' %>' style='display: <% $list_display %>;' class='dashboardTable'>
+<thead>
+<tr>
+% foreach my $colTitle (@{$item->{colTitles}}) {
+    <td><% $colTitle %></td>
+% }
+</tr>
+</thead>
+<tbody>
+% foreach my $id (@{$item->{ids}}) {
+<tr id=<% $id %>>
+% foreach my $col (@{$item->{rows}->{$id}}) {
+    <td><% $col %></td>
+% }
+</tr>
+% }
+</tbody>
+</table>
+<div id='<% $namespace . '_' . $i . '_none' %>' style='display: <% $none_display %>;'>
+% if($item->{none_text}) {
+    <% $item->{none_text} %>
+% } else {
+    <% __('No entries in this list') %>
+% }
+</div>
+</td>
+</tr>
