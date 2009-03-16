@@ -1,0 +1,8 @@
+1.0.1
+	+ Disable egroupware db backup
+1.0
+	+ New release
+0.12.101
+	+ Bugfix: do not remove objectClass fields when deleting a user or group
+0.12.100
+	+ Initial release
