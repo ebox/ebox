@@ -1,0 +1,52 @@
+1.0
+	+ New release
+0.12.99
+	+ New release
+0.12
+	+ Bugfix: Fix SSL PEM file path in c2s.xml template
+	+ Use eBox OID number in LDAP schemas
+0.11.101
+	+ New release
+0.11.100
+	+ New release
+0.11.99
+	+ Added _stopService method to stop jabber daemons
+	+ Improved postinst script to ensure daemons are stopped
+0.11 
+	+ New release
+0.10.99
+	+ New release
+0.10
+	+ New release
+0.9.100
+	+ New release
+0.9.99
+    + New release
+0.9.3
+	+ New release
+0.9.2
+	+ New release
+0.9.1
+	+ New release
+0.9
+	+ Added Polish translation
+	+ Added Dutch translation
+	+ Added German translation
+0.8.99
+	+ New release
+0.8.1
+	+ New release
+O.8
+	+ New release
+0.7.99
+	+ New release
+0.7.1
+	+ Fix errors on make install
+	+ Jabber add-on template is not shown when disabled (#16)
+	+ Fix i18n 
+	+ Fix a bug which prevented jabber to be restarted properly
+	+ Use EBox::LDAP singleton
+	+ Fix issue with external connections (#31)
+	+ Use of ebox-sudoers-friendly
+0.7
+	+ First public release

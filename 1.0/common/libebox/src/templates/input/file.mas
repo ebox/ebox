@@ -1,0 +1,6 @@
+<%init> 
+if (! $ARGS{name})   { 
+    $m->abort('A name parameter is required');
+} 
+</%init>
+<input type='file' <& /htmlAttributes.mas, %ARGS &> />

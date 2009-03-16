@@ -1,0 +1,105 @@
+<%args>
+$spamThreshold
+
+$bayes      
+$bayesPath
+
+$bayesAutolearn 
+$bayesAutolearnSpamThreshold 
+$bayesAutolearnHamThreshold 
+
+@whitelist
+@blacklist
+
+$spamSubject => undef
+
+@trustedNetworks
+@okLocales      => ('all')
+</%args>
+# See 'perldoc Mail::SpamAssassin::Conf' for details 
+
+
+#   Save spam messages as a message/rfc822 MIME attachment instead of
+#   modifying the original message (0: off, 2: use text/plain instead)
+#
+# report_safe 1
+
+ 
+#   Set which networks or hosts are considered 'trusted' by your mail
+#   server (i.e. not spammers)
+
+% if (@trustedNetworks) {
+ trusted_networks <% "@trustedNetworks" %>
+% }
+
+#   Set file-locking method (flock is not safe over NFS, but is faster)
+#
+# lock_method flock
+
+
+#   Set the threshold at which a message is considered spam (default: 5.0)
+#   In Amavis case this value is overriden by amavis' tag levels
+#
+required_score <% $spamThreshold %>
+
+
+% if ($spamSubject) {
+rewrite_header  subject  <% $spamSubject %>
+% }
+
+#   Use Bayesian classifier
+
+<& .bool, 'use_bayes', $bayes &>
+
+bayes_path <% $bayesPath %>
+
+<& .autolearn,
+            active => $bayesAutolearn,
+            spamThreshold => $bayesAutolearnSpamThreshold, 
+            hamThreshold => $bayesAutolearnHamThreshold, 
+&>
+
+# ACLs
+
+% foreach my $addr (@whitelist) {
+whitelist_from <% $addr %>
+% }
+
+
+% foreach my $addr (@blacklist) {
+blacklist_from <% $addr %>
+% }
+
+#   Set headers which may provide inappropriate cues to the Bayesian
+#   classifier
+#
+bayes_ignore_header X-Bogosity
+bayes_ignore_header X-Spam-Flag
+bayes_ignore_header X-Spam-Status
+
+ok_locales <% "@okLocales" %>
+
+
+<%def .autolearn>
+<%args>
+$active
+$spamThreshold
+$hamThreshold
+</%args>
+#   Bayesian classifier auto-learning 
+#
+<& .bool, 'bayes_auto_learn', $active &>
+% if  ($active) {
+bayes_auto_learn_threshold_spam      <% $spamThreshold %>
+bayes_auto_learn_threshold_nonspam   <% $hamThreshold  %>
+% }
+
+</%def>
+
+
+<%def .bool>
+<%init>
+my ($name, $value) = @_;
+</%init>
+<% $name %> <% $value ? '1' : '0' %>
+</%def>
