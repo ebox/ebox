@@ -1,0 +1,109 @@
+1.0.1
+	+ Change default dansguardian conf to make it work with dansguardian 2.9.9.7
+1.0
+	+ New release
+0.12.100
+	+ New release
+0.12.99
+	+ Add support for reporting
+0.12
+	+ Use the new EBox::Model::Row api
+	+ Add field help to models
+	+ Fix titles within tabs
+	+ Set deny as default policy
+0.11.101
+	+ New release
+0.11.100
+	+ Use the new syntax to enable transparent proxy
+	+ Do not launch dansguardian with setsid. It was necessary with runit,
+	  but not with upstart any more.
+	+ do not remove rc scripts, stop on pre-start
+0.11.99
+	+ Set proper language to show denied access page by dansguardian
+	using eBox locale (Currently manually maintained)
+0.11.1
+	+ Bugfix. MIME and extension filter allow attribute is NOT
+	optional but they have a default value
+O.11
+	+ New release
+0.10.99
+	+ Use new model/view framework. UI uses Ajax
+	+ Attempt to simplify content filter interface
+0.10
+	+ New release
+0.9.100
+	+ New release
+0.9.99
+	+ New release
+0.9.3
+	+ New release
+0.9.2
+	+ Add nasty workaround to try to stop and create swap directories for
+	  squid
+O.9.1
+	+ New release
+0.9
+	+ Added Polish translation.00
+	+ Added German Translation	
+
+0.8.99
+	+ New release
+0.8.1
+	+ force creation of swap directories in postinst
+0.8
+	+ New release
+0.7.99
+	+ Add Mime Type Filter Support
+	+ Add custom filter support for file extensions and Mime Type
+	+ Merge portuguese translation thanks to JC Junior
+	+ Add some explanatory notes
+	+ Fix some small bugs
+	+ Fix a bug which made dansguardian crash at start
+	+ Dansguardian does not start when it shouldn't
+
+0.7.1
+	+ Add support to configure banned extension list in dansguardian
+	+ GUI consitency
+	+ Use of ebox-sudoers-friendly
+	
+0.7
+	+ First public release
+0.6
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update install
+	+ Update debian scripts
+
+0.5.2
+	+ Fix some packaging issues
+
+0.5.1
+	+ Convert module to new menu system
+
+0.5
+	+ No changes
+
+0.4
+	+ debian package
+	+ Added content filter based on dansguardian
+	+ Rework to support dansguardian
+	+ Added French translation
+	+ Added Catalan translation
+
+0.3
+	+ Supports i18n
+	+ Supports banned domains
+	+ API name consistency
+	+ Use Mason for templates
+	+ added tips to GUI 
+	+ Fixed bugs to IE compliant
+	+ Several bugfixes
+
+0.2
+	+ All modules are now based on gconf.
+	+ Removed dependencies on xml-simple, xerces and xpath
+	+ New MAC address field in Object members.
+	+ Several bugfixes.
+
+0.1
+	+ Initial release
