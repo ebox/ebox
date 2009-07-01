@@ -1,0 +1,16 @@
+## Process this file with automake to produce Makefile.in
+
+perldir = @PERLPATH@/EBox/Network/Model
+
+nobase_perl_DATA = GatewayTable.pm MultiGwRulesOptions.pm MultiGwRulesDataTable.pm \
+		PhysicalInterfaceTable.pm VlanInterfaceTable.pm \
+		ConfigurableInterfaceTable.pm \
+                ByteRateGraph.pm ByteRateGraphControl.pm ByteRateSettings.pm \
+		ByteRateEnableForm.pm StaticRoute.pm DNSResolver.pm \
+		DeletedStaticRoute.pm DynDNS.pm
+
+DISTCLEANFILES = 
+
+EXTRA_DIST = $(nobase_perl_DATA)
+
+MAINTAINERCLEANFILES = Makefile.in

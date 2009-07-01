@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# script to execute after debian installer base-config and before
+# showing login indicator and debian sarge is ready to be fucked up
+
+
+EXTRA_PACKAGES="libebox bc dahdi-modules-2.6.24-24-l7filter samba-vscan" 
+
+export LOG=/tmp/ebox-installer.log
+
+mount /cdrom
+apt-cdrom add --no-mount
+APT_SUCCESS=$?
+umount /cdrom
+
+if [ $APT_SUCCESS != 0 ]; then
+    # retry prompting the user
+    apt-cdrom add
+fi
+
+SOURCES=/etc/apt/sources.list
+
+# add stable ebox sources
+echo "deb http://ppa.launchpad.net/ebox/ubuntu hardy main" >> $SOURCES
+
+echo Installing base packages...
+apt-get install -y $EXTRA_PACKAGES >> $LOG 2>&1 
+if [ $? != 0 ]; then
+    echo "Installation failed. Check contents of $LOG to see what happened."
+    exit 1
+fi
+
+apt-get install -y dahdi-linux dahdi >> $LOG 2>&1
+if [ $? != 0 ]; then
+    echo "Installation failed. Check contents of $LOG to see what happened."
+    exit 1
+fi
+
+export HOME=/root # needed for ssl-cert postinst
+
+. /etc/default/locale
+export LANG
+
+# workaround buggy logging system
+sed -i '1 i QUIET=yes' /etc/lsb-base-logging.sh
+
+# launch package installer
+echo Launching eBox package installer...
+/var/tmp/ebox-package-installer
+
+# clean up
+echo Cleaning up eBox package installer files...
+rm -f /var/tmp/locale.gen
+rm -f /var/tmp/enable-all-modules.pl
+rm -f /var/tmp/ebox-*
+rm -fr /var/tmp/po
+
+# restore original rc.local
+mv /var/tmp/rc.local /etc/rc.local
+
+# restore file to its original status
+sed -i '1 d' /etc/lsb-base-logging.sh

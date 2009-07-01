@@ -1,0 +1,65 @@
+#!/bin/bash
+
+USER=$PAM_USER
+USERHOME=/home/samba/users/$USER
+
+# Load configuration variables
+. /etc/ebox-desktop/ebox-desktop.conf
+
+CONFIGURED_STAMP=$USERHOME/.ebox-desktop-configured
+
+# We don't do anything if it's already configured
+[ -f $CONFIGURED_STAMP ] && exit 0
+
+SERVER=`grep ^host /etc/ldap.conf | cut -d' ' -f2`
+PROFILE=$USERHOME/.profile
+
+# Ekiga configuration
+EKIGACONF=$USERHOME/ekiga.gconf
+sed -i "s/USERNAME/$USER/g" $EKIGACONF
+sed -i "s/SERVER/$SERVER/g" $EKIGACONF
+echo "[ -r $EKIGACONF ] && gconftool --load $EKIGACONF" >> $PROFILE
+echo "[ -r $EKIGACONF ] && rm $EKIGACONF" >> $PROFILE
+
+# Evolution configuration
+EVOLUTIONCONF=$USERHOME/evolution.gconf
+MAIL_ACCOUNT=`ldapsearch -x -b "uid=$USER,ou=Users,dc=ebox" -h $SERVER | grep ^mail: | head -1 | cut -d' ' -f2`
+if [ -n "$MAIL_ACCOUNT" ]
+then
+    sed -i "s/USERNAME/$USER/g" $EVOLUTIONCONF
+    MAIL_ACCOUNT_ESCAPED=`echo $MAIL_ACCOUNT | sed 's/@/%40/'`
+    sed -i "s/MAIL_ACCOUNT_ESCAPED/$MAIL_ACCOUNT_ESCAPED/g" $EVOLUTIONCONF
+    sed -i "s/MAIL_ACCOUNT/$MAIL_ACCOUNT/g" $EVOLUTIONCONF
+    sed -i "s/EBOX_SERVER/$SERVER/g" $EVOLUTIONCONF
+    sed -i "s/MAIL_PROTOCOL/$MAIL_PROTOCOL/g" $EVOLUTIONCONF
+    sed -i "s/MAIL_USE_SSL/$MAIL_USE_SSL/g" $EVOLUTIONCONF
+    echo "[ -r $EVOLUTIONCONF ] && gconftool --load $EVOLUTIONCONF" >> $PROFILE
+fi
+echo "[ -r $EVOLUTIONCONF ] && rm $EVOLUTIONCONF" >> $PROFILE
+
+# Samba configuration
+HAS_SAMBA_ACCOUNT=`ldapsearch -x -b "uid=$USER,ou=Users,dc=ebox" -h $SERVER | grep "^objectClass: sambaSamAccount"`
+if [ -n "$HAS_SAMBA_ACCOUNT" ]
+then
+    echo "/usr/share/ebox-desktop/ebox-user-shares $SERVER" >> $PROFILE
+fi
+
+# Pidgin configuration
+HAS_JABBER_ACCOUNT=`ldapsearch -x -b "uid=$USER,ou=Users,dc=ebox" -h $SERVER | grep "^objectClass: userJabberAccount"`
+if [ -n "$HAS_JABBER_ACCOUNT" ]
+then
+    echo "/usr/share/ebox-desktop/ebox-jabber-setup $SERVER" >> $PROFILE
+fi
+
+# Firefox profile configuration
+echo "/usr/share/ebox-desktop/ebox-firefox-profile $SERVER" >> $PROFILE
+
+# Copy system skel after ebox-desktop setup is done
+# This will overwrite our .profile
+echo "shopt -s dotglob" >> $PROFILE
+echo "cp -r /etc/skel/* $USERHOME/" >> $PROFILE
+
+# Restore .profile ownership
+chown $USER: $PROFILE
+
+touch $CONFIGURED_STAMP

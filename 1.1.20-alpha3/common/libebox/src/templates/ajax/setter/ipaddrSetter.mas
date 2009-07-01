@@ -1,0 +1,62 @@
+<%args>
+$tableName
+$data
+$cssClass => ''
+$disabled => undef
+</%args>
+<%init>
+my @masks = (32, 30, 29, 28, 27, 26, 25, 24, 16, 8);
+</%init>
+<& SELF:setter, 
+              tableName => $tableName,
+              data      => $data,         
+              cssClass  => $cssClass,
+              masks     => \@masks, 
+              disabled  => $disabled
+&>
+
+<%method setter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+$defaultMask => 32
+@masks
+$disabled
+</%args>
+<%init>
+my @options;
+for my $mask (@masks) {
+	push (@options, {'value' => $mask, 'printableValue' => $mask});
+}
+
+my $defaultMaskValue = $data->mask();
+unless ( $defaultMaskValue ) {
+   $defaultMaskValue = $defaultMask;
+}
+</%init>
+
+% my $id = $tableName . '_' . $data->fieldName();
+% if ( $data->editable() ) {
+<span id="<% $id %>" class="<% $cssClass %>">
+  <input type="text" class="inputText" value="<% $data->ip() %>"
+	size="16" id='<% $id . '_ip' %>' name='<% $id . '_ip' %>'
+    <% $disabled ? 'disabled' : '' %> />
+  <span>/</span>
+
+  <& /input/select.mas,  
+    'name'  => $id . '_ip' , 
+    'value' => $defaultMaskValue, 
+     options => \@options,
+    'id'    => "$id" . "_mask",
+    'disabled' => $disabled
+  &>
+</span>
+% }
+% else
+% {
+<& $data->HTMLViewer(),
+   data => $data &>
+% }
+
+</%method>

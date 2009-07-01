@@ -1,0 +1,9 @@
+1.1.20
+	+ s/device/mountPoint/g since it is the type instance used by
+	collectd to gather data. Thanks to Saturn2888 for your help
+1.1.10
+	+ Bugfix: Monitor graph updates don't glitch anymore
+	+ Bugfix: Set a fixed hostname in order not to let collectd daemon
+	to search for hostname on its own
+1.1.0
+	+ Initial release
