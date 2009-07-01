@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# stop bind9
-invoke-rc.d bind9 stop
-

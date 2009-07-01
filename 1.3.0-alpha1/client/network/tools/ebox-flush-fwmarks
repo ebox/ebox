@@ -1,7 +1,0 @@
-#!/bin/bash
-
-for i in $(ip rule ls | cut -d: -f 1); do 
-	if [ $i -gt 0 -a $i -le 32765 ]; then
-		ip rule del pref $i; 
-	fi; 
-done
