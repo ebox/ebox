@@ -1,0 +1,9 @@
+#!/bin/bash
+
+case "$1" in
+	remove)
+	    /usr/share/ebox/ebox-clean-gconf soap || true
+		;;
+esac
+
+#DEBHELPER#
