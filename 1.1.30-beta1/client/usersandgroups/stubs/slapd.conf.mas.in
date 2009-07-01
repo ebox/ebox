@@ -1,0 +1,115 @@
+<%args>
+	$rootdn
+	$rootpw
+	$dn
+        @acls
+	@schemas
+	$allowV2 => 1
+</%args>
+
+
+# Default schema and objectClass definitions
+include         /etc/ldap/schema/core.schema
+include         /etc/ldap/schema/cosine.schema
+include         /etc/ldap/schema/nis.schema
+include         /etc/ldap/schema/inetorgperson.schema
+
+# Schemas added by ebox
+% foreach my $schema (@schemas) {
+include 	<% $schema %>
+% }
+
+# Where the pid file is put. The init.d script
+# will not stop the server if you change this.
+pidfile         /var/run/slapd/slapd.pid
+
+# List of arguments that were passed to the server
+argsfile        /var/run/slapd/slapd.args
+
+# Read slapd.conf(5) for possible values
+loglevel        none
+
+# Where the dynamically loaded modules are stored
+modulepath	/usr/lib/ldap
+moduleload	back_hdb
+
+password-hash {CLEARTEXT}
+
+# The maximum number of entries that is returned for a search operation
+sizelimit 500
+
+# The tool-threads parameter sets the actual amount of cpu's that is used
+# for indexing.
+tool-threads 1
+
+% if ($allowV2) {
+      allow bind_v2
+% }
+
+
+#######################################################################
+# Specific Backend Directives for hdb:
+# Backend specific directives apply to this backend until another
+# 'backend' directive occurs
+backend		hdb
+
+#######################################################################
+# Specific Backend Directives for 'other':
+# Backend specific directives apply to this backend until another
+# 'backend' directive occurs
+#backend		<other>
+
+#######################################################################
+# Specific Directives for database #1, of type hdb:
+# Database specific directives apply to this databasse until another
+# 'database' directive occurs
+database        hdb
+
+
+
+# The base of your directory in database #1
+suffix          "<% $dn %>"
+
+checkpoint      512 30
+
+directory       "/var/lib/ldap"
+
+dbconfig set_cachesize 0 2097152 0
+
+# Sven Hartge reported that he had to set this value incredibly high
+# to get slapd running at all. See http://bugs.debian.org/303057 for more
+# information.
+
+# Number of objects that can be locked at the same time.
+dbconfig set_lk_max_objects 1500
+# Number of locks (both requested and granted)
+dbconfig set_lk_max_locks 1500
+# Number of lockers
+dbconfig set_lk_max_lockers 1500
+
+
+index           objectClass eq
+
+lastmod         on
+
+rootdn  "<% $rootdn %>"	
+rootpw 	<% $rootpw %>
+
+access to attrs=userPassword,shadowLastChange
+        by dn.regex="<% $rootdn %>" write
+        by anonymous auth
+        by self write
+        by * none
+
+access to dn.base="" by * read
+
+# ACLs needed by ebox modules
+# 
+
+% foreach my $acl (@acls) {
+	<% $acl %>
+% }
+
+access to *
+        by dn="<% $rootdn %>" write
+	    by * read
