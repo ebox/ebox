@@ -1,0 +1,73 @@
+Source: ebox-metapackages
+Section: web
+Priority: optional
+Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+XSBC-Original-Maintainer: Javier Uruen Val <javi@warp.es>
+Build-Depends: debhelper (>= 4.0.0), cdbs
+Standards-Version: 3.7.3
+
+Package: ebox-all
+Architecture: all
+Depends: ebox-gateway, ebox-security, ebox-infrastructure, ebox-office, ebox-communication
+Description: eBox platform - all modules
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This metapackage installs all eBox modules.
+
+Package: ebox-gateway
+Architecture: all
+Depends: ebox-network, ebox-ebackup, ebox-trafficshaping, ebox-l7-protocols, ebox-firewall, ebox-squid, ebox-software, ebox-monitor
+Description: eBox platform - gateway suite
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This metapackage installs typical modules for eBox acting as gateway.
+
+Package: ebox-security
+Architecture: all
+Depends: ebox-firewall, ebox-ebackup, ebox-mailfilter, ebox-squid, ebox-openvpn, ebox-ids, ebox-antivirus, ebox-software, ebox-monitor
+Description: eBox platform - security suite
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This metapackage installs typical modules for Unified Threat Management.
+
+Package: ebox-infrastructure
+Architecture: all
+Depends: ebox-network, ebox-ebackup, ebox-dhcp, ebox-dns, ebox-openvpn, ebox-webserver, ebox-ntp, ebox-software, ebox-monitor
+Description: eBox platform - network infrastructure suite
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This metapackage installs typical modules for managing network infrastructure.
+
+Package: ebox-office
+Architecture: all
+Depends: ebox-samba, ebox-ebackup, ebox-printers, ebox-egroupware, ebox-software, ebox-antivirus, ebox-monitor
+Description: eBox platform - office suite
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This metapackage installs typical modules for sharing office resources.
+
+Package: ebox-communication
+Architecture: all
+Depends: ebox-mail, ebox-ebackup, ebox-antivirus, ebox-mailfilter, ebox-jabber, ebox-asterisk, ebox-software, ebox-monitor
+Description: eBox platform - communication server suite
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This metapackage installs typical modules for a communication server.

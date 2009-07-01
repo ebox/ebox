@@ -1,0 +1,211 @@
+<%args>
+    $port
+    $lang
+    $squidport
+    $weightedPhraseThreshold
+    
+    $nGroups
+
+    $antivirus => 1
+</%args>
+
+reportinglevel = 3
+
+languagedir = '/etc/dansguardian/languages'
+
+language = <% $lang %>
+
+loglevel = 3
+
+logexceptionhits = on
+
+# Log File Format
+# 1 = DansGuardian format        2 = CSV-style format
+# 3 = Squid Log File Format      4 = Tab delimited
+logfileformat = 3
+
+
+loglocation = '/var/log/dansguardian/access.log'
+
+filterip =
+
+filterport = <% $port %>
+
+proxyip = 127.0.0.1
+
+proxyport = <% $squidport %>
+
+# accessdeniedaddress is the address of your web server to which the cgi
+# dansguardian reporting script was copied
+# Do NOT change from the default if you are not using the cgi.
+#
+accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/dansguardian.pl'
+
+# Non standard delimiter (only used with accessdeniedaddress)
+# Default is enabled but to go back to the original standard mode dissable it.
+nonstandarddelimiter = on
+
+
+usecustombannedimage = on
+custombannedimagefile = '/usr/share/dansguardian/transparent1x1.gif'
+
+
+
+filtergroups = <% $nGroups %>
+filtergroupslist = '/etc/dansguardian/lists/filtergroupslist'
+
+# Authentication files location
+bannediplist = '/etc/dansguardian/lists/bannediplist'
+exceptioniplist = '/etc/dansguardian/lists/exceptioniplist'
+
+showweightedfound = on
+
+# Weighted phrase mode
+# There are 3 possible modes of operation:
+# 0 = off = do not use the weighted phrase feature.
+# 1 = on, normal = normal weighted phrase operation.
+# 2 = on, singular = each weighted phrase found only counts once on a page.
+weightedphrasemode = <% $weightedPhraseThreshold ? 2 : 0 %>
+
+urlcachenumber = 1000
+
+urlcacheage = 900
+
+phrasefiltermode = 2
+
+preservecase = 0
+
+hexdecodecontent = off
+
+forcequicksearch = off
+
+reverseaddresslookups = off
+
+reverseclientiplookups = off
+
+createlistcachefiles = on
+
+maxuploadsize = -1
+
+maxcontentfiltersize = 256
+
+
+maxcontentramcachescansize = 2000
+
+# Auth plugins
+# These replace the usernameidmethod* options in previous versions. They
+# handle the extraction of client usernames from various sources, such as
+# Proxy-Authorisation headers and ident servers, enabling requests to be
+# handled according to the settings of the user's filter group.
+# Multiple plugins can be specified, and will be queried in order until one
+# of them either finds a username or throws an error. For example, if Squid
+# is configured with both NTLM and Basic auth enabled, and both the 'proxy-basic'
+# and 'proxy-ntlm' auth plugins are enabled here, then clients which do not support
+# NTLM can fall back to Basic without sacrificing access rights.
+#
+# If you do not use multiple filter groups, you need not specify this option.
+#
+authplugin = '/etc/dansguardian/authplugins/proxy-basic.conf'
+#authplugin = '/etc/dansguardian/authplugins/proxy-digest.conf'
+#authplugin = '/etc/dansguardian/authplugins/proxy-ntlm.conf'
+#authplugin = '/etc/dansguardian/authplugins/ident.conf'
+#authplugin = '/etc/dansguardian/authplugins/ip.conf'
+
+# Preemptive banning - this means that if you have proxy auth enabled and a user accesses
+# a site banned by URL for example they will be denied straight away without a request
+# for their user and pass.  This has the effect of requiring the user to visit a clean
+# site first before it knows who they are and thus maybe an admin user.
+# This is how DansGuardian has always worked but in some situations it is less than
+# ideal.  So you can optionally disable it.  Default is on.
+# As a side effect disabling this makes AD image replacement work better as the mime
+# type is know.
+
+maxcontentfilecachescansize = 20000
+
+filecachedir = '/tmp'
+
+
+deletedownloadedtempfiles = on
+
+
+initialtrickledelay = 20
+
+trickledelay = 10
+
+downloadmanager = '/etc/dansguardian/downloadmanagers/default.conf'
+
+# Content Scanners (Also known as AV scanners)
+# These are plugins that scan the content of all files your browser fetches
+# for example to AV scan.  The options are limitless.  Eventually all of
+# DansGuardian will be plugin based.  You can have more than one content
+# scanner. The plugins are run in the order you specify.
+# This is one of the few places you can have multiple options of the same name.
+#
+# Some of the scanner(s) require 3rd party software and libraries eg clamav.
+# See the individual plugin conf file for more options (if any).
+#
+% if ($antivirus) {
+contentscanner = '/etc/dansguardian/contentscanners/clamav.conf'
+% }
+
+
+
+# Content scanner timeout
+# Some of the content scanners support using a timeout value to stop
+# processing (eg AV scanning) the file if it takes too long.
+# If supported this will be used.
+# The default of 60 seconds is probably reasonable.
+contentscannertimeout = 60
+
+
+
+# Content scan exceptions
+# If 'on' exception sites, urls, users etc will be scanned
+# This is probably not desirable behavour as exceptions are
+# supposed to be trusted and will increase load.
+# Correct use of grey lists are a better idea.
+# (on|off) default = off
+contentscanexceptions = off
+
+
+
+preemptivebanning = off
+
+
+forwardedfor = on
+
+usexforwardedfor = off
+
+logconnectionhandlingerrors = off
+
+maxchildren = 120
+
+minchildren = 8
+
+minsparechildren = 4
+
+preforkchildren = 6
+
+maxsparechildren = 32
+
+maxagechildren = 500
+
+maxips = 0
+ipcfilename = '/tmp/.dguardianipc'
+
+urlipcfilename = '/tmp/.dguardianurlipc'
+
+# Defines process id directory and filename.
+#pidfilename = '/var/run/dansguardian.pid'
+
+nodaemon = off
+
+nologger = off
+
+# daemonuser = 'nobody'
+# daemongroup = 'nobody'
+
+softrestart = off
+
+
+

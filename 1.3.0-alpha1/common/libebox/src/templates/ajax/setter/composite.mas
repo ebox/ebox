@@ -1,0 +1,27 @@
+<%doc>
+  This template is intended to show the type setters within the
+  composite type
+</%doc>
+<%args>
+$tableName
+$data
+$cssClass => ''
+$disabled => undef
+</%args>
+<%init>
+my $id = $tableName . '_' . $data->fieldName();
+</%init>
+<span id="<% $id %>" class="<% $cssClass %>">
+% foreach my $simpleType (@{$data->types()}) {
+%    if ( $data->showTypeName() ) {
+  <span>
+    <% $simpleType->printableName() %>:
+  </span>
+%    }
+  <& $simpleType->HTMLSetter(),
+     data => $simpleType,
+     tableName => $tableName,
+     disabled => $disabled
+  &>
+% }
+</span>
