@@ -1,0 +1,151 @@
+# Japanese translations for ebox-jabber package.
+# Copyright (C) 2008 Warp S.L.
+# This file is distributed under the same license as the ebox-jabber package.
+# Automatically generated, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-jabber 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-06-28 00:06+0200\n"
+"PO-Revision-Date: 2008-01-08 15:49+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/EBox/CGI/JabberConf.pm:42 src/EBox/Jabber.pm:266
+msgid "domain"
+msgstr "ドメイン"
+
+#: src/EBox/CGI/Enable.pm:41
+msgid "module status"
+msgstr "モジュール状態"
+
+#: src/EBox/CGI/Index.pm:30 src/EBox/CGI/Index.pm:40 src/EBox/Jabber.pm:355
+msgid "Jabber"
+msgstr "Jabber"
+
+#: src/EBox/CGI/JabberUserOptions.pm:44
+msgid "username"
+msgstr "ユーザ名"
+
+#: src/EBox/Jabber.pm:71
+msgid "Copy jabber ldap schema to /etc/ldap/schemas"
+msgstr "jabber ldapスキーマを/etc/ldap/schemasにコピー"
+
+#: src/EBox/Jabber.pm:72
+msgid "eBox will need this schema to store jabber users"
+msgstr "eBoxはこのスキーマをjabberユーザ情報格納に使います"
+
+#: src/EBox/Jabber.pm:89 src/EBox/Jabber.pm:94 src/EBox/Jabber.pm:99
+msgid "To properly configure jabberd2"
+msgstr "jabberd2を正しく設定"
+
+#: src/EBox/Jabber.pm:104 src/EBox/Jabber.pm:109
+#, fuzzy
+msgid "To properly configure jabberd2 muc"
+msgstr "jabberd2を正しく設定"
+
+#: src/EBox/Jabber.pm:113
+msgid "To add the LDAP schemas used by eBox jabber"
+msgstr "eBox jabberで利用するLDAPスキーマを追加"
+
+#: src/EBox/Jabber.pm:356
+msgid "Communications"
+msgstr ""
+
+#: src/EBox/Jabber.pm:374
+#, fuzzy
+msgid "Jabber server certificate"
+msgstr "Jabberサービス"
+
+#: src/templates/jabber.mas:8
+#, fuzzy
+msgid "Jabber Account"
+msgstr "Jabberアカウント"
+
+#: src/templates/jabber.mas:9
+#, fuzzy
+msgid "Password for Jabber service is the user password."
+msgstr "Jabberサービスのパスワードはユーザパスワードです"
+
+#: src/templates/jabber.mas:18
+msgid "User account"
+msgstr "ユーザアカウント"
+
+#: src/templates/jabber.mas:23 src/templates/jabber.mas:26
+msgid "Disabled"
+msgstr "無効"
+
+#: src/templates/jabber.mas:24 src/templates/jabber.mas:27
+msgid "Enabled"
+msgstr "有効"
+
+#: src/templates/jabber.mas:34
+msgid "Administration rights"
+msgstr "管理者権限"
+
+#: src/templates/jabber.mas:48 src/templates/jabber.mas:49
+#: src/templates/index.mas:81 src/templates/index.mas:82
+msgid "Change"
+msgstr "変更"
+
+#: src/templates/index.mas:17
+msgid "General Configuration"
+msgstr ""
+
+#: src/templates/index.mas:19
+msgid ""
+"Domain name should be available on the network. Otherwise, you may not be "
+"able to use this service. This applies for internal and external connections."
+msgstr ""
+"ドメイン名がネットワーク上で利用可能になっている必要があります。この規定は内"
+"部と外部の接続に適用されます。"
+
+#: src/templates/index.mas:25
+msgid "Domain name"
+msgstr "ドメイン名"
+
+#: src/templates/index.mas:33
+#, fuzzy
+msgid "Connect to other servers"
+msgstr "グローバルJabberネットワークに接続"
+
+#: src/templates/index.mas:45
+msgid "Enable MUC (Multi User Chat)"
+msgstr ""
+
+#: src/templates/index.mas:57
+#, fuzzy
+msgid "SSL support"
+msgstr "SSLサポート"
+
+#: src/templates/index.mas:62 src/templates/index.mas:66
+#: src/templates/index.mas:70
+msgid "No"
+msgstr "いいえ"
+
+#: src/templates/index.mas:63 src/templates/index.mas:67
+#: src/templates/index.mas:71
+msgid "Optional"
+msgstr "オプション"
+
+#: src/templates/index.mas:64 src/templates/index.mas:68
+#: src/templates/index.mas:72
+msgid "Required"
+msgstr "必須"
+
+#~ msgid "General Settings"
+#~ msgstr "全般的設定"
+
+#~ msgid "Apply Changes"
+#~ msgstr "変更を適用"
+
+#~ msgid "Enter a username and password to register with this server."
+#~ msgstr "ユーザ名とパスワードを入力し、このサーバに登録してください"
+
+#~ msgid "listening port"
+#~ msgstr "受信ポート"

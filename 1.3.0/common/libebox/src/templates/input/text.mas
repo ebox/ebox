@@ -1,0 +1,10 @@
+<%init> 
+if (! $ARGS{name})   { 
+    $m->abort('A name parameter is required');
+} 
+elsif (!exists $ARGS{value}) 
+{ 
+  $ARGS{value} = ''; 
+}
+</%init>
+<input type='text' <& /htmlAttributes.mas, %ARGS &> />
