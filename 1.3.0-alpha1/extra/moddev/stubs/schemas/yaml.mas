@@ -1,4 +1,0 @@
-<%args>
-    $mainClass
-</%args>
-class: <% $mainClass %>
