@@ -1,4 +1,0 @@
-class: 'EBox::OpenVPN'
-depends:
-    - ca
-    - network
