@@ -1,0 +1,194 @@
+# Russian translations for ebox-objects package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-objects package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-objects 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-06-28 00:16+0200\n"
+"PO-Revision-Date: 2008-11-14 05:59+0000\n"
+"Last-Translator: vadim glyshkov <plusv@yandex.ru>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Model/ObjectTable.pm:63 src/EBox/Model/MemberTable.pm:63
+msgid "Name"
+msgstr "Имя"
+
+#: src/EBox/Model/ObjectTable.pm:71 src/EBox/Model/MemberTable.pm:87
+msgid "Members"
+msgstr "Члены"
+
+#: src/EBox/Model/ObjectTable.pm:82 src/EBox/Model/MemberTable.pm:93
+#: src/EBox/Objects.pm:39
+msgid "Objects"
+msgstr "Объекты"
+
+#: src/EBox/Model/ObjectTable.pm:83
+#, fuzzy
+msgid "Objects List"
+msgstr "Список объектов"
+
+#: src/EBox/Model/ObjectTable.pm:90
+msgid "object"
+msgstr "объект"
+
+#: src/EBox/Model/ObjectTable.pm:112
+msgid "This object is being used by another module"
+msgstr "В настоящее время объект используется в другом модуле"
+
+#: src/EBox/Model/ObjectTable.pm:184
+msgid ""
+"Objects are an abstraction of machines and network addresses which can be "
+"used in other modules. Any change on an object is automatically synched in "
+"all the modules using it"
+msgstr ""
+"Объекты - абстракция машин и адресов сети, которые могут использоваться в "
+"других модулях. Любое изменение на объекте автоматически синхронизируется во "
+"всех модулях использующих их"
+
+#: src/EBox/Model/MemberTable.pm:70
+msgid "IP address"
+msgstr "IP-адрес"
+
+#: src/EBox/Model/MemberTable.pm:76
+#, fuzzy
+msgid "MAC address"
+msgstr "MAC-адрес"
+
+#: src/EBox/Model/MemberTable.pm:94
+msgid "member"
+msgstr "член"
+
+#: src/EBox/Model/MemberTable.pm:116
+msgid "You can only use MAC addresses with hosts"
+msgstr "Вы можете использовать только MAC адреса с хостами"
+
+#: src/EBox/Model/MemberTable.pm:119 src/EBox/Model/MemberTable.pm:120
+msgid "network address"
+msgstr "сетевой адрес"
+
+#: src/EBox/Model/MemberTable.pm:126
+#, perl-brace-format
+msgid "{ip} overlaps with the address or another object's member"
+msgstr ""
+
+#: src/EBox/Objects.pm:44
+#, perl-brace-format
+msgid "Added object {object}"
+msgstr "Добавленный объект {object}"
+
+#: src/EBox/Objects.pm:46
+#, perl-brace-format
+msgid "Added {nname} ({ip}/{mask} [{mac}]) to object {object}"
+msgstr "Добавлен {nname} ({ip}/{mask} [{mac}]) к объекту {object}"
+
+#: src/EBox/Objects.pm:47
+#, perl-brace-format
+msgid "Removed object {object}"
+msgstr "Удаленный объект {object}"
+
+#: src/EBox/Objects.pm:49
+#, perl-brace-format
+msgid "Forcefully removed object {object}"
+msgstr "Полностью удаленный объект {object}"
+
+#: src/EBox/Objects.pm:51
+#, perl-brace-format
+msgid "Removed {nname} from object {object}"
+msgstr "Удален {nname} из объекта {object}"
+
+#: src/EBox/Objects.pm:270
+msgid "Object"
+msgstr "Объект"
+
+#: src/EBox/Objects.pm:411
+#, fuzzy
+msgid "Core"
+msgstr "Создать"
+
+#~ msgid "IP Address"
+#~ msgstr "IP-адрес"
+
+#~ msgid "Object name"
+#~ msgstr "Имя объекта"
+
+#~ msgid ""
+#~ "The name '{name}' is already used to identify another object. Please "
+#~ "choose another name"
+#~ msgstr ""
+#~ "Имя '{name}' уже используется для идентификации другого объекта. Выберите "
+#~ "другое имя"
+
+#~ msgid "Edit Object"
+#~ msgstr "Редактировать объект"
+
+#~ msgid "Netmask"
+#~ msgstr "Маска подсети"
+
+#~ msgid "Deleting object"
+#~ msgstr "Удаление объекта"
+
+#~ msgid ""
+#~ "The object you tried to delete is being used by some modules, please "
+#~ "confirm that you want to delete it."
+#~ msgstr ""
+#~ "Объект, который Вы пытаетесь удалить используется некоторыми модулями. "
+#~ "Пожалуйста, подтвердите Ваше намерение удалить объект."
+
+#~ msgid "Delete"
+#~ msgstr "Удалить"
+
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
+
+#~ msgid "Edit <span class='stitle'>{description}</span> members"
+#~ msgstr "Редактировать <span class='stitle'>{description}</span> членов"
+
+#~ msgid "MAC"
+#~ msgstr "MAC"
+
+#~ msgid "Action"
+#~ msgstr "Действие"
+
+#~ msgid "Add"
+#~ msgstr "Добавить"
+
+#~ msgid "Delete Object"
+#~ msgstr "Удалить Объект"
+
+#~ msgid ""
+#~ "If you delete this object, all the information about its members will be "
+#~ "lost."
+#~ msgstr ""
+#~ "Если Вы удалите этот объект, вся информация о его членах будет утеряна."
+
+#~ msgid "Delete object"
+#~ msgstr "Удалить объект"
+
+#~ msgid "Create new object"
+#~ msgstr "Создать новый объект"
+
+#~ msgid ""
+#~ "The objects that you create here can be used in the rest of the system. "
+#~ "Remember that an IP address cannot belong to more than one object."
+#~ msgstr ""
+#~ "Объекты, которые Вы здесь создали могут быть использованы при простое "
+#~ "системы. Помните, что IP-адрес не может быть связанным более чем с одним "
+#~ "объектом."
+
+#~ msgid "Edit"
+#~ msgstr "Редактировать"
+
+#~ msgid "edit"
+#~ msgstr "редактировать"
+
+#~ msgid "delete"
+#~ msgstr "удалить"
