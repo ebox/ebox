@@ -1,9 +1,0 @@
-<%args>
-	@mimeTypes
-</%args>
-
-# Banned MIME type list
-
-% foreach my $mimeType (@mimeTypes) {
-<% $mimeType %>
-% }
