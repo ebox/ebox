@@ -1,0 +1,29 @@
+ebox-asterisk (1.2) hardy; urgency=low
+
+  * New upstream version
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 12 Jul 2009 19:09:10 +0200
+
+ebox-asterisk (1.1.40) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 06 Jul 2009 16:30:03 +0200
+
+ebox-asterisk (1.1.30) hardy; urgency=low
+
+  * New upstream release
+
+ -- José Antonio Calvo <jacalvo@ebox-platform.com>  Mon, 15 Jun 2009 16:14:07 +0200
+
+ebox-asterisk (1.1.20) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Amor Garcia <javier.amor.garcia@ebox-platform.com>  Fri, 05 Jun 2009 13:50:26 +0200
+
+ebox-asterisk (1.1) hardy; urgency=low
+
+  * Initial release.
+
+ -- Jorge Salamero Sanz <jsalamero@ebox-platform.com>  Sat, 07 Mar 2009 15:10:39 +0000

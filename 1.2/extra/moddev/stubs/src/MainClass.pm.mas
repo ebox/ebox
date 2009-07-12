@@ -1,0 +1,133 @@
+<%args>
+    $class
+    $name
+    $printableName
+    $domain
+    $modelDomain
+</%args>
+# Copyright (C) 
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+# Class: <% $class %> 
+#
+#   TODO: Documentation
+
+package <% $class %>;
+
+use strict;
+use warnings;
+
+use base qw(EBox::Module::Service EBox::Model::ModelProvider
+            EBox::Model::CompositeProvider);
+
+
+use EBox::Validate qw( :all );
+use EBox::Global;
+use EBox::Gettext;
+use EBox::Sudo;
+
+use EBox::Exceptions::InvalidData;
+use EBox::Exceptions::MissingArgument;
+use EBox::Exceptions::DataExists;
+use EBox::Exceptions::DataMissing;
+use EBox::Exceptions::DataNotFound;
+
+# Method: _create
+#
+# Overrides:
+#
+#       <Ebox::Module::_create>
+#
+sub _create
+{
+    my $class = shift;
+    my $self = $class->SUPER::_create(name => '<% $name %>',
+            printableName => __('<% $printableName %>'),
+            domain => '<% $domain %>',
+            @_);
+    bless($self, $class);
+    return $self;
+}
+
+## api functions
+
+# Overrides:
+#
+#       <EBox::Model::ModelProvider::modelClasses>
+sub modelClasses 
+{
+    my ($self) = @_;
+
+    return ['<% $class %>::Model::Settings'];
+}
+
+# Overrides:
+#
+#       <EBox::Model::ModelProvider::compositeClasses>
+sub compositeClasses 
+{
+    my ($self) = @_;
+
+    return [];
+}
+
+sub domain
+{
+    return '<% $domain %>';
+}
+
+# Method: actions
+#
+#   Override EBox::ServiceModule::ServiceInterface::actions
+#
+sub actions
+{
+    return [];
+}
+
+
+# Method: usedFiles
+#
+#   Override EBox::ServiceModule::ServiceInterface::usedFiles
+#
+sub usedFiles
+{
+    return [];
+}
+
+# Method: enableActions 
+#
+#   Override EBox::ServiceModule::ServiceInterface::enableActions
+#
+sub enableActions
+{
+}
+
+# Method: menu 
+#
+#       Overrides EBox::Module method.
+#   
+#
+sub menu
+{
+    my ($self, $root) = @_;
+    my $item = new EBox::Menu::Item(
+    'url' => '<% $modelDomain %>/View/Settings',
+    'text' => __('<% $printableName %>'),
+    'order' => 3);
+    $root->add($item);
+}
+
+1;
