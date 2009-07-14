@@ -1,0 +1,549 @@
+# Japanese translations for ebox-firewall package.
+# Copyright (C) 2008 Warp S.L.
+# This file is distributed under the same license as the ebox-firewall package.
+# Automatically generated, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-firewall 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-06-28 00:05+0200\n"
+"PO-Revision-Date: 2008-01-08 15:49+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/EBox/CGI/Filter.pm:28
+msgid "Packet filtering"
+msgstr "パケットフィルタ"
+
+#: src/EBox/Firewall.pm:57
+msgid "firewall"
+msgstr "ファイアウォール"
+
+#: src/EBox/Firewall.pm:125
+msgid "Flush previous firewall rules"
+msgstr "以前のファイアウォールルールを削除"
+
+#: src/EBox/Firewall.pm:126
+msgid ""
+"The eBox firewall will flush any previous firewall rules which have been "
+"added manually or by another tool"
+msgstr ""
+"eBoxファイアウォールは別のツールや手動で追加した以前のルールを削除します"
+
+#: src/EBox/Firewall.pm:131
+msgid "Secure by default"
+msgstr "デフォルト"
+
+#: src/EBox/Firewall.pm:132
+msgid ""
+"Just a few connections are allowed by default. Make sure you add the proper "
+"incoming and outcoming rules to make your system work as expected. Usually, "
+"all outcoming connections are denied by default, and only SSH and HTTPS "
+"incoming connections are allowed."
+msgstr ""
+"デフォルトではほんのわずかな接続のみ許可されています。システムが期待した動作"
+"をするように、正しく送受信のルールを追加していることを確認してください。デ"
+"フォルトでは通常、すべての外向きの接続は拒否され、内向きのSSHとHTTPSのみが許"
+"可されています。"
+
+#: src/EBox/Firewall.pm:304
+msgid "action"
+msgstr "アクション"
+
+#: src/EBox/Firewall.pm:425 src/EBox/Firewall.pm:470 src/EBox/Firewall.pm:494
+#, perl-brace-format
+msgid "Name '{name}' is invalid"
+msgstr "名前 '{name}' は無効です"
+
+#: src/EBox/Firewall.pm:426 src/EBox/Firewall.pm:605 src/EBox/Firewall.pm:630
+msgid "port"
+msgstr "ポート"
+
+#: src/EBox/Firewall.pm:604 src/EBox/Firewall.pm:629
+msgid "protocol"
+msgstr "プロトコル"
+
+#: src/EBox/Firewall.pm:813 src/EBox/Firewall.pm:848
+msgid "Firewall"
+msgstr "ファイアウォール"
+
+#: src/EBox/Firewall.pm:814
+msgid "UTM"
+msgstr ""
+
+#: src/EBox/Firewall.pm:818
+msgid "Packet Filter"
+msgstr "パケットフィルタ"
+
+#: src/EBox/Firewall.pm:821
+msgid "Redirects"
+msgstr "リダイレクト"
+
+#: src/EBox/Firewall.pm:832
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:60
+msgid "Date"
+msgstr "日付"
+
+#: src/EBox/Firewall.pm:833
+msgid "Input interface"
+msgstr "入力インタフェース"
+
+#: src/EBox/Firewall.pm:834
+msgid "Output interface"
+msgstr "出力インタフェース"
+
+#: src/EBox/Firewall.pm:835 src/EBox/Firewall/Model/BaseRuleTable.pm:121
+#: src/EBox/Firewall/Model/RedirectsTable.pm:292
+msgid "Source"
+msgstr "送信元"
+
+#: src/EBox/Firewall.pm:836 src/EBox/Firewall/Model/BaseRuleTable.pm:147
+msgid "Destination"
+msgstr "送信先"
+
+#: src/EBox/Firewall.pm:837 src/EBox/Firewall/Model/RedirectsTable.pm:285
+msgid "Protocol"
+msgstr "プロトコル"
+
+#: src/EBox/Firewall.pm:838
+msgid "Source port"
+msgstr "送信元ポート"
+
+#: src/EBox/Firewall.pm:839
+msgid "Destination port"
+msgstr "送信先ポート"
+
+#: src/EBox/Firewall.pm:840 src/EBox/Firewall/Model/BaseRuleTable.pm:112
+msgid "Decision"
+msgstr "決定"
+
+#: src/EBox/Firewall.pm:845
+msgid "DROP"
+msgstr "ドロップ"
+
+#: src/EBox/Firewall.pm:845 src/EBox/Firewall/Model/BaseRuleTable.pm:70
+msgid "LOG"
+msgstr ""
+
+#: src/EBox/Iptables.pm:738 src/EBox/Iptables.pm:775
+msgid ""
+"You must set the iptables_log_limit variable in the ebox configuration file"
+msgstr "eBox設定ファイルの iptables_log_limit 変数を設定する必要があります"
+
+#: src/EBox/Iptables.pm:744 src/EBox/Iptables.pm:781
+msgid ""
+"You must set the iptables_log_burst variable in the ebox configuration file"
+msgstr "eBox設定ファイルの iptables_log_burst 変数を設定する必要があります"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:52
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:46
+msgid "packets dropped"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:64
+msgid "Firewall packet traffic chart"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:86
+#, fuzzy
+msgid "Packet traffic"
+msgstr "パケットフィルタ"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:66
+msgid "Packets dropped"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:78
+msgid "Packet traffic details"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:86
+msgid "traffic"
+msgstr ""
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:66
+msgid "ACCEPT"
+msgstr "許可"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:68
+msgid "DENY"
+msgstr "拒否"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:126
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:152
+#: src/EBox/Firewall/Model/RedirectsTable.pm:297
+msgid "Any"
+msgstr "全て"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:129
+#: src/EBox/Firewall/Model/RedirectsTable.pm:300
+msgid "Source IP"
+msgstr "送信元IP"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:133
+#: src/EBox/Firewall/Model/RedirectsTable.pm:304
+msgid "Source object"
+msgstr "送信元オブジェクト"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:155
+#: src/EBox/Firewall/Model/RedirectsTable.pm:315
+msgid "Destination IP"
+msgstr "送信先IP"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:160
+msgid "Destination object"
+msgstr "送信先オブジェクト"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:175
+msgid "Service"
+msgstr "サービス"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:179
+msgid ""
+"If inverse match is ticked, any service but the selected one will match this "
+"rule"
+msgstr ""
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:185
+msgid "Description"
+msgstr "内容"
+
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:65
+#: src/templates/filter.mas:13
+msgid "Filtering rules for internal networks"
+msgstr "内部ネットワーク向けフィルタルール"
+
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:78
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:78
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:78
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:81
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:80
+msgid "rule"
+msgstr "ルール"
+
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:68
+#: src/templates/filter.mas:6
+msgid "Filtering rules from internal networks to eBox"
+msgstr "内部ネットワークからeBoxへのフィルタルール"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:68
+#: src/templates/filter.mas:21
+msgid "Filtering rules for traffic coming out from eBox"
+msgstr "eBoxからのトラフィックへのフィルタルール"
+
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:68
+#: src/templates/filter.mas:40
+msgid "Filtering rules from external networks to internal networks"
+msgstr "外部ネットワークから内部ネットワークへのフィルタルール"
+
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:68
+msgid "Filtering rules from  external networks to eBox"
+msgstr "外部ネットワークからeBoxへのフィルタルール"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:145
+msgid "Contradictory rule found. Remove it first"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:249
+msgid "Interface"
+msgstr "インタフェース"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:256
+#, fuzzy
+msgid "Original destination"
+msgstr "送信先"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:261
+msgid "eBox"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:264
+#, fuzzy
+msgid "IP Address"
+msgstr "IPアドレス"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:268
+msgid "Object"
+msgstr "オブジェクト"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:279
+#, fuzzy
+msgid "Original destination port"
+msgstr "送信先ポート"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:321
+msgid "Port"
+msgstr "ポート"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:326
+msgid "Same"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:329
+msgid "Other"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:346
+msgid "Port redirections"
+msgstr "ポートリダイレクト"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:355
+#, fuzzy
+msgid "redirect"
+msgstr "リダイレクト"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:70
+msgid "Packet traffic report"
+msgstr ""
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:71
+msgid "Firewall packet traffic report"
+msgstr ""
+
+#: src/templates/filter.mas:8
+msgid ""
+"These rules are meant to control access from internal network interfaces to "
+"services running on your eBox machine"
+msgstr ""
+"これらのルールは内部ネットワークインタフェースからeBoxが動作するマシンへのア"
+"クセスのコントロールに適用されます"
+
+#: src/templates/filter.mas:10 src/templates/filter.mas:18
+#: src/templates/filter.mas:26 src/templates/filter.mas:37
+#: src/templates/filter.mas:48
+msgid "Configure rules"
+msgstr "ルールを設定"
+
+#: src/templates/filter.mas:15
+msgid ""
+"These rules allow you to control access  from your internal networks to the "
+"Internet, and traffic between your internal networks. If you wish to provide "
+"access to your eBox services, you must use the above section"
+msgstr ""
+"これらのルールにより内部ネットワークからインターネットへのアクセス、そして内"
+"部ネットワーク間のトラフィックをコントロールできます。eBoxサービスにアクセス"
+"をする場合は上のセクションを使う必要があります"
+
+#: src/templates/filter.mas:23
+msgid "These rules allow you to control access from eBox to external services"
+msgstr ""
+"これらのルールによりeBoxから外部サービスへのアクセスをコントロールできます"
+
+#: src/templates/filter.mas:29
+msgid "Filtering rules from external networks to eBox"
+msgstr "外部ネットワークからeBoxへのフィルタルール"
+
+#: src/templates/filter.mas:31
+msgid ""
+"These rules allow you to control access from external networks to sevices "
+"running on your eBox machine."
+msgstr ""
+"これらのルールにより外部ネットワークからeBoxが動作するマシンへのアクセスをコ"
+"ントロールできます"
+
+#: src/templates/filter.mas:34 src/templates/filter.mas:45
+msgid ""
+"Be advised that adding rules in this section may compromise your network "
+"security as you may grant access from untrusted networks. Please do not use "
+"this unless you know what you are doing"
+msgstr ""
+"このセクションにルールを追加することにより信頼できないネットワークを許可する"
+"ことになるため、ネットワークのセキュリティが弱まります。何をしようとしている"
+"か理解していないのであればルールを追加すべきではありません。"
+
+#: src/templates/filter.mas:42
+msgid ""
+"These rules allow you to control access from external networks to internal "
+"networks."
+msgstr ""
+"これらのルールにより外部ネットワークから内部ネットワークへのアクセスをコント"
+"ロールできます。"
+
+#~ msgid "External port"
+#~ msgstr "外部ポート"
+
+#~ msgid "Global services' filtering rules"
+#~ msgstr "グローバルサービスのフィルタルール"
+
+#~ msgid "Services' filtering rules {desc}"
+#~ msgstr "サービスのフィルタルール {desc}"
+
+#~ msgid "Edit rule"
+#~ msgstr "ルールを編集"
+
+#~ msgid "Rules"
+#~ msgstr "ルール"
+
+#~ msgid "Global firewall configuration"
+#~ msgstr "グローバルファイアウォール設定"
+
+#~ msgid "Firewall configuration: {desc}"
+#~ msgstr "ファイアウォール設定: {desc}"
+
+#~ msgid "service"
+#~ msgstr "サービス"
+
+#~ msgid "policy"
+#~ msgstr "ポリシー"
+
+#~ msgid "network interface"
+#~ msgstr "ネットワークインタフェース"
+
+#~ msgid "external port"
+#~ msgstr "外部ポート"
+
+#~ msgid "destination address"
+#~ msgstr "送信先アドレス"
+
+#~ msgid "Port {port} is being used by a service or port redirection."
+#~ msgstr ""
+#~ "ポート {port} はサービスによって使われているかリダイレクト対象になっていま"
+#~ "す。"
+
+#~ msgid "Actions"
+#~ msgstr "アクション"
+
+#~ msgid "Add"
+#~ msgstr "追加"
+
+#~ msgid "Change"
+#~ msgstr "変更"
+
+#~ msgid "Delete"
+#~ msgstr "削除"
+
+#~ msgid ""
+#~ "Protocol, ports and addresses are optional. The rules will be applied in "
+#~ "order, from top to bottom, you can reorder them once they are added. "
+#~ "Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "プロトコル、ポート、アドレスの入力は任意です。ルールは上から順に適用されま"
+#~ "す。追加した後で並べ替えることもできます。ルールは削除しなくても無効化する"
+#~ "ことができます。"
+
+#~ msgid "New rule"
+#~ msgstr "新規ルール"
+
+#~ msgid "Action"
+#~ msgstr "アクション"
+
+#~ msgid "Allow"
+#~ msgstr "許可"
+
+#~ msgid "Deny"
+#~ msgstr "拒否"
+
+#~ msgid "Source address"
+#~ msgstr "送信元アドレス"
+
+#~ msgid "is not"
+#~ msgstr "でない"
+
+#~ msgid "is"
+#~ msgstr "です"
+
+#~ msgid "to"
+#~ msgstr "へ"
+
+#~ msgid "Destination address"
+#~ msgstr "送信先アドレス"
+
+#~ msgid "Rule list"
+#~ msgstr "ルール一覧"
+
+#~ msgid "allow"
+#~ msgstr "許可"
+
+#~ msgid "allow (disabled)"
+#~ msgstr "許可(無効)"
+
+#~ msgid "deny"
+#~ msgstr "拒否"
+
+#~ msgid "deny (disabled)"
+#~ msgstr "拒否(無効)"
+
+#~ msgid "inverse match"
+#~ msgstr "逆引き"
+
+#~ msgid "Edit"
+#~ msgstr "編集"
+
+#~ msgid "Up"
+#~ msgstr "正常"
+
+#~ msgid "Down"
+#~ msgstr "停止"
+
+#~ msgid "delete"
+#~ msgstr "削除"
+
+#~ msgid "edit"
+#~ msgstr "編集"
+
+#~ msgid "move up"
+#~ msgstr "上に移動"
+
+#~ msgid "move down"
+#~ msgstr "下に移動"
+
+#~ msgid "any"
+#~ msgstr "全て"
+
+#~ msgid "Services"
+#~ msgstr "サービス"
+
+#~ msgid "Policy"
+#~ msgstr "ポリシー"
+
+#~ msgid "Enabled"
+#~ msgstr "有効"
+
+#~ msgid ""
+#~ "Protocol, port and destination address are optional. The rules will be "
+#~ "applied in order, from top to bottom, you can reorder them once they are "
+#~ "added. Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "プロトコル、ポート、送信先アドレスの入力は任意です。ルールは上から下の順に"
+#~ "適用されます。追加した後で並べ替えることもできます。ルールは削除しなくても"
+#~ "無効にすることができます。"
+
+#~ msgid ""
+#~ "Rules without an explicit destination address will be applied to packets "
+#~ "that leave eBox through an external network interface. You may flag "
+#~ "network interfaces as external in the <a href='../Network/Ifaces'>Network "
+#~ "Interfaces</a> configuration page."
+#~ msgstr ""
+#~ "送信先のアドレスが明示されていないルールはeBoxから外部ネットワークインタ"
+#~ "フェースへのパケットに適用されます.ネットワークインタフェースは<a "
+#~ "href='../Network/Ifaces'>ネットワークインタフェース設定ページ</a>から外部"
+#~ "向けとして設定できます。"
+
+#~ msgid "Active"
+#~ msgstr "アクティブ"
+
+#~ msgid ""
+#~ "The policy states what to do on network packets not explicitly matched "
+#~ "below. The policy is applied to connections that leave eBox through an "
+#~ "external network interface. If you want to allow traffic between internal "
+#~ "networks you need to create explicit rules for that."
+#~ msgstr ""
+#~ "ポリシーは以下の設定に明示的にマッチしないネットワークパケットに対して操作"
+#~ "を行います。ポリシーはeBoxから外部ネットワークインタフェースへの接続に適用"
+#~ "されます。内部ネットワークでのトラフィックを許可するには明示的にルールを作"
+#~ "成する必要があります。"
+
+#~ msgid ""
+#~ "Choosing global will make the firewall fall back to the <a href='Object?"
+#~ "object=_global'>default configuration</a>."
+#~ msgstr ""
+#~ "グローバルを選択するとファイアウォールは<a href='Object?object=_global'>デ"
+#~ "フォルト設定</a>に戻ります。"
+
+#~ msgid "Global"
+#~ msgstr "グローバル"
