@@ -1,0 +1,15 @@
+- Samba: Change the icon of the shares in the desktop ?
+
+- Evolution is configured and working with the first user mail account
+  but it has server settings hardcoded (IMAP, no-TLS, etc).
+
+- Only add eBox usercorner bookmark if it's enabled on eBox
+
+- On the first version usercorner webpage will be hardcoded
+  (https://ebox_ip:8888), later will be able to get a different port it has
+  been changed.
+
+- Pidgin: We have hardcoded 'ebox' as domain at first, and the proper
+  username is set. The domain has to be set correctly if has been changed.
+
+- Maybe in the future: ebox-printers?
