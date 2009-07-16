@@ -1,0 +1,31 @@
+#!/bin/sh
+
+export LDAP_HOST=$1
+export ROOT_DN=$2
+export USERS_DN=$3
+export GROUPS_DN=$4
+
+EGROUPWARE_DB_PASS=/var/lib/ebox/conf/ebox-egroupware.passwd
+
+PASS=`cat $EGROUPWARE_DB_PASS`
+export EGW_CLI_PASSWORD=$PASS
+
+LDAP_PASS=`cat /var/lib/ebox/conf/ebox-ldap.passwd`
+
+su postgres -c "psql -c \"CREATE ROLE egroupware UNENCRYPTED PASSWORD '$PASS' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN\""
+su postgres -c "createdb --encoding=utf-8 --owner egroupware egroupware"
+
+/etc/init.d/postgresql-8.3 stop
+
+PG_HBA_FILE=/etc/postgresql/8.3/main/pg_hba.conf
+
+if ! grep -q egroupware $PG_HBA_FILE; then
+    echo "# Added by ebox-egroupware" >> $PG_HBA_FILE
+    echo "host egroupware egroupware 127.0.0.1/32 password" >> $PG_HBA_FILE
+fi
+
+/etc/init.d/postgresql-8.3 start
+
+# Call domain setup script
+/usr/share/ebox-egroupware/ebox-egroupware-setup
+
