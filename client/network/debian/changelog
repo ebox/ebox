@@ -1,3 +1,9 @@
+ebox-network (0.12.1) hardy; urgency=low
+
+  * New upstream realese
+
+ -- Enrique J. Hernández <quique@ebox-platform.com>  Sun, 18 Jul 2009 17:25:05 +0200
+
 ebox-network (0.11.101) hardy; urgency=low
 
   * New upstream realese

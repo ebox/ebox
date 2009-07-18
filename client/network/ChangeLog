@@ -1,3 +1,6 @@
+0.12.1
+	+ Bugfix: Edition and removal routes is working again
+	+ Remove those static routes that they have been manually added
 0.12
 	+ Use new EBox::Model::Row api
 	+ Add help to model fields
