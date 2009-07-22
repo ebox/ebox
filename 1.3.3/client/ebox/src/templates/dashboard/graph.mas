@@ -1,0 +1,41 @@
+<%args>
+    $namespace
+    $item
+    $i
+    $parent
+</%args>
+% my $elem = ($namespace . '_' . $i);
+% if ($parent eq 'section') {
+<tr>
+<td colspan='2' align='right'>
+<% $item->{title} %>
+<div id='<% $elem %>' style='width:<% $item->{width} %>px; height:<% $item->{height} %>px'></div>
+</div>
+</td>
+</tr>
+% } else {
+<td>
+<% $item->{title} %>
+<div id='<% $elem %>' style='width:<% $item->{width} %>px; height:<% $item->{height} %>px'></div>
+</td>
+% }
+<script type="text/javascript">
+graphInfo['<% $elem %>'] = [
+% my $values = $item->{'novalues'};
+% foreach my $i (0..$values-2) {
+    [<% $i %>, 0],
+% }
+    [<% $values-1 %>, <% $item->{'value'} %>]
+];
+
+Flotr.draw(
+    $('<% $elem %>'), [
+    {
+        data: graphInfo['<% $elem %>']
+    }],
+    {
+        xaxis: { noTicks: 0 },
+        yaxis: { noTicks: 2, tickFormatter: getBytes },
+    }
+);
+</script>
