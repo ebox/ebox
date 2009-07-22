@@ -1,4 +1,0 @@
-#!/bin/sh
-
-ldapsearch -D 'cn=ebox,dc=localdomain' -w $PASSWORD -b "uid=$USERNAME,ou=Users,dc=localdomain" | grep "^uid: $USERNAME"
-

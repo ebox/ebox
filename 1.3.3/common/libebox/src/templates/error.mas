@@ -1,5 +1,0 @@
-<%args>
-	$error
-</%args>
-
-<div class='error'><% $error %></div>

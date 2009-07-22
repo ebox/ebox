@@ -1,8 +1,0 @@
-<%args>
-$tableName
-$data
-$cssClass => ''
-</%args>
-% my $id = $tableName . '_' . $data->fieldName();
---
-<input type="hidden"  value="unused" id='<% $id %>' name='<% $id %>' /> 
