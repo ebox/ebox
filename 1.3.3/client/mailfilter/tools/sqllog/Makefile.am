@@ -1,9 +1,0 @@
-## Process this file with automake to produce Makefile.in
-
-Sqllogdir = @DATADIR@/ebox/sqllog/
-
-nobase_Sqllog_DATA = mailfilter.sql mailfilter_traffic.sql pop_proxy_filter.sql pop_proxy_filter_traffic.sql
-
-EXTRA_DIST = $(nobase_Sqllog_DATA)
-
-MAINTAINERCLEANFILES = Makefile.in

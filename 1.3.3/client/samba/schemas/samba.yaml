@@ -1,9 +1,0 @@
-class: 'EBox::Samba'
-
-depends:
-    - network
-    - users
-
-enabledepends:
-    - network
-    - users
