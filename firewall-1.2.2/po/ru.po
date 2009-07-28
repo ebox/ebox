@@ -1,0 +1,641 @@
+# Russian translations for ebox-firewall package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-firewall package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-firewall 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-06-28 00:05+0200\n"
+"PO-Revision-Date: 2009-01-25 14:11+0000\n"
+"Last-Translator: vadim glyshkov <plusv@yandex.ru>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/CGI/Filter.pm:28
+msgid "Packet filtering"
+msgstr "Фильтрация пакетов"
+
+#: src/EBox/Firewall.pm:57
+msgid "firewall"
+msgstr "Файервол"
+
+#: src/EBox/Firewall.pm:125
+msgid "Flush previous firewall rules"
+msgstr "Очистите предыдущие правила файервола "
+
+#: src/EBox/Firewall.pm:126
+msgid ""
+"The eBox firewall will flush any previous firewall rules which have been "
+"added manually or by another tool"
+msgstr ""
+"Файервол eBox очистит любые другие правила добавленные ранее в ручную или "
+"при помощи других средств"
+
+#: src/EBox/Firewall.pm:131
+msgid "Secure by default"
+msgstr "Безопасность по умолчанию"
+
+#: src/EBox/Firewall.pm:132
+msgid ""
+"Just a few connections are allowed by default. Make sure you add the proper "
+"incoming and outcoming rules to make your system work as expected. Usually, "
+"all outcoming connections are denied by default, and only SSH and HTTPS "
+"incoming connections are allowed."
+msgstr ""
+"Только несколько соединений разрешены по умолчанию. Убедитесь, что вы "
+"добавляете правильные входящие и исходящие правила для работы вашей системы. "
+"Обычно все внешние соединения запрещены по умолчанию и только SSH и HTTPS "
+"разрешены для внутренних соединений."
+
+#: src/EBox/Firewall.pm:304
+msgid "action"
+msgstr "действие"
+
+#: src/EBox/Firewall.pm:425 src/EBox/Firewall.pm:470 src/EBox/Firewall.pm:494
+#, perl-brace-format
+msgid "Name '{name}' is invalid"
+msgstr "Имя '{name}' ошибочное"
+
+#: src/EBox/Firewall.pm:426 src/EBox/Firewall.pm:605 src/EBox/Firewall.pm:630
+msgid "port"
+msgstr "порт"
+
+#: src/EBox/Firewall.pm:604 src/EBox/Firewall.pm:629
+msgid "protocol"
+msgstr "протокол"
+
+#: src/EBox/Firewall.pm:813 src/EBox/Firewall.pm:848
+msgid "Firewall"
+msgstr "Файрвол"
+
+#: src/EBox/Firewall.pm:814
+msgid "UTM"
+msgstr ""
+
+#: src/EBox/Firewall.pm:818
+msgid "Packet Filter"
+msgstr "Фильтр Пакетов"
+
+#: src/EBox/Firewall.pm:821
+msgid "Redirects"
+msgstr "Перенаправления"
+
+#: src/EBox/Firewall.pm:832
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:60
+msgid "Date"
+msgstr "Дата"
+
+#: src/EBox/Firewall.pm:833
+msgid "Input interface"
+msgstr "Входящий интерфейс"
+
+#: src/EBox/Firewall.pm:834
+msgid "Output interface"
+msgstr "Исходящий интерфейс"
+
+#: src/EBox/Firewall.pm:835 src/EBox/Firewall/Model/BaseRuleTable.pm:121
+#: src/EBox/Firewall/Model/RedirectsTable.pm:292
+msgid "Source"
+msgstr "Источник"
+
+#: src/EBox/Firewall.pm:836 src/EBox/Firewall/Model/BaseRuleTable.pm:147
+msgid "Destination"
+msgstr "Назначение"
+
+#: src/EBox/Firewall.pm:837 src/EBox/Firewall/Model/RedirectsTable.pm:285
+msgid "Protocol"
+msgstr "Протокол"
+
+#: src/EBox/Firewall.pm:838
+msgid "Source port"
+msgstr "Исходный порт"
+
+#: src/EBox/Firewall.pm:839
+msgid "Destination port"
+msgstr "Порт назначения"
+
+#: src/EBox/Firewall.pm:840 src/EBox/Firewall/Model/BaseRuleTable.pm:112
+msgid "Decision"
+msgstr "Решение"
+
+#: src/EBox/Firewall.pm:845
+msgid "DROP"
+msgstr "ОТБРОСИТЬ"
+
+#: src/EBox/Firewall.pm:845 src/EBox/Firewall/Model/BaseRuleTable.pm:70
+msgid "LOG"
+msgstr "ЖУРНАЛ"
+
+#: src/EBox/Iptables.pm:738 src/EBox/Iptables.pm:775
+msgid ""
+"You must set the iptables_log_limit variable in the ebox configuration file"
+msgstr ""
+"Вы должны установить значение iptables_log_limit в конфигурационном файле "
+"ebox"
+
+#: src/EBox/Iptables.pm:744 src/EBox/Iptables.pm:781
+msgid ""
+"You must set the iptables_log_burst variable in the ebox configuration file"
+msgstr ""
+"Вы должны установить значение iptables_log_burst в конфигурационном файле "
+"ebox"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:52
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:46
+msgid "packets dropped"
+msgstr "пакеты отброшены"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:64
+msgid "Firewall packet traffic chart"
+msgstr "Диаграмма пакетов трафика файервола"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:86
+msgid "Packet traffic"
+msgstr "трафик пакетов"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:66
+msgid "Packets dropped"
+msgstr "Пакеты отброшены"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:78
+msgid "Packet traffic details"
+msgstr "Детали трафика пакетов"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:86
+msgid "traffic"
+msgstr "трафик"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:66
+msgid "ACCEPT"
+msgstr "ПРИНЯТЬ"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:68
+msgid "DENY"
+msgstr "ОТКЛОНИТЬ"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:126
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:152
+#: src/EBox/Firewall/Model/RedirectsTable.pm:297
+msgid "Any"
+msgstr "Любой"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:129
+#: src/EBox/Firewall/Model/RedirectsTable.pm:300
+msgid "Source IP"
+msgstr "IP источник"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:133
+#: src/EBox/Firewall/Model/RedirectsTable.pm:304
+msgid "Source object"
+msgstr "Источник объект"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:155
+#: src/EBox/Firewall/Model/RedirectsTable.pm:315
+msgid "Destination IP"
+msgstr "IP назначение"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:160
+msgid "Destination object"
+msgstr "Объект назначения"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:175
+msgid "Service"
+msgstr "Служба"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:179
+msgid ""
+"If inverse match is ticked, any service but the selected one will match this "
+"rule"
+msgstr ""
+"Если будет отмечено обратное сопоставление любая служба выбранная однажды "
+"будет соответствовать этому правилу"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:185
+msgid "Description"
+msgstr "Описание"
+
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:65
+#: src/templates/filter.mas:13
+msgid "Filtering rules for internal networks"
+msgstr "Правила Фильтрации между внутренними сетями"
+
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:78
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:78
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:78
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:81
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:80
+msgid "rule"
+msgstr "правило"
+
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:68
+#: src/templates/filter.mas:6
+msgid "Filtering rules from internal networks to eBox"
+msgstr "Правила фильтрации из внутренних сетей на eBox"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:68
+#: src/templates/filter.mas:21
+msgid "Filtering rules for traffic coming out from eBox"
+msgstr "Правила фильтрации для трафика исходящего из eBox"
+
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:68
+#: src/templates/filter.mas:40
+msgid "Filtering rules from external networks to internal networks"
+msgstr "Правила фильтрации из внешних сетей на внутренние сети"
+
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:68
+msgid "Filtering rules from  external networks to eBox"
+msgstr "Правила фильтрации из  внешних сетей на eBox"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:145
+msgid "Contradictory rule found. Remove it first"
+msgstr "Найдены противоречивые правила.  Сначала удалите их"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:249
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:256
+#, fuzzy
+msgid "Original destination"
+msgstr "Назначение"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:261
+msgid "eBox"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:264
+#, fuzzy
+msgid "IP Address"
+msgstr "IP-адрес"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:268
+msgid "Object"
+msgstr "Объект"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:279
+#, fuzzy
+msgid "Original destination port"
+msgstr "порт назначения"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:321
+msgid "Port"
+msgstr "Порт"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:326
+msgid "Same"
+msgstr "То же самое"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:329
+msgid "Other"
+msgstr "Другое"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:346
+msgid "Port redirections"
+msgstr "Перенаправление портов"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:355
+msgid "redirect"
+msgstr "перенаправления"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:70
+msgid "Packet traffic report"
+msgstr "Отчет по трафику пакетов"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:71
+msgid "Firewall packet traffic report"
+msgstr "Отчет по трафику пакетов файервола"
+
+#: src/templates/filter.mas:8
+msgid ""
+"These rules are meant to control access from internal network interfaces to "
+"services running on your eBox machine"
+msgstr ""
+"Эти правила разрешают контролировать доступ с интерфейса внутренней сети  "
+"на  службы eBox"
+
+#: src/templates/filter.mas:10 src/templates/filter.mas:18
+#: src/templates/filter.mas:26 src/templates/filter.mas:37
+#: src/templates/filter.mas:48
+msgid "Configure rules"
+msgstr "Настроить правила"
+
+#: src/templates/filter.mas:15
+msgid ""
+"These rules allow you to control access  from your internal networks to the "
+"Internet, and traffic between your internal networks. If you wish to provide "
+"access to your eBox services, you must use the above section"
+msgstr ""
+"Эти правила разрешают контролировать доступ с ваших внутренних сетей к "
+"Интернет и трафиком между внутренними сетями. Если вы желаете иметь доступ к "
+"службам eBox, вам необходимо использовать секцию выше."
+
+#: src/templates/filter.mas:23
+msgid "These rules allow you to control access from eBox to external services"
+msgstr ""
+"Эти правила разрешают вам контролировать доступ из Ebox на внешние службы"
+
+#: src/templates/filter.mas:29
+msgid "Filtering rules from external networks to eBox"
+msgstr "Правила фильтрации из внешних сетей на eBox"
+
+#: src/templates/filter.mas:31
+msgid ""
+"These rules allow you to control access from external networks to sevices "
+"running on your eBox machine."
+msgstr ""
+"Эти правила позволяют контролировать доступ из внешних сетей к службам "
+"запущенным на машине eBox"
+
+#: src/templates/filter.mas:34 src/templates/filter.mas:45
+msgid ""
+"Be advised that adding rules in this section may compromise your network "
+"security as you may grant access from untrusted networks. Please do not use "
+"this unless you know what you are doing"
+msgstr ""
+"Имейте ввиду что добавление правил в этой секции могут поставить под угрозу "
+"вашу сеть, поскольку вы можете предоставить доступ из ненадежных сетей. "
+"Пожалуйста, не используйте это, если вы знаете, что вы делаете"
+
+#: src/templates/filter.mas:42
+msgid ""
+"These rules allow you to control access from external networks to internal "
+"networks."
+msgstr ""
+"Эти правила позволяют контролировать доступ из внешних сетей на внутренние "
+"сети"
+
+#~ msgid "External port"
+#~ msgstr "Внешний порт"
+
+#~ msgid "Global services' filtering rules"
+#~ msgstr "Глобальные правила фильтрации служб"
+
+#~ msgid "Services' filtering rules {desc}"
+#~ msgstr "Правила фильтрации служб: {desc}"
+
+#~ msgid "Edit rule"
+#~ msgstr "Редактировать правило"
+
+#~ msgid "Rules"
+#~ msgstr "Правила"
+
+#~ msgid "Global firewall configuration"
+#~ msgstr "Глобальные настройки файрвола"
+
+#~ msgid "Firewall configuration: {desc}"
+#~ msgstr "Настройка файрвола: {desc}"
+
+#~ msgid "service"
+#~ msgstr "служба"
+
+#~ msgid "policy"
+#~ msgstr "политика"
+
+#~ msgid "network interface"
+#~ msgstr "сетевой интерфейс"
+
+#~ msgid "external port"
+#~ msgstr "внешний порт"
+
+#~ msgid "destination address"
+#~ msgstr "адрес назначения"
+
+#~ msgid "Port {port} is being used by a service or port redirection."
+#~ msgstr "Порт {port} используется службой или перенаправлением портов"
+
+#~ msgid "Actions"
+#~ msgstr "Действия"
+
+#~ msgid "Add"
+#~ msgstr "Добавить"
+
+#~ msgid "Change"
+#~ msgstr "Изменить"
+
+#~ msgid "Delete"
+#~ msgstr "Удалить"
+
+#~ msgid ""
+#~ "Protocol, ports and addresses are optional. The rules will be applied in "
+#~ "order, from top to bottom, you can reorder them once they are added. "
+#~ "Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "Протокол, порты и адреса опциональны. Правила будут применятся в порядке "
+#~ "'сверху вниз'. Вы также можете изменить порядок уже существующих правил. "
+#~ "Вы также можете отключать правила без их удаления."
+
+#~ msgid "New rule"
+#~ msgstr "Новое правило"
+
+#~ msgid "Action"
+#~ msgstr "Действие"
+
+#~ msgid "Allow"
+#~ msgstr "Разрешено"
+
+#~ msgid "Deny"
+#~ msgstr "Запрещено"
+
+#~ msgid "Source address"
+#~ msgstr "Исходный адрес"
+
+#~ msgid "is not"
+#~ msgstr "если не"
+
+#~ msgid "is"
+#~ msgstr "если"
+
+#~ msgid "to"
+#~ msgstr "к"
+
+#~ msgid "Destination address"
+#~ msgstr "Адрес назначения"
+
+#~ msgid "Rule list"
+#~ msgstr "Список правил"
+
+#~ msgid "allow"
+#~ msgstr "разрешить"
+
+#~ msgid "allow (disabled)"
+#~ msgstr "разрешить (отключено)"
+
+#~ msgid "deny"
+#~ msgstr "запретить"
+
+#~ msgid "deny (disabled)"
+#~ msgstr "запретить (отключено)"
+
+#~ msgid "inverse match"
+#~ msgstr "обратное соответствие"
+
+#~ msgid "Edit"
+#~ msgstr "Редактировать"
+
+#~ msgid "Up"
+#~ msgstr "Поднять"
+
+#~ msgid "Down"
+#~ msgstr "Опустить"
+
+#~ msgid "delete"
+#~ msgstr "удалить"
+
+#~ msgid "edit"
+#~ msgstr "редактировать"
+
+#~ msgid "move up"
+#~ msgstr "переместить вверх"
+
+#~ msgid "move down"
+#~ msgstr "переместить вниз"
+
+#~ msgid "any"
+#~ msgstr "любой"
+
+#~ msgid "Services"
+#~ msgstr "Службы"
+
+#~ msgid "Policy"
+#~ msgstr "Политика"
+
+#~ msgid "Enabled"
+#~ msgstr "Включено"
+
+#~ msgid ""
+#~ "Protocol, port and destination address are optional. The rules will be "
+#~ "applied in order, from top to bottom, you can reorder them once they are "
+#~ "added. Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "Протокол, порт и адрес назначения опциональны. Правила будут применятся в "
+#~ "порядке 'сверху вниз'. Вы также можете изменить порядок уже существующих "
+#~ "правил. Вы также можете отключать правила без их удаления."
+
+#~ msgid ""
+#~ "Rules without an explicit destination address will be applied to packets "
+#~ "that leave eBox through an external network interface. You may flag "
+#~ "network interfaces as external in the <a href='../Network/Ifaces'>Network "
+#~ "Interfaces</a> configuration page."
+#~ msgstr ""
+#~ "Правила без точного адреса назначения будут применяться к пакетам, "
+#~ "которые покидают eBox через внешний сетевой интерфейс. Вы можете "
+#~ "обозначить сетевой интерфейс как внешний на <a href='../Network/"
+#~ "Ifaces'>странице настройки</a> сетевых интерфейсов"
+
+#~ msgid "Active"
+#~ msgstr "Активное"
+
+#~ msgid ""
+#~ "The policy states what to do on network packets not explicitly matched "
+#~ "below. The policy is applied to connections that leave eBox through an "
+#~ "external network interface. If you want to allow traffic between internal "
+#~ "networks you need to create explicit rules for that."
+#~ msgstr ""
+#~ "Политика определяет что нужно делать с пакетами, которые не совпадают с "
+#~ "описанными ниже. Политика применяется к соединениям проходящим через "
+#~ "внешний сетевой интерфейс eBox. Если Вы хотите разрешить траффик между "
+#~ "внутренними сетями, Вы должны создать точные правила для этого"
+
+#~ msgid ""
+#~ "Choosing global will make the firewall fall back to the <a href='Object?"
+#~ "object=_global'>default configuration</a>."
+#~ msgstr ""
+#~ "Выберите для глобального отката файрвола на <a href='Object?"
+#~ "object=_global'>стандартные настройки</a>."
+
+#~ msgid "Global"
+#~ msgstr "Глобальные"
+
+#~ msgid "object"
+#~ msgstr "объект"
+
+#~ msgid "Port cannot be set if no protocol is selected."
+#~ msgstr "Порт не может быть установлен без выбора протокола."
+
+#~ msgid "address"
+#~ msgstr "адрес"
+
+#~ msgid "source port"
+#~ msgstr "исходный порт"
+
+#~ msgid "source address"
+#~ msgstr "исходный адрес"
+
+#~ msgid "Rule not found"
+#~ msgstr "Правило не найдено"
+
+#~ msgid "Deny action"
+#~ msgstr "Запретить действие"
+
+#~ msgid ""
+#~ "This will tell the firewall what to do when discarding network packets.  "
+#~ "If you choose Reject, a packet will be sent back to the sender, choosing "
+#~ "Drop will make the firewall drop the packet silently."
+#~ msgstr ""
+#~ "Это сообщает файрволу что он должен делать с запрещенными пакетами. Если "
+#~ "Вы выберите Отклонить - пакет будет возвращен отправителю. Если Вы "
+#~ "выберите Сборсить - пакет будет удален."
+
+#~ msgid "Drop packets"
+#~ msgstr "Сбрасывать пакеты"
+
+#~ msgid "Reject packets"
+#~ msgstr "Отклонять пакеты"
+
+#~ msgid "Apply"
+#~ msgstr "Применить"
+
+#~ msgid "Filtering rules for internet access"
+#~ msgstr "Правила фильтрации для доступа в Интернет"
+
+#~ msgid ""
+#~ "The link below will let you set up the default behavior of the packet "
+#~ "filter.  These rules are meant to control access from internal network "
+#~ "interfaces to external ones, they provide a simpler way to control access "
+#~ "to the internet. You may also choose an object and set up its own rules"
+#~ msgstr ""
+#~ "Ссылка ниже предлагает Вам установить действие по умолчанию для фильтра "
+#~ "пакетов. Эти правила предназначены для контроля доступа с внутренних "
+#~ "сетевых интерфейсов на внешние. Они обеспечивают более простой путь к "
+#~ "контролю над доступом в Интернет. Вы также можете выбрать объект и "
+#~ "установить свои собственные правила"
+
+#~ msgid "Configure default rules"
+#~ msgstr "Настроить стандартные правила"
+
+#~ msgid "Filtering Rules between internal networks"
+#~ msgstr "Правила Фильтрации между внутренними сетями"
+
+#~ msgid "Configure default rules related to eBox services"
+#~ msgstr "Настроить стандартные правила связанные со службами eBox"
+
+#~ msgid "Configure rules for a particular object"
+#~ msgstr "Настроить правила для отдельных объектов"
+
+#~ msgid "Go"
+#~ msgstr "Запуск"
+
+#, fuzzy
+#~ msgid ""
+#~ "The link below will let you set up the default behavior of the packet "
+#~ "filter. You may also choose an object and set up rules and the services "
+#~ "it may access. These rules are meant to control access from internal "
+#~ "network interfaces to external ones, they provide a simpler way to "
+#~ "control access to the internet."
+#~ msgstr ""
+#~ "Ссылка ниже предлагает Вам установить действие по умолчанию для фильтра "
+#~ "пакетов. Эти правила предназначены для контроля доступа с внутренних "
+#~ "сетевых интерфейсов на внешние. Они обеспечивают более простой путь к "
+#~ "контролю над доступом в Интернет. Вы также можете выбрать объект и "
+#~ "установить свои собственные правила"
+
+#, fuzzy
+#~ msgid "Filtering rules for eBox's services"
+#~ msgstr "Правила фильтрации для доступа в Интернет"
