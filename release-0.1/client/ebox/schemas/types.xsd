@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:simpleType name="iptype">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([01]?\d?\d|2[0-4]\d|25[0-4])\.){3}([01]?\d?\d|2[0-4]\d|25[0-4])"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="cidrtype">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+			value="(([01]?\d?\d|2[0-4]\d|25[0-4])\.){3}([01]?\d?\d|2[0-4]\d|25[0-4])(/([012]?\d|3[012]))"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="addresstype">
+	    <xs:union memberTypes="iptype cidrtype" />
+	</xs:simpleType>
+
+	<xs:simpleType name="porttype">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="65535"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="protocoltype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="tcp"/>
+			<xs:enumeration value="udp"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="yesnotype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="yes"/>
+			<xs:enumeration value="no"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

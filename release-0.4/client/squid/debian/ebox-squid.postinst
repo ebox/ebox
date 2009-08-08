@@ -1,0 +1,17 @@
+#!/bin/bash
+
+webserver=apache
+
+case "$1" in
+	configure)
+		# don't start squid with its script
+		update-rc.d -f squid remove
+
+		#sudo configuration
+		ebox-sudoers > /etc/sudoers
+		chmod 0440 /etc/sudoers
+esac
+
+#DEBHELPER#
+
+exit 0

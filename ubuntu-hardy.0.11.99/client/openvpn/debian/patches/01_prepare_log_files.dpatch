@@ -1,0 +1,46 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_prepare_log_files.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to prepare openVPN log files to be read 
+## DP: by loggerd
+
+@DPATCH@
+
+Index: openvpn/src/EBox/OpenVPN.pm
+===================================================================
+--- openvpn/src/EBox/OpenVPN.pm	(revisión: 9763)
++++ openvpn/src/EBox/OpenVPN.pm	(copia de trabajo)
+@@ -64,6 +64,7 @@
+     my ($self) = @_;
+ 
+     $self->_writeConfFiles();
++    $self->_prepareLogFiles();
+     $self->_cleanupDeletedDaemons();
+     $self->_doDaemon();
+ }
+@@ -188,7 +189,24 @@
+     }
+ }
+ 
++sub _prepareLogFiles
++{
++    my ($self) = @_;
+ 
++    my $logDir = $self->logDir();
++    for my $name ($self->daemonsNames()) {
++        for my $file ("$logDir/$name.log", "$logDir/status-$name.log") {
++            try {
++                EBox::Sudo::root("test -e $file");
++            } otherwise {
++                EBox::Sudo::root("touch $file");
++            };
++            EBox::Sudo::root("chown root:ebox $file");
++            EBox::Sudo::root("chmod 0640 $file");
++        }
++    }
++}
++
+ sub _cleanupDeletedDaemons
+ {
+     my ($self) = @_;

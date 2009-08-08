@@ -1,0 +1,26 @@
+<%args>
+</%args>
+<%init>
+  use EBox::Gettext;
+  my @createTable = (
+                     [ name => 'orgName', input => 'text',
+                       printableName => __('Organization Name') ],
+                     [ name => 'expiryDays', input => 'text',
+                       printableName => __('Days to expire') ],
+              #       [ name => 'caPassphrase', input => 'password',
+              #         printableName => __('Passphrase') ],
+              #       [ name => 'reCAPassphrase', input => 'password',
+              #        printableName => __('Re-passphrase') ],
+                     [ name => 'ca', input => 'submit',
+                       value => __('Create') ]
+                    );
+
+</%init>
+<div class="note">
+  <% __("This page only appears once at starting up the Certification
+  Authority.\nChanges take effect immediately") %>
+</div> 
+<h3><% __('Create Certification Authority Certificate') %></h3>
+<form action='CreateCA' method='POST'>
+  <& formTable.mas, rows => \@createTable &>
+</form>

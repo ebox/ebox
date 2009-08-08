@@ -1,0 +1,54 @@
+0.11.99
+	+ Added thin client general options: filename and next-server
+	+ Added include files to use by user in
+	  ${EBOX_HOME}/conf/dhcp/${iface}/plugins subdir
+	+ Bugfix. Check fixed mapping names not to collide with other
+	mappings in other models and make dhcpd crash
+	+ Bugfix. Fixed mapping names cannot contain spaces
+0.10.99
+	+ Use the new model/view framework. UI uses Ajax.
+	+ Show eBox domain server if DNS is installed
+	+ Show eBox IPs on default gateway selection
+0.9.100
+	+ Use new services API 
+0.9.99
+	+ New release
+
+0.9.3
+	+ New release
+0.9.2
+	+ Check fixed ip's name against domain name syntax
+0.9.1
+	+ New release
+0.9
+	+ Added Polish translation
+	+ Added Aragonese translation
+	+ Added German translation
+
+0.8.99
+	+ New release
+0.8.1
+	+ New release
+0.8
+	+ New release
+0.7.99
+        + Add Portuguese translation
+
+0.7.1
+	+ Add search domain to options
+	+ Use of ebox-sudoers-friendly
+0.7
+	+ First public release
+	+ Log leases/releases
+0.6	
+	+ API documented using naturaldocs
+	+ move to client
+	+ Use NetworkObserver
+	   
+0.5.2
+	+ Fix some packaging issues
+0.5.1
+	+ Convert module to new menu system
+
+0.5
+	+ Initial release

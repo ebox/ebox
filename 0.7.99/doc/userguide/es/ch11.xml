@@ -1,0 +1,68 @@
+	<!-- vim: ts=2 sw=2 tw=75
+-->
+<chapter id="ch-files">
+
+	<title>Servidor de ficheros</title>
+	<!-- File Sharing -->
+
+	<section>
+		<title>Servidor de ficheros</title>
+
+		<para>
+		Se accede a la configuración del servidor de ficheros
+		a traves de 
+			<menuchoice>
+				<guimenu>Compartir ficheros</guimenu>
+			</menuchoice>
+		.
+		Para activar el servidor de ficheros simplemente seleccione
+		de la lista desplegable de estados, en la parte superior
+		de la ventana de configuración, el estado habilitado y acepte
+		el cambio pulsando en cambiar.
+		</para>
+
+		<para>
+		Para que el servidor de ficheros funcione correctamente,
+		además de habilitarlo, tendrá que configurar los siguientes
+		campos:
+		<variablelist>
+			<varlistentry>
+				<term>Grupo de trabajo</term>
+				<listitem>
+					<para>
+					Sólo los usuarios que pertenezcan al mismo grupo de 
+					trabajo pueden compartir sus ficheros entre sí.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Nombre de netbios</term>
+				<listitem>
+					<para>
+					Nombre que tendrá la máquina dentro de la red.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Descripción</term>
+				<listitem>
+					<para>
+					Descripción de la máquina.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Quota limit</term>
+				<listitem>
+					<para>
+					Límite de tamaño de disco en MB a usar por cada uno 
+					de los usuarios. Si no se quieren imponer restricciones
+					de tamaño es suficiente poner en este campo un cero.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		</para>
+	</section>
+
+</chapter>

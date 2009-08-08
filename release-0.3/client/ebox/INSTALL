@@ -1,0 +1,105 @@
+DEPENDENCIES
+------------
+
++ Debian packages:
+
+# apt-get install <package>
+
+	+ perl
+	+ perl-modules
+	+ sudo
+	+ iproute
+	+ iptables
+	+ apache-perl
+	+ dhcp3-client
+	+ libapache-mod-perl
+	+ liblog-dispatch-perl
+	+ liblog-log4perl-perl
+	+ liblocale-gettext-perl
+	+ libnetwork-ipv4addr-perl
+	+ liberror-perl
+	+ libdevel-stacktrace-perl
+	+ libapache-authcookie-perl
+	+ libgnome2-gconf-perl
+	+ libnet-ifconfig-wrapper-perl
+	+ libsys-cpu-perl
+	+ libsys-cpuload-perl
+	+ libnetwork-ipv4addr-perl
+	+ gettext
+
++ modules from cpan
+
+	none currently
+
+INSTALATION
+-----------
+
+1.- Configure:
+
+    $ ./configure <arguments>
+
+    Accepts standard GNU configure arguments, run ./configure --help
+    for a list
+
+    Apache is autodetected
+
+    Suggested argument: --localstatedir=/var/lib/ , to have variable data
+    installed in /var/lib/
+
+2.- Instalation, as root:
+
+    $ make install
+
+3.- Allow the apache user to run some root commands via sudo:
+    
+    See doc/sudo and doc/sudo.example for further info and examples
+    to configure sudoers file.
+
+4.- Copy the file conf/ebox.conf to apache conf.d directory, i.e.
+    /etc/apache/conf.d/
+
+5.- Restart apache:
+
+    /etc/init.d/apache restart
+
+6.- To make ebox run on startup:
+
+    ln -s /etc/init.d/ebox /etc/rc2.d/S99ebox
+
+7.- Give write permission to the apache user (www-data) in the
+    localstatedir directory: $prefix/var/lib/ebox or /var/lib/ebox if the
+    --localstatedir=/var/lib/ parameter was used, and create directories log and tmp
+	 inside:
+
+    mkdir /var/lib/ebox/tmp
+    mkdir /var/lib/ebox/log
+    chown -R www-data.www-data /var/lib/ebox
+
+
+8.- If apache is not going to listen on port 80 change it in
+    with gconf-editor or gconf tool in the /ebox/firewall/services
+    gconf directory.
+
+9.- Copy conf/.gconf.path to the $HOME directory of the user which runs
+    apache, usually /var/www or /srv/www/.
+
+10.- Copy the ebox script to /etc/init.d/ and make a link in /etc/rc2.d/
+
+11.- Remove the link to /etc/init.d/apache from /etc/rc2.d/, the ebox script
+     will handle apache starts/stops.
+
+RUNNING
+-------
+
+The url for the administration interface is:
+
+http://<ip address>:<apache-port>/ebox/
+
+The default password is 'lala'. It may be changed in the general configuration
+page.
+
+Ebox logs are located in $localstatedir/ebox/log/ (localstatedir will be
+$prefix/var/ by default or /var/lib/ if you have used the suggested argument
+--localstatedir=/var/lib/).
+
+Some errors may be found in the apache error log: /var/log/apache/error.log

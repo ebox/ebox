@@ -1,0 +1,207 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+  @backups
+  $readOpticalDisk  => 0
+  $writeOpticalDisk => 0
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<& .backupSection, writeOpticalDisk => $writeOpticalDisk &>
+<& .restoreSection, readOpticalDisk => $readOpticalDisk &>
+<& .listSection, backups => \@backups,  writeOpticalDisk => $writeOpticalDisk &>
+<%def .backupSection>
+<%args>
+$writeOpticalDisk
+</%args>
+<%init>
+my $modeOptions = [
+     { value => 'fullBackup', printableValue => __('Full Backup') },
+     { value => 'configurationBackup', printableValue => __('Configuration Backup') }
+];
+</%init>
+<h3><% __('Back up the current state') %></h3>
+<div class='help'>
+	<% __("Backups will be stored in eBox and then you will be able to download them to your hard disk or write them into CD/DVD disks. Anyway, you can later copy back stored backup") %>
+</div>	
+% if (not $writeOpticalDisk) {
+  <div class='warning'>
+	<% __("'Backup to CD/DVD disk' is disabled, because eBox could not find any recorder drive") %>
+  </div>   
+% }
+<p>
+<table class='formTable'>
+    <tbody>
+       <form action='Backup' method='POST'>
+		<tr>
+			<td class='tright'>
+				<span class='ftitle'><% __('Description') %>:</span>
+			</td>
+			<td>
+					<input type='text' class='inputText' name='description' size='52' />
+			</td>
+                </tr>
+		<tr>
+			<td class='tright'>
+				<span class='ftitle'><% __('Backup mode') %>:</span>
+			</td>
+			<td>
+	                	<& /input/select.mas, name => 'mode', value => 'configurationBackup', options => $modeOptions &>
+			</td>
+                </tr>
+		<tr>
+			<td class='tright'> </td>
+			<td>
+				<input class='inputButton' type='submit' name='backup' value="<% __('Back up to hard disk') %>" />
+			   	<input class='inputButton'
+			   	type='submit' <% $writeOpticalDisk ? '' : 'disabled' %> name='backupToDisc' value="<% __('Back up to CD/DVD disk') %>" />
+			</td>
+                </tr>
+	</form>
+    </tbody>
+</table>
+</p>
+</%def>
+
+<%def .restoreSection>
+<%args>
+$readOpticalDisk
+</%args>
+<h3><% __('Restore backup from file') %></h3>
+<div class='help'>
+	<% __('You can  upload a backup file from your computer') %>
+</div>
+  <table class='formTable'>
+    <tbody>
+     <form action='ConfirmBackup' method='POST' enctype="multipart/form-data">
+		<tr>
+			<td class='tright'>
+				<span class='ftitle'><% __('Backup file') %>:</span>
+			</td>
+			<td>
+					<input type='file' name='backupfile'/>
+			</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td>
+                  <input class='inputButton' type='submit' name='restoreFromFile' value="<% __('Restore') %>" /> 
+			</td>
+		</tr>
+
+       </form>
+   </tbody>
+</table>
+
+<h3><% __('Restore backup from disk') %></h3>
+<div class='help'>
+	<% __('You can restore from a backup disk. Please insert the disk before clicking the button') %>
+</div>
+% if (not $readOpticalDisk) {
+  <div class='help'>
+	<% __("'Restore backup from CD/DVD disk' is disabled, because eBox could not find any reader drive") %>
+  </div>   
+% }
+  <table class='formTable'>
+    <tbody>
+     <form action='ConfirmBackup' method='POST' enctype="multipart/form-data">
+		<tr>
+			<td> </td>
+			<td>
+					
+		<input class='inputButton' type='submit' name='restoreFromDisc' <% $readOpticalDisk ? '' : 'disabled' %> value="<% __('Restore from disk') %>" />
+			</td>
+		</tr>
+
+       </form>
+   </tbody>
+</table>
+</%def>
+
+
+<%def .listSection>
+<%args>
+@backups
+$writeOpticalDisk
+</%args>
+<%init>
+my $writeToDiskIcon   = $writeOpticalDisk ? '/data/images/writecd.gif': '/data/images/writecd.gif';
+</%init>
+% if(@backups){
+% if (not $writeOpticalDisk) {
+  <div class='help'>
+	<% __("'Write backup to CD/DVD disk' is disabled, because eBox could not find any recorder drive") %>
+  </div>   
+% }
+<h3><% __('List of configuration backups') %></h3>
+<table class='dataTable' cellspacing='0'>
+	<thead>
+		<tr>
+			<th class="tleft"><%__('Description')%></th>
+			<th><%__('Date')%></th>
+			<th class="thOptions"><%__('Actions')%></th>
+		</tr>
+	</thead>
+	<tbody>
+%		foreach my $backup (@backups) {
+		<tr class='border'>
+			<form method='POST' action='ConfirmBackup'>
+				<td class="tleft" width="35%">
+					<input type='hidden'
+						name='id'
+						value="<%$backup->{'id'}%>"/>
+					<% $backup->{'description'} %>
+				</td>
+				<td class='tcenter' width="40%">
+					<% $backup->{'date'} %>
+				</td>
+				<td class='tcenter' width="15%">
+					<input type='image' name='restoreFromId'
+						src='/data/images/apply.gif'
+						value="Restore"
+						title="<%__('Restore configuration using this file')%>"
+						alt="<%__('Restore from backup')%>"/>
+					<img src='/data/images/sep.gif' alt='-'/>
+					<input type='image' name='download'
+						src='/data/images/down.gif'
+						value="Download"
+						title="<%__('Download')%>"
+						alt="<%__('Download')%>"/>
+					<img src='/data/images/sep.gif' alt='-'/>
+					<input type='image' name='burn'
+						src='<% $writeToDiskIcon %>'
+		                                <%  $writeOpticalDisk ? '' : 'disabled' %>
+						value="Burn"
+						title="<%__('Write backup to CD/DVD disk')%>"
+						alt="<%__('Write backup to CD/DVD disk')%>"/>
+					<img src='/data/images/sep.gif' alt='-'/>
+					<input type='image' name='delete'
+						src='/data/images/delete.gif'
+						value="Delete"
+						title="<%__('Delete')%>"
+						alt="<%__('Delete')%>"/>
+				</td>
+			</form>
+		</tr>
+%		}
+	</tbody>
+</table>
+<br />
+<!-- Put the legend underneath the list -->
+<%perl>
+  my @legendElements = (
+                        { imgFile => "/data/images/down.gif",
+			  imgName => __('download') },
+			{ imgFile => $writeToDiskIcon,
+			  imgName => $writeOpticalDisk ?  __('write into disk') : __('write into disk (disabled)') },
+			{ imgFile => "/data/images/apply.gif",
+			  imgName => __('restore') },
+			{ imgFile => "/data/images/delete.gif",
+			  imgName => __('delete') }
+		       );
+</%perl>
+<& legendTable.mas, elements => \@legendElements, nColumns => 2 &>
+% }
+</%def>
+

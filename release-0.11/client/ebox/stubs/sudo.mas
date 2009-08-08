@@ -1,0 +1,9 @@
+<%args>
+	$user => 'ebox'
+</%args>
+
+# sudoers file for ebox
+
+
+# Allow httpd user to execute all commands
+<% $user %>  ALL = NOPASSWD:ALL

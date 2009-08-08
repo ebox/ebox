@@ -1,0 +1,44 @@
+alias /data/ @DATADIR@/ebox/www/
+
+<Directory @DATADIR@/ebox/www/>
+	Options Indexes MultiViews
+        AllowOverride None
+	Order allow,deny
+	Allow from all
+</Directory>
+
+ScriptAlias /ebox/ @DATADIR@/ebox/cgi/
+
+PerlModule EBox::Auth
+PerlSetVar EBoxPath /
+PerlSetVar EBoxLoginScript /ebox/Login/Index
+PerlSetVar EBoxSatisfy Any
+PerlSetVar AuthCookieDebug 0
+
+<Files LOGIN>
+	AuthType EBox::Auth
+	AuthName EBox
+	SetHandler perl-script
+	PerlHandler EBox::Auth->login
+</Files>
+
+<Directory @DATADIR@/ebox/cgi/>
+	AuthType EBox::Auth
+	AuthName EBox
+	PerlModule 	EBox::Auth
+	PerlAuthenHandler EBox::Auth->authenticate
+	PerlAuthzHandler  EBox::Auth->authorize
+	require valid-user
+        SetHandler perl-script
+        PerlHandler Apache::Registry
+        PerlSendHeader On
+        AllowOverride None
+        Options +ExecCGI
+        Order allow,deny
+        Allow from all
+</Directory>
+
+RewriteEngine On
+
+RewriteRule ^/ebox/ebox.cgi$ [S,PT]
+RewriteRule ^/ebox/(.*) /ebox/ebox.cgi [E=script:$1,PT,L]

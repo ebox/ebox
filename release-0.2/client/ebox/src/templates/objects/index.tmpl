@@ -1,0 +1,204 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+	<div class='squidnew'>
+		<form action='Add' method='POST'>
+			<h3><TMPL_VAR EXPR="__('New Object')"></h3>
+			<p><TMPL_VAR EXPR="__('Object Name')">:
+				<input type='text' class='inputText' name='objectname'>
+				<input class='inputButton' type='submit' name='create' 
+					   value='<TMPL_VAR EXPR="__('Create')">'
+					   alt='<TMPL_VAR EXPR="__('Create')">'>
+			</p>
+
+			<div class='help'>
+				<TMPL_VAR EXPR="__('Help about new Object creation.')">
+			</div>
+		</form>
+	</div>
+
+	<TMPL_IF NAME="objects"> 
+	<h3><TMPL_VAR EXPR="__('Object List')"></h3>
+	<div class='object_list'>
+		<table cellspacing='0' class='dataTable'>
+			<thead>
+				<tr>
+					<th width='66%' class='tleft'>
+						<TMPL_VAR EXPR="__('Name')">
+					</th>
+					<th class='thOptions'>
+						<TMPL_VAR EXPR="__('Modify')">
+					</th>
+					<th class='thOptions'>
+						<TMPL_VAR EXPR="__('Delete')">
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			<TMPL_LOOP NAME="objects">
+				<tr class='border'>
+					<td><TMPL_VAR NAME="description"></td>
+					<td class='tcenter'>
+						<div class='show' id='hideview<TMPL_VAR NAME="name">'><a
+						href='show' onclick="show('<TMPL_VAR NAME="name">');
+						return false;"><TMPL_VAR EXPR="__('Show')"></a></div>
+						<div class='hide' id='showview<TMPL_VAR NAME="name">'>
+							<a href='show' onclick="hide(); return false;">
+								<TMPL_VAR EXPR="__('Hide')">
+							</a>
+						</div>
+					</td>
+					<td class='tcenter'>
+						<a href='Del?objectname=<TMPL_VAR NAME="name">'>
+							<TMPL_VAR EXPR="__('Delete')">
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class='hide' id='<TMPL_VAR NAME="name">'>
+					
+							<table cellspacing='0' class='iptableaux'>
+								<thead>
+									<tr>
+										<th width='40%' class='tleft'>
+											<TMPL_VAR EXPR="__('Name')">
+										</th>
+										<th class='thOptions'>
+											<TMPL_VAR EXPR="__('IP Address')">
+										</th>
+										<th class='thOptions'>
+											<TMPL_VAR EXPR="__('Mask')">
+										</th>
+										<th class='thOptions'>
+											<TMPL_VAR EXPR="__('MAC')">
+										</th>
+										<th class='thOptions'>
+											<TMPL_VAR EXPR="__('Action')">
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<form action='AddTo' method='POST'>
+										<input type='hidden' name='objectname'
+											   value='<TMPL_VAR NAME="name">'/>
+										<td>
+											<input type="text" class='inputText'
+												   size="16" name="ip_name"/>
+										</td>
+										<td>
+											<input type="text" class='inputText'
+												   size="15" name="ip_addr"/>
+										</td>
+										<td>
+											<select name='ip_mask'>
+												<option selected value="32">
+													32
+												</option>
+												<option value="31">31</option>
+												<option value="30">30</option>
+												<option value="29">29</option>
+												<option value="28">28</option>
+												<option value="27">27</option>
+												<option value="26">26</option>
+												<option value="25">25</option>
+												<option value="24">24</option>
+												<option value="16">16</option>
+												<option value="8">8</option>
+											</select>
+										</td>
+										<td>
+											<input type="text" class='inputText'
+												   size="17" name="mac"/>
+										</td>
+										<td>
+											<input class='inputButton'
+												   type='submit' name='add'
+										     value='<TMPL_VAR EXPR="__('Add')">'
+											 alt='<TMPL_VAR EXPR="__('Add')">'>
+										</td>
+									</form>
+								</tr>
+								<TMPL_LOOP NAME="member">
+								<tr>
+								<form action='DelFrom' method='POST'>
+									<td>
+										<input type='hidden' name='objectname'
+											   value='<TMPL_VAR NAME="name">'/>
+										<TMPL_VAR NAME="nname">
+									</td>
+									<td class='tright'>
+										<input type='hidden' name='ip_addr'
+											   value='<TMPL_VAR NAME="ip">'/>
+										<TMPL_VAR NAME="ip">
+									</td>
+									<td>
+										<input type='hidden' name='ip_mask'
+											   value='<TMPL_VAR NAME="mask">'/>
+										/<TMPL_VAR NAME="mask">
+									</td>
+									<td class='tright'>
+										<TMPL_VAR NAME="mac">
+									</td>
+									<td class='tcenter'>
+										<input class='inputButton'
+											   type='submit' name='delete'
+										 value='<TMPL_VAR EXPR="__('Delete')">'>
+									</td>
+								</form>
+								</tr>
+								</TMPL_LOOP>
+								</tbody>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</TMPL_LOOP>
+			</tbody>
+		</table>
+	</div>
+	</TMPL_IF>
+</div>
+<script type="text/javascript"><!--
+function getElementByClass(classname){
+	ccollect=new Array()
+	var inc=0;
+	var alltags=document.getElementsByTagName("*");
+	for (i=0; i<alltags.length; i++){
+		if (alltags[i].className==classname)
+			ccollect[inc++]=alltags[i];
+	}
+	return ccollect;
+}
+
+function setDefault(){
+	elements=getElementByClass("hide");
+	var inc=0;
+	while (elements[inc]){
+		elements[inc].style.display="none";
+		inc++;
+	}
+	inc=0;
+	elements=getElementByClass("show");
+	while (elements[inc]){
+		elements[inc].style.display="inline";
+		inc++;
+	}
+}
+
+function show(id){
+	setDefault();
+	document.getElementById(id).style.display="block";
+	document.getElementById("hideview" + id).style.display="none";
+	document.getElementById("showview" + id).style.display="inline";
+}
+
+function hide(id){
+	setDefault();
+}
+
+setDefault();
+<TMPL_IF NAME='show'> 
+show('<TMPL_VAR NAME="show">');
+</TMPL_IF>
+//--></script>

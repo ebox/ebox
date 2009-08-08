@@ -1,0 +1,91 @@
+package EBox::Config;
+
+my $ref = {};
+$ref->{prefix} = "@prefix@";
+$ref->{datadir} = "@DATADIR@";
+$ref->{sysconfdir} = "@SYSCONFDIR@";
+$ref->{localstatedir} = "@LOCALSTATEDIR@";
+$ref->{package} = "@PACKAGE@";
+$ref->{version} = "@VERSION@";
+$ref->{perlpath} = "@PERLPATH@";
+$ref->{squidconfile} = "@SQUIDCONF@";
+#FIXME Hardcoded. Detect and check it.
+$ref->{squidinit}   =  "/etc/init.d/squid";
+
+sub prefix {
+	return $ref->{prefix};
+}
+
+sub share {
+	return $ref->{datadir};
+}
+
+sub conf {
+	return $ref->{localstatedir} . "/ebox/conf/";
+}
+
+sub tmp {
+	return $ref->{localstatedir} . "/ebox/tmp/";
+}
+
+sub passwd {
+	return $ref->{localstatedir} . "/ebox/conf/ebox.passwd";
+}
+
+sub sessionid {
+	return $ref->{localstatedir} . "/ebox/conf/ebox.sid";
+}
+
+sub log {
+	return $ref->{localstatedir} . "/log/ebox.log";
+}
+
+sub stubs {
+	return $ref->{localstatedir} . "/ebox/stubs/";
+}
+
+sub cgi {
+	return $ref->{datadir} . "/ebox/cgi/";
+}
+
+sub templates {
+	return $ref->{datadir} . "/ebox/templates/";
+}
+
+sub schemas {
+	return $ref->{datadir} . "/ebox/schemas/";
+}
+
+sub www {
+	return $ref->{datadir} . "/ebox/www/";
+}
+
+sub css {
+	return $ref->{datadir} . "/ebox/www/css/";
+}
+
+sub images {
+	return $ref->{datadir} . "/ebox/www/images/";
+}
+
+sub package {
+	return $ref->{package};
+}
+
+sub version {
+	return $ref->{version};
+}
+
+sub lang {
+	return $ref->{lang};
+}
+
+sub squidconf {
+	return	$ref->{squidconfile};
+}
+
+sub squidinit {
+	return $ref->{squidinit};
+}
+
+1;

@@ -1,0 +1,101 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/software/class</key>
+			<applyto>/ebox/modules/global/modules/software/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::Software</default>
+			<locale name="C"/>
+		</schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/text</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>Software management</default>
+            </locale>
+            <locale name="es">
+                <default>Gestión de software</default>
+            </locale>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/sub/ebx/text</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/sub/ebx/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>eBox components</default>
+            </locale>
+            <locale name="es">
+                <default>Componentes eBox</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/sub/ebx/location</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/sub/ebx/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>Software/EBox</default>
+            <locale name="C"/>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/sub/updates/text</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/sub/updates/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>System updates</default>
+            </locale>
+            <locale name="es">
+                <default>Actualizaciones del sistema</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/sub/updates/location</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/sub/updates/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>Software/Updates</default>
+            <locale name="C"/>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/sub/conf/text</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/sub/conf/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>Configuration</default>
+            </locale>
+            <locale name="es">
+                <default>Configuración</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/software/menu/soft/sub/conf/location</key>
+            <applyto>/ebox/modules/global/modules/software/menu/soft/sub/conf/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>Software/Config</default>
+            <locale name="C"/>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/software/automatic</key>
+            <applyto>/ebox/modules/software/automatic</applyto>
+            <owner>ebox</owner>
+            <type>bool</type>
+			<default>false</default>
+            <locale name="C"/>
+        </schema>
+
+	</schemalist>
+</gconfschemafile>

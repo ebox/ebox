@@ -1,0 +1,211 @@
+# translation of es.po to 
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of Ebox Squid.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# <>, 2004.
+# Isaac Clerencia <isaac@sindominio.net>, 2004.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: es\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2004-10-22 12:25+0200\n"
+"PO-Revision-Date: 2004-10-22 17:39+0200\n"
+"Last-Translator: Isaac Clerencia <isaac@sindominio.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+
+#: src/EBox/CGI/Index.pm:30
+msgid "HTTP Proxy"
+msgstr "Proxy HTTP"
+
+#: src/EBox/CGI/Banned.pm:38 src/EBox/Squid.pm:373 src/EBox/Squid.pm:378
+msgid "domain name"
+msgstr "nombre de dominio"
+
+#: src/EBox/CGI/Banned.pm:39
+msgid "ban action"
+msgstr "acción de prohibición"
+
+#: src/EBox/CGI/Enable.pm:42
+msgid "module status"
+msgstr "estado del módulo"
+
+#: src/EBox/CGI/General.pm:41
+msgid "global policy"
+msgstr "política global"
+
+#: src/EBox/CGI/General.pm:46 src/EBox/Squid.pm:277
+msgid "transparent proxy"
+msgstr "proxy transparente"
+
+#: src/EBox/CGI/General.pm:49 src/EBox/Squid.pm:307
+msgid "listening port"
+msgstr "puerto de escucha"
+
+#: src/EBox/Squid.pm:131
+#, perl-brace-format
+msgid "Policy '{policy}' is invalid"
+msgstr "La política {policy} no es válida"
+
+#: src/EBox/Squid.pm:158
+msgid "object"
+msgstr "objeto"
+
+#: src/EBox/Squid.pm:185
+msgid "auth"
+msgstr "autorización"
+
+#: src/EBox/Squid.pm:257
+msgid "Service Status"
+msgstr "Estado del servicio"
+
+#: src/EBox/Squid.pm:399
+msgid "domain"
+msgstr "dominio"
+
+#: src/EBox/Squid.pm:472
+msgid "Proxy"
+msgstr "Proxy"
+
+#: src/EBox/Squid.pm:478
+msgid "Running"
+msgstr "En ejecución"
+
+#: src/EBox/Squid.pm:480
+msgid "Stopped"
+msgstr "Detenido"
+
+#: src/EBox/Squid.pm:482
+msgid "Status"
+msgstr "Estado"
+
+#: src/EBox/Squid.pm:487 src/templates/index.mas:47 src/templates/index.mas:50
+msgid "Enabled"
+msgstr "Activado"
+
+#: src/EBox/Squid.pm:489 src/templates/index.mas:46 src/templates/index.mas:49
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: src/EBox/Squid.pm:491 src/templates/index.mas:40
+msgid "Transparent proxy"
+msgstr "Proxy transparente"
+
+#: src/EBox/Squid.pm:494 src/templates/index.mas:77 src/templates/index.mas:80
+msgid "Allow"
+msgstr "Permitir"
+
+#: src/EBox/Squid.pm:496 src/templates/index.mas:76 src/templates/index.mas:79
+msgid "Deny"
+msgstr "Denegar"
+
+#: src/EBox/Squid.pm:498
+msgid "Global policy"
+msgstr "Política global"
+
+#: src/EBox/Squid.pm:500
+msgid "Listening port"
+msgstr "Puerto de escucha"
+
+#: src/templates/index.mas:18
+msgid "Enable the HTTP proxy"
+msgstr "Activar el proxy HTTP"
+
+#: src/templates/index.mas:22 src/templates/index.mas:25
+msgid "No"
+msgstr "No"
+
+#: src/templates/index.mas:23 src/templates/index.mas:26
+msgid "Yes"
+msgstr "Sí"
+
+#: src/templates/index.mas:30 src/templates/index.mas:31
+#: src/templates/index.mas:88 src/templates/index.mas:170
+msgid "Ok"
+msgstr "Aceptar"
+
+#: src/templates/index.mas:33
+msgid "General Settings"
+msgstr "Configuración general"
+
+#: src/templates/index.mas:58
+msgid "Port"
+msgstr "Puerto"
+
+#: src/templates/index.mas:70
+msgid "Default policy"
+msgstr "Política por defecto"
+
+#: src/templates/index.mas:94
+msgid "Object selection"
+msgstr "Selección de objeto"
+
+#: src/templates/index.mas:98
+msgid "Select those objects which you want to allow access to"
+msgstr "Seleccione los objetos a los que desea permitir el acceso"
+
+#: src/templates/index.mas:102
+msgid "Select those objects which you want to deny access to"
+msgstr "Seleccione los objetos a los que desea denegar el acceso"
+
+#: src/templates/index.mas:108
+msgid "Object Name"
+msgstr "Nombre de objeto"
+
+#: src/templates/index.mas:109 src/templates/index.mas:122
+#: src/templates/index.mas:123
+msgid "Show"
+msgstr "Mostrar"
+
+#: src/templates/index.mas:110
+msgid "Select"
+msgstr "Seleccionar"
+
+#: src/templates/index.mas:128 src/templates/index.mas:129
+msgid "Hide"
+msgstr "Ocultar"
+
+#: src/templates/index.mas:177
+msgid "Banned domains"
+msgstr "Dominios prohibidos"
+
+#: src/templates/index.mas:178
+msgid "Add here those domains which you do not want to allow access."
+msgstr "Añada aquí los dominos a los que no quiere permitir acceso"
+
+#: src/templates/index.mas:180
+msgid "Introduce domains in this way: "
+msgstr "Introduzca los dominios de la siguiente forma:"
+
+#: src/templates/index.mas:180
+msgid "domain.com"
+msgstr "dominio.com"
+
+#: src/templates/index.mas:186
+msgid "Domain"
+msgstr "Dominio"
+
+#: src/templates/index.mas:187
+msgid "Action"
+msgstr "Acción"
+

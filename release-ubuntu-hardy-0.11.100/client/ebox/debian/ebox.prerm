@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+if [ -x "invoke-rc.d ebox" ]; then
+    if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+        invoke-rc.d ebox stop || true
+    else
+        invoke-rc.d ebox stop || true
+    fi
+fi
+
+#DEBHELPER#
+

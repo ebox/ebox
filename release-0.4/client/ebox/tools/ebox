@@ -1,0 +1,58 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use EBox::Global;
+
+EBox::Global::init();
+my $global = EBox::Global->getInstance(1);
+
+sub usage {
+	print "Usage: $0 start|stop|restart\n";
+	exit 1;
+}
+
+sub start() {
+	my @names = @{$global->modNames};
+	foreach (@names) {
+		my $mod = EBox::Global->modInstance($_);
+		print "EBox: starting $_ ";
+		$mod->restartService;
+		print ".\n";
+	}
+}
+
+sub stop() {
+	my @names = @{$global->modNames};
+	foreach my $modname (@names) {
+		next if ($modname eq 'apache');
+		my $mod = EBox::Global->modInstance($modname);
+		print "EBox: stopping $modname ";
+		$mod->stopService;
+		print ".\n";
+	}
+	my $mod = EBox::Global->modInstance('apache');
+	print "EBox:: stopping apache ";
+	$mod->stopService;
+	print ".\n";
+}
+
+if (@ARGV != 1) {
+	usage;
+}
+
+
+if ($ARGV[0] eq "start") {
+	start();
+} elsif ($ARGV[0] eq "restart") {
+	stop();
+	start();
+} elsif ($ARGV[0] eq "force-reload") {
+	stop();
+	start();
+} elsif ($ARGV[0] eq "stop") {
+	stop();
+} else {
+	usage;
+}

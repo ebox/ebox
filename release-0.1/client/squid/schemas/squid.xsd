@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:include schemaLocation="types.xsd"/>
+	
+   <xs:simpleType name="policytype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="allow"/>
+            <xs:enumeration value="deny"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+
+   <xs:simpleType name="squidpolicytype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="listAllow"/>
+            <xs:enumeration value="listDeny"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<xs:complexType name="acltype">
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="policy" type="squidpolicytype"/>
+	</xs:complexType>
+
+	<xs:complexType name="globaltype" >
+			<xs:sequence>
+				<xs:element name="acl" type="acltype"
+							maxOccurs="unbounded" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="policy" 
+						  type="policytype" use="required"/>
+	</xs:complexType>
+	
+	<xs:element name="squid">
+		<xs:complexType>
+			<xs:all>
+				
+				<xs:element name="service" maxOccurs="1" minOccurs="1" >
+					<xs:complexType>
+						<xs:attribute name="active" 
+									  type="yesnotype" use="required"/>
+						<xs:attribute name="reload" 
+									  type="yesnotype" use="required"/>
+						<xs:attribute name="port" 
+									  type="porttype" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="transproxy" maxOccurs="1" minOccurs="1" >
+					<xs:complexType>
+						<xs:attribute name="active" 
+									  type="yesnotype" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="auth" maxOccurs="1" minOccurs="1" >
+					<xs:complexType>
+						<xs:attribute name="require" 
+									  type="yesnotype" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="global" type="globaltype" 
+							maxOccurs="1" minOccurs="1" />
+				
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

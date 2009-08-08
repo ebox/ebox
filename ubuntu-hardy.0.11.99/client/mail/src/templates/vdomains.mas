@@ -1,0 +1,116 @@
+<!-- vim: ts=4 sw=4 filetype=mason
+</script>
+</script>
+-->
+<%args>
+	$mdsize
+	%vdomains
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<h3><% __('Add a new virtual domain') %></h3>
+<form action='AddVDomain' method='POST'>
+	<table class='formTable'>
+	<tr>
+		<td class='tright'>
+			<span class='ftitle'><% __('Domain name') %>: </span>
+		</td>
+		<td class='tright'>
+			<input type='text' class='inputText' name='vdomain' />
+		</td>
+	</tr>
+	<tr>
+		<td class='tright'><% __('Unlimited size') %></td>
+		<td><input type='checkbox' name='ummsize' id='ummsize'
+				value='0' onclick="updateMDSize()"
+%			if($mdsize eq 0) {
+				checked
+%			} 
+			/>
+		</td>
+	</tr>
+	<tr>
+		<td class='tright'><% __('Default maildir size') %>: </td>
+		<td><input type='text' class='inputText' name='mdsize'
+					id='mdsize'
+					size="15"
+%			if($mdsize eq 0) {
+				disabled
+				value=""
+%			} else {
+				enabled
+				value='<% $mdsize %>'
+%			}
+			/> <% __("(MB)") %>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input class='inputButton' type='submit' name='addVDomain' 
+				   value="<% __('Add') %>"
+				   alt="<% __('Add') %>">
+		</td>
+	</tr>
+	</table>
+</form>
+
+%   my @kvd = keys %vdomains;
+%	if(@kvd != 0) {
+
+		<h3><% __('Virtual domains list') %></h3>
+		<table cellspacing='0' class='dataTable'>
+			<thead>
+				<tr>
+					<th width='44%' class='tleft'>
+						<% __('Name') %>
+					</th>
+					<th width='22%' class='tleft'>
+						<% __('Maildir Size') %>
+					</th>
+					<th class='thOptions'>
+						<% __('Action') %>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+%			foreach my $domain (@kvd) {
+				<tr class='border'>
+					<td><% $domain %></td>
+					<td><% $vdomains{$domain} %></td>
+					<td class='tcenter'>
+						<a href="EditVDomain?vdomain=<% $domain %>">
+						<img src='/data/images/edit.gif'
+							alt="<% __('Edit') %>" title="<% __('Edit') %>" /></a>
+						<img src='/data/images/sep.gif' alt='-'/>
+						<a href='DelVDomain?vdomain=<% $domain %>'>
+						<img src='/data/images/delete.gif' 
+							title="<% __('Delete') %>"
+							alt="<% __('Delete') %>"/></a>
+					</td>
+				</tr>
+%				}
+			</tbody>
+		</table>
+%	}
+
+<script type="text/javascript">
+function updateMDSize() {
+    var size = document.getElementById("mdsize")
+    var chk = document.getElementById("ummsize")
+	var val = <% $mdsize %>;
+
+    if(chk.checked) {
+        size.disabled = true;
+        size.value = '';
+    } else {
+        size.disabled = false;
+		
+		if(val == 0) {
+			val = 10;
+		}
+        size.value = val;
+    }
+}
+</script>

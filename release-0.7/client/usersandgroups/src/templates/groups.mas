@@ -1,0 +1,63 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+	@groups => ();
+</%args>
+<%init>
+use EBox::Gettext;
+use Data::Dumper;
+</%init>
+<div class="note">
+	<p><%__('Changes in user accounts take effect inmediately, they do not need to be saved.')%></p>
+	<p><% __('Changes related to printing, file sharing and Jabber service do need to be saved in order to be effective.') %></p>
+</div>
+<h3><% __('Add Group') %></h3>
+	<form action='AddGroup' method='POST'>
+	<table class='formTable'>
+		<tr>
+			<td  class='tright'>
+				<span class="ftitle">
+					<% __('Group name') %>:
+				</span>
+			</td>
+			<td>
+				<input type='text' class='inputText' name='groupname'>
+			</td>
+		</tr>
+		<tr>
+			<td class='tright'>
+				<span class="ftitle">
+					<% __('Comment') %>:
+				</span>
+			</td>
+			<td>
+				<input type='text' class='inputText' name='comment'>
+				<div class="comment">(<% __('Optional value') %>)</div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input class='inputButton' type='submit' name='group' 
+					   value="<% __('Create') %>"
+					   alt="<% __('Create') %>">
+			</td>
+		</tr>
+	</table>
+	</form>
+
+
+%   if(@groups) {
+<h3><% __('Edit Group') %></h3>
+    <form action='Group' method='post'>
+        <select name='group'>
+%           foreach my $gr (@groups){
+                <option value='<% $gr->{'account'} %>'>
+                    <% $gr->{'account'} %>
+                </option>
+%           }
+        </select>
+        <input class='inputButton' type='submit' value="<% __('Edit') %>" name='configgroup' />
+    </form>
+%   }
+

@@ -1,0 +1,24 @@
+<%args>
+@availableCertificates => ()
+@localInterfaces       => ()
+$disabled => 0
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+% if (not $disabled) {
+%    if (@availableCertificates) {
+           <h3><% __('OpenVPN server creation') %> </h3>
+	   <form action=Create' method='POST'>
+              <& /openvpn/serverProperties.mas,  availableCertificates
+	      => \@availableCertificates, localInterfaces => \@localInterfaces,  nameEditable => 1,   submitName => 'create', submitValue => __('Create') &>
+           </form>
+%     }
+%     else {
+       <& /openvpn/caRequired.mas, caCreated => 1 &>
+%     }
+% }
+% else {
+  <& /openvpn/caRequired.mas, caCreated => 0 &>
+% }
+

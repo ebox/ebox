@@ -1,0 +1,276 @@
+# French translations for ebox-samba package.
+# Copyright (C) 2005 Warp S.L.
+# This file is distributed under the same license as the ebox-samba package.
+# Automatically generated, 2005.
+# Ignacio Correas <icorreas@warp.es>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-samba 0.10.99\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2007-11-07 11:41+0100\n"
+"PO-Revision-Date: 2007-04-12 11:16+0000\n"
+"Last-Translator: Nicolas Liaudat <nliaudat@pompiers-chatel.ch>\n"
+"Language-Team: Español <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 0.10.1\n"
+
+#: src/EBox/CGI/ActivePrinting.pm:44 src/EBox/CGI/ActiveSharing.pm:66
+msgid "user name"
+msgstr "nom d'utilisateur"
+
+#: src/EBox/CGI/ActivePrinting.pm:48 src/EBox/CGI/ActiveSharing.pm:44
+#: src/EBox/SambaLdapUser.pm:480 src/EBox/SambaLdapUser.pm:508
+#: src/EBox/SambaLdapUser.pm:559
+msgid "group name"
+msgstr "nom du groupe"
+
+#: src/EBox/CGI/Enable.pm:42
+msgid "module status"
+msgstr "statut du module"
+
+#: src/EBox/CGI/ActiveSharing.pm:47
+msgid "sharing name"
+msgstr "nom du partage"
+
+#: src/EBox/CGI/ActiveSharing.pm:69
+msgid "active"
+msgstr "actif"
+
+#: src/EBox/CGI/Index.pm:30 src/EBox/CGI/Index.pm:40 src/EBox/Samba.pm:245
+#: src/EBox/Samba.pm:253
+msgid "File sharing"
+msgstr "Partage de fichiers"
+
+#: src/EBox/CGI/SambaConf.pm:42 src/EBox/Samba.pm:477
+msgid "netbios"
+msgstr "netbios"
+
+#: src/EBox/CGI/SambaConf.pm:43 src/EBox/Samba.pm:515
+msgid "working group"
+msgstr "groupe de travail"
+
+#: src/EBox/CGI/SambaConf.pm:44
+msgid "working mode"
+msgstr "Mode de travail"
+
+#: src/EBox/CGI/SambaConf.pm:45 src/EBox/Samba.pm:496
+msgid "description"
+msgstr "description"
+
+#: src/EBox/CGI/SambaConf.pm:46
+msgid "user quota"
+msgstr "quota d'utilisateur"
+
+#: src/EBox/Samba.pm:292 src/EBox/Samba.pm:337
+msgid "listening port"
+msgstr "port d'écoute"
+
+#: src/EBox/Samba.pm:375
+msgid "Domain Name"
+msgstr "Nom de domaine"
+
+#: src/EBox/Samba.pm:534
+msgid "quota"
+msgstr "quota"
+
+#: src/EBox/Samba.pm:819 src/EBox/Samba.pm:838
+msgid "user"
+msgstr "utilisateur"
+
+#: src/EBox/Samba.pm:822 src/EBox/Samba.pm:852 src/EBox/SambaLdapUser.pm:629
+msgid "group"
+msgstr "groupe"
+
+#: src/EBox/Samba.pm:825
+msgid "printer"
+msgstr "imprimante"
+
+#: src/EBox/Samba.pm:1166
+msgid "User's files"
+msgstr "Fichiers utilisateur"
+
+#: src/EBox/Samba.pm:1168
+msgid "Group's files"
+msgstr "Fichiers de groupe"
+
+#: src/EBox/SambaLdapUser.pm:210
+msgid "This user has a sharing directory associated which conatins data"
+msgstr ""
+"Cet utilisateur a un répertoire partagé associé qui contient des données"
+
+#: src/EBox/SambaLdapUser.pm:271
+msgid "This group has a sharing directory associatedwhich conatins data"
+msgstr "Ce groupe a un répertoire partagé associé qui contient des données"
+
+#: src/EBox/SambaLdapUser.pm:513
+msgid "A name should be provided for the share"
+msgstr "Un nom de partage doit être fourni"
+
+#: src/EBox/SambaLdapUser.pm:521
+msgid "sharing resource"
+msgstr "ressource partagée"
+
+#: src/templates/delete.mas:11
+msgid ""
+"The group you tried to delete has a directory which contains data, if you "
+"remove it all its data will be removed. Please confirm that you want to "
+"delete it."
+msgstr ""
+"Le groupe que vous essayez d'effacer a un répertoire qui contient des "
+"données, si vous l'enlevez tout ses données seront également perdue. "
+"Veuillez confirmer que vous voulez l'effacer."
+
+#: src/templates/delete.mas:18 src/templates/samba.mas:79
+#: src/templates/samba.mas:80
+msgid "Delete"
+msgstr "Effacer"
+
+#: src/templates/delete.mas:21
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/templates/samba.mas:9
+msgid "PDC/File sharing account"
+msgstr "PDC/Compte de partage de fichier"
+
+#: src/templates/samba.mas:16
+msgid "User account"
+msgstr "Compte utilisateur"
+
+#: src/templates/samba.mas:21 src/templates/samba.mas:24
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: src/templates/samba.mas:22 src/templates/samba.mas:25
+msgid "Enabled"
+msgstr "Activé"
+
+#: src/templates/samba.mas:32
+msgid "Administration rights"
+msgstr "Droits administrateur"
+
+#: src/templates/samba.mas:46 src/templates/samba.mas:47
+#: src/templates/samba.mas:76 src/templates/samba.mas:77
+#: src/templates/samba.mas:147 src/templates/samba.mas:148
+#: src/templates/index.mas:81 src/templates/index.mas:82
+msgid "Change"
+msgstr "Modifier"
+
+#: src/templates/samba.mas:55
+msgid "Sharing directory for this group"
+msgstr "Répertoires partagés pour ce groupe"
+
+#: src/templates/samba.mas:58
+msgid ""
+"You can set a share directory for this group, but you should keep in mind "
+"that Microsoft Windows 98 and Millenium will not be able to see names longer "
+"than 12 characters"
+msgstr ""
+"Vous pouvez fixer un répertoire partagé pour ce groupe, mais vous devriez "
+"garder à l'esprit que Microsoft Windows 98 et Millenium ne pourront pas voir "
+"des noms plus longs que 12 caractères"
+
+#: src/templates/samba.mas:66
+msgid "This resource name is longer than 12 characters."
+msgstr "Le nom de cette ressource est plus long que 12 caractères"
+
+#: src/templates/samba.mas:69
+msgid "Directory name"
+msgstr "Nom de répertoire"
+
+#: src/templates/samba.mas:83 src/templates/samba.mas:84
+msgid "Add"
+msgstr "Ajouter"
+
+#: src/templates/samba.mas:91
+msgid "Printers"
+msgstr "Imprimantes"
+
+#: src/templates/samba.mas:95
+msgid "Select the printers this user will have access to."
+msgstr "Choisissez les imprimantes auxquelles cet utilisateur aura accès."
+
+#: src/templates/samba.mas:105
+msgid "Printer"
+msgstr "Imprimante"
+
+#: src/templates/samba.mas:106
+msgid "Allow"
+msgstr "Permettre"
+
+#: src/templates/samba.mas:128
+msgid "Allow all printers"
+msgstr "Permettre toutes les imprimantes"
+
+#: src/templates/samba.mas:159
+msgid "printers module"
+msgstr "Module d'imprimantes"
+
+#: src/templates/samba.mas:170
+msgid "file sharing module"
+msgstr "Module de partage de fichiers"
+
+#: src/templates/index.mas:19
+msgid "General Settings"
+msgstr "Configuration générale"
+
+#: src/templates/index.mas:21
+msgid ""
+"To allow unlimited disk usage to users, just set zero as user quota limit."
+msgstr ""
+"Pour permettre l'utilisation illimitée du disque aux utilisateurs, fixez "
+"zéro comme limite de quota."
+
+#: src/templates/index.mas:27
+msgid "Working mode"
+msgstr "Mode de travail"
+
+#: src/templates/index.mas:32 src/templates/index.mas:35
+msgid "File server"
+msgstr "Serveur de fichiers"
+
+#: src/templates/index.mas:33 src/templates/index.mas:36
+msgid "PDC"
+msgstr "PDC"
+
+#: src/templates/index.mas:44
+msgid "Domain name"
+msgstr "Nom de domaine"
+
+#: src/templates/index.mas:46
+msgid "Working group"
+msgstr "Groupe de travail"
+
+#: src/templates/index.mas:56
+msgid "Netbios name"
+msgstr "Nom Netbios"
+
+#: src/templates/index.mas:64
+msgid "Description"
+msgstr "Description"
+
+#: src/templates/index.mas:71
+msgid "Quota limit"
+msgstr "Limite de quota"
+
+#: stubs/smb.conf.mas:91
+msgid "Home Directories"
+msgstr "Répertoires home"
+
+#~ msgid "Deleting group"
+#~ msgstr "Effacement du groupe"
+
+#~ msgid "PDC/File sharing service status"
+#~ msgstr "PDC/Status du service de partage de fichiers"
+
+#~ msgid "This resource name is longer than 12 charcters."
+#~ msgstr "Le nom de cette ressource est plus long de 12 caractères"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Sharing name"
+#~ msgstr "Nom partagé"

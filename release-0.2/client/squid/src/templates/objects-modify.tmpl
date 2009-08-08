@@ -1,0 +1,198 @@
+<!--
+   | Variables que necesita la plantilla:
+   |	- allow = 1 si elige permitir
+   |	- object = 1 si elige filtrar por object
+   -->
+	<div class='squidnew'>
+		
+
+			<h3>Squid Status</h3>
+			<TMPL_IF NAME="active">
+				<form action='/ebox/Squid/Status' method='POST'>
+				<p>The module is enabled
+				<input type='hidden' name='active' value='no' >
+				<input class='inputButton' type='submit' name='disable' 
+						value='Disable' alt='disable module'></p>
+				</form>
+			<TMPL_ELSE>
+				<form action='/ebox/Squid/Status' method='POST'>
+				<p>The module is disabled
+				<input type='hidden' name='active' value='yes' >
+				<input class='inputButton' type='submit' name='enable' 
+						value='Enable' alt='enable module'></p>
+				</form>
+			</TMPL_IF> 
+
+			
+			<h3>Transparent proxy</h3>
+			<TMPL_IF NAME="transparent">
+				<form action='/ebox/Squid/Transparent' method='POST'>
+				<p>Transparent proxy is enabled
+				<input type='hidden' name='active' value='no' >
+				<input class='inputButton' type='submit' name='disable' 
+						value='Disable' alt='disable module'></p>
+				</form>
+			<TMPL_ELSE>
+				<form action='/ebox/Squid/Transparent' method='POST'>
+				<p>Transparent proxy is disabled
+				<input type='hidden' name='active' value='yes' >
+				<input class='inputButton' type='submit' name='enable' 
+						value='Enable' alt='enable module'></p>
+				</form>
+			</TMPL_IF> 
+
+			
+			<h3><TMPL_VAR EXPR="__('Listening Port')"></h3>
+			<form action='Port' method='POST'>
+				<p><TMPL_VAR EXPR="__('Port')">:
+				<input class='inputText' type='text' name='port' value='<TMPL_VAR NAME="port">'>
+				<input class='inputButton' type='submit' name='change' 
+						value='<TMPL_VAR EXPR="__('change')">' alt='<TMPL_VAR
+						EXPR="__('change')">'></p>
+			</form>
+
+			<h3>Global Policy</h3>
+			<TMPL_IF NAME="global">
+				<form action='/ebox/Squid/Global' method='POST'>
+				<p>Everybody is allowed but underneath exceptions 
+				<input type='hidden' name='policy' value='deny' >
+				<input class='inputButton' type='submit' name='deny' 
+						value='Deny All' alt='deny all'></p>
+				</form>
+			<TMPL_ELSE>
+				<form action='/ebox/Squid/Global' method='POST'>
+				<p>Everybody is denied but underneath exceptions
+				<input type='hidden' name='policy' value='allow' >
+				<input class='inputButton' type='submit' name='allow' 
+						value='Allow All' alt='Allow all'></p>
+				</form>
+			</TMPL_IF> 
+
+
+			<TMPL_IF NAME="object">
+				<h3><TMPL_VAR EXPR="__('Object selection')"></h3>
+				<TMPL_IF NAME="global">
+					<p><TMPL_VAR EXPR="__('Which Objects do you want to deny access?')"></p> 
+				<TMPL_ELSE>
+					<p><TMPL_VAR EXPR="__('Which Objects do you want to grant access?')"></p> 
+				</TMPL_IF>
+			<TMPL_ELSE>
+				<h3><TMPL_VAR EXPR="__('User selection')"></h3>
+				<TMPL_IF NAME="allow">
+					<p><TMPL_VAR EXPR="__('Which users do you want to deny access?')"></p> 
+				<TMPL_ELSE>
+					<p><TMPL_VAR EXPR="__('Which users do you want to grant access?')"></p> 
+				</TMPL_IF>
+			</TMPL_IF>
+
+			<div class="help">
+				<TMPL_VAR EXPR="__('Select your preferred options.')">
+			</div>
+			<!--
+			   | mostrar lista de usuarios o objects segun variable (LOOP)
+			   | TMPL_IF NAME=object
+			   | si el array de object tiene alguna movida mostramos objects, sino ldap
+			   -->
+			<br />
+			<form action='<TMPL_VAR NAME="policy">' method='POST'>
+ 			<TMPL_IF NAME="objects">
+					<table cellspacing="0" class="dataTable">
+						<thead>
+						<tr>
+							<th width="66%" class="tleft"><TMPL_VAR EXPR="__('Object Name')"></th>
+							<th class="thOptions"><TMPL_VAR EXPR="__('Show/Hide')"></th>
+							<th class="thOptions"><TMPL_VAR EXPR="__('Select')"></th>
+						</tr>
+						</thead>
+						<tbody>
+						<TMPL_LOOP NAME="objects">
+						<tr class="border">
+							<td><TMPL_VAR NAME="description"></td>
+							<td class="tcenter">
+							<div class="show" id='hideview<TMPL_VAR NAME="name">'><a href='show' onclick="show('<TMPL_VAR NAME="name">'); return false;"><TMPL_VAR EXPR="__('Show')"></a></div>
+							<div class="hide" id='showview<TMPL_VAR NAME="name">'><a href='show' onclick="hide(); return false;"><TMPL_VAR EXPR="__('Hide')"></a></div>
+							</td> 
+							<td class="tcenter"><INPUT type="checkbox" name="<TMPL_VAR NAME='name'>" <TMPL_VAR NAME="checked"> ></td>
+						</tr>
+						<tr>
+							<td>
+							<div class='hide'  id='<TMPL_VAR NAME="name">'>
+							<TMPL_IF NAME='member'>
+							<table class="iptableaux" cellspacing="0">
+						  	<thead>
+							<tr>
+								<th width="40%" class="tleft">IP Name</th>
+								<th class="thOptions">IP Address</th>
+							</tr>
+							</thead>
+							<tbody>
+							<TMPL_LOOP NAME='member'>
+								<tr>
+									<td><TMPL_VAR NAME="nname"></td>
+									<td class="tcenter"><TMPL_VAR NAME="ip">/<TMPL_VAR NAME="mask"></td>
+								</tr>
+							</TMPL_LOOP>
+							</tbody>
+							</table>
+							</TMPL_IF> 
+							</div>
+							</td>
+						</tr>
+						</TMPL_LOOP>
+						</tbody>
+					</table>
+			<TMPL_ELSE>
+			<br />
+				<!--
+				   | TODO: mostrar lista de usuarios
+				   -->
+			</TMPL_IF>
+			<p class="endform">
+				<input class='inputButton' type='submit' name='Ok'
+	        	            value='<TMPL_VAR EXPR="__('Ok')">' alt='Ok'>
+		                <input class='inputButton' type='submit' name='Cancel'
+                    		value='<TMPL_VAR EXPR="__('Cancel')">' alt='Cancel'>
+			</p>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+function getElementByClass(classname){
+        ccollect=new Array()
+        var inc=0;
+        var alltags=document.getElementsByTagName("*");
+        for (i=0; i<alltags.length; i++){
+                if (alltags[i].className==classname)
+                        ccollect[inc++]=alltags[i];
+        }
+        return ccollect;
+}
+function setDefault(){
+        elements=getElementByClass("hide");
+        var inc=0;
+        while (elements[inc]){
+                elements[inc].style.display="none";
+                inc++;
+        }
+        inc=0;
+        elements=getElementByClass("show");
+        while (elements[inc]){
+                elements[inc].style.display="inline";
+                inc++;
+        }
+}
+function show(id){
+        setDefault();
+        document.getElementById(id).style.display="block";
+        document.getElementById("hideview" + id).style.display="none";
+        document.getElementById("showview" + id).style.display="inline";
+}
+
+function hide(id){
+        setDefault();
+}
+
+					
+setDefault();
+</script>

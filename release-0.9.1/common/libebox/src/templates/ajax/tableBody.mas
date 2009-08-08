@@ -1,0 +1,407 @@
+<%args>
+	@data => ()
+	$dataTable
+	$action => 'view'
+	$editid => ''
+	$hasChanged => 1
+</%args>
+<%init>
+use EBox::Gettext;
+
+
+my @tableHead = @{$dataTable->{'tableDescription'}};
+my $tableFields = $dataTable->{'paramArrayString'}; 
+my $changeView = $dataTable->{'actions'}->{'changeView'};
+
+my $rowEdit;
+
+if ($editid) {
+	foreach my $row (@data) {
+		if ($row->{'id'} ne $editid) {
+			next;
+		}
+		
+		$rowEdit = $row;
+		last;
+	}
+}
+
+my @formData;
+if ($rowEdit) {
+	@formData = @{$rowEdit->{'values'}};
+} else {
+	@formData = @tableHead;
+}
+
+</%init>
+%	if ($action ne 'changeAdd' and $action ne 'changeEdit') {
+
+	<h3><% $dataTable->{'printableTableName'} %></h3>
+
+	<div>
+%			if ($changeView) {
+					<input  class='inputButton' type='image' name='add'
+					value="Add" title="Add"
+					alt="Add" src='/data/images/add.gif'
+					onClick='changeView("<% $changeView %>", "<% $dataTable->{"tableName"} %>",  "<% $dataTable->{"gconfdir"} %>", "changeAdd")' />
+					<% __("Add new") %>
+%			}
+        <span id="creatingForm"></span> 	
+	</div>
+	<br>
+% 	}
+
+%	if ($action eq 'changeAdd' or $action eq 'changeEdit') {
+%          if ( $action eq 'changeAdd' ) {
+              <h3><%
+		__x('Adding a new {row}',
+		     row => $dataTable->{'printableRowName'})
+              %></h3>
+%          }
+%          elsif ( $action eq 'changeEdit' ) {
+              <h3><%
+                __x('Editing {row}',
+		    row => $dataTable->{'printableRowName'})
+	      %></h3>
+%          }
+				<table class='formTable'>
+					<tbody>
+
+%		foreach my $type (@formData) {
+						<tr>
+
+							<td class='tright'>
+								<% $type->printableName() %>
+							</td>
+							<td>
+%								my $HTMLSetter = '.' . $type->HTMLSetter();
+
+								<& $HTMLSetter, 'data' => $type, 'tableName' => "$dataTable->{'tableName'}" &>
+							</td>
+						</tr>
+%		}
+					
+						<tr>
+						        <td class="tright" id="applyChanges"></td>
+							<td id="buttons">
+%				if ($action eq 'changeAdd') {
+
+								<input class='inputButton' type='submit' name='add'
+										value="Add" title="Add"
+										onClick="addNewRow('<% $dataTable->{"actions"}->{"add"} %>', '<% $dataTable->{"tableName"} %>', <% $tableFields %>, '<% $dataTable->{"gconfdir"} %>'); return false"/>
+									
+%				} elsif ($action eq 'changeEdit') {
+
+								<input class='inputButton' type='submit' name='change'
+										value="Change" title="Change"
+										onClick="changeRow('<% $dataTable->{"actions"}->{"editField"} %>', '<% $dataTable->{"tableName"} %>', <% $tableFields %>, '<% $dataTable->{"gconfdir"} %>', '<% $editid %>'); return false"/>
+
+%				}
+%							if ($changeView) {
+									<input  class='inputButton' type='submit' name='cancel'
+									value="Cancel" title="Cancel"
+									onClick='changeView("<% $changeView %>", "<% $dataTable->{"tableName"} %>",  "<% $dataTable->{"gconfdir"} %>", "changeList")' />
+%							}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+%	}
+
+
+% if (@data) {
+%    if ( $action eq 'changeAdd' or $action eq 'changeEdit' ) {
+	        <h3><% $dataTable->{'printableTableName'} %></h3>
+%    }
+		
+		<table cellspacing='0' class='<% $dataTable->{'class'} %>'>
+			
+			<thead>
+			
+%	foreach my $th (@tableHead) {
+				<th class='<% $th->class() %>'>
+					<% $th->printableName() %>
+				</th>
+%	}
+
+				<th class='thOptions'>
+					<% __('Action') %>
+				</th>
+			</thead>
+
+
+			
+			<tbody>			
+
+%	for ( my $idx; $idx < scalar(@data); $idx++) {
+%           my  $row = $data[$idx];
+				<tr class='border' id="<% $row->{"id"} %>">
+				
+%		foreach my $td (@{$row->{'values'}}) {
+				<td class='tcenter'>
+
+%			my $HTMLViewer = '.' . $td->HTMLViewer();
+
+					<& $HTMLViewer, 'data' => $td &>
+
+				</td>
+% 		}
+%
+				<td class='tcenter' id='actionsCell_<% $row->{id} %>'>
+%			my $del = $dataTable->{'actions'}->{'del'};
+
+%			if ($del) {
+					<input  class='inputButton' type='image' name='del'
+					value="Del" title="Del"
+					alt="Del" src='/data/images/delete.gif'
+					onClick='actionClicked("<% $del %>", "<% $dataTable->{"tableName"} %>", "del", "<% $row->{"id"} %>", "", "<% $dataTable->{"gconfdir"} %>")' />
+			
+%			}
+%			if ($changeView) {
+					<input  class='inputButton' type='image' name='edit'
+					value="edit" title="edit" src='/data/images/edit.gif'
+					onClick='changeView("<% $changeView %>", "<% $dataTable->{"tableName"} %>",  "<% $dataTable->{"gconfdir"} %>", "changeEdit", "<% $row->{"id"} %>")' />
+%			}
+		
+%			if ($dataTable->{'order'} == 1) {
+%                         if ( $idx != 0 ) {
+					<input  class='inputButton' type='image' name='up'
+					value="Up" title="Del"
+					alt="Up" src='/data/images/up.gif' onClick='actionClicked("<% $dataTable->{"actions"}->{"move"} %>", "<% $dataTable->{"tableName"} %>", "move", "<% $row->{"id"} %>", "dir=up",  "<% $dataTable->{"gconfdir"} %>")'/>
+%                         }
+%                         if ( $idx != $#data ) {
+					<input  class='inputButton' type='image' name='down'
+					value="Down" title="Down"
+					alt="Down" src='/data/images/down.gif' onClick='actionClicked("<% $dataTable->{"actions"}->{"move"} %>", "<% $dataTable->{"tableName"} %>", "move", "<% $row->{"id"} %>", "dir=down",  "<% $dataTable->{"gconfdir"} %>")'/>
+%                         }
+% 			}
+				</td>
+
+				</tr>
+% 	}	
+			</tbody>
+
+		</table>
+% }
+
+<script>
+<%perl>
+my $className;
+if ($hasChanged) {
+	$className = 'changed';
+} else {
+	$className = 'notChanged';
+}
+</%perl>
+$('changes_menu').className = '<% $className %>';
+</script>
+
+<%def .textViewer>
+<%args>
+$data
+</%args>
+% if ( defined ( $data->printableValue() )) {
+	<span ><% $data->printableValue() %></span>
+	  <%$data->trailingText %>
+% }
+% else {
+        <span>--</span>
+% }
+</%def>
+
+<%def .booleanViewer>
+<%args>
+$data
+</%args>
+%   if ($data->printableValue() == 1) {
+		<img src="/data/images/apply.gif" alt="yes"/>
+%   } else {
+		<img src="/data/images/deny-active.gif" alt="no"/>
+%   }
+</%def>
+
+<%def .unionSetter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+</%args>
+<%init>
+my $id = $tableName . '_' . $data->fieldName() . '_selected';
+my @options;
+foreach my $type (@{$data->subtypes()}) {
+	push (@options, {
+						'value' => $type->fieldName(),
+						'printableValue' => $type->printableName()
+					});
+}
+</%init>
+<span class='<% $cssClass %>'>
+  <& /input/select.mas,
+                       'name'        => "$id" ,
+                       'value'       => $data->selectedType(),
+                       'options'     => \@options,
+                       'extraParams' => [ id => "$id",
+				          onchange => " showSelected('" . $id . "'," .
+						      "'selectValues_" . $id . "', '" . $tableName . "');",
+					],
+   &>
+			<span id="selectValues_<% $id %>">
+<%perl>
+                         if ( not defined ( $data->selectedType() )) {
+			   # If there's no selected data, set one
+			   $data->setSelectedType($data->subtypes()->[0]->fieldName());
+			 }
+                         foreach my $type (@{$data->{'subtypes'}}) {
+                             	my $HTMLSetter = '.' . $type->HTMLSetter();
+				my $cssClass = '';
+				if ( $type->fieldName() ne $data->selectedType() ) {
+				  $cssClass = 'hidden';
+				}
+</%perl>
+			  <& $HTMLSetter, 'data' => $type, 'tableName' => $tableName, 'cssClass' => $cssClass &>
+%                         }
+			</span>
+</span>
+</%def>
+
+
+<%def .ipaddrSetter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+</%args>
+<%init>
+my @options;
+for my $mask (32, 30, 29, 28, 27, 26, 25, 24, 16, 8) {
+	push (@options, {'value' => $mask, 'printableValue' => $mask});
+}
+
+</%init>
+% my $id = $tableName . '_' . $data->fieldName();
+<span id="<% $id %>" class="<% $cssClass %>">
+					<input type="text" class="inputText" value="<% $data->ip() %>"
+						size="16" id='<% $id . '_ip' %>' name='<% $id . '_ip' %>' />
+					<span>/</span>
+
+					<& /input/select.mas,  
+							'name' => $id . '_ip' , 
+							'value' => $data->mask(), options => \@options,
+							'extraParams' => [ id => "$id" . "_mask",
+									 ],
+							&>
+</span>
+
+</%def>
+
+<%def .serviceSetter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+</%args>
+<%init>
+</%init>
+% my $id = $tableName . '_' . $data->fieldName();
+<!-- Store a list with protocols which needs a port -->
+<script type="text/javascript">
+  showPort('<% $id %>_protocol', '<% $id %>_portText',
+            <% $data->protocolsJS() %>);
+</script>
+
+<span id="<% $id %>" class="<% $cssClass %>">
+					<& /input/select.mas,
+							'name' => $id . '_protocol' ,
+							'value' => $data->protocol(),
+							 options => $data->protocols(),
+							'extraParams' => [ id => "$id" . "_protocol",
+									   onchange => "showPort('" . $id . "_protocol'," .
+                                                                                                 "'" . $id . "_portText'," .
+                                                                                                 $data->protocolsJS() . ")",
+                                                                         ],
+							&>
+					<span id="<% $id . '_portText' %>" class="hidden">
+					  <%__('port')%>
+					  <input type="text" class="inputText"
+					         value="<% $data->port() %>"
+					         size="5" id ="<% $id . '_port' %>"
+						 name='<% $id . '_port' %>' />
+					</span>
+
+</span>
+
+</%def>
+
+<%def .selectSetter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+</%args>
+% my $id = $tableName . '_' . $data->fieldName();
+
+			<& /input/select.mas,
+			                     'name' => "$id" , 
+					     'value' => $data->value(), options => $data->options(),
+					     'extraParams' => [ id => "$id",
+							        class => "$cssClass",
+							      ],
+					&>
+					<% $data->trailingText() %>
+
+</%def>
+
+
+
+<%def .textSetter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+</%args>
+% my $id = $tableName . '_' . $data->fieldName();
+
+					<input type="text" class="inputText <% $cssClass %>" value="<% $data->printableValue() %>"
+						size="<% $data->size() %>" id='<% $id %>' name='<% $id %>' /> 
+						<% $data->trailingText() %>
+</%def>
+
+<%def .booleanSetter>
+<%args>
+$tableName
+$data
+$cssClass => ''
+</%args>
+% my $id = $tableName . '_' . $data->fieldName();
+
+					<& /input/checkbox.mas,
+					 'name' => "$id", 
+                                         'value' => $data->printableValue(),
+					 'extraParams' => [id => "$id",
+							   class => "$cssClass",
+							  ] &>
+						<% $data->trailingText() %>
+</%def>
+
+
+<%def .inputText>
+<%args>
+$tableName
+$fieldName
+$size
+$value => ''
+</%args>
+					<input type="text" class="inputText" value="<% $value %>"
+						size="<% $size %>" id='<% $tableName . '_' . $fieldName %>' name='<% $fieldName %>' /> 
+</%def>
+
+<%def .checkbox>
+<%args>
+$tableName
+$fieldName
+$value => 0
+</%args>
+	
+					<& /input/checkbox.mas, name => "$fieldName", value => $value, extraParams => [ id => "$tableName" .'_' ."$fieldName"] &>
+</%def>

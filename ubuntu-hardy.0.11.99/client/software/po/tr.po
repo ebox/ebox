@@ -1,0 +1,278 @@
+# Turkish translations for ebox-software package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-software package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-software 0.11\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2008-01-08 15:51+0100\n"
+"PO-Revision-Date: 2007-04-22 12:00+0000\n"
+"Last-Translator: Alper orus <alperor@linux-sevenler.org>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1\n"
+
+#: src/EBox/CGI/Config.pm:31 src/EBox/CGI/Config.pm:41
+msgid "Automatic software updates"
+msgstr "Otomatil sistem güncellemeleri"
+
+#: src/EBox/CGI/Updates.pm:30 src/EBox/CGI/Updates.pm:40
+#: src/EBox/Software.pm:382
+msgid "System updates"
+msgstr "Sistem güncellemeleri"
+
+#: src/EBox/CGI/Updates.pm:45
+msgid "Software updates are being handled automatically"
+msgstr "Sistem güncellemeleri otomatik olarak başlatılacak"
+
+#: src/EBox/CGI/Updates.pm:52
+msgid "The system is up to date"
+msgstr "Sistem güncellendi"
+
+#: src/EBox/CGI/Enable.pm:41
+msgid "automatic updates configuration"
+msgstr "Otomatik güncelleme ayarları"
+
+#: src/EBox/CGI/InstallPkgs.pm:76
+msgid "There were no packages to update"
+msgstr "Güncellenecek paket mevcut değil"
+
+#: src/EBox/CGI/InstallPkgs.pm:93
+msgid "The packages were removed successfully"
+msgstr "Paketler başarılı bir şekilde silindi"
+
+#: src/EBox/CGI/InstallPkgs.pm:118 src/EBox/CGI/CurrentPackage.pm:31
+msgid "Upgrading"
+msgstr "Güncelleniyor"
+
+#: src/EBox/CGI/InstallPkgs.pm:119
+#, fuzzy
+msgid "Upgrading packages"
+msgstr "Güncelleniyor"
+
+#: src/EBox/CGI/InstallPkgs.pm:120
+msgid "Current package"
+msgstr "Güncel paketler"
+
+#: src/EBox/CGI/InstallPkgs.pm:121
+msgid "packages left to install"
+msgstr ""
+
+#: src/EBox/CGI/InstallPkgs.pm:122
+#, fuzzy
+msgid "The packages installation has finished successfully"
+msgstr "Paketlerin kurulu başarılı bir şekilde tamamlandı"
+
+#: src/EBox/CGI/InstallPkgs.pm:123
+msgid ""
+"The packages installation has not finished correctly . More information on "
+"the logs"
+msgstr ""
+
+#: src/EBox/CGI/EBox.pm:30 src/EBox/CGI/EBox.pm:40 src/EBox/Software.pm:380
+msgid "eBox components"
+msgstr "eBox bileşenleri"
+
+#: src/EBox/Software.pm:164
+msgid ""
+"An error ocurred while removing components. If the error persists or eBox "
+"stops working properly, seek technical support."
+msgstr ""
+"Bir bileşenin kaldırılması esnasında bir hata oluştur. Eğer bu hata tekrar "
+"meydana gelirse veya eBox düzgün çalışmaz ise 'Teknik Servis' bölümünü okuyun"
+
+#: src/EBox/Software.pm:377 src/EBox/PackageDescriptions.pm:18
+msgid "Software management"
+msgstr "Uygulama yönetimi"
+
+#: src/EBox/Software.pm:384
+#, fuzzy
+msgid "Automatic updates"
+msgstr "Otomatil sistem güncellemeleri"
+
+#: src/EBox/Software.pm:475
+#, perl-brace-format
+msgid ""
+"Software management is currently  locked by {locker}. Please, try again later"
+msgstr ""
+
+#: src/EBox/PackageDescriptions.pm:1
+msgid "Certificate Authority Manager for eBox"
+msgstr "Ebox yetkili sertifika yöneticisi "
+
+#: src/EBox/PackageDescriptions.pm:2
+msgid "DHCP server"
+msgstr "DHCP sunucusu"
+
+#: src/EBox/PackageDescriptions.pm:3
+msgid "eBox DNS server"
+msgstr "eBox DNS sunucusu"
+
+#: src/EBox/PackageDescriptions.pm:4
+msgid "Base framework"
+msgstr "Temel taşlar"
+
+#: src/EBox/PackageDescriptions.pm:5
+msgid "Firewall"
+msgstr "Güvenlik duvarı"
+
+#: src/EBox/PackageDescriptions.pm:6
+msgid "IPsec VPNs"
+msgstr "IPsec VPNs"
+
+#: src/EBox/PackageDescriptions.pm:7
+msgid "Instant messaging (Jabber)"
+msgstr "Haberleşme (Jabber)"
+
+#: src/EBox/PackageDescriptions.pm:8
+msgid "Mail server"
+msgstr "Posta sunucusu"
+
+#: src/EBox/PackageDescriptions.pm:9
+msgid "Mail filter module"
+msgstr "Posta süzgeçleme modulu"
+
+#: src/EBox/PackageDescriptions.pm:10
+msgid "Network configuration"
+msgstr "Ağ ayarları"
+
+#: src/EBox/PackageDescriptions.pm:11
+msgid "NTP server"
+msgstr "NTP sunucusu"
+
+#: src/EBox/PackageDescriptions.pm:12
+msgid "Object management"
+msgstr "Nesne yönetimi"
+
+#: src/EBox/PackageDescriptions.pm:13
+msgid "OpenVPN server"
+msgstr "OpenVPN sunucusu"
+
+#: src/EBox/PackageDescriptions.pm:14
+msgid "Printer sharing"
+msgstr "Yazıcı paylaşımı"
+
+#: src/EBox/PackageDescriptions.pm:15
+msgid "File sharing"
+msgstr "Dosya paylaşımı"
+
+#: src/EBox/PackageDescriptions.pm:16
+msgid "Services  management"
+msgstr "Servis yönetimi"
+
+#: src/EBox/PackageDescriptions.pm:17
+msgid "SOAP server to communicate with eBox control center"
+msgstr "Ebox yönetim merkezi ile iletişim yapabilecek SOAP sunucu adresi"
+
+#: src/EBox/PackageDescriptions.pm:19
+msgid "Proxy cache and content filter"
+msgstr "Vekil depolama ve içerik filtreleme"
+
+#: src/EBox/PackageDescriptions.pm:20
+msgid "Traffic shaper for eBox"
+msgstr "Ebox için internet trafik kontrolü"
+
+#: src/EBox/PackageDescriptions.pm:21
+msgid "User and Group management"
+msgstr "Kullanıcı ve grup yönetimi"
+
+#: src/EBox/PackageDescriptions.pm:22
+#, fuzzy
+msgid "Web Server"
+msgstr "eBox DNS sunucusu"
+
+#: src/templates/del.mas:14
+msgid "The following packages will be installed"
+msgstr "Aşağıdaki paketler kurulacak"
+
+#: src/templates/del.mas:16
+msgid "The following packages will be removed"
+msgstr "Aşağıdaki paketler silinecek"
+
+#: src/templates/del.mas:32
+msgid "Ok"
+msgstr "Tamam"
+
+#: src/templates/del.mas:33
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/templates/updates.mas:10
+msgid "Updates are available for the following system components"
+msgstr "Aşağıdaki sistem bileşenleri için güncelleme mevcut"
+
+#: src/templates/updates.mas:15 src/templates/ebox.mas:14
+msgid "Component"
+msgstr "Bileşen"
+
+#: src/templates/updates.mas:16
+msgid "Description"
+msgstr "Açıklama"
+
+#: src/templates/updates.mas:17 src/templates/ebox.mas:27
+msgid "Update"
+msgstr "Güncelle"
+
+#: src/templates/updates.mas:33 src/templates/ebox.mas:74
+msgid "Update all packages"
+msgstr "Bütün paketleri güncelle"
+
+#: src/templates/updates.mas:44
+msgid ""
+"This operation can take some time, don't worry if eBox looks unresponsive "
+"after pressing the Upgrade button."
+msgstr ""
+"Bu işlem uzun sürebilir. eBox uzun bir süre size cevap vermez ise sakın "
+"heyacana kapılmayın."
+
+#: src/templates/updates.mas:47
+msgid "Upgrade"
+msgstr "Güncelle"
+
+#: src/templates/ebox.mas:15
+msgid "Installed version "
+msgstr "Kurulu sürüm"
+
+#: src/templates/ebox.mas:16
+msgid "Latest version"
+msgstr "Son sürüm"
+
+#: src/templates/ebox.mas:17
+msgid "Actions"
+msgstr "İşlemler"
+
+#: src/templates/ebox.mas:33
+msgid "Install"
+msgstr "Kur"
+
+#: src/templates/ebox.mas:35
+msgid "none"
+msgstr "hiçbirşey"
+
+#: src/templates/ebox.mas:57
+msgid "Remove"
+msgstr "Kaldır"
+
+#~ msgid "The installation of the packages has finished successfully"
+#~ msgstr "Paketlerin kurulu başarılı bir şekilde tamamlandı"
+
+#~ msgid "Configuration"
+#~ msgstr "Ayarlar"
+
+#~ msgid ""
+#~ "The packages are being installed, please refrain from using the "
+#~ "application until the update is done"
+#~ msgstr ""
+#~ "Paket güncellenecek. Lütfen güncelleme esnasında bu uygulamayı "
+#~ "kullanmayın."
+
+#~ msgid "Starting..."
+#~ msgstr "Başlatılıyor..."
+
+#~ msgid "Perform automatic security updates"
+#~ msgstr "Güvenlik güncellemelerini otomatik olarak uygula"

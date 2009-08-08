@@ -1,0 +1,22 @@
+<%args>
+@ifaces
+$redistribute
+</%args>
+hostname ebox
+password ripd
+enable password ripd
+% foreach my $iface (@ifaces) {
+interface <% $iface %>
+% }
+no ip rip authentication mode
+router rip
+% foreach my $iface (@ifaces) {
+network <% $iface %>
+% }
+% if ($redistribute) {
+redistribute connected
+redistribute static
+% }
+debug rip events
+debug rip packet
+log file /var/log/quagga/ripd.log

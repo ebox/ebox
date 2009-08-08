@@ -1,0 +1,24 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+    $printerid
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+
+<div class="warning">
+<% __('Are you sure you want to delete this printer?') %>
+</div>
+
+<form action='ManagePrinter' method='POST'>
+    <input type='hidden' name='printerid'
+           value='<% $printerid %>'/>
+    <input class='inputButton'
+           type='submit' name='delforce'
+           value="<% __('Delete') %>">
+    <input class='inputButton'
+           type='submit' name='cancel'
+           value="<% __('Cancel') %>">
+</form>
+

@@ -1,0 +1,44 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<h3><TMPL_VAR EXPR="__('Change password')"></h3>
+	<form action='General' method='POST'>
+		<table><tbody>
+			<tr>
+				<td>
+					<TMPL_VAR EXPR="__('Current password')">
+				</td>
+				<td>
+					<input type='password' name='currentpwd' size='16'>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<TMPL_VAR EXPR="__('New password: ')">
+				</td>
+				<td>
+					<input type='password' name='newpwd1' size='16'>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+			<TMPL_VAR EXPR="__('Confirm new password: ')">
+				</td>
+				<td>
+					<input type='password' name='newpwd2' size='16'>
+					<input class='inputButton' type='submit' name='password'
+						   value='<TMPL_VAR EXPR="__('Change')">'>
+				</td>
+			</tr>
+		</tbody></table>
+	</form>
+<h3><TMPL_VAR EXPR="__('Language selection')"></h3>
+	<form action='General' method='POST'>
+		<select name='lang'>
+			<option selected value="C">English</option>
+			<option value="es_ES.UTF-8">Español</option>
+		</select>
+		<input class='inputButton' type='submit' name='lang'
+			   value='<TMPL_VAR EXPR="__('Ok')">'>
+	</form>

@@ -1,0 +1,113 @@
+ebox (0.3.svn.14-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Thu,  2 Dec 2004 12:29:42 +0100
+
+ebox (0.3.svn.13-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Thu,  2 Dec 2004 12:18:52 +0100
+
+ebox (0.3.svn.12-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Thu,  2 Dec 2004 11:55:14 +0100
+
+ebox (0.3.svn.11-2) unstable; urgency=low
+
+  * Changed /etc/sudoers perms after generating it in postinst
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed,  1 Dec 2004 20:40:06 +0100
+
+ebox (0.3.svn.10-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed,  1 Dec 2004 20:30:13 +0100
+
+ebox (0.3.svn.9-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed,  1 Dec 2004 20:20:49 +0100
+
+ebox (0.3.svn.8-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed,  1 Dec 2004 20:08:08 +0100
+
+ebox (0.3.svn.7-2) unstable; urgency=low
+
+  * Minor changes in localstatedir
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed,  1 Dec 2004 19:46:18 +0100
+
+ebox (0.3.svn.7-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed,  1 Dec 2004 19:25:22 +0100
+
+ebox (0.3.svn.6-3) unstable; urgency=low
+
+  * Fixed bug in adduser call
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Tue, 30 Nov 2004 16:01:21 +0100
+
+ebox (0.3.svn.6-2) unstable; urgency=low
+
+  * Added libapache-singleton-perl in Depends 
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Tue, 30 Nov 2004 16:01:21 +0100
+
+ebox (0.3.svn.6-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Mon, 29 Nov 2004 21:34:30 +0100
+
+ebox (0.3.svn.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed, 10 Nov 2004 15:10:14 +0100
+
+ebox (0.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Wed, 10 Nov 2004 11:43:19 +0100
+
+ebox (0.2.svn.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Fri, 22 Oct 2004 23:27:33 +0200
+
+ebox (0.2.svn.4-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Tue, 21 Sep 2004 11:30:41 +0200
+
+ebox (0.2.svn.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Fri, 10 Sep 2004 17:13:33 +0200
+
+ebox (0.2.svn.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Thu,  9 Sep 2004 23:27:41 +0200
+
+ebox (0.2.svn-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Thu,  9 Sep 2004 20:50:23 +0200

@@ -1,0 +1,15 @@
+#!/bin/sh
+cat tools/po-am.header
+echo -n "POTFILES_TMPL = "
+find . \( -name "*.tmpl" -o -name "*.mas" \) -exec echo -ne \\\\\\\n {}" " \;
+echo ""
+echo ""
+echo -n "POTFILES_PL = "
+find . -name "*.pm" -exec echo -ne \\\\\\\n {}" " \;
+echo ""
+echo ""
+echo -n "POTFILES = "
+find . \( -name "*.tmpl" -o -name "*.mas" -o -name "*.pm" \) -exec echo -ne \\\\\\\n {}" " \;
+echo ""
+echo ""
+cat tools/po-am.footer

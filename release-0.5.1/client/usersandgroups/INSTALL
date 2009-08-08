@@ -1,0 +1,59 @@
+DEPENDENCIES
+------------
+
++ Debian packages:
+
+# apt-get install <package>
+	+ slapd
+	+ libnet-ldap-perl
+
++ To install this module you need to install EBox base before.
+
+INSTALLATION
+------------
+
+- Once EBox base has been installed:
+	
+	./configure
+	make install
+
+  configure will autodetect EBox base path to install
+
+- Update your sudoers file with the ebox-sudoers command.
+
+- LDAP Server installation
+
+	To install OpenLDAP:
+
+        # aptitude install slapd
+
+	When asked by debconf, set 'ebox' as DNS domain name.
+
+	Set the administration password
+	
+	Permission bits must be set over /var/run/ldapi to access 
+	via a UNIX Domain Socket, writing in /etc/default/slapd:
+
+	SLAPD_SERVICES="ldapi:///????x-mod=777"
+
+	(A better approach consists of slapd running as a non root user and 
+	setting socket ownership accordingly)
+
+	EBox has to read the ldap administration password from 
+	ebox-ldap.passwd, so you must create it.  Where this file is 
+	depends on your installation, 
+	i.e /var/lib/ebox/conf/ebox-ldap.passwd
+
+	
+	Now you must generate a slapd.conf file. Use ebox-init-ldap
+	in tools:
+
+		ebox-init-ldap genconfig
+
+	Restart slapd
+
+		/etc/init.d/slapd restart
+
+	The final step consists of populating the ldap database
+
+		ebox-init-ldap populate

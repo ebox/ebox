@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no" ?>
+<!ENTITY name "Security Guide">
+<!ENTITY version "0.1">
+<!ENTITY title "KAJIKA">
+<!ENTITY subtitle "Security Guide">
+
+<!ENTITY part-programming_languages SYSTEM "part-programming_languages.xml">
+<!ENTITY ch-general_hints SYSTEM "ch-general_hints.xml">
+<!ENTITY ch-perl SYSTEM "ch-perl.xml">

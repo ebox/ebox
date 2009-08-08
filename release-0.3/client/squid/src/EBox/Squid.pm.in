@@ -1,0 +1,505 @@
+# Copyright (C) 2004  Warp Netwoks S.L.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+package EBox::Squid;
+use strict;
+use warnings;
+
+use base 'EBox::GConfModule';
+
+use EBox::Objects;
+use EBox::Global;
+use EBox::Config;
+use EBox::Firewall;
+use EBox::Validate qw( :all );
+use EBox::Exceptions::InvalidData;
+use EBox::Exceptions::Internal;
+use EBox::Exceptions::DataNotFound;
+use EBox::Summary::Module;
+use EBox::Summary::Value;
+use EBox::Summary::Section;
+use EBox::Sudo qw( :all );
+use EBox::Gettext;
+use Error qw(:try);
+use HTML::Mason;
+
+
+#Module local conf stuff
+use constant SQUIDCONFILE => "@SQUIDCONF@";
+use constant SQUIDINIT    => "/etc/init.d/squid";
+use constant PIDFILE      => "/var/run/squid.pid";
+use constant MAXDOMAINSIZ 		=> 255; 
+
+
+sub _create {
+	my $class = shift;
+	my $self  = $class->SUPER::_create(name => 'squid', 
+					   domain => 'ebox-squid');
+	$self->{logger} = EBox::Global->logger();
+	bless ($self, $class);
+	return $self;
+}
+
+sub isRunning($) {
+	my $self = shift;
+	if ( -f PIDFILE ) {
+		return 1;
+	} else {
+		return undef
+	}
+}
+
+
+sub _doDaemon {
+	my $self = shift;
+	if ($self->service eq 'yes' and $self->isRunning){
+		$self->daemon('reload');
+	} elsif ($self->service eq 'yes') {
+		$self->daemon('start');
+	} elsif ($self->service eq 'no' and $self->isRunning) {
+		$self->daemon('stop');
+	}
+}
+
+sub _stopService($) {
+	my $self = shift;
+	if ( -f PIDFILE ){
+		$self->daemon('stop');
+	}
+	
+}
+#Override virtual method in base class
+#This method should be called anytime  object's conf changes
+#Restart service if module active
+sub _regenConfig {
+	my $self = shift;
+	$self->setSquidConf;
+	$self->_doDaemon();
+}
+
+#Override virtual method in base class
+#Arguments:
+#	- Object name
+#Returns:
+#	- True if  used by this module
+#	- False if not used by this module
+sub usesObject($$) {
+	my $self = shift;
+	my $object  = shift;
+	my $exceps = $self->exceptions;
+	foreach (@{$exceps}) {
+		return 1 if ($_ eq $object);
+	}
+	return undef;
+}
+
+#Override virtual method in base class
+#Arguments:
+#	- Object name
+sub freeObject($$) {
+	my $self = shift;
+	my $object  = shift;
+	(defined($object) && $object ne "") or return;
+	my $exceps = $self->exceptions;
+	my @array = ();
+	foreach (@{$exceps}) {
+		($_ ne $object) or next;
+		push(@array, $_)
+	}
+	$self->setExceptions(\@array);
+
+}
+
+#changes the global policy
+#Pars: 0 -> 'allow'|'deny'
+sub setGlobalPolicy {
+	my ($self, $policy) = @_;
+	if ( $policy ne 'allow' && $policy ne 'deny'){
+		throw EBox::Exceptions::Internal(
+                        __x("Policy '{policy}' is invalid", policy => $policy));
+	}
+	if ($policy eq $self->globalPolicy) {
+		return undef;
+	}
+	$self->{logger}->debug("Setting global policy to $policy");
+	$self->set_string("policy", $policy);
+	return 1;
+}
+
+#returns  the global policy
+#'allow'|'deny'
+sub globalPolicy {
+	my $self = shift;
+	return $self->get_string("policy");
+}
+
+#creates exceptions for the global policy
+#Par: 0- Array with object names
+sub setExceptions {
+	my ($self, $args) = (@_);
+	my $objects = EBox::Global->modInstance('objects');
+	$self->unset("exceptions");
+	($args) or return;
+	foreach (@{$args}){	
+	      $objects->objectExists($_) or
+		      throw EBox::Exceptions::DataNotFound(
+		             'data' => __("object"), 'value' => $_);
+        }
+	$self->set_list("exceptions", "string", $args);
+}
+
+#returns:
+#	- array reference with object's overriding global policy
+sub exceptions {
+	my $self = shift;
+	return $self->get_list("exceptions");
+}
+
+
+#returns true if an Object is an exception to global policy
+sub isExcep($$) {
+	my ($self, $object) = @_;
+	my $exceptions = $self->exceptions();
+	foreach (@{$exceptions}) {
+		return 1 if ($_ eq $object);
+	}
+	return undef;
+}
+#sets authentication 
+#Par: 0 -> 'yes'|'no'  Weird, isn't it?
+sub setAuth {
+	my ($self, $auth) = @_;
+	if ($auth ne 'yes' && $auth ne 'no') {
+		throw EBox::Exceptions::InvalidData('data'  => __('auth'),
+						    'value' => $auth);
+	}
+	$self->set_string("auth", $auth);
+}
+
+#returns authentication 
+#ret: yes|no
+sub auth {
+	my $self = pop;
+	return $self->get_string("auth");
+}
+
+# Get the current dnat port in squid service
+# returns
+# 	- int: dnat port
+# 	- undef: if not exists
+sub _serviceDNatPort($){
+	my $self = shift;
+	my $fw = EBox::Global->modInstance('firewall');
+	my $fwserv = $fw->service('squid');
+
+	unless ($fwserv) {
+		return undef;
+	}
+
+	return $fwserv->{'dnatport'};
+}
+# Configure DNat in firewall for squid service
+sub _configureServiceDNat($){
+	my $self = shift;
+	my $fw = EBox::Global->modInstance('firewall');
+	my $trans = $self->transproxy;
+
+	my $port = $self->_serviceDNatPort('squid');
+	if (($self->service eq 'yes') and ($trans eq 'yes')){
+		unless ((defined $port) and ($port == 80)) {
+			$fw->setServiceDNat('squid', 80);
+		}
+	}  elsif ($fw->service('squid') and $port) {
+		$fw->unsetServiceDNat('squid');
+	}
+}
+
+# Configure Service  in firewall for squid service
+sub _configureFirewall($){
+	my $self = shift;
+	my $fw = EBox::Global->modInstance('firewall');
+	my $fwserv = $fw->service('squid');
+	
+	if (($self->service eq 'yes') and (not $fwserv)){
+		$fw->addService('squid', 'tcp', $self->port, 1);
+                $fw->addOutputRule('tcp', 80);
+                $fw->setObjectService('_global', 'squid', 'allow');
+	} elsif (($self->service eq 'yes') and ($fwserv)) {
+		unless ($fwserv->{'port'} == $self->port){
+			$fw->changeService('squid', 'tcp', $self->port, 1);
+		}
+	} elsif (($self->service eq 'no') and ($fwserv)){
+		$fw->removeService('squid');
+		$fw->removeOutputRule('tcp', 80);
+	}
+
+	$self->_configureServiceDNat();
+}
+
+#sets activation service
+#Par: 0-> 'yes'|'no
+sub setService {
+	my ($self, $active) = @_;
+	if ($active ne 'yes' && $active ne 'no') {
+		throw EBox::Exceptions::InvalidData(
+						'data' => __('Service Status'),
+ 					    	'value' => $active);
+	}
+	$self->set_string("active", $active);
+	$self->_configureFirewall;
+}
+
+#returns if service is active or not
+#ret: yes|no
+sub service {
+	my $self = shift;    	
+	return $self->get_string("active");
+}
+
+#sets transparent proxy service
+#Par: 0-> 'yes'|'no
+sub setTransproxy {
+	my ($self, $trans) = @_;
+	if ($trans ne 'yes' && $trans ne 'no') {
+		throw EBox::Exceptions::InvalidData(
+					'data'  => __('transparent proxy'),
+					'value' => $trans);
+	}
+	if ($trans eq $self->transproxy) {
+		return undef;
+	}
+	$self->set_string("transproxy", $trans);
+	$self->_configureFirewall;
+	return 1;
+}
+
+#returns if service is active or not
+#ret: yes|no
+sub transproxy {
+	my $self = shift;    	
+	return $self->get_string("transproxy");
+}
+
+#sets port service
+#Par: 0-> port_number
+sub setPort {
+	my ($self, $port) = @_;
+	my $fw = EBox::Global->modInstance('firewall');
+	checkPort($port, "listening port");
+	my $currentport = $fw->servicePort('squid');	
+	if ($currentport == $port) {
+		return;
+	}
+	unless ($fw->availablePort($port)) {
+		throw EBox::Exceptions::DataInUse(
+					'data'  => __('listening port'),
+					'value' => $port);
+	}					
+	if ($port eq $self->port) {
+		return undef;
+	}
+	$self->set_int("port", $port);
+	$self->_configureFirewall;
+	return 1;
+}
+
+#returns port_number
+#ret: port_number
+sub port {
+	my $self = shift;    	
+	return $self->get_int("port");
+}
+
+#returns
+# 	- Array with banned domains
+sub bannedDomains($) {
+	my $self = shift;
+	return $self->get_list("banned_sites");
+}
+
+#arguments
+#	- string: forbidden domain
+#returns
+#	- true if exists
+#	- false if not
+sub bannedDomainExists($$) {
+	my $self = shift;
+	my $domain = shift;
+
+	foreach (@{$self->bannedDomains()}) {
+		return 1 if ($_ eq $domain);
+	}
+	return undef;
+}
+
+sub _checkDomainName($$) {
+	my $self = shift;
+	my $domain = shift;
+	
+	unless (length($domain) < MAXDOMAINSIZ) {
+		return undef;
+	}
+	unless ($domain =~ /^[^\.\-][\w\.\-]+[^\-]$/) {
+		return undef;
+	}
+	return 1;
+}
+
+#arguments
+#	- string: forbidden domain
+#returns
+#	- true if everything goes ok
+#throws 
+#	- DataInUse
+#		- If domain already exists
+sub addBannedDomain($$) {
+	my $self = shift;
+	my $domain = shift;
+
+	if ($self->bannedDomainExists($domain)) {
+                 throw EBox::Exceptions::DataInUse(
+		 		'data' => __('domain name'),
+                                'value' => "$domain");
+	}
+	unless ($self->_checkDomainName($domain)) {
+  		throw EBox::Exceptions::InvalidData(
+				'data' => __('domain name'),
+	  			'value' => $domain); 
+	}
+	$domain = "." . $domain;
+	my @list = @{$self->bannedDomains()};
+	push @list, $domain;
+	$self->set_list("banned_sites", "string", \@list);	
+	return 1;
+}
+
+#arguments
+#	- string: forbidden domain
+#returns
+#	- true if everything goes ok
+#	- false if not
+sub removeBannedDomain($$) {
+	my $self = shift;
+	my $domain = shift;
+
+	unless ($self->bannedDomainExists($domain)) {
+		 throw EBox::Exceptions::DataNotFound(
+		 		'data' => __("domain"), 
+				'value' => $domain); 
+	}
+	
+	my @list = @{$self->bannedDomains()};
+	@list = grep (!/^$domain$/, @list);
+	$self->set_list("banned_sites", "string", \@list);	
+	return 1;
+}
+sub setSquidConf {
+	my $self = shift;
+	my $ob = EBox::Global->modInstance('objects');
+	my $objects;
+	my $banned;
+	
+	foreach (@{$self->exceptions}) {
+		foreach (@{$ob->ObjectAddresses($_)}) {
+			$objects .= "acl objects src  $_\n";
+		  }
+	}
+	foreach (@{$self->bannedDomains}) {
+		$banned .= "acl banned_domains dstdomain $_\n";
+	}
+	
+ 	my $output;
+	my $interp = HTML::Mason::Interp->new( out_method => \$output);
+	my $comp = $interp->make_component(comp_file =>
+                	(EBox::Config::stubs . "/squid/squid.conf.mas"));
+        my @array = ();
+        push(@array, 'port'  => $self->port);
+        push(@array, 'transparent'  => $self->transproxy);
+        push(@array, 'policy'  => $self->globalPolicy);
+        push(@array, 'objects' => $objects);
+        push(@array, 'banned'  => $banned);
+        $interp->exec($comp, @array);
+	
+	my $confile = EBox::Config::tmp . "/squid.conf";
+	unless (open (SQUIDCONF, "> " . $confile)) {
+		 throw EBox::Exceptions::Internal(
+		 	"Could not open to write ". $confile . 
+			" Check permissions");
+	}
+	print SQUIDCONF $output;
+	close (SQUIDCONF);
+	
+       root("/bin/mv ". EBox::Config::tmp .  "/squid.conf " . SQUIDCONFILE);
+}
+
+#manage squid via init.d/squid script
+#Pars 0: start|stop|restart
+sub daemon() {
+	my ($self, $action) = @_;
+	my $command =  SQUIDINIT . " " . $action . " 2>&1";
+	if ( $action eq 'start') {
+		root($command);
+		$self->{logger}->info("starting squid");
+	}
+	elsif ( $action eq 'stop') {
+		root($command);
+		$self->{logger}->info("stoping squid");
+	}
+	elsif ( $action eq 'reload') {
+		root($command);
+		$self->{logger}->info("reloading squid");
+	}
+	else {
+		throw EBox::Exceptions::Internal("Bad argument: $action");
+	}
+	
+}
+
+sub summary($) {
+	my $self = shift;
+	my $item = new EBox::Summary::Module(__("Proxy"));
+	my $section = new EBox::Summary::Section();
+	my $status;
+	$item->add($section);
+	
+	if ($self->isRunning) {
+		$status = __("Running");
+	} else {
+		$status = __("Stopped");
+	}
+	$section->add(new EBox::Summary::Value(__("Status"), $status));
+
+	$self->isRunning() or return $item;
+	
+	if ($self->transproxy eq "yes") {
+		$status = __("Enabled");
+	} else {
+		$status = __("Disabled");
+	}
+	$section->add(new EBox::Summary::Value(__("Transparent proxy"),$status));
+	
+	if ($self->globalPolicy eq "allow") {
+		$status = __("Allow");
+	} else {
+		$status = __("Deny");
+	}
+	$section->add(new EBox::Summary::Value(__("Global policy"), $status));
+	
+	$section->add(new EBox::Summary::Value(__("Listening port"), 
+					       $self->port));
+	return $item;
+}
+
+1;

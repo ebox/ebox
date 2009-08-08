@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_fix_backup_parameter.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix for ebox-make-backup parameter
+
+@DPATCH@
+
+Index: ebox/src/EBox/ProgressIndicator.pm
+===================================================================
+--- ebox/src/EBox/ProgressIndicator.pm	(revisión: 9763)
++++ ebox/src/EBox/ProgressIndicator.pm	(copia de trabajo)
+@@ -423,7 +423,7 @@
+ sub execProgressIdParamName
+ {
+   my ($self) = @_;
+-  return 'progress-id';
++  return '--progress-id';
+ }
+ 
+ # Method to clean up the rubbish regarding to the progress indicator

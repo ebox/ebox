@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<firewall xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation='firewall.xsd'>
+	<external iface="eth1"/>
+
+	<!-- choose what to do when denying packets -->
+	<action deny="drop"/>
+
+	<!--+ ports redirected to internal machines
+	    | FIXME: find a good name 
+	    | XXX - should this be doable in other directions?
+	    +-->
+	<dnats>
+		<dnat protocol="tcp" eport="80" ip="252.12.41.12" dport="8080"/>
+		<dnat protocol="tcp" eport="25" ip="241.145.0.1" dport="2500"/>
+		<dnat protocol="tcp" eport="21" ip="24.121.80.219" dport="500"/>
+	</dnats>
+
+	<!--+ rules for objects -->
+	<objects>
+		<!--+ global rules for machines in internal networks 
+		    | this object is internal, it keeps the default rules 
+		    +-->
+		<object name="_global" policy="deny">
+			<rule action="allow" proto="tcp" port="22"/>
+			<rule action="allow" proto="tcp" port="110"/>
+			<rule action="allow" proto="tcp" port="25"/>
+			<servicepol name="squid" policy="allow"/>
+		</object>
+
+		<!--+ this objects are configured in the objects module -->
+		<object name="developers" policy="allow">
+			<rule action="deny" proto="tcp" port="6667"/>
+			<servicepol name="squid" policy="deny"/>
+		</object>
+		<object name="admins" policy="global">
+			<rule action="allow" proto="tcp" port="6667"/>
+		</object>
+		<object name="bosses" policy="deny">
+			<rule action="allow" proto="tcp" port="31337"/>
+		</object>
+	</objects>
+
+	<!-- services running in this machine -->
+	<services>
+		<service name="squid" protocol="tcp" port="8080"/>
+		<service name="dnscache" protocol="udp" port="53"/>
+	</services>
+
+</firewall>

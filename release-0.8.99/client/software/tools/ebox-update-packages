@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+
+use strict;
+use EBox::Config;
+use EBox::Global;
+
+my $file = EBox::Config::tmp . "ebox-update-log";
+sub writeToFile($)
+{
+	my $txt = shift;
+	(length($txt) > 0) or return;
+	
+	open (FD, ">$file") or die "I couldn't open $file";
+	print FD $txt;
+	close (FD);
+}
+
+
+writeToFile("starting");
+
+foreach my $pkg (@ARGV) {
+	writeToFile($pkg);
+	my $cmd ='/usr/bin/apt-get install --no-download -q --yes';
+	system("sudo $cmd $pkg");
+}
+
+system("sudo /etc/init.d/ebox apache restart");
+system("sudo apt-get install -f");
+
+
+writeToFile("done");
+
+EBox::init();
+my $global = EBox::Global->getInstance(1);
+my $software = $global->modInstance('software');
+
+#causes the cache to be generated
+$software->listUpgradablePkgs(1);
+#call also listEBoxPkgs to regen the cache
+$software->listEBoxPkgs(1);

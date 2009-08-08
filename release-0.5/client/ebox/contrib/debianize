@@ -1,0 +1,94 @@
+#!/bin/bash
+
+if [ ! -f ebox/trunk/configure.ac ]
+then
+	echo "This program should be run from ebox SVN root directory"
+	exit 1
+fi
+
+DEBOPTS=""
+if [ "$1" = "nosign" ]
+then
+	DEBOPTS="-us -uc"
+fi
+
+ROOTDIR=$PWD
+LOG=$ROOTDIR/debianize.log
+
+rm -f $LOG
+
+NOMOD=""
+BROKEN=""
+NODEB=""
+BADDEB=""
+OK=""
+
+for mod in *
+do
+	cd $ROOTDIR >> $LOG 2>&1
+	if [ ! -d $mod ] ; then
+		continue
+	fi
+	echo ""
+	echo "-------- Packaging $mod module ----------"
+	if [ ! -f $mod/trunk/configure.ac ] ; then
+		echo "$mod module is not correct, skipping ..."
+		NOMOD="$NOMOD $mod"
+		continue
+	fi
+	cd $mod/trunk >> $LOG 2>&1
+	echo "Removing old tarballs ..."
+	rm -f *.tar.gz >> $LOG 2>&1
+	VERSION=$( grep AC_INIT configure.ac | sed -e 's/AC_INIT.*(\[.*\].*\[\(.*\)\])/\1/' )
+
+	echo "Running autogen.sh --disable-runtime-tests ..."
+	sh autogen.sh --disable-runtime-tests >> $LOG 2>&1
+	echo "Creating tarball ..."
+	make dist >> $LOG 2>&1
+	if [ $? -ne 0 ] ; then
+		echo "Error creating tarball for $mod module"
+		BROKEN="$BROKEN $mod"
+		continue
+	fi
+	if [ ! -d debian ]
+	then
+		echo "No debian/ dir for $mod module"
+		NODEB="$NODEB $mod"
+		continue
+	fi
+	PACKAGE=$( dpkg-parsechangelog | grep ^Source | cut -d' ' -f 2 )
+	echo "Setting up build directory for source package $PACKAGE ..."
+	BUILDDIR="/tmp/debianize-$$/$PACKAGE/"
+	mkdir -p $BUILDDIR >> $LOG 2>&1
+	svn export debian "$BUILDDIR/debian" >> $LOG 2>&1
+	mv *.tar.gz $BUILDDIR >> $LOG 2>&1
+	cd $BUILDDIR/ >> $LOG 2>&1
+	mv *.tar.gz ${PACKAGE}_${VERSION}.orig.tar.gz >> $LOG 2>&1
+	tar zxf ${PACKAGE}_${VERSION}.orig.tar.gz >> $LOG 2>&1
+	mv debian ${PACKAGE}-${VERSION} >> $LOG 2>&1
+	cd ${PACKAGE}-${VERSION} >> $LOG 2>&1
+	dch -v $VERSION "New upstream release" >> $LOG 2>&1
+	dpkg-buildpackage $DEBOPTS -rfakeroot >> $LOG 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "*** Package $PACKAGE construction has failed***"
+		BADDEB="$BADDEB $mod"
+		continue
+	fi
+	OK="$OK $mod"
+done
+echo "--- REPORT ---"
+echo "Packages built successfully"
+echo "$OK"
+echo ""
+echo "Packages with problems building the Debian package"
+echo "$BADDEB"
+echo ""
+echo "Packages without debian/ directory"
+echo "$NODEB"
+echo ""
+echo "Packages whose make dist fails"
+echo "$BROKEN"
+echo ""
+echo "Packages without proper directory structure"
+echo "$NOMOD"

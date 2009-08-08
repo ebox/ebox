@@ -1,0 +1,28 @@
+0.9
+	+ Added Polish translation
+        + Added Aragonese translation
+	+ Added German translation
+	+ Removed dependency: dhcp-hooks don't require firewall module
+	anymore to operate correctly
+
+0.8.99
+	+ Support multigateway configuration
+	+ Remove old default router configuration
+	+ Add migration script from version 0 to 1
+O.8.1
+	+ New release
+0.8
+	+ Add netmask /30 (Patch from rampa at encomix.org) 
+0.7.99
+	+ New release
+0.7.1
+	+ New release
+	+ Use of ebox-sudoers-friendly
+0.7
+	+ First public release
+0.6	
+	+ Separate module from ebox base
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update INSTALL 
+	+ Update debian scripts

@@ -1,0 +1,9 @@
+Sudo is used to execute privileged commands such as iptables, ifup, ifdown, 
+rc.d scripts and so on. See /ebox/doc/sudoers.example at the ebox base package
+to see a configuration example for a sudoers file.
+
+You should add these commands to your sudoers file to allow this module to work
+properly:
+
+	/bin/mv * /etc/squid.conf
+	/etc/init.d/squid *

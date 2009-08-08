@@ -1,0 +1,106 @@
+<%flags>
+inherit => 'table.mas'
+</%flags>
+<%args>
+@rows  => (),
+@additionalComponents => ()
+</%args>
+<%attr>
+ tableClass => 'formTable'
+</%attr>
+<%init>
+use EBox::Gettext;
+</%init>
+<& SELF:table,  rows => \@rows, additionalComponents => \@additionalComponents &>
+
+
+<%method rows>
+<%args>
+@rows
+</%args>
+% foreach my $row_r (@rows) {
+    <& SELF:tr, @{ $row_r } &>
+% }
+</%method>
+
+<%method tr>
+<%args>
+$printableName => ''
+$component     => undef
+$input         => 'text'
+
+$name          => undef
+$value         => undef
+$warning       => undef
+$note          => undef
+$help          => undef
+@extraParams   => ()
+</%args>
+<%init>
+# adjust imput component
+my $inputComponent;
+if (defined $component) {
+  $inputComponent = $component;
+}
+else {
+  $inputComponent = "/input/$input.mas";
+}
+
+# get component parameters
+my @componentParams = @extraParams;
+push @componentParams, (name => $name) if defined $name;
+push @componentParams, (value => $value) if defined $value;
+</%init>
+% if (not $inputComponent =~ m/hidden\.mas$/ ) {
+  <& .div, type => 'warning', content => $warning &>
+  <& .div, type => 'note', content => $note &>
+  <& .div, type => 'help', content => $help &>
+  <tr>
+       <& .labelTd, printableName => $printableName &>
+     <td>
+        <& $inputComponent, @componentParams &>
+     </td>
+
+  </tr>
+% } else {
+  <& $inputComponent, name => $name, value => $value, @extraParams &>
+% }
+
+</%method>
+
+<%def .labelTd>
+<%args>
+$printableName
+</%args>
+<%init>
+if ($printableName ne '') {
+    $printableName .= ':';
+}
+</%init>
+     <td class='tright' >
+       <span class='ftitle'>
+         <% "$printableName" %>
+       </span>
+     </td>
+</%def>
+
+
+
+
+
+<%def .div> 
+<%args>
+$content
+$type
+</%args>
+% if (defined $content) {
+<tr>
+<td/>
+<td>
+   <div class ='<% $type %>'>
+   <% $content %>
+   </div>
+   </td>
+</tr>
+% }
+</%def>

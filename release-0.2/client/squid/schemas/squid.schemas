@@ -1,0 +1,81 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/global/modules/squid/class</key>
+			<applyto>/ebox/global/modules/squid/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::Squid</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/squid/menu/squid/text</key>
+			<applyto>/ebox/global/modules/squid/menu/squid/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Proxy</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/squid/menu/squid/location</key>
+			<applyto>/ebox/global/modules/squid/menu/squid/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Squid/Index</default>
+			<locale name="C"/>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/squid/policy</key>
+			<applyto>/ebox/squid/policy</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>deny</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/squid/active</key>
+			<applyto>/ebox/squid/active</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>no</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/squid/auth</key>
+			<applyto>/ebox/squid/auth</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>no</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/squid/transproxy</key>
+			<applyto>/ebox/squid/transproxy</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>no</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/squid/port</key>
+			<applyto>/ebox/squid/port</applyto>
+			<owner>ebox</owner>
+			<type>int</type>
+			<default>3128</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/squid/exceptions</key>
+			<applyto>/ebox/squid/exceptions</applyto>
+			<owner>ebox</owner>
+			<type>list</type>
+			<list_type>string</list_type>
+			<locale name="C"/>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

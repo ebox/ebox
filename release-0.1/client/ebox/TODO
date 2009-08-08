@@ -1,0 +1,131 @@
+Phase 1 - finish modules
+------------------------
+
+[DONE]
+
+Phase 2 - general stuff, integration
+------------------------------------
+
+unassigned
+	- show more information in the summary, remove redundant info
+	- virtual network interfaces
+	- recover from errors more gracefully:
+		- if a module throws an exception on service restart, allow the
+		  remaining modules to restart themselves before reporting the
+		  error
+		- check all internal error conditions an see if they can be
+		  handled more gracefully
+		- install a die handler that sends an stacktrace to the log.
+
+isaac
+	- i18n
+	- implement language selection
+
+jorge
+	- Finish GUI: styles, images, tips...
+	- write tips
+	- IExplore compliance: 
+		+ Save/Cancel menu entry doesn't get the correct style 
+		+ Font size in inputs is too big	
+javi
+	- http session without using Apache::Cookie. For example, using
+	  CGI::Cookie to get and send cookies and implemeting _loggedIn.
+	  By using Apache::Cookie we are too much dependent of Apache.
+	  So it's not much work to implement it to be "httpd-independent"
+	- revoke configuration changes after logout (whatever the reason)
+	- fix ebox.sid
+
+javi+isaac
+	+ fix encoding bug
+
+guillermo
+	+ optional MAC address field in object members, plus support in the
+	firewall
+
+hector
+
+Done
+----
+	- Make the menu dinamic, using EBox::Global.
+	- Implement common API in squid (regenConfig, usesObject...)
+	- Implement missing functionality in firewall.
+	- Implement common API in firewall (regenConfig, usesObject...)
+	- Provide a way to set up a transparent proxy:  added dnat option for
+	  services.
+	- Add "Finnish" button in all pages, to restart reconfigured services
+	  and their dependencies. Implement this functionality in Module.pm or
+	  Global.pm.
+	- Use common code to execute stuff as root.
+	- Error handling: throw exceptions in the modules, catch them and show
+	  them in the cgis.
+	- Remove leading and trailing characters from cgi params
+	- Use mod_perl to speed up the response time on slow machines
+	- admin validation
+	- http session using Apache::AuthCookie
+	- move ldap module to it's own source tree (like squid)
+	- make all cgis use _requireParam everywhere it makes sense to do so
+	- write init.d script that starts/stops all ebox services
+	- change cgis that use the value of the input button to make a decision.
+	  they should use the name.
+	- logout menu entry should open a logout page where the user is warned
+	  that logging out will discard his changes, and where a logout button
+	  is provided. The logout menu entry should be at the bottom of the
+	  menu, with the save/cancel entry.
+	- General configuration dialog:
+		- language selection
+		- change admin password
+	- Change ACLs name: Objects
+	- Improve address input: user friendly netmask input in Objects module
+	- implement _regenConfig in network module
+	- unset the external interface if the selected one becomes
+	  not-configured
+	- In the GUI: warn the user if he tries to delete an object which is
+	  being used by a module, make him confirm that he wants to delete it.
+	- do not show the object drop-down if there are none
+	- Improve address input: user friendly netmask input in network
+	  interfaces 
+	- Improve address input: user friendly netmask input in static routes
+	- squid: create output rules in the firewall, squid won't be able to
+	  fetch pages if that isn't done
+	- tell the firewall to allow the squid service for the objects that are
+	  allowed to use squid in the squid gui.
+	- implement ordering in firewall rules for an object
+	- implement ordering in static routes
+	- allow an unlimited number of external interfaces
+	- allow redirections on all directions
+	- do some (configurable) logging: requests, errors, stack traces,
+	  service restarts...
+
+These things can wait:
+----------------------
+
+- Major code and API cleanup:
+	+ fix all FIXMEs
+	+ API naming consistency:
+		+ do not have removeXXX and deleteXXX methods: pick a name
+		+ do not have XXXX and getXXXX: pick a name
+	+ API friendliness:
+		+ methods that remove something should:
+			+ return true if they removed it
+			+ return undef if there was nothing to remove
+	+ find unused methods and decide whether they should exist
+	+ enforce the codingstyle
+	+ for all functions that return an array (or array ref) or undef if
+	there are no items to return:
+		+ make them return an empty array if there are no items, it is
+		far more reliable
+- Write tests for everything
+- Package necessary perl modules for debian.
+- Package ebox base for debian.
+- Package squid module for debian.
+- Package usersandgroups module for debian.
+- Write schemas for all modules. Validate against schemas after writing xml
+  files and on the first read.
+- Apache && ebox:
+	+ it is a security risk if there is more stuff running in the same
+	  apache that ebox is. Thus, it is not a problem if ebox takes over the
+	  management of the httpd.conf file.
+	+ EBox should overwrite the httpd.conf file with its own. And allow the
+	  configuration of the listening port for the administration interface.
+	+ It would be nice if a debian package was made with ssl and mod_perl
+	  and the minimum modules necessary.

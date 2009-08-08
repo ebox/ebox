@@ -1,0 +1,8 @@
+List of commands that the httpd user should be able to execute as root through
+sudo:
+
+/sbin/ifup
+/sbin/ifdown
+/sbin/ip
+/sbin/iptables
+/sbin/sysctl

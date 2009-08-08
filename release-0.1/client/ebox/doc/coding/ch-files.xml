@@ -1,0 +1,33 @@
+<chapter id="files">
+	<title>Files</title>
+
+
+	<section>
+		<title>Extensions</title>
+
+		<variablelist>
+			<title>Filename extensions</title>
+				<varlistentry>
+					<term>pl</term>
+					<listitem><para>Perl scripts</para></listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>pl</term>
+					<listitem><para>Perl scripts</para></listitem>
+				</varlistentry>
+		</variablelist>
+		
+	</section>
+	
+	<section>
+		<title>README, INSTALL and similar files</title>
+		<para>
+		README, INSTALL and similar text files	included will be capitalized.
+		</para>
+		<para>
+		A dot followed by some text can be used to denote more specific contents, as in <filename>README.whatever</filename>.
+		</para>
+	</section>
+
+
+</chapter>

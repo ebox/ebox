@@ -1,0 +1,138 @@
+<chapter id="perl">
+	<title>Perl</title>
+
+	<section>
+		<title>General hints about input values</title>
+		<para>
+		Be extremely careful dealing with the next sentences:
+		</para>
+		<itemizedlist>
+			<listitem><para>eval</para></listitem>
+		</itemizedlist>
+	</section>
+
+	<section>
+		<title>Cross site scripting</title>
+
+		<para>
+		Input characters must be filtered or escaped. To do so, there are two main ways: direct process or rely on a web server module.
+		</para>
+
+		<section>
+			<title>Direct process of input values</title>
+			<para>
+			Best way is to use regular expressions.
+			</para>
+			<para>
+			HTTP::Entities::encode can be used too, but other functions, as Apache::Util::escape_html or CGI::escapeHTML have some problems and allow evil code to be executed.
+			</para>
+		</section>
+
+		<section>
+			<title>Apache module</title>
+			<para>
+			Apache module	
+			</para>
+			<para>
+			Apache::TaintRequest
+			</para>
+			<para>
+			overwrites mod_perl.
+			</para>
+			<para>
+			To use it, next line must be included in Apache configuration file:
+			</para>
+			<para>
+			PerlTaintCheck on
+			</para>
+			<para>
+			Programmer must use Apache::TaintRequest and its methods instead of Apache::Request, adding next line to each code file:
+			</para>
+			<para>
+			use Apache::TaintRequest;
+			</para>
+		</section>
+
+	</section>
+
+	<section>
+		<title>Perl LDAP</title>
+
+		<para>
+		LDAP is vulnerable to code injection, so each user input must be inspected and escaped to avoid any danger.
+		</para>
+
+		<para>
+		<ulink url="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP/Util.pm">Net::LDAP::Util</ulink> provides the functions needed.
+		</para>
+
+
+		<variablelist>
+
+			<title>Net::LDAP::Util escaping functions</title>
+
+			<varlistentry>
+				<term>escape_filter_value ( VALUES )</term>
+				<listitem>
+					<para>
+					Escapes the given VALUES according to RFC 2254 so that they can be safely used in LDAP filters.
+					</para>
+					<para>
+					Any control characters with an ACII code &lt; 32 as well as the characters with special meaning in LDAP filters "*", "(", ")", and "\" the backslash are converted into the representation of a backslash followed by two hex digits representing the hexadecimal value of the character.
+					</para>
+					<para>
+					Returns the converted list in list mode and the first element in scalar mode.	
+					</para>
+				</listitem>
+			</varlistentry>
+
+			<varlistentry>
+				<term>unescape_filter_value ( VALUES )</term>
+				<listitem>
+					<para>
+					Undoes the conversion done by escape_filter_value().
+					</para>
+					<para>
+					Converts any sequences of a backslash followed by two hex digits into the corresponding character.
+					</para>
+					<para>
+					Returns the converted list in list mode and the first element in scalar mode.
+					</para>
+				</listitem>
+			</varlistentry>
+
+			<varlistentry>
+				<term>escape_dn_value ( VALUES )</term>
+				<listitem>
+					<para>
+					Escapes the given VALUES according to RFC 2253 so that they can be safely used in LDAP DNs.
+					</para>
+					<para>
+					The characters ",", "+", """, "\", "&lt;", ">", ";", "#", "=" with a special meaning in RFC 2252 are preceeded by ba backslash. Control characters with an ASCII code &lt; 32 are represented as \hexpair. Finally all leading and trailing spaces are converted to sequences of \20.
+					</para>
+					<para>
+					Returns the converted list in list mode and the first element in scalar mode.
+					</para>
+				</listitem>
+			</varlistentry>
+
+			<varlistentry>
+				<term>unescape_dn_value ( VALUES )</term>
+				<listitem>
+					<para>
+					Undoes the conversion done by escape_dn_value().
+					</para>
+					<para>
+					Any escape sequence starting with a baskslash - hexpair or special character - will be transformed back to the corresponding character.
+					</para>
+					<para>
+					Returns the converted list in list mode and the first element in scalar mode.
+					</para>
+				</listitem>
+			</varlistentry>
+
+		</variablelist>
+
+	</section>
+
+</chapter>

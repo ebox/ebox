@@ -1,0 +1,31 @@
+<?xml version='1.0' standalone='yes'?>
+<global xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation='@DATADIR@/ebox/schemas/global.xsd'>
+	<admin port="80"/>
+	<language locale="C"/>
+	<module name="global" class="EBox::Global" changed='no'>
+		<menu text="__('Summary')" location="Summary/Index" order="first"/>
+		<menu text="__('General')" location="General"/>
+		<menu text="__('Save/Cancel')" location="Finish" 
+		      order="last" style="last"/>
+		<menu text="__('Logout')" location="Logout/Index" order="last-1"/>
+	</module>
+
+	<module name="sysinfo" class="EBox::SysInfo" changed='no'/>
+
+	<module name="objects" class="EBox::Objects" changed='no'>
+		<menu text="__('Objects')" location="Objects/Index"/>
+	</module>
+
+	<module name="network" class="EBox::Network" changed='no'>
+		<menu text="__('Network')" location="Network/Index" />
+	</module>
+
+	<module name="firewall" class="EBox::Firewall" changed='no'>
+		<menu text="__('Firewall')" location="Firewall/Index"/>
+		<test module="EBox::Test::Firewall"/>
+		<depends module="objects"/>
+		<depends module="network"/>
+	</module>
+
+</global>

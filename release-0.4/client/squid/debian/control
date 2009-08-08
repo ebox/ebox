@@ -1,0 +1,12 @@
+Source: ebox-squid
+Section: web
+Priority: optional
+Maintainer: Isaac Clerencia <isaac@sindominio.net>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: ebox-squid
+Architecture: all
+Depends: ebox, squid
+Description: Cool Warp box
+ Warp box

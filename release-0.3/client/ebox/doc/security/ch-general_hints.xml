@@ -1,0 +1,93 @@
+<chapter id="general_hints">
+	<title>General hints</title>
+
+	<section>
+		<title>Affected languages</title>
+		<para>
+		Scripting languages are more affected by these security concerns:
+		</para>
+		<itemizedlist>
+			<listitem><para>Bash</para></listitem>
+			<listitem><para>Perl</para></listitem>
+		</itemizedlist>
+	</section>
+
+	
+	<section>
+		<title>Execution UID</title>
+		<para>
+		GNU/Linux don't allow set scripts SUID.
+		</para>
+		<para>
+		FIXME	
+		</para>
+	</section>
+
+
+	<section>
+		<title>Input values</title>
+		<para>
+		Never trust external input values.	
+		</para>
+		<para>
+		Don't assume input values belong to a set of characters. Be careful or discard inputs composed by:
+		</para>
+		<itemizedlist>
+			<listitem><para>"Begin Commentary" characters</para></listitem>
+			<listitem><para>Quotes</para></listitem>
+			<listitem><para>Colons</para></listitem>
+		</itemizedlist>
+
+		<section>
+			<title>Scripts</title>
+			<para>
+			Be very careful including external files (e.g. Perl eval sentence)
+			</para>
+		</section>
+
+		<section>
+			<title>CGIs</title>
+			<para>
+			To avoid code injection problems, each CGI GET or POST parameters must be checked to discard dangerous input values.
+			</para>
+		</section>
+
+	</section>
+
+
+	<section>
+		<title>System interaction</title>
+		<para>
+		FIXME
+		</para>
+		
+		<section>
+			<title>General system calls</title>
+			<para>
+			system, exec, reverse quotes in bash or perl	
+			</para>
+			<para>
+			FIXME
+			</para>
+		</section>
+		
+		<section>
+			<title>Files</title>
+			<para>
+			open, read, write
+			</para>
+			<para>
+			FIXME
+			</para>
+		</section>
+
+	</section>
+
+	<section>
+		<title>External interaction</title>
+		<para>
+		FIXME: external APIs, databases, networking
+		</para>
+	</section>
+
+</chapter>

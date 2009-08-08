@@ -1,0 +1,61 @@
+0.9.100
+	+ New release
+0.9.99
+	+ New release
+0.9.3
+	+ New release
+0.9.2
+	+ Add ebox backup directory as a shared resource to download/upload
+	  files
+	+ Create smbldap_bind.conf which contains password with mask 0600
+0.9.1
+	+ New release
+0.9
+	+ Added Polish translation
+	+ Added German translation
+	+ Added Dutch  translation
+
+0.8.99
+	+ New release
+0.8.1
+	+ bugfix. Do not mess up home directories when upgrading
+	+ Minor workaround. Create slapd run directory in case it does not
+	  exist
+0.8
+	+ New release
+0.7.99
+	+ Full backup mode stores shared files
+	+ Unlimited i-node quota
+	+ Various bug-fixes
+	+ Portuguese translation
+ 
+0.7.1
+	+ Initial support for PDC
+	+ GUI improvements
+	+ Added update/clean actions to eobx-samba-ldap
+	+ Use EBox::LDAP singleton
+	+ Debian package fixes
+	+ Fetch SID from configuration file
+	+ Use of ebox-sudoers-friendly
+
+0.7
+	+ First public release
+0.6
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update install
+	+ Update debian scripts
+	+ Enable/disable printer sharing and file sharing independentely
+	+ Use new syntax to define ACLs in slapd.conf
+	+ Implements usesPort
+	+ Add full support for printers
+	+ Several bugfixes
+
+0.5.2
+	+ Fix some packaging issues
+
+0.5.1
+	+ Convert module to new menu system
+
+0.5
+	+ Initial release

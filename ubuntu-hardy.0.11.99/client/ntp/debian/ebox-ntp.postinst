@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#DEBHELPER#
+
+onInstall() {
+
+    perl -e 'use EBox::NTP; EBox::NTP::onInstall();'
+}
+
+case "$1" in
+	configure)
+		# install gconf schemas
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+		# import timezone from system if installing for the first time
+		if [ -z "$2" ] ; then
+			/usr/share/ebox-ntp/ebox-timezone-import
+		fi
+
+		onInstall
+
+		invoke-rc.d ebox apache restart
+esac
+
+
+
+exit 0

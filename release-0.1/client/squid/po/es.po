@@ -1,0 +1,97 @@
+# translation of Ebox Squid.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# <>, 2004.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Ebox Squid 0.1-SVN\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2004-07-21 02:29+0200\n"
+"PO-Revision-Date: 2004-07-21 02:32+0200\n"
+"Last-Translator: Isaac Clerencia <isaac@sindominio.net>\n"
+"Language-Team: Spanish Warp Team <lang-es@warp.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/EBox/CGI/Port.pm:28 src/templates/objects-modify.tmpl:27
+msgid "Listening Port"
+msgstr "Puerto de escucha"
+
+#: src/EBox/CGI/Global.pm:28
+msgid "Global Policy"
+msgstr "Política Global"
+
+#: src/EBox/CGI/Transparent.pm:27
+msgid "Transparent Proxy Status"
+msgstr "Estado del Proxy Transparente"
+
+#: src/EBox/CGI/Status.pm:28
+msgid "Module Status"
+msgstr "Estado del Modulo"
+
+#: src/templates/objects-modify.tmpl:29
+msgid "Port"
+msgstr "Puerto"
+
+#: src/templates/objects-modify.tmpl:32 src/templates/objects-modify.tmpl:33
+msgid "change"
+msgstr "cambiar"
+
+#: src/templates/objects-modify.tmpl:46
+msgid "Object selection"
+msgstr "Selección de objeto"
+
+#: src/templates/objects-modify.tmpl:48
+msgid "Which Objects do you want to deny access?"
+msgstr "¿A qué objetos quieres denegar el acceso?"
+
+#: src/templates/objects-modify.tmpl:50
+msgid "Which Objects do you want to grant access?"
+msgstr "¿A qué objetos quieres permitir el acceso?"
+
+#: src/templates/objects-modify.tmpl:53
+msgid "User selection"
+msgstr "Selección de usuario"
+
+#: src/templates/objects-modify.tmpl:55
+msgid "Which users do you want to deny access?"
+msgstr "¿A qué usuarios quieres denegar el acceso?"
+
+#: src/templates/objects-modify.tmpl:57
+msgid "Which users do you want to grant access?"
+msgstr "¿A qué usuarios quieres permitir el acceso?"
+
+#: src/templates/objects-modify.tmpl:62
+msgid "Select your preferred options."
+msgstr "Elige tus opciones preferidas"
+
+#: src/templates/objects-modify.tmpl:75
+msgid "Object Name"
+msgstr "Nombre de Objeto"
+
+#: src/templates/objects-modify.tmpl:76
+msgid "Show/Hide"
+msgstr "Mostrar/Ocultar"
+
+#: src/templates/objects-modify.tmpl:77
+msgid "Select"
+msgstr "Elige"
+
+#: src/templates/objects-modify.tmpl:85
+msgid "Show"
+msgstr "Mostrar"
+
+#: src/templates/objects-modify.tmpl:86
+msgid "Hide"
+msgstr "Ocultar"
+
+#: src/templates/objects-modify.tmpl:125
+msgid "Ok"
+msgstr "Ok"
+
+#: src/templates/objects-modify.tmpl:127
+msgid "Cancel"
+msgstr "Cancelar"
+

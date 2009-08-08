@@ -1,0 +1,306 @@
+# Copyright (C) 2005 Warp Networks S.L., DBS Servicios Informaticos S.L.
+# Copyright (C) 2007 Warp Networks S.L.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+package EBox::Config;
+
+use EBox::Exceptions::External;
+use EBox::Gettext;
+
+my $ref = {};
+$ref->{prefix} = "@prefix@";
+$ref->{datadir} = "@DATADIR@";
+$ref->{sysconfdir} = "@SYSCONFDIR@";
+$ref->{localstatedir} = "@LOCALSTATEDIR@";
+$ref->{libdir} = "@LIBDIR@";
+
+for my $key (keys(%{$ref})) {
+	if (substr($ref->{$key},-1) ne '/') {
+		$ref->{$key} = ($ref->{$key} . "/");
+	}
+}
+
+$ref->{package} = "@PACKAGE@";
+$ref->{version} = "@VERSION@";
+$ref->{perlpath} = "@PERLPATH@";
+
+sub etc 
+{
+	return $ref->{sysconfdir} . "ebox/";
+}
+
+sub var
+{
+	return $ref->{localstatedir};
+}
+
+sub configkeyFromFile # (key, file)
+{
+	my ($key, $file) = @_;
+	my $value = undef;
+	open(my $CONF, $file) or 
+		throw EBox::Exceptions::External(
+					__x('Could not open the config file {file}.', file => $file));
+	while (<$CONF>) {
+		$_ =~ s/\s//g;
+		$_ =~ s/#.*//g;
+		($_ eq '') and next;
+		my ($nkey, $nvalue) = $_ =~ /(.*)=(.*)/;
+		if ($nkey eq $key) {
+			$value = $nvalue;
+			last;
+		}
+	}
+	close($CONF);
+	return $value;
+}
+
+sub configkey # (key)
+{
+	my $key = shift;
+	my $value = undef;
+
+	my @conffiles = glob(EBox::Config::etc() . "[0-9][0-9]*.conf");
+	
+	foreach my $file (@conffiles){
+		$value = configkeyFromFile($key, $file);
+		defined($value) and last;
+	}
+	return $value;
+}
+
+sub configkeys # (key)
+{
+	my $key = shift;
+
+	my @conffiles = glob(EBox::Config::etc() . "[0-9][0-9]*.conf");
+	
+	my @values;
+	foreach my $file (@conffiles){
+		my $value = configkeyFromFile($key, $file);
+		push (@values, $value) if defined($value);
+	}
+	return \@values;
+}
+
+sub user
+{
+	my $user = configkey('user');
+	$user or throw EBox::Exceptions::External(
+		__('The ebox user has not been set in the config file.'));
+	return $user;
+}
+
+sub groups
+{
+	my @values = @{configkeys('group')};
+	@values or throw EBox::Exceptions::External("The ebox group has not ".
+						"been set in the config file.");
+	my @groups;
+	for my $group (@values) {
+		if ($group =~ m/:/) {
+			push (@groups, split(':', $group));
+		} else {
+			push (@groups, $group);
+		}
+	}
+
+	return \@groups;
+}
+
+sub group
+{
+	my $value = configkey('egroup');
+	$value or throw EBox::Exceptions::External("The ebox group has not ".
+			"been set in the config file.");
+	return $value;
+}
+
+sub home
+{
+	my $user = user();
+	  my ($name,$passwd,$uid,$gid, $quota,$comment,$gcos,$dir,$shell,$expire) = getpwnam($user);
+	return $dir;
+}
+
+sub prefix 
+{
+	return $ref->{prefix};
+}
+
+sub share 
+{
+	return $ref->{datadir};
+}
+
+sub lib
+{
+	return $ref->{libdir};
+}
+
+sub libexec 
+{
+	return $ref->{libdir} . "ebox/";
+}
+
+sub pkgdata 
+{
+	return $ref->{datadir} . "ebox/";
+}
+
+sub locale 
+{
+	return $ref->{datadir} . "locale/";
+}
+
+sub conf 
+{
+	return $ref->{localstatedir} . "lib/ebox/conf/";
+}
+
+sub tmp 
+{
+	return $ref->{localstatedir} . "lib/ebox/tmp/";
+}
+
+sub passwd 
+{
+	return $ref->{localstatedir} . "lib/ebox/conf/ebox.passwd";
+}
+
+# Method: sessionid
+#
+#      Get the path where Web session identifier is stored
+#
+# Returns:
+#
+#      String - the path to that file
+
+sub sessionid
+  {
+    return $ref->{localstatedir} . 'lib/ebox/conf/ebox.sid';
+  }
+
+# Method: soapSession
+#
+#      Get the path where the SOAP session identifier is stored
+#
+# Returns:
+#
+#      String - the path to that file
+#
+sub soapSession
+  {
+    return $ref->{localstatedir} . 'lib/ebox/conf/ebox.soap-sid';
+  }
+
+sub log 
+{
+	return $ref->{localstatedir} . "log/ebox/";
+}
+
+sub logfile
+{
+	return $ref->{localstatedir} . "log/ebox/ebox.log";
+}
+
+sub stubs 
+{
+	return $ref->{datadir} . "ebox/stubs/";
+}
+
+sub cgi 
+{
+	return $ref->{datadir} . "ebox/cgi/";
+}
+
+sub templates 
+{
+	return $ref->{datadir} . "ebox/templates/";
+}
+
+sub schemas 
+{
+	return $ref->{datadir} . "ebox/schemas/";
+}
+
+sub www 
+{
+	return $ref->{datadir} . "ebox/www/";
+}
+
+sub css 
+{
+	return $ref->{datadir} . "ebox/www/css/";
+}
+
+sub images 
+{
+	return $ref->{datadir} . "ebox/www/images/";
+}
+
+
+sub dynamicwww
+{
+	return $ref->{localstatedir} . 'lib/ebox/dynamicwww/';
+}
+
+sub dynamicwwwSubdirs
+{
+    return [ dynamicimages(), dynamicRSS() ];
+}
+
+sub dynamicimages
+{
+  return dynamicwww() . 'images/';
+}
+
+sub dynamicRSS
+{
+    return dynamicwww() . 'feed/';
+}
+
+sub package 
+{
+	return $ref->{package};
+}
+
+sub version 
+{
+	return $ref->{version};
+}
+
+sub lang 
+{
+	return $ref->{lang};
+}
+
+# Method: perlPath
+#
+#      Get the PERL path where the perl modules lying on (Static
+#      method).
+#
+# Returns:
+#
+#      String - the perl path
+#
+sub perlPath
+  {
+
+      return $ref->{perlpath};
+
+  }
+
+1;

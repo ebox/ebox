@@ -1,0 +1,18 @@
+<%args>
+	$unsaved => 'no'	
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+% if($unsaved eq 'yes'){
+<div class='error'>
+	<% __('There are unsaved changes, if you log out now they will be lost.') %>
+</div>
+<p class='endform'>
+<a class='logout' href='/ebox/Logout/Logout'><% __('Exit anyway') %></a>
+</p>
+% }else{
+<p class='endform'>
+<a class='logout' href='/ebox/Logout/Logout'><% __('Exit') %></a>
+</p>
+% }

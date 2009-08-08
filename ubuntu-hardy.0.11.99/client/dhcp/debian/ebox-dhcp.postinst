@@ -1,0 +1,36 @@
+#!/bin/bash
+
+onInstall() {
+
+	perl -e 'use EBox::DHCP; EBox::DHCP::onInstall();'
+}
+
+#DEBHELPER#
+
+case "$1" in
+	configure)
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+ 		# create log table
+        /usr/share/ebox/ebox-sql-table add leases /usr/share/ebox/sqllog/dhcp.sql
+	
+		# restart logs
+		invoke-rc.d ebox logs restart || true
+
+		# run the onInstall method in the module
+		onInstall
+
+		# Migrate data if needed
+		/usr/share/ebox/ebox-migrate /usr/share/ebox-dhcp/migration/
+
+        # Restart dhcp module
+        invoke-rc.d ebox dhcp restart || true
+
+        # Restart eBox apache
+        invoke-rc.d ebox apache restart || true
+
+esac
+
+
+
+exit 0

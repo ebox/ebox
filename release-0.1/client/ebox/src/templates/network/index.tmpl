@@ -1,0 +1,210 @@
+<!-- vim: ts=4 sw=4
+-->
+<h3>Interfaces</h3>
+	<TMPL_LOOP NAME="iflist">
+	<form name='<TMPL_VAR NAME="name">' action='Iface' method='POST'>
+		<table class='iftable'>
+			<tr>
+				<td colspan='4'>
+				<h4><TMPL_VAR NAME="name">
+				<input type='hidden' name='ifname'
+				value='<TMPL_VAR NAME="name">'/></h4>
+				</td>
+			</tr>
+			<tr>
+			<td>
+				<select name='method' onChange='methodChanged(this)'>
+
+				<TMPL_IF EXPR="method eq 'static'">
+					<option selected value='static'>
+						<TMPL_VAR EXPR="__('Static')">
+					</option>
+				<TMPL_ELSE>
+					<option value='static'>
+						<TMPL_VAR EXPR="__('Static')">
+					</option>
+				</TMPL_IF>
+
+				<TMPL_IF EXPR="method eq 'dhcp'">
+					<option selected value='dhcp'>DHCP</option>
+				<TMPL_ELSE>
+					<option value='dhcp'>DHCP</option>
+				</TMPL_IF>
+
+				<TMPL_IF EXPR="method eq 'notset'">
+					<option selected value='notset'>
+						<TMPL_VAR EXPR="__('Not set')">
+					</option>
+				<TMPL_ELSE>
+					<option value='notset'>
+						<TMPL_VAR EXPR="__('Not set')">
+					</option>
+				</TMPL_IF>
+
+				</select>
+			</td>
+			<td>
+				<TMPL_IF EXPR="external eq 'yes'">
+					<input type='checkbox' checked name="external"
+						   value="external"/>External
+				<TMPL_ELSE>
+					<input type='checkbox' name="external"
+						   value="external"/>External
+				</TMPL_IF>
+			</td>
+			<td id='<TMPL_VAR NAME="name">_ip'>
+				<TMPL_VAR EXPR="__('IP Address')">:
+				<input class='inputText' type='text' size='16' name='if_address'
+					   alt='if_name' value='<TMPL_VAR NAME="address">' />
+			</td>
+			<td id='<TMPL_VAR NAME="name">_mask'>
+				<TMPL_VAR EXPR="__('Netmask')">:
+				<select name="if_netmask">
+					<TMPL_IF NAME="netmask">
+						<option selected value='<TMPL_VAR NAME="netmask">'>
+							<TMPL_VAR NAME="netmask">
+						</option>
+					<TMPL_ELSE>
+					<option selected value='255.255.255.0'>
+						255.255.255.0
+					</option>
+					</TMPL_IF>
+					<option value='255.255.255.248'>255.255.255.248</option>
+					<option value='255.255.255.240'>255.255.255.240</option>
+					<option value='255.255.255.224'>255.255.255.224</option>
+					<option value='255.255.255.192'>255.255.255.192</option>
+					<option value='255.255.255.128'>255.255.255.128</option>
+					<option value='255.255.255.0'>255.255.255.0</option>
+					<option value='255.255.0.0'>255.255.0.0</option>
+					<option value='255.0.0.0'>255.0.0.0</option>
+				</select>
+				<!--
+				<input class='inputText' type='text' size='16' name='if_netmask'
+					   alt='if_netmask' value='<TMPL_VAR NAME="netmask">' />
+					   -->
+			</td>
+			</tr>
+		</table>
+		<p class='endform'>
+			<input class='inputButton' type='submit'
+				   name='accept' value='<TMPL_VAR EXPR="__('Ok')">' />
+		</p>
+	</form>
+	</TMPL_LOOP>
+
+<h3>DNS</h3>
+
+	<form action='Nameservers' method='POST'>
+	<table>
+		<tr>
+			<td><TMPL_VAR EXPR="__('Primary:')"></td>
+			<td>
+				<input class='inputText' type='text' name='dnsone'
+					   value='<TMPL_VAR NAME="dnsone">' alt='DNS 1' />
+			</td>
+		</tr>
+		<tr>
+			<td><TMPL_VAR EXPR="__('Secondary:')"></td>
+			<td>
+				<input class='inputText' type='text' name='dnstwo'
+					   value='<TMPL_VAR NAME="dnstwo">' alt='DNS 2' />
+			</td>
+		</tr>
+		<tr>
+			<td><TMPL_VAR EXPR="__('Tertiary:')"></td>
+			<td>
+				<input class='inputText' type='text' name='dnsthree'
+					   value='<TMPL_VAR NAME="dnsthree">' alt='DNS 3' />
+			</td>
+		</tr>
+	</table>
+	<p class='endform'><input class='inputButton' type='submit' name='accept'
+	   value='Ok' /></p>
+	</form>
+
+<h3><TMPL_VAR EXPR="__('Default Gateway')"></h3>
+	<form action='Gateway' method='POST'>
+		<p>
+			<input class='inputText' type='text' name='gateway'
+				   alt='Default Gateway' value='<TMPL_VAR NAME="gateway">' />
+			<input class='inputButton' type='submit' name='accept' value='Ok' />
+		</p>
+	</form>
+<h3><TMPL_VAR EXPR="__('Static Routes')"></h3>
+	<table class='dataTableMini' cellspacing='0'>
+	<thead>
+		<tr>
+			<th class='tleft'><TMPL_VAR EXPR="__('Network')"></th>
+			<th class='thOptions'><TMPL_VAR EXPR="__('Gateway')"></th>
+			<th class='thOptions'><TMPL_VAR EXPR="__('Actions')"></th>
+		</tr>
+	</thead>
+	<TMPL_LOOP NAME="routes">
+	<tr class='border'>
+		<form action="Route" method="post">
+		<td>
+			<input type="hidden" name="order" value='<TMPL_VAR NAME="order">'/>
+			<input type="hidden" name="ip"   value='<TMPL_VAR NAME="ip">'/>
+			<input type="hidden" name="mask" value='<TMPL_VAR NAME="mask">'/>
+			<TMPL_VAR NAME='ip'>/<TMPL_VAR NAME='mask'>
+		</td>
+		<td class='tcenter'>
+			<TMPL_VAR NAME='gateway'>
+		</td>
+		<td class='tcenter'>
+			<input class='inputButton' type='submit' name='del'
+				   value='<TMPL_VAR EXPR="__('Delete')">'/>
+			<input class='inputButton' type='submit' name='up'
+				   value='<TMPL_VAR EXPR="__('Up')">'/>
+			<input class='inputButton' type='submit' name='down'
+				   value='<TMPL_VAR EXPR="__('Down')">'/>
+		</td>
+		</form>
+	</tr>
+	</TMPL_LOOP>
+	<tr>
+	<form action='Route' method='POST'>
+		<td>
+			<input class='inputText' size="15" type="text" name="ip"/>
+			/ <select name='mask'>
+				<option value="32">32</option>
+				<option value="30">30</option>
+				<option value="29">29</option>
+				<option value="28">28</option>
+				<option value="27">27</option>
+				<option value="26">26</option>
+				<option value="25">25</option>
+				<option selected value="24">24</option>
+				<option value="16">16</option>
+				<option value="8">8</option>
+			</select>
+		</td>
+		<td class='tcenter'>
+			<input class='inputText' type="text" name="gateway"/>
+		</td>
+		<td class='tcenter'>
+			<input class='inputButton' type='submit' name='add'
+				   value='<TMPL_VAR EXPR="__('Add')">'
+				   alt='<TMPL_VAR EXPR="__('Add')">'>
+		</td>
+	</form>
+	</tr>
+	</table>
+<script type="text/javascript"><!--
+function methodChanged(select){
+	selected = select.options[select.selectedIndex].value;
+	if(selected == 'static'){
+		document.getElementById(select.form.name + "_ip").style.display="inline";
+		document.getElementById(select.form.name + "_mask").style.display="inline";
+	}else{
+		document.getElementById(select.form.name + "_ip").style.display="none";
+		document.getElementById(select.form.name + "_mask").style.display="none";
+	}
+}
+
+var methodSelects = document.getElementsByName('method');
+while(select = methodSelects.item(i)){
+for(var i = 0; i< methodSelects.length; i++) 
+	methodChanged(methodSelects[i]);
+}
+//--></script>

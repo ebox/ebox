@@ -1,0 +1,17 @@
+#!/bin/bash
+
+case "$1" in
+	purge)
+
+		#delete logs and temporary files when purging
+		rm -rf /var/lib/ebox/
+		rm -rf /etc/ebox/
+		rm -rf /etc/gconf/gconf.xml.defaults/ebox/
+		rm -rf /etc/gconf/gconf.xml.defaults/schemas/ebox/
+
+		;;	
+	remove)
+		;;	
+esac
+
+#DEBHELPER#

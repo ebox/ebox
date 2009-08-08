@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Digest::MD5;
+
+# FIXME: hide user input
+
+print "EBox\n";
+print "Enter new passwd: ";
+my $passwd1 = <STDIN>;
+$passwd1 =~ s/[\n\r]//g;
+
+print "Please retype: ";
+my $passwd2 = <STDIN>;
+$passwd2 =~ s/[\n\r]//g;
+
+if ($passwd1 eq $passwd2) {
+	my $ctx = Digest::MD5->new;
+	$ctx->add($passwd1);
+	my $digest = $ctx->hexdigest;
+	print $digest . "\n";
+} else {
+	print "Wrong input, passwords are different\n";
+}

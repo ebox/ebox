@@ -1,0 +1,36 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/global/modules/network/class</key>
+			<applyto>/ebox/global/modules/network/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::Network</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/network/menu/net/text</key>
+			<applyto>/ebox/global/modules/network/menu/net/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Network</default>
+			</locale>
+			<locale name="es">
+				<default>Red</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/network/menu/net/location</key>
+			<applyto>/ebox/global/modules/network/menu/net/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Network/Index</default>
+			<locale name="C"/>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

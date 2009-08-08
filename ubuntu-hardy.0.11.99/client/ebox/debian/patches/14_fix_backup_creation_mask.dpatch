@@ -1,0 +1,66 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 14_fix_backup_creation_mask.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to fix a security issue with backup file's 
+## DP: permissions. 
+
+@DPATCH@
+
+Index: ebox/src/EBox/GConfModule.pm
+===================================================================
+--- ebox/src/EBox/GConfModule.pm	(revisión: 10021)
++++ ebox/src/EBox/GConfModule.pm	(copia de trabajo)
+@@ -158,7 +158,7 @@
+ 	my $key = "/ebox/modules/" . $self->name;
+ 	($dir) or $dir = EBox::Config::conf;
+ 	my $file = $self->_bak_file_from_dir($dir);
+-	`/usr/bin/gconftool --dump $key > $file` and
++	`umask 0077; /usr/bin/gconftool --dump $key > $file` and
+ 		throw EBox::Exceptions::Internal("Error while backing up " .
+ 						 "configuration on $file");
+ }
+Index: ebox/src/EBox/Backup.pm
+===================================================================
+--- ebox/src/EBox/Backup.pm	(revisión: 10021)
++++ ebox/src/EBox/Backup.pm	(copia de trabajo)
+@@ -78,9 +78,9 @@
+ 	my $backupArchive = "$confdir/eboxbackup.tar";
+ 	
+ 	try {
+-	  mkdir($auxDir) or
++	  mkdir($auxDir, 0700) or
+ 	    throw EBox::Exceptions::Internal("Could not create auxiliar tempdir.");
+-	  mkdir($archiveContentsDir) or
++	  mkdir($archiveContentsDir, 0700) or
+ 	    throw EBox::Exceptions::Internal("Could not create archive tempdir.");
+ 
+ 	  $self->_dumpModulesBackupData($auxDir, %options);
+@@ -199,7 +199,7 @@
+ {
+   my ($self, $auxDir, $filesArchive) = @_;
+ 
+-  if (`tar czf $filesArchive -C $auxDir .`) {
++  if (`umask 0077; tar czf $filesArchive -C $auxDir .`) {
+     throw EBox::Exceptions::Internal("Could not create archive.");
+   }
+   `rm -rf $auxDir`;
+@@ -293,7 +293,7 @@
+   my $cmd;
+   my @output;
+ 
+-  $cmd = "tar cf $backupArchive -C $tempdir $archiveContentsDirRelative  --exclude $filesArchive 2>&1";
++  $cmd = "umask 0077; tar cf $backupArchive -C $tempdir $archiveContentsDirRelative  --exclude $filesArchive 2>&1";
+   @output = `$cmd`;
+   if ($? != 0) {
+     EBox::error("Failed command: $cmd. Output: @output");
+@@ -559,7 +559,7 @@
+   my $backupdir = backupDir();
+ 
+   unless (-d $backupdir) {
+-    mkdir($backupdir) or throw EBox::Exceptions::Internal
++    mkdir($backupdir, 0700) or throw EBox::Exceptions::Internal
+       ("Could not create backupdir.");
+   }
+ 
+

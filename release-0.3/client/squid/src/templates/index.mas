@@ -1,0 +1,272 @@
+<%args>
+	$active
+	$transparent
+	$global
+	$policy
+	$port
+	@objects
+	@banned
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+
+<div class='squidnew'>
+<br />
+	<form action='Enable' method='POST'>
+	<span class='ftitle'> 
+		<% __('Enable the HTTP proxy') %>
+	</span>
+		<select name="active" enabled>
+% if ($active eq 'yes') {
+			<option value='no' ><% __('No') %></option>
+			<option selected value='yes'><% __('Yes') %></option>
+% } else {				
+			<option selected value='no'><% __('No') %></option>
+			<option value='yes'><% __('Yes') %></option>
+% }
+		</select>
+		<input class='inputButton' type='submit' name='change' 
+			value='<% __('Ok') %>'
+			alt='<% __('Ok') %>'>
+</form>
+<h3><% __('General Settings') %></h3>
+
+<form action='General' method='POST'>
+<table class='proxyTable'>
+<tr>
+	<td width='157px' bgcolor='#eee'>
+		<span class="ftitle">
+			<% __('Transparent proxy') %>
+		</span>
+	</td>
+	<td>
+		<select name="active" enabled>
+% if ($transparent eq 'yes') {
+			<option value='no'><% __('Disabled') %></option>
+			<option selected value='yes'><% __('Enabled')%></option>
+% } else { 
+			<option selected value='no'><% __('Disabled')%></option>
+			<option value='yes'><% __('Enabled') %></option>
+% }
+		</select>
+	</td>
+</tr>
+<tr>
+	<td bgcolor='#eee'>
+		<span class="ftitle">
+			<% __('Port') %>
+		</span>
+	</td>
+	<td>
+			<input class='inputText' size='5'
+				type='text' name='port'
+				value='<% $port %>'>
+	</td>
+	<td>
+<tr>
+	<td bgcolor='#eee'>
+		<span class="ftitle">
+			<% __('Default policy') %>
+		</span>
+	</td>
+	<td>
+		<select name="policy" enabled>
+% if ($global eq 'allow') {	
+			<option value='deny'><% __('Deny') %></option>
+			<option selected value='allow'><% __('Allow')%></option>
+% } else {
+			<option selected value='deny'><% __('Deny') %></option>
+			<option value='allow'><% __('Allow') %></option>
+% } 
+		</select>
+	</td>
+</tr>
+</table>
+<div class='endproxyform'>
+		<input class='inputButton' type='submit' name='change' 
+			value='<% __('Ok') %>' alt='<% __("Ok") %>'>
+</div>
+</tr>
+</form>
+
+% if (@objects) {
+<h3><% __('Object selection') %></h3>
+% 	if ($global eq 'allow') {
+
+	<p>
+	<% __('Select those objects which you want to allow access to') %>
+	</p> 
+
+% 	} else {
+	<p><% __('Select those objects which you want to deny access to') %></p> 
+% 	} 
+	<form action='<% $policy %>' method='POST'>
+		<table cellspacing="0" class="dataTable">
+		<thead>
+			<tr>
+				<th width="66%" class="tleft"><% __('Object Name') %></th>
+				<th class="thOptions"><% __('Show') %></th>
+				<th class="thOptions"><% __('Select') %></th>
+			</tr>
+		</thead>
+		<tbody>
+% 	foreach my $ob (@objects) {
+			<tr class="border">
+				<td><% $ob->{description} %></td>
+				<td class="tcenter">
+					<div class='show' id='hideview<% $ob->{'name'} %>'>
+						<a href='show' onclick="show('<% $ob->{'name'} %>');
+							return false;">
+						<img src='/data/images/show.gif'
+							alt='<% __('Show') %>' 
+							title='<% __('Show') %>' /></a>
+					</div>
+					<div class='hide' id='showview<% $ob->{'name'} %>'>
+						<a href='show' onclick="hide(); return false;">
+							<img src='/data/images/hide.gif' 
+								title='<% __('Hide') %>'
+								alt='<% __('Hide') %>'/>
+						</a>
+					</div>
+				</td> 
+				<td class="tcenter">
+				
+%		my $checkbox = "";
+%		if (defined($ob->{checked})) {
+%			$checkbox = "checked";	
+%		}
+					<input type="checkbox" name="<% $ob->{name} %>" <% $checkbox %> > 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class='hide'  id='<% $ob->{name} %>'>
+% 		if ($ob->{member}) {
+					<table class="iptableaux" cellspacing="0">
+					<thead>
+						<tr>
+							<th width="40%" class="tleft">IP Name</th>
+							<th class="thOptions">IP Address</th>
+						</tr>
+					</thead>
+					<tbody>
+% 			foreach my $mem (@{$ob->{member}}) {
+						<tr>
+							<td><% $mem->{nname} %></td>
+							<td class="tcenter"><% $mem->{ip} %>/<% $mem->{mask} %></td>
+						</tr>
+% 			}
+					</tbody>
+					</table>
+% 		}
+					</div>
+				</td>
+			</tr>
+% 	}					
+			<tr>
+				<td colspan="3" class="tright">
+					<input class='inputButton' type='submit' name='Ok'
+					    value='<% __('Ok') %>' alt='Ok'>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+% }
+		<h3 style='clear: both;'><% __('Banned domains') %></h3>
+		<p><% __('Add here those domains which you do not want to allow access.') %></p>
+		<div class="help">
+			<% __('Introduce domains in this way: ') %> <strong><% __('domain.com') %></strong>
+		</div>
+		<br />
+		<table class="dataTable">
+			<thead>
+				<tr>
+					<th width="66%" class="tleft"><% __('Domain') %></th>
+					<th class="thOptions"><% __('Action') %></th>
+				</tr>
+			</thead>
+
+			<tbody>
+			<tr class="border">
+				<form  action="Banned" method="post">
+				<input type="hidden" name="banaction" value="add">
+				<td>
+					<input class="inputText" type="text" size="16" name="domain_name"
+						   alt="domain_name" value="" >
+				</td>
+				<td class="tcenter">
+					<input class="inputButton" 
+						type="image"
+						src='/data/images/add.gif'
+						name="accept" 
+						alt="<% __("Add") %>"
+						title="<% __("Add") %>"
+						value="<% __("Add") %>" >
+				</td>
+				</form>
+			</tr>
+% foreach my $domain (@{banned}) {
+			<tr>
+				<form name="<% $domain %>" action="Banned" method="post">
+				<input type="hidden" name="banaction" value="delete">
+				<input type="hidden" name="domain_name" value="<% $domain %>">
+				<td>
+% 	$domain =~ s/^\.//g;				
+					<% $domain %>
+				</td>
+				<td class="tcenter">
+					<input type="image" name="del"
+						src="/data/images/delete.gif"
+						alt="<% __("Delete") %>"
+						title="<% __("Delete") %>"
+						value="<% __("Delete") %>">
+				</td>
+				</form>
+			</tr>
+% }
+			</tbody>
+		</table>
+	</div>
+
+<script type="text/javascript">
+function getElementByClass(classname){
+        ccollect=new Array()
+        var inc=0;
+        var alltags=document.getElementsByTagName("*");
+        for (i=0; i<alltags.length; i++){
+                if (alltags[i].className==classname)
+                        ccollect[inc++]=alltags[i];
+        }
+        return ccollect;
+}
+function setDefault(){
+        elements=getElementByClass("hide");
+        var inc=0;
+        while (elements[inc]){
+                elements[inc].style.display="none";
+                inc++;
+        }
+        inc=0;
+        elements=getElementByClass("show");
+        while (elements[inc]){
+                elements[inc].style.display="inline";
+                inc++;
+        }
+}
+function show(id){
+        setDefault();
+        document.getElementById(id).style.display="block";
+        document.getElementById("hideview" + id).style.display="none";
+        document.getElementById("showview" + id).style.display="inline";
+}
+
+function hide(id){
+        setDefault();
+}
+
+					
+setDefault();
+</script>
+

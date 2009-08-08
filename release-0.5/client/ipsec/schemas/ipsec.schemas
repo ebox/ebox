@@ -1,0 +1,100 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/class</key>
+			<applyto>/ebox/modules/global/modules/ipsec/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::IPSec</default>
+			<locale name="C"/>
+		</schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ipsec/depends</key>
+            <applyto>/ebox/modules/global/modules/ipsec/depends</applyto>
+            <owner>ebox</owner>
+            <type>list</type>
+            <list_type>string</list_type>
+            <default>[network]</default>
+            <locale name="C"/>
+        </schema>
+
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/text</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>IPSec VPNs</default>
+			</locale>
+			<locale name="es">
+				<default>VPNs IPSec</default>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/sub/static/text</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/sub/static/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Static tunnels</default>
+			</locale>
+			<locale name="es">
+				<default>Tuneles estaticos</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/sub/static/location</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/sub/static/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>IPSec/Static</default>
+			<locale name="C"/>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/sub/warrior/text</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/sub/warrior/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Road Warriors</default>
+			</locale>
+			<locale name="es">
+				<default>Road Warriors</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/sub/warrior/location</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/sub/warrior/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>IPSec/RoadWarrior</default>
+			<locale name="C"/>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/sub/rsa/text</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/sub/rsa/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>RSA keys</default>
+			</locale>
+			<locale name="es">
+				<default>Claves RSA</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ipsec/menu/ipsec/sub/rsa/location</key>
+			<applyto>/ebox/modules/global/modules/ipsec/menu/ipsec/sub/rsa/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>IPSec/RSA</default>
+			<locale name="C"/>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

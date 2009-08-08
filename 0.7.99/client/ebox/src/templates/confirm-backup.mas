@@ -1,0 +1,89 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+	$backup
+	$action
+	$actiontext
+</%args>
+<%init>
+use EBox::Gettext;
+use Perl6::Junction qw(any);
+my $restoreAction = $action eq any(qw(restoreFromId restoreFromDisc restoreFromFile));
+</%init>
+
+<br/>
+<table class='formTable'>
+	<tbody>
+		<tr>
+			<td class='tright'>
+				<span class='ftitle'><% __('Date') %>:</span>
+			</td>
+			<td>
+				<% $backup->{'date'} %>
+			</td>
+		</tr>
+		<tr>
+			<td class='tright'>
+				<span class='ftitle'><% __('Description') %>:</span>
+			</td>
+			<td>
+				<% $backup->{'description'} %>
+			</td>
+		</tr>
+	<form action='Backup' method='POST'>
+%		if ($restoreAction) {
+                              <&.restoreRows &>
+%               }
+		<tr>
+			<td></td>
+			<td>
+                                        <& .backupIdentifier, backup => $backup &>
+
+					<input class='inputButton' type='submit'
+							name='cancel' value="<%__('Cancel')%>" alt="<%__('Cancel')%>"/>
+					<input class='inputButton' type='submit'
+							name='<%$action%>' value='<%$actiontext%>' alt='<%$actiontext%>'/>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<br/>
+<%def .backupIdentifier >
+<%args>
+$backup
+</%args>
+<%init>
+my $name;
+my $value;
+
+return if exists $backup->{disc};
+
+if (exists $backup->{id}) {
+    $name = 'id';
+    $value = $backup->{id};
+}
+elsif (exists $backup->{file}) {
+   $name = 'backupfile';
+   $value = $backup->{file}
+}
+else {
+   die "bad backup details data";
+}
+</%init>
+<& /input/hidden.mas, name => $name, value => $value &>
+</%def>
+<%def .restoreRows>
+<%init>
+my $modeOptions = [
+     { value => 'fullRestore', printableValue => __('Full Restore') },
+     { value => 'configurationRestore', printableValue => __('Configuration Restore') }
+];
+</%init>
+<tr>
+    <td>    <span class='ftitle'><% __('Restore mode') %>:</span>   </td>
+    <td>
+		<& /input/select.mas, name => 'mode', value => 'configurationRestore', options => $modeOptions &>
+    </td>
+</tr>
+</%def>

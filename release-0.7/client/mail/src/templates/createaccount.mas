@@ -1,0 +1,65 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+    $params
+</%args>
+<%init>
+use EBox::Gettext;
+settextdomain('ebox-mail');
+</%init>
+
+<form name='createaccount' action='/ebox/Mail/CreateAccount' method='POST'>
+    <input type="hidden" name="username" value="<% $params->{'username'} %>">
+	<h3><% __('Create mail account') %></h3>
+	<table class="formTable">
+	<tr>
+		<td class="tright"><% __('Account name') %>:</td>
+		<td><input type='text' class='inputText' name='lhs'></td>
+	</tr>
+	<tr>
+		<td class="tright"><% __('Domain name') %>:</td>
+		<td>
+			<select name="vdomain" enabled onChange='vdomainChanged(this)'>
+%			my @kvd = keys %{$params->{'vdomains'}};
+%			foreach my $vd (@kvd) {
+				<option value= <% $vd %> > <% __($vd) %> </option>
+%			}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="tright"><% __('Maildir size (MB)') %>:</div>
+		<td>
+			<input type='text' class='inputText' size="5" name='dftmdsize' value=<%  %>>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input class='inputButton' type='submit' name='change'
+					value="<% __('Create') %>"
+					alt="<% __('Create') %>">
+		</td>
+	</table>
+</form>
+
+<script type="text/javascript"><!--
+    var a = new Array();
+
+%	my %hashdom = %{$params->{'vdomains'}};
+%   foreach my $domain (@kvd) {
+        a["<%$domain%>"] = <% $hashdom{$domain} %>;
+%   }
+
+    function vdomainChanged(select){
+        domain = select.options[select.selectedIndex].value;
+        maildirsizeText.value = a[domain];
+    }
+
+var maildirsizeText = document.forms.createaccount.dftmdsize;
+var vdomainSelect = document.forms.createaccount.vdomain;
+vdomainChanged(vdomainSelect);
+//--></script>
+
+
+% settextdomain('ebox-usersandgroups');

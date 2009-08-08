@@ -1,0 +1,38 @@
+<%args>
+	$backup
+	$action
+	$actiontext
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+
+<br/>
+<table class='proxyTable'>
+	<tbody>
+		<tr>
+			<td width='157px' bgcolor='#eee'>
+				<% __('Description') %>
+			</td>
+			<td>
+				<% $backup->{'description'} %>
+			</td>
+		</tr>
+		<tr>
+			<td width='157px' bgcolor='#eee'>
+				<% __('Date') %>
+			</td>
+			<td>
+				<% $backup->{'date'} %>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<br/>
+<form action='Backup' method='POST'>
+	<input type='hidden' name='id' value='<%$backup->{'id'}%>'/>
+	<input class='inputButton' type='submit'
+			name='cancel' value='<%__('Cancel')%>' alt='<%__('Cancel')%>'/>
+	<input class='inputButton' type='submit'
+			name='<%$action%>' value='<%$actiontext%>' alt='<%$actiontext%>'/>
+</form>

@@ -1,0 +1,39 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+	$vdomain
+	$mdsize
+	$menu
+	@components
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+
+<& mail/menutabs.mas, selected => $menu, vdomain => $vdomain, components => \@components &>
+
+% if ($menu eq '0') {
+<br/>
+<form action='ModifyVDomain' method='POST'>
+<table>
+	<tr>
+		<td class="tright"><% __x('Maildir size for {vdomain} virtual domain', vdomain => $vdomain ) %>:</td>
+		<td><input type='text' class='inputText' name='mdsize' size="5" value=<% $mdsize %>></td>
+	</tr>
+	<tr>
+		<td class="tright"><% __('Force the change to the existing accounts') %>:</td>
+		<td><input id="forceold" type='checkbox' value='no' name="forceold" /></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input class='inputButton' type='submit' name='change'
+			value="<% __('Modify') %>"
+			alt="<% __('Modify') %>"></td>
+	</tr>
+	<input type='hidden' name='vdomain' value=<% $vdomain %>>
+</table>
+</form>	
+
+% } elsif (defined($components[$menu-1])) {
+      <& $components[$menu-1]->{'path'}, params => $components[$menu-1]->{'params'} &>
+% }

@@ -1,0 +1,20 @@
+Source: ebox-squid
+Section: web
+Priority: optional
+Maintainer: Enrique J. Hernandez <quique@warp.es>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: ebox-squid
+Architecture: all
+Depends: ebox (= 0.11.99), ebox-firewall, ebox-objects, squid, dansguardian
+Conflicts: ebox (<< 0.11.99)
+Description: Proxy cache and content filter
+ eBox is a framework for the development and deployment of security-wise
+ network services in small and medium-sized networks, offering a simplified
+ graphical interface to non expert users. It can be set up as a gateway,
+ having some extra features over a usual router.
+ .
+ This module adds a transparent proxy cache, a HTTP content filter,
+ object access policies, banned/allowed domains and custom MIME type
+ and file extension filter to your eBox installation.

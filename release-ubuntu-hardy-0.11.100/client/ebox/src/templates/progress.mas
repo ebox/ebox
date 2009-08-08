@@ -1,0 +1,51 @@
+<%doc>
+  This template is used to display the progress of the progress
+  indicator.
+</%doc>
+<%args>
+#$currentItemUrl
+$progressId
+$text   => ''
+$currentItemCaption => undef
+$itemsLeftMessage   => undef
+$endNote            => undef
+$errorNote          => undef
+$currentItemUrl => '/ebox/EBox/CurrentProgress'
+$reloadInterval  => 5;
+</%args>
+<%init>
+use EBox::Gettext;
+use EBox::ProgressIndicator;
+
+defined $currentItemCaption or $currentItemCaption = __('Item');
+defined $itemsLeftMessage   or $itemsLeftMessage   = __('items left');
+defined $endNote            or $endNote            = __('Done');
+defined $errorNote          or $errorNote = __('Some error has '
+                                               . 'happened in eBox: '
+                                               );
+my $progressIn = EBox::ProgressIndicator->retrieve($progressId);
+</%init>
+<script type="text/javascript" src="/data/js/prototype.js">//</script>
+<script type="text/javascript" src="/data/js/progress.js"></script>
+
+<script type="text/javascript">
+    createPeriodicalExecuter(<% $progressId %>, '<% $currentItemUrl %>', <% $reloadInterval %>);
+</script>
+
+<div id='progressing'>
+<p> <% $text %> </p>
+<% $currentItemCaption %>: <strong><span id="currentItem"><% __("Starting...")
+%></span></strong>
+<br/>
+<span id='ticks'>-</span><% __(' of ') %><span id='totalTicks'>-</span><% ' ' . $itemsLeftMessage %>
+<br/>
+</div>
+
+<br/>
+<div class ="note" id="done" style="display:none;">
+	 <p><% $endNote  %></p>
+</div>
+<div class="error" id="error-progress" style="display:none;">
+   <p><% $errorNote %></p>
+   <p id="error-progress-message"></p>
+</div>

@@ -1,0 +1,44 @@
+<%args>
+$name
+$value       => ''
+@extraParams => ()
+# Each option is a hash containing value and printableValue as keys
+@options => ();
+</%args>
+<%init>
+my %params = @extraParams;
+if (@options == 0) {
+   if (exists $params{options} ) {
+       @options = @{ $params{options} };
+   }
+}
+
+
+</%init>
+<select name='<% $name %>' <% @options == 0 ? 'disabled="disabled"' : ''  %>  >
+% foreach my $option (@options) {
+%  my $optionValue = $option->{value};
+%  $option->{selected} = ($value eq $optionValue) ? 1 : 0;
+%  my @optionParams = %{ $option  };
+ <& .option, @optionParams &>
+% }
+</select>
+
+
+<%def .option>
+<%args>
+$value
+$selected => 0
+$printableValue => undef
+</%args>
+<%init>
+if (!defined $printableValue) {
+   $printableValue = $value;
+}
+my $selectedAttr = $selected ? 'selected' : '';
+</%init>
+<option value='<% $value | h %>' <% $selectedAttr | h %> >
+<% $printableValue %>
+</option>
+</%def>
+

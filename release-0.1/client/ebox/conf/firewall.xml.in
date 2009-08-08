@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<firewall xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation='@DATADIR@/ebox/schemas/firewall.xsd'>
+	<!-- choose what to do when denying packets -->
+	<action deny="DROP"/>
+
+	<output>
+	</output>
+
+	<!--+ rules for objects -->
+	<objects>
+		<!--+ global rules for machines in internal networks 
+		    | this object is internal, it keeps the default rules 
+		    +-->
+		<object name="_global" policy="deny">
+			<servicepol name="administration" policy="allow"/>
+			<servicepol name="ssh" policy="allow"/>
+		</object>
+	</objects>
+
+	<!-- services running in this machine -->
+	<services>
+		<service name="administration" protocol="tcp" port="80"/>
+		<service name="ssh" protocol="tcp" port="22"/>
+	</services>
+
+</firewall>

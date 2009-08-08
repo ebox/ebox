@@ -1,0 +1,34 @@
+0.12.100
+        + Bugfix: validation of General model now works properly
+	+ Added POP transparent proxy
+	+ SMTP filter separated from main module
+	+ Interface overhaul t reflect changes in SMT filter and addition
+	of POP proxy
+0.12.99
+	+ New release
+0.12.1
+	+ Run clamd with "su clamav -c ..."
+0.12
+	+ Use eBox OID number in LDAP schemas
+0.11.101
+	+ New release
+0.11.100
+	+ Stop daemons in pre-start upstart script
+	+ Create /var/run/* directories in pre-start 
+	+ Removed erroneous activation order dependency with module mail
+	+ Added module activation with mail only when mail is not
+	configured (mailfilter depends on ldap data created in
+	configuration of mail module)
+0.11.99
+	+ Bugfix: Banned file names regular expressions are case
+	insensitive
+0.11
+	+ New release
+0.10.99
+	+ New release
+0.10
+	+ Bugfix. Removal of external domain
+0.9.100
+	+ Configure firewall to open fort for freshclam
+0.9.99
+	+ First release

@@ -1,0 +1,200 @@
+<%args>
+	@iflist
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<div class='help'>
+<% __('Remember that changing the network interfaces configuration may cause you to lose access to the adminstration page.') %>
+	<br/>
+	<br/>
+<% __('Traffic being routed through interfaces marked as external will be NATed.  Also, services meant for the LAN users will not be available on external interfaces.') %>
+</div>
+% foreach my $iface (@iflist){
+<br style='clear: both;'/>
+	<form name='<% $iface->{'name'} %>' action='Iface' method='post'>
+		<input type='hidden' name='ifname' value='<% $iface->{'name'} %>'/>
+		<table class='iftable'>
+	<h4><% $iface->{'name'} %></h4>
+		<tr>
+			<td>
+				<select name='method' onChange='methodChanged(this)'>
+% if($iface->{'method'} eq 'static'){
+					<option selected value='static'><% __('Static') %></option>
+% }else{
+					<option value='static'><% __('Static') %></option>
+% }
+
+% if($iface->{'method'} eq 'dhcp'){
+					<option selected value='dhcp'>DHCP</option>
+% }else{
+					<option value='dhcp'>DHCP</option>
+% }
+
+% if($iface->{'method'} eq 'notset'){
+					<option selected value='notset'><% __('Not set') %></option>
+% }else{
+					<option value='notset'><% __('Not set') %></option>
+% }
+				</select>
+				<input type='checkbox'\
+% if($iface->{'external'} eq 'yes'){
+	checked \
+% }
+   name="external"/><% __('External') %>
+			</td>
+		</tr>
+
+</table>
+	
+
+<div id='<% $iface->{'name'} %>_static'>
+	<table>
+		<tr>
+			<td>
+				<% __('IP address') %>:
+			</td>
+			<td>
+				<input class='inputText' type='text' size='16' name='if_address'
+					   alt='if_name' value='<% $iface->{'address'} %>' />
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<% __('Netmask') %>:
+			</td>
+			<td>
+				<select name="if_netmask">
+%	my $netmask;
+%	if(defined($iface->{'netmask'})){
+%		$netmask = $iface->{'netmask'};
+%	}else{
+%		$netmask = '255.255.255.0';
+%	}
+					<option selected value='<% $netmask %>'><% $netmask %></option>
+					<option value='255.255.255.248'>255.255.255.248</option>
+					<option value='255.255.255.240'>255.255.255.240</option>
+					<option value='255.255.255.224'>255.255.255.224</option>
+					<option value='255.255.255.192'>255.255.255.192</option>
+					<option value='255.255.255.128'>255.255.255.128</option>
+					<option value='255.255.255.0'>255.255.255.0</option>
+					<option value='255.255.0.0'>255.255.0.0</option>
+					<option value='255.0.0.0'>255.0.0.0</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+</div>
+		<p class='endform'>
+			<input class='inputButton' type='submit'
+				   name='accept' value='<% __('Ok') %>' />
+		</p>
+
+	</form>
+% if($iface->{"method"} eq "static"){
+
+
+<table class='dataTableMini' cellspacing='0'>
+	<caption>
+		<% __x('Virtual interfaces in {iface}', iface => $iface->{"name"}) %>
+	</caption>
+<thead>
+	<tr>
+	</tr>
+
+	<tr>
+		<th class='tleft'><% __('Name') %></th>
+		<th class='thOptions'><% __('IP address') %></th>
+		<th class='thOptions'><% __('Netmask') %></th>
+		<th class='thOptions'><% __('Action') %></th>
+	</tr>
+</thead>
+<tbody>
+
+	<tr><form action='VIface' method='POST'>
+
+		<td id="v<% $iface->{"name"} %>_name">
+				<input type="hidden" name="ifname" value="<% $iface->{"name"} %>">
+				<input type="hidden" name="ifaction" value="add">
+				<input class="inputText" type="text" size="16" name="vif_name"
+					   alt="vif_name" value="" >
+		</td>
+
+		<td id="v<% $iface->{"name"} %>_ip">
+			<input class="inputText" type="text" size="16" name="vif_address"
+				   alt="vif_name" value="" >
+		</td>
+
+		<td id="v<% $iface->{"name"} %>_mask">
+			<select name="vif_netmask">
+				<option selected value="255.255.255.0">255.255.255.0</option>
+				<option value="255.255.255.248">255.255.255.248</option>
+				<option value="255.255.255.240">255.255.255.240</option>
+				<option value="255.255.255.224">255.255.255.224</option>
+				<option value="255.255.255.192">255.255.255.192</option>
+				<option value="255.255.255.128">255.255.255.128</option>
+				<option value="255.255.255.0">255.255.255.0</option>
+				<option value="255.255.0.0">255.255.0.0</option>
+				<option value="255.0.0.0">255.0.0.0</option>
+			</select>
+		</td>
+
+		<td class='tcenter'>
+			<input class="inputButton" type="image" name="accept"
+					src="/data/images/add.gif"
+					alt="<% __("Add") %>"
+					title="<% __("Add") %>"
+					value="<% __("Add") %>" >
+		</td>
+	</form></tr>
+
+% foreach my $viface (@{$iface->{"virtual"}}) {
+	<tr><form name="<% $iface->{"name"} %>" action="VIface" method="post">
+
+		<td id="<% $viface->{"name"} %>_<% $iface->{"name"} %>_name">
+			<input type="hidden" name="ifname" value="<% $iface->{"name"} %>">
+			<input type="hidden" name="ifaction" value="delete">
+			<% $viface->{"name"} %>
+		</td>
+
+		<td id="<% $viface->{"name"} %>_<% $iface->{"name"} %>_ip">
+			<% $viface->{"address"} %>
+		</td>
+
+		<td id="<% $viface->{"name"} %>_<% $iface->{"name"} %>_mask">
+			<% $viface->{"netmask"} %>
+		</td>
+
+		<td class='tcenter'>
+			<input type="image" name="del"
+				src="/data/images/delete.gif"
+				alt="<% __("Delete") %>"
+				title="<% __("Delete") %>"
+				value="<% __("Delete") %>">
+		</td>
+
+	</form></tr>
+% }
+
+</tbody>
+</table>
+% }
+% }
+
+<script type="text/javascript"><!--
+function methodChanged(select){
+	selected = select.options[select.selectedIndex].value;
+	if(selected == 'static'){
+		document.getElementById(select.form.name + "_static").style.display="block";
+	}else{
+		document.getElementById(select.form.name + "_static").style.display="none";
+	}
+}
+
+var methodSelects = document.getElementsByName('method');
+while(select = methodSelects.item(i)){
+for(var i = 0; i< methodSelects.length; i++) 
+	methodChanged(methodSelects[i]);
+}
+//--></script>

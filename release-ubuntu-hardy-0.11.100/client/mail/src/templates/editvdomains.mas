@@ -1,0 +1,30 @@
+<!-- vim: ts=4 sw=4 nowrap filetype=mason
+-->
+<%args>
+	$vdomain
+
+	$menu
+
+	@components
+
+        $mdQuotaAvailable => 0
+	$mdsize           => 0
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+% if (@components > 0) {
+%    if ($menu > scalar @components) {   
+%      $m->abort("wrong menu id: $menu");
+%    }
+
+  <& /mail/menutabs.mas, selected => $menu, vdomain => $vdomain, components => \@components &>
+      <& $components[$menu]->{'path'}, @{ $components[$menu-1]->{'params'}  } &>
+
+% }
+% else {
+   <div class='note'>
+    <% __(q{There aren't modules which provide mail domains options to configure}) %>
+   </div>
+% }
+

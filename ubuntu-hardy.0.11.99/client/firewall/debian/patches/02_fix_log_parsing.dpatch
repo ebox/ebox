@@ -1,0 +1,25 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_fix_log_parsing.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to parse new iptables log
+
+@DPATCH@
+
+Index: firewall/src/EBox/FirewallLogHelper.pm
+===================================================================
+--- firewall/src/EBox/FirewallLogHelper.pm	(revisión: 9763)
++++ firewall/src/EBox/FirewallLogHelper.pm	(copia de trabajo)
+@@ -67,9 +67,9 @@
+ {
+ 	my ($self, $file, $line, $dbengine) = @_;
+ 
+-	system("echo > /tmp/kkka");
+-	return unless ($line =~ /^(\w+\s+\d+ \d\d:\d\d:\d\d) [\w\s]+: ebox-firewall (.+)/);
+-
++	unless ($line =~ /^(\w+\s+\d+ \d\d:\d\d:\d\d) .*: \[.*\] ebox-firewall (.+)/) {
++	    return;
++	}
+ 	my $date = $1;
+ 	my $rule = $2;
+ 

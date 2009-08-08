@@ -1,0 +1,38 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/dns-cache/class</key>
+			<applyto>/ebox/modules/global/modules/dns-cache/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::DNSCache</default>
+			<locale name="C"/>
+		</schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/dns-cache/menu/dns-cache/text</key>
+            <applyto>/ebox/modules/global/modules/dns-cache/menu/dns-cache/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>DNS Cache</default>
+            </locale>
+            <locale name="es">
+                <default>DNS Cache</default>
+            </locale>
+            <locale name="fr">
+                <default>DNS Cache</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/dns-cache/menu/dns-cache/location</key>
+            <applyto>/ebox/modules/global/modules/dns-cache/menu/dns-cache/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>DNSCache/Index</default>
+            <locale name="C"/>
+        </schema>
+	</schemalist>
+</gconfschemafile>

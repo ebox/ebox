@@ -1,0 +1,968 @@
+# Russian translations for ebox-mail package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-mail package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-mail 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-01-21 10:14+0100\n"
+"PO-Revision-Date: 2008-12-03 08:39+0000\n"
+"Last-Translator: vadim glyshkov <plusv@yandex.ru>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:155
+msgid "Admin mail recipient"
+msgstr "Получатель почты администратора"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:168 src/EBox/Mail.pm:1053
+#: src/EBox/Mail.pm:1109 src/EBox/Mail.pm:1190
+msgid "Mail"
+msgstr "Почта"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:189
+#, perl-brace-format
+msgid "Cannot connect to {smtp} mail server"
+msgstr "Невозможно подключиться по {smtp} с почтовым сервером"
+
+#: src/EBox/Event/Dispatcher/Mail.pm:230
+#, perl-brace-format
+msgid "Cannot connect to the server {hostname} to send the event through SMTP"
+msgstr ""
+"Невозможно соединится с сервером {hostname} , чтобы инициализировать SMTP"
+
+#: src/EBox/CGI/MQRequeue.pm:42 src/EBox/CGI/MQRemove.pm:42
+#: src/templates/qmanager.mas:17
+msgid "Queue ID"
+msgstr "ID очереди"
+
+#: src/EBox/CGI/CreateAlias.pm:42 src/EBox/CGI/DelAlias.pm:42
+#: src/EBox/CGI/CreateAccount.pm:42 src/EBox/CGI/DelAccount.pm:42
+msgid "username"
+msgstr "имя пользователя"
+
+#: src/EBox/CGI/CreateAlias.pm:48
+msgid "maildrop"
+msgstr "maildrop"
+
+#: src/EBox/CGI/CreateAlias.pm:49 src/EBox/CGI/CreateGroupAlias.pm:48
+msgid "account name"
+msgstr "имя аккаунта"
+
+#: src/EBox/CGI/CreateAlias.pm:50 src/EBox/CGI/CreateGroupAlias.pm:49
+msgid "domain name"
+msgstr "доменное имя"
+
+#: src/EBox/CGI/DelAlias.pm:46
+msgid "mail alias"
+msgstr "почтовый псевдоним"
+
+#: src/EBox/CGI/QueueManager.pm:34 src/EBox/CGI/QueueManager.pm:52
+#: src/EBox/Mail.pm:1135
+msgid "Queue Management"
+msgstr "Управление очередью"
+
+#: src/EBox/CGI/CreateAccount.pm:48 src/EBox/Mail/Model/VDomains.pm:81
+#: src/EBox/MailVDomainsLdap.pm:63 src/EBox/MailVDomainsLdap.pm:122
+msgid "virtual domain"
+msgstr "виртуальный домен"
+
+#: src/EBox/CGI/CreateAccount.pm:50
+msgid "Mail address"
+msgstr "Почтовый адрес"
+
+#: src/EBox/CGI/DelAccount.pm:46
+msgid "user mail"
+msgstr "почта пользователя"
+
+#: src/EBox/CGI/CreateGroupAlias.pm:42 src/EBox/CGI/DelGroupAlias.pm:42
+msgid "group"
+msgstr "группа"
+
+#: src/EBox/CGI/DelGroupAlias.pm:47
+msgid "group alias mail"
+msgstr "почтовый псевдоним группы"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:126
+msgid "Subject"
+msgstr "Тема"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:128
+#, perl-brace-format
+msgid "[EBox-event] An event has happened at {hostName}"
+msgstr "[EBox-event] событие произошло на {hostName}"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:135 src/EBox/Mail.pm:1159
+msgid "To"
+msgstr "Кому"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:142
+msgid "Configure mail dispatcher"
+msgstr "Настройка почтового диспетчера"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:147
+msgid ""
+"In order to configure the Mail event dispatcher is required to enable the "
+"mail service from eBox"
+msgstr ""
+"Для настройки событий почтового диспетчера необходимо включить почтовую "
+"службу из eBox"
+
+#: src/EBox/Mail/Model/Dispatcher/Mail.pm:150
+msgid "Mail dispatcher configuration updated"
+msgstr "Конфигурация почтового диспетчера обновлена"
+
+#: src/EBox/Mail/Model/SMTPAuth.pm:85
+msgid ""
+"Users will have to authenticate to be able to send mails through this server"
+msgstr ""
+"Пользователям будет необходима аутентификация для отправки почты через этот "
+"сервер"
+
+#: src/EBox/Mail/Model/SMTPAuth.pm:93
+msgid "Authentication"
+msgstr "Аутентификация"
+
+#: src/EBox/Mail/Model/SMTPAuth.pm:123
+msgid "Cannot require authentication when TLS is inactive"
+msgstr "Невозможно требовать аутентификацию при отключенном TLS"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:90
+msgid "Object"
+msgstr "Объект"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:96
+msgid "Allow relay"
+msgstr "Разрешить пересылку"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:99
+#, fuzzy
+msgid ""
+"Tick this to allow the machines within the above object to send mails "
+"through this server."
+msgstr ""
+"Отметить это чтобы машины входящие в объект могли отправлять почту используя "
+"этот  сервер."
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:108
+msgid "Relay policy for network objects"
+msgstr "Политика пересылки для сетевых объектов"
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:120
+msgid "object's relay policy"
+msgstr "политика объектов пересылки "
+
+#: src/EBox/Mail/Model/ObjectPolicy.pm:121
+#, fuzzy
+msgid "You may allow mail relay per network object"
+msgstr "Здесь вы можете разрешить пересылку для сетевых объектов"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:87
+msgid "Filter in use"
+msgstr "Используется фильтр"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:94
+msgid "Custom filter's mail forward port"
+msgstr "Пользовательские фильтры порта перенаправления почты"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:100
+msgid "Custom filter's IP address"
+msgstr "Пользовательские фильтры IP-адресов"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:106
+msgid "Custom filter's Port"
+msgstr "Пользовательские фильтры портов"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:115
+msgid "Mail filter options"
+msgstr "Настройки почтовых фильтров"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:135
+msgid "none"
+msgstr "ничего"
+
+#: src/EBox/Mail/Model/ExternalFilter.pm:136
+msgid "custom"
+msgstr "пользовательский"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:83
+msgid "Smarthost to send mail"
+msgstr "Smarthost для отправки почты"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:90
+#, fuzzy
+msgid "Smarthost authentication"
+msgstr "Запрашивать аутентификацию"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:95
+#, fuzzy
+msgid "None"
+msgstr "ничего"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:99
+msgid "User and password"
+msgstr ""
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:105
+msgid "User"
+msgstr ""
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:111
+msgid "Password"
+msgstr ""
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:123
+msgid "Maximum message size accepted"
+msgstr "Максимальный размер сообщений принят"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:127 src/templates/createaccount.mas:78
+#: src/templates/alias.mas:140
+msgid "Unlimited size"
+msgstr "Безлимитный размер"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:131
+msgid "size in Mb"
+msgstr "размер в Mb"
+
+#: src/EBox/Mail/Model/SMTPOptions.pm:143
+msgid "Options"
+msgstr "Параметры"
+
+#: src/EBox/Mail/Model/VDomains.pm:57
+msgid "Name"
+msgstr "Имя"
+
+#: src/EBox/Mail/Model/VDomains.pm:72
+msgid "Mail virtual domains"
+msgstr "Почтовый виртуальный домен"
+
+#: src/EBox/Mail/Model/VDomains.pm:83
+#, fuzzy
+msgid "Virtual domain added. You must save changes to use this domain"
+msgstr ""
+"Виртуальный домен добавлен. Необходимо записать изменения, чтобы "
+"использовать этот домен"
+
+#: src/EBox/Mail/Model/VDomains.pm:113
+#, fuzzy
+msgid ""
+"You must enable the mail module in module status section in order to use it."
+msgstr "Включите почтовый модуль в модуле состояния для его использования."
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:87
+msgid "SSL Support"
+msgstr "Поддержка SSL"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:96
+msgid "Mail retrieval services"
+msgstr "Поисковые службы почты"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:114
+msgid "No"
+msgstr "Нет"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:115
+msgid "Optional"
+msgstr "Параметр"
+
+#: src/EBox/Mail/Model/RetrievalServices.pm:116
+msgid "Required"
+msgstr "Обязательный"
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:64
+msgid "Enabled"
+msgstr "Включено"
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:70
+msgid "Greylist duration (seconds)"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:78
+msgid "Retry window (hours)"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:79
+msgid ""
+"Time that will have the mail sender to retry before it will be greylisted "
+"again"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:87
+msgid "Entries time to live (days)"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:88
+msgid "Period after that unseen entries will be deleted"
+msgstr ""
+
+#: src/EBox/Mail/Model/GreylistConfiguration.pm:101
+#, fuzzy
+msgid "Greylist configuration"
+msgstr "Конфигурация почтового диспетчера обновлена"
+
+#: src/EBox/Mail/Composite/ServiceConfiguration.pm:88
+#: src/EBox/Mail/Composite/General.pm:77
+msgid "Mail server options"
+msgstr "Настройки почтового сервера"
+
+#: src/EBox/Mail/Greylist.pm:53
+msgid "To configure whitelist for greylisting"
+msgstr ""
+
+#: src/EBox/MailVDomainsLdap.pm:332
+msgid "Size quota"
+msgstr "Размер квоты"
+
+#: src/EBox/MailVDomainsLdap.pm:424 src/EBox/MailVDomainsLdap.pm:430
+#: src/EBox/MailVDomainsLdap.pm:474 src/EBox/MailVDomainsLdap.pm:480
+#: src/EBox/Mail.pm:1327 src/EBox/MailUserLdap.pm:725
+#: src/EBox/MailUserLdap.pm:731 src/EBox/MailUserLdap.pm:793
+#: src/EBox/MailUserLdap.pm:799
+msgid "maildir size"
+msgstr "размер почтового каталога"
+
+#: src/EBox/MailAliasLdap.pm:59 src/EBox/MailAliasLdap.pm:64
+#: src/EBox/MailAliasLdap.pm:97 src/EBox/MailAliasLdap.pm:102
+#: src/EBox/MailAliasLdap.pm:140 src/EBox/MailUserLdap.pm:71
+#: src/EBox/MailUserLdap.pm:76
+msgid "mail account"
+msgstr "почтовые учетные записи"
+
+#: src/EBox/MailAliasLdap.pm:163 src/EBox/MailAliasLdap.pm:193
+#: src/EBox/MailAliasLdap.pm:228
+msgid "mail alias account"
+msgstr "почтовый псевдоним учетной записи"
+
+#: src/EBox/Mail.pm:78
+msgid "mail"
+msgstr "почта"
+
+#: src/EBox/Mail.pm:112
+#, perl-brace-format
+msgid "Add {user} to {group} group"
+msgstr ""
+
+#: src/EBox/Mail.pm:114
+#, fuzzy, perl-brace-format
+msgid "To allow {daemon} to connect with {otherDaemon} via unix socket"
+msgstr "Разрешить postfix соединяться с saslauthd через unix сокет"
+
+#: src/EBox/Mail.pm:120
+msgid "Generate mail aliases"
+msgstr "Создать почтовые псевдонимы"
+
+#: src/EBox/Mail.pm:122
+#, perl-brace-format
+msgid "eBox will execute {cmd}"
+msgstr ""
+
+#: src/EBox/Mail.pm:126
+msgid "Add LDAP schemas"
+msgstr "Добавить LDAP схему"
+
+#: src/EBox/Mail.pm:128
+#, fuzzy, perl-brace-format
+msgid "eBox will add two LDAP schemas: {schema1} and {schema2}."
+msgstr "eBox добавит две LDAP схемы: authldap.schema и eboximail.schema."
+
+#: src/EBox/Mail.pm:147
+msgid "To configure postfix"
+msgstr "Настроить postfix"
+
+#: src/EBox/Mail.pm:153
+msgid "To define how client programs connect to services in  postfix"
+msgstr "Определить какие клиентские программы соединены со службой  postfix"
+
+#: src/EBox/Mail.pm:161
+msgid "To configure courier to authenticate against LDAP"
+msgstr "Настроить courier для аутентификации через LDAP"
+
+#: src/EBox/Mail.pm:166
+msgid "To let courier know how to access LDAP"
+msgstr "Показать courier, как обращаться к LDAP"
+
+#: src/EBox/Mail.pm:171
+msgid "To configure courier POP3"
+msgstr "Настроить courier POP3"
+
+#: src/EBox/Mail.pm:176
+msgid "To configure POP3 with SSL support"
+msgstr "Настроить POP3 с поддержкой SSL"
+
+#: src/EBox/Mail.pm:181
+msgid "To configure IMAP"
+msgstr "Настроить IMAP"
+
+#: src/EBox/Mail.pm:186
+msgid "To configure IMAP with SSL support"
+msgstr "Настроить IMAP с поддержкой SSL"
+
+#: src/EBox/Mail.pm:192 src/EBox/Mail.pm:198
+msgid "To configure saslauthd to authenticate against LDAP "
+msgstr "Настроить saslauthd для аутентификации LDAP"
+
+#: src/EBox/Mail.pm:203
+msgid "To configure saslauthd to use LDAP"
+msgstr "Настроить saslauthd для использования LDAP"
+
+#: src/EBox/Mail.pm:208
+#, fuzzy
+msgid "To configure smart host authentication"
+msgstr "Настроить saslauthd для аутентификации LDAP"
+
+#: src/EBox/Mail.pm:213
+msgid "To add the LDAP schemas used by eBox mail"
+msgstr "Добавить LDAP схемы используемые почтой eBox"
+
+#: src/EBox/Mail.pm:581
+msgid "Cannot change this parameter for a non-custom filter"
+msgstr "Невозможно изменить данный параметр для не пользовательских фильтров"
+
+#: src/EBox/Mail.pm:596 src/EBox/Mail.pm:616
+msgid ""
+"The mail filter does not exist. Please set another mail filter or disable it"
+msgstr ""
+"Почтовый фильтр не существует. Пожалуйста установите другой почтовый фильтр "
+"или отключите это."
+
+#: src/EBox/Mail.pm:623
+#, fuzzy, perl-brace-format
+msgid ""
+"The mail filter {name} is not active. Please set another mail filter or "
+"disable it"
+msgstr ""
+"Почтовый фильтр $name отключен. Пожалуйста установите другой фильтр или "
+"отключите это"
+
+#: src/EBox/Mail.pm:1031
+msgid "POP3 service"
+msgstr "Служба POP3"
+
+#: src/EBox/Mail.pm:1033
+msgid "IMAP service"
+msgstr "Служба IMAP"
+
+#: src/EBox/Mail.pm:1067
+msgid "enabled"
+msgstr "включен"
+
+#: src/EBox/Mail.pm:1067
+msgid "disabled"
+msgstr "отключен"
+
+#: src/EBox/Mail.pm:1069 src/EBox/Mail.pm:1164
+msgid "Status"
+msgstr "Состояние"
+
+#: src/EBox/Mail.pm:1072
+#, fuzzy
+msgid "Mail server's filter"
+msgstr "Настройки почтового сервера"
+
+#: src/EBox/Mail.pm:1081 src/EBox/Mail.pm:1088
+#, fuzzy
+msgid "Filter type"
+msgstr "Фильтр"
+
+#: src/EBox/Mail.pm:1082
+msgid "Custom"
+msgstr "Пользовательский"
+
+#: src/EBox/Mail.pm:1084
+msgid "Address"
+msgstr "Адрес"
+
+#: src/EBox/Mail.pm:1115
+msgid "General"
+msgstr "Общие"
+
+#: src/EBox/Mail.pm:1122
+msgid "Virtual mail domains"
+msgstr "Виртуальные почтовые домены"
+
+#: src/EBox/Mail.pm:1128
+msgid "Greylist"
+msgstr ""
+
+#: src/EBox/Mail.pm:1156 src/templates/qmanager.mas:19
+msgid "Date"
+msgstr "Дата"
+
+#: src/EBox/Mail.pm:1157
+msgid "Message ID"
+msgstr "ID сообщения"
+
+#: src/EBox/Mail.pm:1158
+msgid "From"
+msgstr "От"
+
+#: src/EBox/Mail.pm:1160
+msgid "From hostname"
+msgstr "От узла (имя)"
+
+#: src/EBox/Mail.pm:1161
+msgid "From host ip"
+msgstr "От узла (IP)"
+
+#: src/EBox/Mail.pm:1162 src/templates/qmanager.mas:18
+msgid "Size (bytes)"
+msgstr "Размер (байт)"
+
+#: src/EBox/Mail.pm:1163
+msgid "Relay"
+msgstr "Пересылка"
+
+#: src/EBox/Mail.pm:1165
+msgid "Event"
+msgstr "Событие"
+
+#: src/EBox/Mail.pm:1166
+msgid "Aditional Info"
+msgstr "Доп. информация"
+
+#: src/EBox/Mail.pm:1177
+msgid "Successful messages"
+msgstr "Успешное сообщение"
+
+#: src/EBox/Mail.pm:1178
+msgid "Maximum message size exceeded"
+msgstr "Превышен макс. размер сообщения"
+
+#: src/EBox/Mail.pm:1179
+msgid "User quote exceeded"
+msgstr "Превышена квота пользователя"
+
+#: src/EBox/Mail.pm:1180
+msgid "Relay access denied"
+msgstr "Доступ к пересылке отклонен"
+
+#: src/EBox/Mail.pm:1181
+msgid "Account does not exist"
+msgstr "Учетная запись не существует"
+
+#: src/EBox/Mail.pm:1182
+msgid "Host unreachable"
+msgstr "Узел недоступен"
+
+#: src/EBox/Mail.pm:1183
+msgid "Authentication error"
+msgstr "Ошибка аутентификации"
+
+#: src/EBox/Mail.pm:1184
+msgid "Relay denied by the smarthost"
+msgstr ""
+
+#: src/EBox/Mail.pm:1185
+msgid "Greylisted"
+msgstr ""
+
+#: src/EBox/Mail.pm:1186
+msgid "Other events"
+msgstr "Другие события"
+
+#: src/EBox/Mail.pm:1291
+msgid "Mailboxes"
+msgstr "Почтовые ящики"
+
+#: src/EBox/MailUserLdap.pm:320
+msgid "This group has a mail alias"
+msgstr "Эта группа имеет почтовый псевдоним"
+
+#: src/EBox/MailUserLdap.pm:347
+msgid "This user has a mail account"
+msgstr "Этот пользователь имеет почтовую учетную запись"
+
+#: migration/0001_add_firewall_services.pl:30
+msgid "eBox Mail System"
+msgstr "Почтовая система eBox"
+
+#: src/templates/warnvd.mas:14
+msgid ""
+"The virtual domain you tried to delete contains data in the following "
+"modules. Please confirm you want to remove it and all its related data"
+msgstr ""
+"Виртуальный домен, который Вы пытаетесь удалить содержит данные в других "
+"модулях. Пожалуйста, подтвердите свое намерение удалить домен и все "
+"связанные с ним данные"
+
+#: src/templates/warnvd.mas:29 src/templates/groupalias.mas:64
+#: src/templates/groupalias.mas:65 src/templates/alias.mas:22
+#: src/templates/alias.mas:23 src/templates/alias.mas:24
+#: src/templates/alias.mas:76 src/templates/alias.mas:77
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/templates/warnvd.mas:32 src/templates/warnvdmdsize.mas:36
+#: src/templates/warnusermdsize.mas:26
+msgid "Cancel"
+msgstr "Отмена"
+
+#: src/templates/groupalias.mas:11
+msgid "Create alias mail account to group"
+msgstr "Создать почтовый псевдоним для группы"
+
+#: src/templates/groupalias.mas:16
+msgid ""
+"When the last member of a group is removed, the mail alias account will be "
+"deleted"
+msgstr ""
+"Когда последний член группы будет удален, почтовый псевдоним тоже будет "
+"удален"
+
+#: src/templates/groupalias.mas:21
+msgid ""
+"There are no users in the group or the users do not have a mail account, so "
+"an alias account cannot be created"
+msgstr ""
+"Нет пользователей в группе или пользователи не имеют почтовых учетных "
+"записей, поэтому псевдоним не может быть создан."
+
+#: src/templates/groupalias.mas:48 src/templates/groupalias.mas:49
+#: src/templates/createaccount.mas:46 src/templates/createaccount.mas:47
+#: src/templates/alias.mas:63 src/templates/alias.mas:64
+#: src/templates/alias.mas:65
+msgid "Create"
+msgstr "Создать"
+
+#: src/templates/groupalias.mas:54
+msgid "Mail alias settings"
+msgstr "Настройки почтового псевдонима"
+
+#: src/templates/moduleDisabled.mas:5
+msgid ""
+"The following settings only will take effect when the mail module is enabled"
+msgstr ""
+"Настройки вступят в действие только когда почтовый модуль будет включен."
+
+#: src/templates/warnvdmdsize.mas:33 src/templates/warnusermdsize.mas:23
+msgid "Change"
+msgstr "Изменить"
+
+#: src/templates/createaccount.mas:15
+msgid "Create mail account"
+msgstr "Создать почтовый аккаунт"
+
+#: src/templates/createaccount.mas:23
+msgid "Account name"
+msgstr "Имя аккаунта"
+
+#: src/templates/createaccount.mas:27
+msgid "Domain name"
+msgstr "Доменное имя"
+
+#: src/templates/createaccount.mas:62
+msgid "Maildir size"
+msgstr "Размер почтового каталога"
+
+#: src/templates/alias.mas:11
+msgid "Mail account settings"
+msgstr "Настройки почтовой учетной записи"
+
+#: src/templates/alias.mas:34
+msgid "Create mail aliases"
+msgstr "Создать почтовые псевдонимы"
+
+#: src/templates/alias.mas:39
+msgid "Mail alias"
+msgstr "Почтовый псевдоним"
+
+#: src/templates/alias.mas:42
+msgid "Action"
+msgstr "Действие"
+
+#: src/templates/alias.mas:126
+msgid "Default maildir size (MB)"
+msgstr "Стандартный размер почтового каталога (Мбайт)"
+
+#: src/templates/alias.mas:151 src/templates/alias.mas:152
+msgid "Modify"
+msgstr "Изменить"
+
+#: src/templates/qmanager.mas:20
+msgid "Sender"
+msgstr "Отправитель"
+
+#: src/templates/qmanager.mas:21
+msgid "Recipients"
+msgstr "Получатели"
+
+#: src/templates/qmanager.mas:22
+msgid "Message"
+msgstr "Сообщение"
+
+#: src/templates/qmanager.mas:23
+msgid "Operate"
+msgstr "Управление"
+
+#: src/templates/qmanager.mas:40 src/templates/qmanager.mas:41
+msgid "Requeue"
+msgstr "Возвращение в очередь"
+
+#: src/templates/qmanager.mas:45 src/templates/qmanager.mas:46
+msgid "Show Info"
+msgstr "Показать информацию"
+
+#: src/templates/qmanager.mas:50 src/templates/qmanager.mas:51
+msgid "Remove"
+msgstr "Удалить"
+
+#: src/templates/qmanager.mas:63 src/templates/qmanager.mas:64
+msgid "Hide Info"
+msgstr "Скрыть информацию"
+
+#: src/templates/qmanager.mas:83 src/templates/qmanager.mas:84
+msgid "first"
+msgstr "первый"
+
+#: src/templates/qmanager.mas:87 src/templates/qmanager.mas:88
+msgid "prev"
+msgstr "пред"
+
+#: src/templates/qmanager.mas:107 src/templates/qmanager.mas:108
+msgid "next"
+msgstr "след"
+
+#: src/templates/qmanager.mas:111 src/templates/qmanager.mas:112
+msgid "last"
+msgstr "последний"
+
+#: src/templates/qmanager.mas:122
+msgid "There is no messages in queue or the service is stopped"
+msgstr "Нет ни одного сообщения в очереди или служба остановлена"
+
+#: src/templates/account.mas:22
+msgid "Mail account"
+msgstr "Почтовая учетная запись"
+
+#: src/templates/account.mas:26
+msgid "Click here to create a new mail virtual domain"
+msgstr "Создать новый почтовый виртуальный домен"
+
+#~ msgid "Add postfix to sasl group"
+#~ msgstr "Добавить postfix в группу sasl"
+
+#~ msgid "eBox will execute /usr/sbin/postalias /etc/aliases "
+#~ msgstr "eBox выполнит /usr/sbin/postalias /etc/aliases "
+
+#~ msgid "Mail services"
+#~ msgstr "Почтовая служба"
+
+#~ msgid "Mail system"
+#~ msgstr "Почтовая система"
+
+#~ msgid "vdomain"
+#~ msgstr "вирт. домен"
+
+#~ msgid "Message size limit"
+#~ msgstr "Лимит размера сообщения"
+
+#~ msgid "Virtual domain name"
+#~ msgstr "Имя виртуального домена"
+
+#~ msgid "Maximum mail account size"
+#~ msgstr "Максимальный размер почтового аккаунта"
+
+#~ msgid "remote IP"
+#~ msgstr "удаленный IP"
+
+#~ msgid "{ip} is not a valid ip address"
+#~ msgstr "{ip} не действительный IP-адрес"
+
+#~ msgid "{ip} cannot be reached by any configured interface"
+#~ msgstr ""
+#~ "{ip} не может быть достигнут ни через один сконфигурированный интерфейс"
+
+#~ msgid "{ip} can be reached by more than one configured interface"
+#~ msgstr ""
+#~ "{ip} может быть достигнут более чем через один сконфигурированный "
+#~ "интерфейс"
+
+#~ msgid "port"
+#~ msgstr "порт"
+
+#, fuzzy
+#~ msgid "Smarthost"
+#~ msgstr "smarthost IP"
+
+#~ msgid "message size"
+#~ msgstr "размер сообщения"
+
+#~ msgid "Yes"
+#~ msgstr "Да"
+
+#~ msgid "TLS support is required by the authentication system"
+#~ msgstr "Поддержка TLS требуется системой аутентификации"
+
+#~ msgid "Services"
+#~ msgstr "Службы"
+
+#~ msgid "Service"
+#~ msgstr "Служба"
+
+#~ msgid "Apply Changes"
+#~ msgstr "Применить изменения"
+
+#~ msgid ""
+#~ "A value of 0 for the maximum message size and maximum mail account size "
+#~ "stands for no size limitation."
+#~ msgstr ""
+#~ "Значение '0' (ноль) для макс. размера сообщения и макс. размера почтового "
+#~ "аккаунта означает безлимитные размеры."
+
+#~ msgid "Maximum message size accepted by the mail server"
+#~ msgstr "Макс. размер сообщения принят почтовым сервером"
+
+#~ msgid "Size (MB)"
+#~ msgstr "Размер (Мбайт)"
+
+#~ msgid ""
+#~ "You should move to allowed column those objects you want to allow sending "
+#~ "mail through this module."
+#~ msgstr ""
+#~ "Вы должны переместить в графу \"Разрешено\" те объекты, которым Вы хотите "
+#~ "разрешить отправлять почту через этот модуль."
+
+#~ msgid ""
+#~ "Choose the object whose state you want to change and click on the arrow "
+#~ "to move it to the desired column."
+#~ msgstr ""
+#~ "Выберите объект и кликните на стрелку для перемещения его в желаемую "
+#~ "графу."
+
+#~ msgid "Denied"
+#~ msgstr "Запрещено"
+
+#~ msgid "Empty list"
+#~ msgstr "Пустой список"
+
+#~ msgid "Allow"
+#~ msgstr "Разрешить"
+
+#~ msgid "Move selected objects to the allowed column"
+#~ msgstr "Переместить выбранные объекты в графу \"Разрешено\""
+
+#~ msgid "Deny"
+#~ msgstr "Запретить"
+
+#~ msgid "Move selected objects to the denied column"
+#~ msgstr "Переместить выбранные объекты в графу \"Запрещено\""
+
+#~ msgid "Apply"
+#~ msgstr "Применить"
+
+#~ msgid "Default maximum mail account size"
+#~ msgstr "Стандартный макс. размер почтового аккаунта"
+
+#~ msgid "Force the change to the existing accounts"
+#~ msgstr "Применить изменение для существующих аккаунтов"
+
+#~ msgid "Maildir size for {vdomain} virtual domain"
+#~ msgstr "Размер почтового каталога для вирт. домена {vdomain}"
+
+#, fuzzy
+#~ msgid "unlimited"
+#~ msgstr "Безлимитный размер"
+
+#~ msgid "Add a new virtual domain"
+#~ msgstr "Добавить новый виртуальный домен"
+
+#~ msgid "Default maildir size"
+#~ msgstr "Стандартный размер почтового каталога"
+
+#~ msgid "(MB)"
+#~ msgstr "(Мбайт)"
+
+#~ msgid "Add"
+#~ msgstr "Добавить"
+
+#, fuzzy
+#~ msgid "Unlimited"
+#~ msgstr "Безлимитный размер"
+
+#~ msgid "Virtual domains list"
+#~ msgstr "Список виртуальных доменов"
+
+#~ msgid "Maildir Size"
+#~ msgstr "Размер почтового каталога"
+
+#~ msgid "Edit"
+#~ msgstr "Редактировать"
+
+#~ msgid "Settings"
+#~ msgstr "Настройки"
+
+#~ msgid "smarthost ip"
+#~ msgstr "smarthost IP"
+
+#~ msgid "IP address of smarthost to send mail"
+#~ msgstr "smarthost IP-адрес для отправки почты"
+
+#~ msgid "mail system status"
+#~ msgstr "статус почтовой системы"
+
+#~ msgid "Service status"
+#~ msgstr "Статус службы"
+
+#~ msgid "Disabled"
+#~ msgstr "Отключено"
+
+#~ msgid "Deleting virtual domain"
+#~ msgstr "Удаление виртуального домена"
+
+#~ msgid "TLS for SMTP server"
+#~ msgstr "TLS для сервера SMTP"
+
+#~ msgid "POP3"
+#~ msgstr "POP3"
+
+#~ msgid "IMAP"
+#~ msgstr "IMAP"
+
+#~ msgid "Changing maildir size of"
+#~ msgstr "Изменение размера почтового каталога"
+
+#~ msgid "Page"
+#~ msgstr "Страница"
+
+#~ msgid "of"
+#~ msgstr "из"
+
+#~ msgid "Create mail alias to mail account"
+#~ msgstr "Создать псевдоним для почтового аккаунта"
+
+#~ msgid "module status"
+#~ msgstr "статус модуля"
+
+#~ msgid "External Filter"
+#~ msgstr "Внешний фильтр"
+
+#~ msgid "There is not any message at the queue or the service is stopped"
+#~ msgstr "Нет ни одного сообщения в очереди или остановленной службы"
+
+#~ msgid "Account do not exists"
+#~ msgstr "Аккаунта не существует"
+
+#~ msgid "Virtual domains"
+#~ msgstr "Виртуальные домены"
+
+#~ msgid "Mail service settings"
+#~ msgstr "Настройки почтовой службы"
+
+#~ msgid "Allowed"
+#~ msgstr "Разрешено"
+
+#~ msgid "Mail forward port"
+#~ msgstr "Порт перенаправления почты"
+
+#~ msgid "Filter's IP address"
+#~ msgstr "IP-адрес фильтра"
+
+#~ msgid "Filter's Port"
+#~ msgstr "Порт фильтра"

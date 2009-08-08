@@ -1,0 +1,10 @@
+<%args>
+	$title
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+% if (length($title)) {
+	<h2 class='title'><% $title %></h2>
+	<div id='helpbutton'><a href="" onclick="switchHelp(); return false; "><% __('Show/Hide help') %></a></div>
+% }

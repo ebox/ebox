@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_fix_enable_service.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to fix enable service.
+
+@DPATCH@
+
+diff -Naur ebox-openvpn-0.11.99/src/EBox/OpenVPN.pm ebox-openvpn-new/src/EBox/OpenVPN.pm
+--- ebox-openvpn-0.11.99/src/EBox/OpenVPN.pm	2008-02-25 15:02:39.000000000 +0100
++++ ebox-openvpn-new/src/EBox/OpenVPN.pm	2008-04-10 15:55:25.000000000 +0200
+@@ -968,7 +968,7 @@
+ sub userService
+ {
+   my ($self) = @_;
+-  return $self->_service('userActive');
++  return $self->service();
+ }
+ 
+ 

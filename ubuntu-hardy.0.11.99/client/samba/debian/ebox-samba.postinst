@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#DEBHELPER#
+
+onInstall() {
+
+	perl -e 'use EBox::Samba; EBox::Samba::onInstall();'
+}
+
+case "$1" in
+	configure)
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+        # FIXME
+        initctl list >/dev/null  2>&1 || true
+
+		# migrate data if needed
+#		/usr/share/ebox/ebox-migrate /usr/share/ebox-samba/migration/	
+
+        # Restart eBox apache
+        invoke-rc.d ebox apache restart || true
+
+        # run the onInstall method in the module
+		onInstall
+
+    ;;
+
+esac
+
+exit 0

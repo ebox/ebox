@@ -1,0 +1,20 @@
+0.8.99
+	+ Add externalInput to FirewallObserver to provide rules for
+	  external interfaces
+0.8.1
+	+ New release
+0.8
+	+ New release
+0.7.99
+	+ Add Portuguese translation
+0.7.1
+	+ GUI fixes
+	+ Use of ebox-sudoers-friendly
+0.7
+	+ First public release
+0.6	
+	+ Separate module from ebox base
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update install
+	+ Update debian scripts

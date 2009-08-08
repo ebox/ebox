@@ -1,0 +1,16 @@
+<form action='/LOGIN' method='post'>
+	<div id='login'>
+		<img src='/data/images/logintro.png' alt='Login:' />
+		<br />
+		<TMPL_VAR EXPR="__('Administrator Password')">:
+		<input  class='inputTextLogin' type='password' 
+			name='credential_0' 
+			maxlength='16' size='14' />
+		<input  type='hidden' name='destination' 
+			value='/ebox/Summary/Index' />
+		<input class='inputButton' type='submit' value='Aceptar' />
+	</div>
+</form>
+<TMPL_IF NAME="reason">
+	<div id='reason'><TMPL_VAR NAME="reason"></div>
+</TMPL_IF>

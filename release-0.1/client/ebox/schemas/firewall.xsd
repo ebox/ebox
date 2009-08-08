@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:include schemaLocation="types.xsd"/>
+
+	<xs:simpleType name="denyactiontype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DROP"/>
+			<xs:enumeration value="REJECT"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="actiontype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="allow"/>
+			<xs:enumeration value="deny"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="policytype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="allow"/>
+			<xs:enumeration value="deny"/>
+			<xs:enumeration value="global"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="dnattype">
+		<xs:attribute name="protocol" type="protocoltype" use="required"/>
+		<xs:attribute name="eport"    type="porttype"     use="required"/>
+		<xs:attribute name="ip"       type="iptype"       use="required"/>
+		<xs:attribute name="dport"    type="porttype"     use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="ruletype">
+		<xs:attribute name="name"   type="xs:string"    use="required"/>
+		<xs:attribute name="action" type="actiontype"   use="required"/>
+		<xs:attribute name="proto"  type="protocoltype" use="required"/>
+		<xs:attribute name="port"   type="porttype"     use="required"/>
+		<xs:attribute name="active" type="yesnotype"    use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="servicepoltype">
+		<xs:attribute name="name"   type="xs:string" use="required"/>
+		<xs:attribute name="policy" type="actiontype" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="objecttype">
+		<xs:sequence>
+			<xs:element name="rule" type="ruletype"
+						minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="servicepol" type="servicepoltype"
+						minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="policy" type="policytype" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="servicetype">
+		<xs:attribute name="name"   type="xs:string" use="required"/>
+		<xs:attribute name="protocol" type="protocoltype" use="required"/>
+		<xs:attribute name="port" type="porttype" use="required"/>
+		<xs:attribute name="dnatport" type="porttype" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="firewall">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="action">
+					<xs:complexType>
+						<xs:attribute name="deny" type="denyactiontype"
+									  use="required"/>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="dnats" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="dnat" type="dnattype"
+										maxOccurs="unbounded" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="dnatport">
+						<xs:selector xpath="dnat"/>
+						<xs:field xpath="@protocol"/>
+						<xs:field xpath="@eport"/>
+					</xs:unique>
+				</xs:element>
+
+				<xs:element name="objects" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="object" type="objecttype"
+										maxOccurs="unbounded" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="objectname">
+						<xs:selector xpath="object"/>
+						<xs:field xpath="@name"/>
+					</xs:unique>
+				</xs:element>
+
+				<xs:element name="services" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="service" type="servicetype"
+										maxOccurs="unbounded" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="servicename">
+						<xs:selector xpath="service"/>
+						<xs:field xpath="@name"/>
+					</xs:unique>
+				</xs:element>
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

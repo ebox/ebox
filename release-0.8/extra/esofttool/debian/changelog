@@ -1,0 +1,12 @@
+esofttool (0.2-1) unstable; urgency=low
+
+  * Bug with 's fixed
+
+ -- Daniel Baeyens Sicilia <dani@warp.es>  Wed, 22 Mar 2006 13:41:14 +0100
+
+esofttool (0.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Isaac Clerencia <isaac@debian.org>  Sun, 29 Jan 2006 18:01:14 +0100
+

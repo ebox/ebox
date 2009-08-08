@@ -1,0 +1,4 @@
+<%args>
+	$msg
+</%args>
+<div class='msg'><% $msg %></div>

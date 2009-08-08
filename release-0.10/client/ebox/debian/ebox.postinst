@@ -1,0 +1,143 @@
+#!/bin/bash
+
+webserver=apache-perl
+
+create_db() 
+{
+	db_name="eboxlogs"
+	db_user="eboxlogs"
+	db_pass="eboxlogs"
+
+	su postgres -c 'psql -Alt' | grep -q '^$db_name|' && db_exists=1 || db_exists=0
+	if [ $db_exists -eq 0 ]; then
+		echo "Creating the $db_name database"
+		su postgres -c "createdb $db_name" > /dev/null 2>&1
+		su postgres -c "createuser -A -D $db_user" > /dev/null 2>&1
+		su postgres -c "psql -d $db_name -c \"GRANT ALL ON DATABASE $db_name TO  $db_user\"" > /dev/null 2>&1
+		su postgres -c "psql -d template1 -c \"ALTER USER $db_user WITH PASSWORD \"\"'\"$db_pass\"'\" " > /dev/null 2>&1 || (echo "Cannot set password for database user $db_user" && exit 1)
+
+	cat <<EOF > /etc/postgresql/pg_hba.conf
+# TYPE  DATABASE    USER        IP-ADDRESS        IP-MASK           METHOD
+# Database administrative login by UNIX sockets
+local   all         postgres                                        ident sameuser
+#
+# eBox log database
+host    $db_name    $db_user     127.0.0.1       255.255.255.255 md5
+local   $db_name    $db_user                                        md5
+# All IPv4 connections from localhost
+host    all         all         127.0.0.1         255.255.255.255  ident sameuser
+# 
+# All IPv6 localhost connections
+host    all         all         ::1               ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff        ident sameuser
+host    all         all         ::ffff:127.0.0.1/128                ident sameuser
+# 
+# reject all other connection attempts
+host    all         all         0.0.0.0           0.0.0.0           reject
+EOF
+
+	fi
+
+	invoke-rc.d postgresql  restart
+}
+
+case "$1" in
+	configure)
+
+		# don't start apache-perl with its script
+		update-rc.d -f apache-perl remove
+
+		# stop apache-perl
+		invoke-rc.d apache-perl stop
+
+		# create ebox's' apache certificates
+		ebox-create-certificate
+
+		#add the ebox group and user
+		touch /tmp/test.$$
+		chgrp ebox /tmp/test.$$ >/dev/null 2>&1 || addgroup --system ebox
+		chown ebox /tmp/test.$$ >/dev/null 2>&1 || 
+		adduser --system --home /var/lib/ebox/ --no-create-home \
+				--disabled-password --ingroup ebox ebox
+
+		# add the stderr file needed by sudo
+		STDERR_FILE=`perl -MEBox::Config -e'print EBox::Config::tmp() . 'stderr'; 1'`;
+		touch ${STDERR_FILE}
+		chmod 0600 ${STDERR_FILE}
+		chown ebox.ebox ${STDERR_FILE}
+
+
+		#change the /var/lib/ebox/ user
+		chown -R ebox.ebox /var/lib/ebox
+
+		# install gconf schemas
+		SCHEMA_LOCATION=/usr/share/gconf/schemas
+		SCHEMA_FILES="events.schemas global.schemas sysinfo.schemas apache.schemas logs.schemas "
+		for SCHEMA in $SCHEMA_FILES; do
+			if [ -e $SCHEMA_LOCATION/$SCHEMA ]; then
+				HOME=/var/lib/ebox GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` \
+					gconftool-2 \
+						--makefile-install-rule $SCHEMA_LOCATION/$SCHEMA > /dev/null
+			fi
+		done
+
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+		#sudo configuration
+		ebox-sudoers-friendly
+		chmod 0440 /etc/sudoers
+
+		# Set default passwd if it does not exist yet
+		if [ ! -f /var/lib/ebox/conf/ebox.passwd ]; then
+			echo -n 'ebox' | md5sum | cut -d' ' -f1 > \
+				/var/lib/ebox/conf/ebox.passwd
+			chown ebox.ebox /var/lib/ebox/conf/ebox.passwd
+		fi
+
+		if test -z "$2"; then
+			# not upgrading
+			if grep '^EB:' /etc/inittab >/dev/null; then
+				cat <<\EOT >&2
+
+There already is an EB entry in /etc/inittab.  In order to have this package
+add an entry with the name EB to have ebox starting by sysvinit you need to
+remove or rename the current EB entry first.
+
+Installation failed.
+
+EOT
+				exit 1
+			fi
+		fi
+		if ! grep '^EB:' /etc/inittab >/dev/null; then
+			echo 'Adding eBox inittab entry...'
+			cp /etc/inittab /etc/inittab'{new}'
+			cat >>/etc/inittab'{new}' <<-\EOT
+#-- ebox begin
+EB:2:once:/etc/init.d/ebox start
+#-- ebox end
+EOT
+			mv -f /etc/inittab'{new}' /etc/inittab
+		fi
+
+		#postgresql and logs
+		chmod 0600 /var/lib/ebox/.pgpass
+		chown ebox.ebox /var/lib/ebox/.pgpass
+
+		#Create user and database
+		create_db
+
+		/usr/lib/ebox/ebox-sql-table add admin /usr/share/ebox/sqllog/admin.sql
+
+		/etc/init.d/ebox start
+
+		if [ -n "$2" ] && dpkg --compare-versions "$2" lt 0.7.1;
+		then
+			/etc/init.d/ebox apache restart
+		fi
+
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

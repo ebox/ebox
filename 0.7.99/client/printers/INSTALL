@@ -1,0 +1,39 @@
+DEPENDENCIES
+------------
+
++ eBox components
+
+	+ ebox
+	+ ebox-network
+	+ ebox-firewall
+	+ ebox-usersandgroups
+	+ ebox-samba
+	+ ebox-logs
+
++ Debian packages (apt-get install <package>)
+
+	+ cupsys
+	+ libnet-cups-perl
+	+ foomatic-db
+	+ foomatic-db-engine
+	+ foomatic-filters
+	+ foomatic-filters-ppds
+
+INSTALLATION
+------------
+
+- Once EBox base has been installed:
+	
+	./configure
+	make install
+
+  configure will autodetect EBox base path to install
+
+- Add ebox to lpadmin group
+
+- Do not run cupsys on startup, this module takes control of it:
+
+mv /etc/rc2.d/SXXcupssys /etc/rc2.d/K20cupsys
+ebox-runit
+
+- Stop cupsys if it's running.

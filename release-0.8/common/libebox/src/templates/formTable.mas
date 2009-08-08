@@ -1,0 +1,105 @@
+<%args>
+@elements  => (),
+$emptyMsg  => undef
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+% if (@elements) {
+<table class='formTable' >
+<tbody>
+% foreach my $element (@elements) {
+% my @tableRowParams = %{$element};
+<& .tableRow, @tableRowParams &>
+% }
+</tbody>
+</table>
+% }
+% else {
+    <& .emptyMsg, msg => $emptyMsg &>
+%}
+<%def .tableRow>
+<%args>
+$name
+$printableName => undef
+$input         => 'text'
+$value         => ''
+$warning       => undef
+$note          => undef
+$help          => undef
+@extraParams   => ()
+</%args>
+<%init>
+# adjust default printable name if needed
+if (!defined $printableName ) {
+   $printableName = $name;
+}
+
+my $inputComponent = "/input/$input.mas";
+</%init>
+% if ( $input ne "hidden" ) {
+  <tr>
+     <td class='tright' >
+       <span class='ftitle'>
+         <& .printableName, printableName => $printableName, input =>
+	    $input &>
+       </span>
+     </td>
+     <td>
+        <& $inputComponent, name => $name, value => $value, @extraParams &>
+     </td>
+  </tr>
+% } else {
+  <& $inputComponent, name => $name, value => $value, @extraParams &>
+% }
+  <& div, type => 'warning', content => $warning &>
+  <& div, type => 'note', content => $note &>
+  <& div, type => 'help', content => $help &>
+</%def>
+
+<%def .printableName>
+<%args>
+$printableName
+$input
+</%args>
+<%init>
+if ($input eq 'submit') {
+   $printableName = '';
+}
+if ($printableName ne '') {
+    $printableName .= ':';
+}
+</%init>
+<% "$printableName" %>
+</%def>
+
+
+<%def .emptyMsg>
+<%args>
+$msg
+</%args>
+<%init>
+if (!defined $msg) {
+  $msg = __('Table is empty');
+}
+</%init>
+<div class='note'>
+   <% $msg %>
+</div>
+</%def>
+
+
+<%def div> 
+<%args>
+$content
+$type
+</%args>
+% if (defined $content) {
+<tr><td/>
+<td> 
+<div class ='<% $type %>'>
+<% $content %>
+</div>
+</td>
+% }
+</%def>

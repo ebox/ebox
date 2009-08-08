@@ -1,0 +1,8 @@
+## Process this file with automake to produce Makefile.in
+SUBDIRS = sqllog cron
+
+pkgdata_SCRIPTS =  ebox-apache2ctl ebox-apache-restart ebox-sql-table ebox-migrate ebox-sudoers ebox ebox-runit ebox-sudoers-friendly ebox-clean-gconf ebox-create-certificate ebox-make-backup ebox-restore-backup ebox-unblock-exec ebox-passwd
+
+MAINTAINERCLEANFILES = Makefile.in
+
+EXTRA_DIST = $(pkgdata_SCRIPTS)

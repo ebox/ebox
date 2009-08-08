@@ -1,0 +1,226 @@
+<chapter id="perl">
+	<title>Perl</title>
+
+	<section>
+		<title>General structure</title>
+		<para>
+		FIXME
+		</para>
+		<para>
+		FIXME: guía de estilo Larry Wall en Todo Linux
+		</para>
+	</section>
+
+
+
+	<section>
+		<title>Header</title>
+		<para>
+		Each program file begins with a header as follows:
+		</para>
+		<programlisting>
+			&perl-header;
+		</programlisting>
+		<para>
+		It must include:
+		</para>
+		<itemizedlist>
+			<listitem><para>A short description of the file</para></listitem>
+			<listitem><para>File name</para></listitem>
+			<listitem><para>License: GPL, LGPL, BSD, Cantoware...</para></listitem>
+			<listitem><para>License URL: a place in the Internet where find the license writing</para></listitem>
+			<listitem><para>Authors: people who have modified the file, one each line beginning in the next one</para></listitem>
+			<listitem><para>Created: creation date in japanese format YYYY MM DD, followed by the creator of the file</para></listitem>
+			<listitem><para>Description: a description of what the file is for</para></listitem>
+		</itemizedlist>
+	</section>
+
+	<section>
+		<title>Resources</title>
+		<para>
+		FIXME
+		</para>
+
+		<section>
+			<title><command>use</command></title>
+			<para>
+			FIXME
+			</para>
+		</section>
+
+		<section>
+			<title><command>require</command></title>
+			<para>
+			FIXME
+			</para>
+		</section>
+		
+	</section>
+
+	<section>
+		<title>Variable and constant declaration</title>
+		<para>
+		Names of constants and variables will be descriptive.
+		</para>
+		<para>
+		A constant foobar initialized to 0 must be especified using:
+		</para>
+		<programlisting>
+		use constant FOOBAR => 0;
+		</programlisting>
+		<para>
+		When multiple constants are to be declared, they can be grouped together with:
+		</para>
+		<programlisting>
+		use constant {
+			FOOBAR => 0;
+			FOOBAL => 1;
+			FOOLAN => 2;
+		};
+		</programlisting>
+		<para>
+		<command>use strict;</command> clause must be used, so any variable must be declared with:
+		</para>
+		<programlisting>
+		my $fooBar;
+		</programlisting>
+		<para>
+		
+		</para>
+	</section>
+
+	<section>
+		<title>Blocks</title>
+		<para>
+		FIXME
+		</para>
+
+		<section>
+			<title><command>if then else</command></title>
+			<programlisting>
+			if expresion {
+			   ...
+			}
+			</programlisting>
+			<programlisting>
+			if expresion {
+			   ...
+			} else {
+			   ...
+			}
+			</programlisting>
+		</section>
+
+	
+	</section>
+
+	<section>
+		<title>Subroutines</title>	
+
+		<section>
+			<title>Header</title>
+			<para>
+			Each subroutine must include a header detailing:
+			</para>
+			<itemizedlist>
+				<listitem><para>Return value</para></listitem>
+				<listitem><para>Subroutine name</para></listitem>
+				<listitem><para>Number and type of arguments, using Perl convention ($@)</para></listitem>
+				<listitem><para>Brief description of each argument</para></listitem>
+				<listitem><para>When required, a description of subroutine's functionality</para></listitem>
+			</itemizedlist>
+			<programlisting>
+				&perl-subroutine-header;
+			</programlisting>
+		</section>
+
+		<section>
+			<title>Naming</title>
+
+			<para>
+			FIXME
+			</para>
+
+			<para>
+			Internal subroutines start with an underscore:
+			</para>
+
+			<screen>
+			sub _foo () {
+			...
+			}
+			</screen>
+
+		</section>
+
+		<section>
+			<title>Block definition</title>
+			<programlisting>
+			sub () {
+				...
+			}
+			</programlisting>
+		</section>
+
+		<section>
+			<title>Parameters</title>
+			<para>
+			Subroutine parameters must be especified using:
+			</para>
+
+			<itemizedlist>
+				<listitem><para>Scalar: $</para></listitem>
+				<listitem><para>Array: @</para></listitem>
+			</itemizedlist>
+
+			<para>
+			For instance, a subroutine which accepts a scalar value followed by an array and three other scalars will be:
+			</para>
+
+			<programlisting>
+			sub ($@$$$) {
+				...
+			}
+			</programlisting>
+		</section>
+
+	</section>
+
+	<section>
+		<title>General structure</title>
+		<para>
+		FIXME
+		</para>
+	</section>
+
+	<section>
+		<title>General structure</title>
+		<para>
+		FIXME
+		</para>
+	</section>
+
+	<section>
+		<title>General structure</title>
+		<para>
+		FIXME
+		</para>
+	</section>
+
+	<section>
+		<title>General structure</title>
+		<para>
+		FIXME
+		</para>
+	</section>
+
+	<section>
+		<title>General structure</title>
+		<para>
+		FIXME
+		</para>
+	</section>
+
+
+
+</chapter>

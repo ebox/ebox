@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use EBox::Schema;
+
+my $USAGE = <<EOU;
+USAGE: $0 file
+EOU
+
+die $USAGE unless scalar @ARGV;
+
+#get the file to validate
+my $file = $ARGV[0];
+-f $file or die "File '$file' does not exist!\n";
+
+if (EBox::Schema::validate($filename)) {
+	print STDOUT "The file '$file' was parsed correctly\n";
+	exit(0);
+} else {
+	print STDERR "The file '$file' contains errors\n";
+	exit(1);
+}

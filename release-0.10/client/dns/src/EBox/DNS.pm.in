@@ -1,0 +1,551 @@
+# Copyright (C) 2005  Warp Networks S.L., DBS Servicios Informaticos S.L.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+package EBox::DNS;
+
+use strict;
+use warnings;
+
+use base qw(EBox::GConfModule EBox::Model::ModelProvider EBox::Model::CompositeProvider);
+
+use EBox::Objects;
+use EBox::Gettext;
+use EBox::Service;
+use EBox::Summary::Module;
+use EBox::Summary::Status;
+use EBox::Menu::Item;
+use EBox::Sudo qw( :all );
+use EBox::Validate qw( :all );
+use EBox::DNS::Model::DomainTable;
+use EBox::DNS::Model::HostnameTable;
+use EBox::DNS::Model::AliasTable;
+use EBox::DNS::Model::EnableFormDNS;
+use EBox::DNS::Model::DNSComposite;
+use EBox::Model::ModelManager;
+
+use constant BIND9CONFDIR => "@BIND9CONFDIR@";
+use constant BIND9CONFFILE => "@BIND9CONF@";
+use constant BIND9CONFOPTIONSFILE => "@BIND9CONFOPTIONS@";
+use constant BIND9CONFLOCALFILE => "@BIND9CONFLOCAL@";
+use constant BIND9INIT     => "@BIND9_INIT@";
+use constant PIDFILE       => "/var/run/bind/run/named.pid";
+
+sub _create 
+{
+	my $class = shift;
+	my $self = $class->SUPER::_create(name => 'dns', 
+						domain => 'ebox-dns',
+						@_);
+
+	$self->{'domainModel'} = new EBox::DNS::Model::DomainTable(
+			'gconfmodule' => $self,
+			'directory' => 'domainTable'
+		);
+	$self->{'hostnameModel'} = new EBox::DNS::Model::HostnameTable(
+			'gconfmodule' => $self,
+			'directory' => 'hostnameTable'
+		);
+	$self->{'aliasModel'} = new EBox::DNS::Model::AliasTable(
+			'gconfmodule' => $self,
+			'directory' => 'aliasTable'
+		);
+	$self->{'enableModel'} = new EBox::DNS::Model::EnableFormDNS(
+			'gconfmodule' => $self,
+			'directory' => 'enableForm',
+			'enableTitle' => __('DNS Server'),
+			'modelDomain' => 'DNS'
+		);
+ 	$self->{'dnsComposite'} = new EBox::DNS::Model::DNSComposite();
+
+	bless($self, $class);
+	return $self;
+}
+
+# Method: models
+# 	Overrides <EBox::ModelImplementator::models>
+#
+sub models
+{
+	my ($self) = @_;
+
+	return [
+		$self->{'domainModel'}, 
+		$self->{'hostnameModel'}, 
+		$self->{'aliasModel'},
+		$self->{'enableModel'}
+	];
+}
+
+# Method: composites 
+# 
+#	Return the compistes used by the DNS eBox module
+#	
+# Overrides:
+# 
+#        <EBox::Model::CompositeProvider::composites>
+# 
+sub composites 
+{
+	my ($self) = @_;
+
+	return [
+		$self->{'dnsComposite'}, 
+	];
+}
+
+
+# Method: addDomain
+# 	add new domain to table model
+#
+# Parameter:
+#
+sub addDomain
+{
+	my ($self, $domainData) = @_;
+
+	my $domainModel = EBox::Model::ModelManager->instance()->model('DomainTable');
+
+	$domainModel->addDomain($domainData);
+}
+
+# Method: domains
+# 	returns an array with all domain names
+#
+# Returns:
+# 	an array ref
+# 	
+sub domains
+{
+	my $self = shift;
+	my @array;
+
+	my $model = EBox::Model::ModelManager->instance()->model('DomainTable');
+
+	foreach my $row(@{$model->printableValueRows()})
+	{
+		my $domaindata;
+
+		$domaindata->{'name'} = $row->{'domain'};
+
+		push(@array, $domaindata);
+	}
+
+	return \@array;
+}
+
+# Method: hostnames
+# 	returns an array with all hostname structure
+#
+# Parameters:
+# 	array with all printable values of a domain
+#
+# Returns:
+#		array ref with this structure data:
+#		
+#		'name': hostname
+#		'ip': ip address of hostname
+#		'aliases': an array ref returned by <EBox::DNS::aliases> method.
+# 	
+sub hostnames
+{
+	my ($self, $data) = @_;
+	my @array;
+
+	foreach my $hostname(@{$data})
+	{
+		my $hostdata;
+
+		$hostdata->{'name'} = $hostname->{'hostname'};
+		$hostdata->{'ip'} = $hostname->{'ipaddr'};
+		$hostdata->{'aliases'} = $self->aliases($hostname->{'alias'}->{'values'});
+
+		push(@array, $hostdata);
+	}
+
+	return \@array;
+}
+
+# Method: aliases
+# 	returns an array with all alias structure of a hostname
+#
+# Parameters:
+# 	array with all printable values of a hostname
+#
+# Returns:
+#		array ref with this structure data:
+#		
+#		'name': alias name
+# 	
+sub aliases
+{
+	my ($self, $data) = @_;
+	my @array;
+
+	foreach my $alias(@{$data})
+	{
+		my $aliasdata;
+
+		$aliasdata->{'name'} = $alias->{'alias'};
+
+		push(@array, $aliasdata);
+	}
+
+	return \@array;
+}
+
+# Method: completeDomain
+# 	returns a structure with all necesary data to build bind db config files
+#
+# Parameters:
+# 	domain name
+#
+# Returns:
+#		structure data with:
+#		
+#		'name': domain name
+#		'hosts': an array ref returned by <EBox::DNS::hostnames> method.
+# 	
+sub completeDomain # (domain)
+{
+	my ($self, $domain) = @_;
+	my $model = EBox::Model::ModelManager->instance()->model('DomainTable');
+	my $domdata;
+
+	my $row = $model->find(domain => $domain->{'name'});
+	$domdata->{'name'} = $domain->{'name'};
+	$domdata->{'hosts'} = $self->hostnames($row->{'hostnames'}->{'values'});
+	
+	return $domdata;
+}
+
+# Method: createHostDataArray
+# 	returns host and their alias info in a single hosts array ref.
+#
+# Parameters:
+# 	hostip: less significant ip address block of a host.
+# 	hostData: host and alias info
+#
+# Returns:
+# 	array ref
+sub createHostDataArray
+{
+	my ($self, $hostip, $hostData) = @_;
+	my @newHostsDataArray;
+	
+	# Add host info
+	my $newHostData;
+	$newHostData->{'name'} = $hostData->{'name'};
+	$newHostData->{'ip'} = $hostip;
+	push(@newHostsDataArray, $newHostData);
+	
+	# Add all alias info
+	foreach my $aliasData (@{$hostData->{'aliases'}})
+	{
+		my $newHostDataFromAlias;
+		$newHostDataFromAlias->{'name'} = $aliasData->{'name'};
+		$newHostDataFromAlias->{'ip'} = $hostip;
+		push(@newHostsDataArray, $newHostDataFromAlias);
+	}
+
+	return \@newHostsDataArray;
+}
+
+# Method: updateReversedData
+# 	updates or adds new item to the array data passed as parameters
+#
+# Parameters:
+# 	array ref that holds reversed info data
+# 	groupIDData structure to update or add
+#
+sub updateReversedData
+{
+	my ($self, $reversedData, $groupIPData) = @_;
+	# Try to find an previously added groupip item (from other domain)
+	my $pos = -1;
+	for(my $i = 0; $i < @{$reversedData}; $i++)
+	{
+		if($reversedData->[$i]->{'groupip'} eq $groupIPData->{'groupip'})
+		{
+			my $jpos = -1;
+			for(my $j = 0; $j < @{$reversedData->[$i]->{'domain'}}; $j++)
+			{
+				if($reversedData->[$i]->{'domain'}->[$j]->{'name'}
+						eq $groupIPData->{'domain'}->{'name'})
+				{
+					push(@{$reversedData->[$i]->{'domain'}->[$j]->{'hosts'}},
+							@{$groupIPData->{'domain'}->{'hosts'}});
+					$jpos = $j;
+					last;
+				}
+			}
+
+			if($jpos < 0)
+			{
+				push(@{$reversedData->[$i]->{'domain'}}, $groupIPData->{'domain'});
+			}
+			$pos = $i;
+			last;
+		}
+	}
+	
+	if($pos < 0)
+	{
+		my $item;
+		$item->{'groupip'} = $groupIPData->{'groupip'};
+		push(@{$item->{'domain'}}, $groupIPData->{'domain'});
+		push(@{$reversedData}, $item);
+	}
+}
+
+# Method: switchToReverseInfoData
+# 	returns a structure with all necesary data to build reverse db config
+# 	files.
+#
+# Parameters:
+# 	array ref structure returned by <EBox::DNS::completeDomain>
+#
+# Returns:
+# 	array ref structure data with:
+#
+#		'groupip': ip range to define a zone file info
+#		'domain': an array of hosts and domain data:
+#				'name': domain name
+#				'hosts': an array of hostnames and hostip:
+#						'ip': less significant block of an ip address
+#						'name': name of the host in the domain
+#
+sub switchToReverseInfoData
+{
+	my ($self, $info) = @_;
+	my @reversedData;
+
+	foreach my $domainData (@{$info})
+	{
+		my $domain = $domainData->{'name'};
+
+		foreach my $hostData (@{$domainData->{'hosts'}})
+		{
+			my @ipblocks = split(/\./, $hostData->{'ip'});
+
+			#Set group ip bind format (reverse order)
+			my $groupip = join(".", $ipblocks[2], $ipblocks[1], $ipblocks[0]);
+			my $hostip = $ipblocks[3];
+			
+			my $newDomainData;
+			$newDomainData->{'name'} = $domain;
+			$newDomainData->{'hosts'} = $self->createHostDataArray($hostip, $hostData);
+
+			my $groupIPData;
+			$groupIPData->{'groupip'} = $groupip;
+			$groupIPData->{'domain'} = $newDomainData;
+
+			$self->updateReversedData(\@reversedData, $groupIPData);
+		}
+	}
+
+	return \@reversedData;
+}
+
+sub _doDaemon
+{
+	my $self = shift;
+
+	if ($self->service and EBox::Service::running('bind9')) {
+		EBox::Service::manage('bind9','restart');
+	} elsif ($self->service) {
+		EBox::Service::manage('bind9','start');
+	} elsif (EBox::Service::running('bind9')) {
+		EBox::Service::manage('bind9','stop');
+	}
+}
+
+sub _stopService
+{
+	EBox::Service::manage('bind9','stop');
+}
+# Method: service
+#
+#      Check whether the Events service is enabled or not
+#
+# Returns:
+#
+#      boolean - the service is enabled or not
+#
+sub service
+  {
+
+      my ($self) = @_;
+
+      my $enableModel = $self->{'enableModel'};
+
+      return $enableModel->enabledValue();
+
+  }
+
+# Method: setService
+#
+#      Set if the events service is enabled or not
+#
+# Parameters:
+#
+#      enabled - boolean service to be enabled or not
+#
+sub setService
+  {
+
+      my ($self, $enabled) = @_;
+
+      my $enableModel = $self->{'enableModel'};
+
+      $enableModel->setRow(1,
+                           ( enabled => $enabled ),
+                          );
+
+  }
+
+# Method: _regenConfig
+#
+#       Overrides base method. It regenertates the dhcp service configuration
+#
+sub _regenConfig
+{
+	my $self = shift;
+
+	$self->_setBindConf;
+	$self->_doDaemon();
+}
+
+sub _setBindConf
+{
+	my $self = shift;
+	my @array = ();
+
+	$self->writeConfFile(BIND9CONFFILE, 
+				"dns/named.conf.mas", 
+				\@array);
+	$self->writeConfFile(BIND9CONFOPTIONSFILE, 
+				"dns/named.conf.options.mas", 
+				\@array);
+
+	my @domains = @{$self->domains()};
+
+#	push(@array, 'domains' => \@domains);
+#	$self->writeConfFile(BIND9CONFLOCALFILE, 
+#				"dns/named.conf.local.mas", 
+#				\@array);
+
+	root("/bin/rm -rf " . BIND9CONFDIR . "/zones/");
+	root("/bin/mkdir " . BIND9CONFDIR . "/zones/");
+
+	my @domainData;
+	foreach my $domain (@domains)
+	{
+		my $domdata = $self->completeDomain($domain);
+		push(@domainData, $domdata);
+
+		my $file = BIND9CONFDIR . "/zones/db." . $domdata->{'name'};
+		@array = ();
+		push(@array, 'domain' => $domdata);
+		$self->writeConfFile($file,"dns/db.mas",\@array);
+	}
+
+	my $reversedData = $self->switchToReverseInfoData(\@domainData);
+
+	my @inaddrs;
+	foreach my $reversedDataItem(@{$reversedData})
+	{
+		my $file = BIND9CONFDIR . "/zones/db." . $reversedDataItem->{'groupip'};
+		push(@inaddrs, $reversedDataItem->{'groupip'});
+		@array = ();
+		push(@array, 'rdata' => $reversedDataItem);
+		$self->writeConfFile($file, "dns/dbrev.mas", \@array);
+	}
+
+	push(@array, 'domains' => \@domains);
+	push(@array, 'inaddrs' => \@inaddrs);
+	$self->writeConfFile(BIND9CONFLOCALFILE, 
+				"dns/named.conf.local.mas", 
+				\@array);
+}
+
+sub statusSummary
+{
+	my $self = shift;
+	return new EBox::Summary::Status('dns', __('DNS'),
+		EBox::Service::running('bind9'), $self->service);
+}
+
+sub configureFirewall
+{
+	my ($self) = @_;
+
+	my $fw = EBox::Global->modInstance('firewall');	
+
+	if ($self->service()) {
+		$fw->addOutputRule('udp', 53);
+		$fw->addOutputRule('tcp', 53);
+	} else {
+		$fw->removeOutputRule('udp', 53);
+		$fw->removeOutputRule('tcp', 53);
+	}
+}
+
+sub onInstall
+{
+	EBox::init();
+	_addDNSService();
+	my $fw = EBox::Global->modInstance('firewall');
+	$fw->setInternalService('dns', 'accept');
+	$fw->save();
+}
+
+# Method: menu 
+#
+#       Overrides EBox::Module method.
+#
+sub menu
+{
+        my ($self, $root) = @_;
+        $root->add(new EBox::Menu::Item('url' => 'DNS/Composite/DNSComposite',
+                                        'text' => __('DNS')));
+}
+
+sub _addDNSService
+{
+   my $serviceMod = EBox::Global->modInstance('services');
+
+   if (not $serviceMod->serviceExists('name' => 'dns')) {
+       $serviceMod->addService('name' => 'dns',
+           'protocol' => 'udp',
+           'sourcePort' => 'any',
+           'destinationPort' => 53,
+           'internal' => 1,
+	   'readOnly' => 1);
+
+   } else {
+       $serviceMod->setService('name' => 'dns',
+           'protocol' => 'udp',
+           'sourcePort' => 'any',
+           'destinationPort' => 53,
+           'internal' => 1,
+	   'readOnly' => 1);
+       EBox::info("Not adding dns service as it already exists");
+   }
+
+   $serviceMod->save();
+
+}
+
+1;

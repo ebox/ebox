@@ -1,0 +1,98 @@
+DEPENDENCIES
+------------
+
++ Debian packages:
+
+# apt-get install <package>
+
+	+ perl
+	+ perl-modules
+	+ sudo
+	+ iproute
+	+ vlan
+	+ iptables
+	+ apache-perl
+	+ dhcp3-client
+	+ libapache-mod-perl
+	+ libapache-mod-ssl
+	+ liblog-dispatch-perl
+	+ liblog-log4perl-perl
+	+ liblocale-gettext-perl
+	+ libnet-ip-perl
+	+ liberror-perl
+	+ libdevel-stacktrace-perl
+	+ libapache-authcookie-perl
+	+ libgnome2-gconf-perl
+	+ libsys-cpuload-perl
+	+ libhtml-mason-perl
+	+ libproc-process-perl
+	+ libapache-singleton-perl
+	+ gettext
+
++ modules from cpan
+
+	none currently
+
+INSTALATION
+-----------
+
+1.- Configure:
+
+    $ ./configure <arguments>
+
+    Accepts standard GNU configure arguments, run ./configure --help
+    for a list
+
+    Apache is autodetected
+
+    Suggested argument: --localstatedir=/var/ , to have variable data
+    installed in /var/lib/, instead of the default $prefix/var/lib/
+
+2.- Instalation, as root:
+
+    $ make install
+
+3.- To make ebox run on startup:
+
+    cp tools/ebox /etc/init.d
+    ln -s /etc/init.d/ebox /etc/rc2.d/S99ebox
+
+4.- Give write permission to the ebox user (set in $sysconfdir/ebox/ebox.conf)
+    in the localstatedir directory: $prefix/var/ebox or /var/lib/ebox if the
+    --localstatedir=/var parameter was used, and create directories log and
+    tmp inside:
+
+    mkdir /var/lib/ebox/tmp
+    mkdir /var/lib/ebox/log
+    chown -R ebox.ebox /var/lib/ebox
+
+5.- Allow the apache user to run some root commands via sudo, include
+    the output of the ebox-sudoers command in your sudoers file. If the ebox
+    user is the only one that needs to use sudo you can just overwrite the
+    old file with the output of ebox-sudoers:
+
+    ebox-sudoers > /etc/sudoers
+
+6.- Copy conf/.gconf.path to the $HOME directory of the ebox user and:
+	
+	mkdir $HOME/gconf
+	chown ebox.ebox $HOME/gconf
+
+7.- Remove the link to /etc/init.d/apache from /etc/rc2.d/, the ebox script
+     will handle apache starts/stops.
+
+8.- Start ebox:
+	
+	/etc/init.d/ebox start
+
+RUNNING
+-------
+
+The url for the administration interface is (the default apache is 443):
+
+https://<ip address>
+
+The default password is 'ebox'. It may be changed in the general configuration
+page.
+
+eBox and apache logs are located in $localstatedir/ebox/log/ 

@@ -1,0 +1,13 @@
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ca/class</key>
+			<applyto>/ebox/modules/global/modules/ca/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::CA</default>
+			<locale name="C"/>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

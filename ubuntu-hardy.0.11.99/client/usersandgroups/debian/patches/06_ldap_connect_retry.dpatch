@@ -1,0 +1,39 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06_ldap_connect_retry.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to try to connect to ldap several times before giving up and  
+## DP: throwing an exception to give slapd some time to be ready to accept 
+## DP: connections
+
+@DPATCH@
+
+Index: usersandgroups/src/EBox/Ldap.pm
+===================================================================
+--- usersandgroups/src/EBox/Ldap.pm	(revisión: 10060)
++++ usersandgroups/src/EBox/Ldap.pm	(copia de trabajo)
+@@ -110,9 +110,23 @@
+ 
+ 
+ 	if ((not defined $self->{ldap}) or $reconnect) {
+-		$self->{ldap} = Net::LDAP->new (LDAPI) or
++		# We try to connect 5 times in 5 seconds, as we might need to 
++		# give slapd some time to accept connections after a
++		# slapd restart
++		my $connected = undef;
++		for (0..4) {
++			$self->{ldap} = Net::LDAP->new (LDAPI);
++			if ($self->{ldap}) {
++				$connected = 1;
++				last;
++			} else {
++				sleep (1);
++			}	
++		}
++		unless ($connected) {
+ 			throw EBox::Exceptions::Internal(
+ 					"Can't create ldapi connection");
++		}
+ 		$self->{ldap}->bind(ROOTDN, password => getPassword());
+ 	}
+ 

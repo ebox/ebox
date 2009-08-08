@@ -1,0 +1,44 @@
+<%args>
+	$dnsone
+	$dnstwo
+	$dnsthree
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<div class='help'>
+<% __('Having network interfaces configured via DHCP may cause this settings to be overriden.') %>
+</div>
+<br />
+	<form action='Nameservers' method='POST'>
+	<table>
+		<tr>
+			<td><% __('Primary') %>:</td>
+			<td>
+				<input class='inputText' type='text' name='dnsone'
+					   value='<% $dnsone %>' alt='DNS 1' />
+			</td>
+		</tr>
+		<tr>
+			<td><% __('Secondary') %>:</td>
+			<td>
+				<input class='inputText' type='text' name='dnstwo'
+					   value='<% $dnstwo %>' alt='DNS 2' />
+			</td>
+		</tr>
+		<tr>
+			<td><% __('Tertiary') %>:</td>
+			<td>
+				<input class='inputText' type='text' name='dnsthree'
+					   value='<% $dnsthree %>' alt='DNS 3' />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td class="tright">
+				<input class='inputButton' type='submit'
+					  name='accept' value='Ok' />
+			</td>
+		</tr>
+	</table>
+	</form>

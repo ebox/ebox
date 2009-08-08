@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+use EBox;
+use EBox::Backup;
+use EBox::ProgressIndicator;
+
+use Error qw(:try);
+
+
+my %params = @ARGV;
+
+my $progressId = delete $params{'--progress-id'};
+$progressId or die 'not progress indicator id supplied';
+
+my $progress = EBox::ProgressIndicator->retrieve($progressId);
+
+
+# put  progress indicator param
+$params{progress} = $progress;
+
+try {
+  EBox::Backup->makeBackup(%params);
+}
+otherwise {
+  my $ex = shift @_;
+  if (not $progress->finished) {
+    $progress->setAsFinished(1, $ex->text);
+  }
+
+  $ex->throw();
+};
+
+
+1;

@@ -1,0 +1,330 @@
+# Turkish translations for ebox-usersandgroups package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-usersandgroups package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-usersandgroups 0.10.99\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2007-11-07 12:22+0100\n"
+"PO-Revision-Date: 2007-05-01 18:03+0000\n"
+"Last-Translator: Erkan Kaplan <erkan@linux-sevenler.org>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"es\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1\n"
+
+#: src/EBox/CGI/Group.pm:30
+msgid "Edit group"
+msgstr "Grubu düzenle"
+
+#: src/EBox/CGI/Group.pm:45 src/EBox/CGI/AddUserToGroup.pm:44
+#: src/EBox/CGI/DelUserFromGroup.pm:45
+msgid "group"
+msgstr "Grup"
+
+#: src/EBox/CGI/Del.pm:65
+msgid "object name"
+msgstr "Nesne ismi"
+
+#: src/EBox/CGI/Del.pm:70
+msgid "object type"
+msgstr "Nesne türü"
+
+#: src/EBox/CGI/Del.pm:90
+msgid "User removed successfully"
+msgstr "Kullanıcı başarılı bir şekilde silindi"
+
+#: src/EBox/CGI/Del.pm:94
+msgid "Group removed successfully"
+msgstr "Grup başarılı bir şekilde silindi"
+
+#: src/EBox/CGI/User.pm:42 src/EBox/CGI/Users.pm:31
+#: src/EBox/UsersAndGroups.pm:1378 src/EBox/UsersAndGroups/Model/Users.pm:74
+msgid "Users"
+msgstr "Kullanıcılar"
+
+#: src/EBox/CGI/User.pm:46
+msgid "username"
+msgstr "Kullanıcı ismi"
+
+#: src/EBox/CGI/ModifyUser.pm:42 src/EBox/CGI/AddUser.pm:45
+#: src/EBox/UsersAndGroups.pm:261 src/EBox/UsersAndGroups.pm:267
+#: src/EBox/UsersAndGroups.pm:353 src/EBox/UsersAndGroups.pm:407
+#: src/EBox/UsersAndGroups.pm:438 src/EBox/UsersAndGroups.pm:727
+#: src/EBox/UsersAndGroups.pm:792 src/EBox/UsersAndGroups.pm:885
+#: src/EBox/UsersAndGroups.pm:922 src/EBox/UsersAndGroups.pm:959
+msgid "user name"
+msgstr "Kullanıcı ismi"
+
+#: src/EBox/CGI/ModifyUser.pm:47 src/EBox/CGI/AddUser.pm:46
+msgid "full name"
+msgstr "Tam ismi"
+
+#: src/EBox/CGI/ModifyUser.pm:48 src/EBox/CGI/AddUser.pm:49
+#: src/EBox/CGI/ModifyGroup.pm:47
+msgid "comment"
+msgstr "Açıklama"
+
+#: src/EBox/CGI/ModifyUser.pm:49 src/EBox/CGI/AddUser.pm:47
+msgid "password"
+msgstr "Parola"
+
+#: src/EBox/CGI/ModifyUser.pm:50
+msgid "confirm password"
+msgstr "Parola (tekrar)"
+
+#: src/EBox/CGI/ModifyUser.pm:65 src/EBox/CGI/AddUser.pm:61
+msgid "Passwords do not match."
+msgstr "Parolalar birbiri ile uyumsuz."
+
+#: src/EBox/CGI/AddGroup.pm:45 src/EBox/CGI/ModifyGroup.pm:40
+#: src/EBox/UsersAndGroups.pm:653 src/EBox/UsersAndGroups.pm:658
+#: src/EBox/UsersAndGroups.pm:763 src/EBox/UsersAndGroups.pm:890
+#: src/EBox/UsersAndGroups.pm:927 src/EBox/UsersAndGroups.pm:1001
+#: src/EBox/UsersAndGroups.pm:1107
+msgid "group name"
+msgstr "Grup ismi"
+
+#: src/EBox/CGI/AddUser.pm:48
+msgid "retype password"
+msgstr "Parolayı tekrar gir"
+
+#: src/EBox/CGI/AddUserToGroup.pm:49 src/EBox/CGI/DelUserFromGroup.pm:50
+#: src/EBox/UsersAndGroups/Model/Users.pm:82
+msgid "user"
+msgstr "Kullanıcı"
+
+#: src/EBox/CGI/Groups.pm:43 src/EBox/UsersAndGroups.pm:1386
+msgid "Groups"
+msgstr "Grublar"
+
+#: src/EBox/UsersAndGroups.pm:256
+#, perl-brace-format
+msgid "Username must not be longer than {maxuserlength} characters"
+msgstr "Kullanıcı ismi {maxuserlength} karakterden fazla olamaz"
+
+#: src/EBox/UsersAndGroups.pm:276 src/EBox/UsersAndGroups.pm:667
+msgid "Maximum number of system users reached"
+msgstr "Sistem içi asgari kullanıcı sayısına erişildi"
+
+#: src/EBox/UsersAndGroups.pm:641
+#, perl-brace-format
+msgid "Groupname must not be longer than {maxGroupLength} characters"
+msgstr "Grup ismi {maxGroupLength} karakterden fazla olamaz"
+
+#: src/EBox/UsersAndGroups.pm:647
+msgid "The group name is not valid because it is used internally"
+msgstr "Grub ismi geçersiz çünkü şuanda dahili olarak kullanımda."
+
+#: src/EBox/UsersAndGroups.pm:1180
+#, perl-brace-format
+msgid "Password must not be longer than {maxPwdLength} characters"
+msgstr "Parola en fazla {maxPwdLength} olabilir"
+
+#: src/EBox/UsersAndGroups.pm:1380
+#, fuzzy
+msgid "Add user"
+msgstr "Kullanıcı ekle"
+
+#: src/EBox/UsersAndGroups.pm:1383
+#, fuzzy
+msgid "Edit user"
+msgstr "Kullanıcıyı düzenle"
+
+#: src/EBox/LdapUserImplementation.pm:42
+msgid "This group contains users"
+msgstr "Bu grup içinde kullanıcı mevcut"
+
+#: src/EBox/UsersAndGroups/Model/Users.pm:56
+#: src/EBox/UsersAndGroups/Model/Users.pm:97
+msgid "Name"
+msgstr ""
+
+#: src/EBox/UsersAndGroups/Model/Users.pm:61
+#: src/EBox/UsersAndGroups/Model/Users.pm:107 src/templates/user.mas:28
+#: src/templates/users.mas:27
+msgid "Full name"
+msgstr "Tam ismi"
+
+#: src/EBox/UsersAndGroups/Model/Users.pm:66
+#: src/EBox/UsersAndGroups/Model/Users.pm:117
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/EBox/UsersAndGroups/Model/Users.pm:81
+msgid "foo"
+msgstr ""
+
+#: src/templates/ajax/tableUser.mas:88
+#, fuzzy
+msgid "Add new"
+msgstr "Kullanıcı ekle"
+
+#: src/templates/del.mas:15
+msgid ""
+"The user you tried to delete contains data in the following modules. Please "
+"confirm you want to remove it and all its related data"
+msgstr ""
+"Silmek istediğiniz kullanıcının verileri aşağıdaki modullarda mevcut. Lütfen "
+"bu verileri silmek için onaylayın"
+
+#: src/templates/del.mas:20
+msgid ""
+"The group you tried to delete contains data in the following modules. Please "
+"confirm you want to remove it and all its related data"
+msgstr ""
+"Silmek istediğiniz grubun verileri aşağıdaki modullarda mevcut. Lütfen bu "
+"verileri silmek için onaylayın"
+
+#: src/templates/del.mas:43
+msgid "Delete"
+msgstr "Sil"
+
+#: src/templates/del.mas:46
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/templates/groups.mas:11 src/templates/users.mas:11
+msgid ""
+"Changes in user accounts take effect inmediately, they do not need to be "
+"saved."
+msgstr "Kullanıcı hesapları güncelleniyor. Lütfen birşey kaydetmeyin."
+
+#: src/templates/groups.mas:12 src/templates/users.mas:12
+msgid ""
+"Changes related to printing, file sharing and Jabber service do need to be "
+"saved in order to be effective."
+msgstr ""
+"Yazdırma, Ortak kullanım ve Jabber servisindeki değişiklikler kayıt edilmesi "
+"gerekir."
+
+#: src/templates/groups.mas:14
+msgid "Add Group"
+msgstr "Grup ekle"
+
+#: src/templates/groups.mas:20 src/templates/groups.mas:54
+msgid "Group name"
+msgstr "Grup ismi"
+
+#: src/templates/groups.mas:30 src/templates/group.mas:21
+#: src/templates/user.mas:18 src/templates/users.mas:35
+msgid "Comment"
+msgstr "Açıklama"
+
+#: src/templates/groups.mas:35
+msgid "Optional value"
+msgstr "Seçmeli değerler"
+
+#: src/templates/groups.mas:42 src/templates/groups.mas:43
+#: src/templates/users.mas:63 src/templates/users.mas:64
+msgid "Create"
+msgstr "Oluştur"
+
+#: src/templates/groups.mas:51
+msgid "Edit Group"
+msgstr "Grubu düzenle"
+
+#: src/templates/groups.mas:55
+msgid "Actions"
+msgstr "İşlemler"
+
+#: src/templates/groups.mas:76 src/templates/group.mas:58
+msgid "Remove"
+msgstr "Kaldır"
+
+#: src/templates/group.mas:15
+msgid ""
+"There are no users the moment. You need at least one  to manage this group "
+"properly"
+msgstr ""
+"Henüz kullanıcı mevcut değil. Kullanım için en azından bir grubu "
+"düzenlemeniz gerekiyor."
+
+#: src/templates/group.mas:25 src/templates/group.mas:26
+#: src/templates/user.mas:60 src/templates/user.mas:61
+msgid "Change"
+msgstr "Değiştir"
+
+#: src/templates/group.mas:32
+msgid "Users in group"
+msgstr "Grubdaki kullanıcılar"
+
+#: src/templates/group.mas:34
+msgid "Users not in group"
+msgstr "Grup içinde kullanıcı mevcut değil"
+
+#: src/templates/group.mas:50 src/templates/group.mas:85
+msgid "Empty list"
+msgstr "Liste boş"
+
+#: src/templates/group.mas:61
+msgid "Remove users from group"
+msgstr "Kullanıcılar grubtan kaldır"
+
+#: src/templates/group.mas:69 src/templates/group.mas:72
+msgid "Add users to group"
+msgstr "Kullanıcılar gruba ekle"
+
+#: src/templates/group.mas:100 src/templates/group.mas:108
+#: src/templates/group.mas:109
+msgid "Delete group"
+msgstr "Grubu sil"
+
+#: src/templates/group.mas:102
+msgid ""
+"If you remove this group all its data within its shared directory will be "
+"deleted"
+msgstr "Eğer grubu silerseniz ortak kullanımdaki bütün dizinlerde silinir"
+
+#: src/templates/user.mas:38 src/templates/users.mas:43
+msgid "Password"
+msgstr "Parola"
+
+#: src/templates/user.mas:48 src/templates/users.mas:50
+msgid "Retype password"
+msgstr "Parola (tekrar)"
+
+#: src/templates/user.mas:71 src/templates/user.mas:79
+#: src/templates/user.mas:80
+msgid "Delete user"
+msgstr "Kullanıcıyı sil"
+
+#: src/templates/user.mas:73
+msgid ""
+"This operation will cause the removal of the user and all his dependences; "
+"such as mail accounts, user data..."
+msgstr ""
+"Bu işlem kullanıcıyı siler ve ona ait tüm posta ve kullanıcı verileride "
+"birlikte silinir"
+
+#: src/templates/users.mas:14
+msgid "Add User"
+msgstr "Kullanıcı ekle"
+
+#: src/templates/users.mas:19
+msgid "User name"
+msgstr "Kullanıcı ismi"
+
+#: src/templates/users.mas:77
+msgid "Group"
+msgstr "Grup"
+
+#~ msgid "Deleting user"
+#~ msgstr "Kullanıcı siliniyor"
+
+#~ msgid "Deleting group"
+#~ msgstr "Grup siliniyor"
+
+#~ msgid "Administration of group "
+#~ msgstr "Grup yöneticisi"
+
+#~ msgid "Administration of user"
+#~ msgstr "Kullanıcı yönetimi"
+
+#~ msgid "Edit User"
+#~ msgstr "Kullanıcıyı düzenle"

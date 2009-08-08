@@ -1,0 +1,8 @@
+0.2
+	+ Configuration  based on gconf.
+	+ Removed dependencies on xml-simple, xerces and xpath
+	+ Some code cleanup
+	+ Several bugfixes.
+
+0.1
+	+ Initial release

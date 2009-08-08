@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_enable_log_observer.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to enable log observer
+
+@DPATCH@
+
+Index: firewall/src/EBox/Firewall.pm
+===================================================================
+--- firewall/src/EBox/Firewall.pm	(revisión: 9847)
++++ firewall/src/EBox/Firewall.pm	(revisión: 9848)
+@@ -21,6 +21,7 @@
+ use base qw(EBox::GConfModule 
+ 			EBox::ObjectsObserver 
+ 			EBox::NetworkObserver
++			EBox::LogObserver
+ 			EBox::Model::ModelProvider
+ 			EBox::ServiceModule::ServiceInterface
+ 			);

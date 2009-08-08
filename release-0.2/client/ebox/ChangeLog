@@ -1,0 +1,8 @@
+0.2
+	+ All modules are now based on gconf.
+	+ Removed dependencies on xml-simple, xerces and xpath
+	+ New MAC address field in Object members.
+	+ Several bugfixes.
+
+0.1
+	+ Initial release

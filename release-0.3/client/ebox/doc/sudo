@@ -1,0 +1,23 @@
+Sudo is used to execute privileged commands such as iptables, ifup, ifdown, 
+rc.d scripts and so on.  Httpd user has to be able to excute them.
+
+Here you have got an example of a sudoers file, and commands used.
+
+# Sudoers example file for ebox
+
+# Cmnd alias specification
+# /sbin/ifup     -> used to bring interfaces up
+# /sbin/ifdown   -> used to bring interfaces down
+# /sbin/iptables -> used to configure firewall rules
+# /sbin/sysctl   -> used to configure network kernel stuff such as ipv4_forward
+# /etc/init.d/apache   -> used to start/stop/restart apache
+# /bin/mv * /etc/resolv.conf -> used to modify dns servers
+
+
+Cmnd_Alias      EBOXCMNDS = /sbin/ifup, /sbin/ifdown, /sbin/ip, \
+                            /sbin/iptables, /sbin/sysctl, \
+                            /bin/mv * /etc/resolv.conf, /etc/init.d/apache
+
+# Allow httpd user to execute above commands
+
+www-data ALL = NOPASSWD:EBOXCMNDS

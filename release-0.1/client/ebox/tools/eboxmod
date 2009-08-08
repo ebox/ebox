@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use EBox::Global;
+use Data::Dumper;
+
+my $global = EBox::Global->modInstance('global');
+
+sub usage {
+	print "Usage: $0 install|remove filename\n";
+	exit 1;
+}
+
+sub install($) {
+	my $file = shift;
+	my $doc = $global->installMod($file);
+}
+
+sub remove($) {
+	my $mod = shift;
+	if ($global->modExists($mod)) {
+		$global->unregisterMod($mod);
+		exit 0;
+	} else {
+		print "Module does not exist: $mod\n";
+		exit 1;
+	}
+}
+
+if (@ARGV != 2) {
+	usage;
+}
+
+if ($ARGV[0] eq "install") {
+	unless (-f $ARGV[1]) {
+		print "File does not exist: " . $ARGV[1] . "\n";
+		exit 1;
+	}
+	install($ARGV[1]);
+} elsif ($ARGV[0] eq "remove") {
+	remove($ARGV[1]);
+} else {
+	usage;
+}

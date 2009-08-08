@@ -1,0 +1,17 @@
+ebox-openvpn (0.9.1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 15 May 2007 13:02:26 +0200
+
+ebox-openvpn (0.9) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Amor Garcia <javier.amor.garcia@warp.es>  Tue, 27 Mar 2007 16:16:29 +0200
+
+ebox-openvpn (0.8.99) unstable; urgency=low
+
+  * Initial upstream release
+
+ -- Javier Amor Garcia <javier.amor.garcia@warp.es>  Tue,  6 Feb 2007 10:39:51 +0100

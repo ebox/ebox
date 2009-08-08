@@ -1,0 +1,29 @@
+#!/bin/bash
+
+webserver=apache-perl
+
+case "$1" in
+	configure)
+		# don't start apache-perl with its script
+		update-rc.d -f apache-perl remove
+
+		#add the ebox group and user
+		touch /tmp/test.$$
+		chgrp ebox /tmp/test.$$ >/dev/null 2>&1 || addgroup --system ebox
+		chown ebox /tmp/test.$$ >/dev/null 2>&1 || 
+			adduser --system --home /var/lib/ebox/ --no-create-home \
+				--disabled-password --ingroup ebox ebox
+
+		#change the /var/lib/ebox/ user
+		chown -R ebox.ebox /var/lib/ebox
+
+		#sudo configuration
+		ebox-sudoers > /etc/sudoers
+		chmod 0440 /etc/sudoers
+
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,31 @@
+<%args>
+	@data
+	$dataTable
+	$hasChanged
+</%args>
+<%init>
+use EBox::Gettext;
+my @tableHead = @{$dataTable->{'tableDescription'}};
+</%init>
+<script type="text/javascript" src="/data/js/table-helper.js">//</script>
+
+<!-- Element to hide the elements while Asynchronous request are -->
+<!-- working. Find more information at "table-helper.js" and -->
+<!-- "tableBody.mas" -->
+<div id="hiddenDiv" class="hidden"></div>
+
+<div class="help">
+<% $dataTable->{'help'} %>
+</div>
+
+
+	<div id='error_<% $dataTable->{'tableName'} %>'></div>
+
+	<div id="<% $dataTable->{'tableName'} %>">
+	
+		<& /ajax/tableBody.mas, 
+						'data' => \@data,
+						'dataTable' => $dataTable,
+						'hasChanged' => $hasChanged &>
+
+	</div>

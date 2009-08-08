@@ -1,0 +1,18 @@
+<h2 class='squid'><TMPL_VAR EXPR="_('Squid Administration')"></h2>
+	<div class='squidnew'>
+		<form action='index.cgi' method='POST'>
+			<h3><TMPL_VAR EXPR="_('Tipo de negociacion por defecto')"></h3>
+				<p><TMPL_VAR EXPR="_('Do you wish to allow web browsing for everybody by deafult?')"></p>
+			<div class="help">
+				<p>Si selecciona que desea permitir navegar a todo el mundo podra
+				despues seleccionar las excepciones que no pueden navegar. Si su
+				decision es no permitir navegar a todo el mundo, tendra entonces
+				que seleccionar quien si puede navegar.</p>
+			</div>
+			<p class="endform"><input class='inputButton' type='submit' name='Yes' 
+					value='<TMPL_VAR EXPR="_('Yes')">' alt='Yes'>
+			<input class='inputButton' type='submit' name='No' 
+					value='<TMPL_VAR EXPR="_('No')">' alt='No'></p>
+		</form>
+	</div>
+</div>

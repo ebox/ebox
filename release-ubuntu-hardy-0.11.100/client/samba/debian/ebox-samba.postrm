@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#DEBHELPER#
+
+case "$1" in
+	remove)
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+		#invoke-rc.d samba stop || true
+		
+		# Generate configuration
+		# /usr/share/ebox-usersandgroups/ebox-init-ldap genconfig
+
+		# Restart slapd
+		# invoke-rc.d slapd restart
+
+		# /usr/share/ebox/ebox-clean-gconf samba || true
+
+        # Restart eBox apache
+        invoke-rc.d ebox apache restart || true
+
+		;;		
+	purge)
+	 	# test -d /home/samba && rm -rf /home/samba
+	    ;;    
+esac
+
+

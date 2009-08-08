@@ -1,0 +1,383 @@
+package EBox::Squid;
+# Simple API to manage squid.conf
+# Author: Javier Uruen Val
+# Version: 0.21
+# Last Modification: 07-01-2004
+use strict;
+use warnings;
+
+# inherits EBox::Module
+use base 'EBox::XMLModule';
+
+use EBox::Objects;
+use EBox::Global;
+use EBox::Config;
+use EBox::Firewall;
+use EBox::Validate qw( :all );
+use EBox::Exceptions::InvalidData;
+use EBox::Exceptions::Internal;
+use EBox::Exceptions::DataNotFound;
+use Data::Dumper;
+use Error qw(:try);
+
+#Module local conf stuff
+use constant SQUIDCONFILE => "@SQUIDCONF@";
+use constant SQUIDINIT    => "/etc/init.d/squid";
+use constant PIDFILE      => "/var/run/squid.pid";
+#Strings to find tags in our base configuration file
+use  constant TAG_ACL   		=> "# <EBOX> TAG_ACL #";
+use  constant TAG_HTTP_ACCESS           => "# <EBOX> TAG_HTTP_ACCESS #";
+use  constant TAG_HTTP_PORT             => "# <EBOX> TAG_HTTP_PORT #";
+use  constant TAG_TRANSPARENT           => "# <EBOX> TAG_TRANSPARENT #";
+
+use  constant TRANSPARENT_CONF          => "httpd_accel_host virtual\n".
+		      			   "httpd_accel_port 80\n".
+		      			   "httpd_accel_with_proxy on\n".
+	      				   "httpd_accel_uses_host_header on\n";
+
+
+sub _create {
+	my $class = shift;
+	my $self  = $class->SUPER::_create(name => 'squid');
+	$self->{logger} = EBox::Global->logger();
+	bless ($self, $class);
+	return $self;
+}
+
+
+
+sub _doDaemon {
+	my $self = shift;
+	my $isRunning;
+	$isRunning = 1 if ( -f PIDFILE );
+	if ( $self->getService eq 'yes'  and $isRunning  ){
+		$self->daemon('reload');
+	}elsif ( $self->getService eq 'yes' ){
+		$self->daemon('start');
+	}elsif ( $self->getService eq 'no' and $isRunning){
+		$self->daemon('stop');
+	}
+}
+#Override virtual method in base class
+#This method should be called anytime  object's conf changes
+#Restart service if module active
+sub _regenConfig {
+	my $self = shift;
+	$self->setSquidConf;
+	$self->_doDaemon();
+}
+
+#Override virtual method in base class
+#Arguments:
+#	- Object name
+#Returns:
+#	- True if  used by this module
+#	- False if not used by this module
+sub usesObject($$){
+	my $self = shift;
+	my $object  = shift;
+	my $exceps = $self->getExceptions;
+	if ( defined $exceps->{$object} ){
+		return "true";
+	}else {
+		return undef;
+	}
+}
+
+#Override virtual method in base class
+#Arguments:
+#	- Object name
+sub freeObject($$){
+	my $self = shift;
+	my $object  = shift;
+	my $exceps = $self->getExceptions;
+	delete $exceps->{$object};
+  	$self->hdoc->{'global'}[0]->{'object'} = $exceps; 	
+	$self->writeHashFile;
+	#FIXME make sure everthing goes ok when removing the last object
+}
+
+#changes the global policy
+#Pars: 0 -> 'allow'|'deny'|""
+sub changeGlobalPolicy {
+	my ($self, $policy) = @_;
+	$self->{logger}->debug("Changing global policy to $policy");
+	$self->{logger}->debug(Dumper($self->adoc));
+	$self->hdoc->{'global'}[0]->{'policy'} = $policy;
+	$self->writeHashFile();
+}
+
+#returns  the global policy
+#'allow'|'deny'
+sub getGlobalPolicy {
+	my $self = shift;
+	return $self->hdoc->{'global'}[0]->{'policy'};
+}
+
+#creates exceptions for the global policy
+#Par: 0- Array of arrays containing object and polciy
+sub addExceptions {
+	my ($self, @args) = (@_);
+	$self->hdoc->{'global'}[0]->{'object'} = {};if (not @args){
+		delete  $self->hdoc->{'global'}[0]->{'object'}; 
+		$self->writeHashFile();
+		return;
+	}
+	foreach  (@args){
+		my $refvec = $_;
+		my @object = @$_;
+		$self->hdoc->{'global'}[0]->{'object'}->{@$_[0]}->{'policy'} = @$_[1];	
+	}
+	$self->writeHashFile();
+}
+
+#returns:
+#	- Hash reference with object's overriding global policy
+sub getExceptions {
+	my $self = shift;
+	if ( defined $self->hdoc->{'global'}[0]->{'object'} ){
+		return  $self->hdoc->{'global'}[0]->{'object'}; 	
+	}else{
+		return ;
+	}
+}
+
+
+#returns true if an Object is an exception to global policy
+sub isExcep($$) {
+	my ($self, $object) = @_;
+	my $exceptions = $self->getExceptions();
+	for my $key ( keys %$exceptions ) {
+		  return 1 if ( $key eq $object ); 
+		  
+        }
+	return undef;
+}
+#sets authentication 
+#Par: 0 -> 'yes'|'no'  Weird, isn't it?
+sub setAuth {
+	my ($self, $auth) = @_;
+	if ( $auth ne 'yes' && $auth ne 'no'){
+		throw EBox::Exceptions::InvalidData("Bad argument: $auth");
+	}
+	$self->hdoc->{'auth'}[0]->{'require'} = $auth;	
+ 	$self->writeHashFile();;	
+}
+
+#returns authentication 
+#ret: yes|no
+sub getAuth {
+	my $self = pop;
+	if ( defined $self->hdoc->{'auth'} ) {
+		return $self->hdoc->{'auth'}[0]->{'require'} ;	
+	}else{
+		return;
+	}
+}
+
+
+
+sub _confFW {
+	my $self = shift;
+	my $fw = EBox::Global->modInstance('firewall');
+	if ( $self->getService eq 'yes' ){
+		if ( not $fw->service('squid') ){
+			$fw->addService('squid', 'tcp' , $self->getPort);
+			$fw->addOutputRule('tcp', 80);
+			$fw->setObjectService('_global', 'squid', 'allow');
+		}
+
+		if ( $self->getTransproxy eq 'yes' ){
+			$fw->setServiceDNat('squid', 80);
+		} else{
+			try {
+				$fw->unsetServiceDNat('squid');
+			} catch EBox::Exceptions::DataNotFound with { };
+		}
+	} else {
+		if ( $fw->service('squid')){
+			$fw->removeService('squid');
+			$fw->removeOutputRule('tcp', 80);
+		}
+	}
+}
+
+#sets activation service
+#Par: 0-> 'yes'|'no
+sub setService {
+	my ($self, $active) = @_;
+
+	if ( $active eq 'yes' or $active eq 'no' ) {
+		$self->hdoc->{'service'}[0]->{'active'} = $active;
+		$self->writeHashFile();
+		$self->_confFW;
+	}else {
+		throw EBox::Exceptions::InvalidData("Bad argument: $active");
+	}
+}
+
+#returns if service is active or not
+#ret: yes|no
+sub getService {
+	my $self = shift;    	
+	if ( defined $self->hdoc->{'service'} ) {
+		return $self->hdoc->{'service'}[0]->{'active'} ;	
+	}else{
+		return;
+	}
+}
+
+#sets transparent proxy service
+#Par: 0-> 'yes'|'no
+sub setTransproxy {
+	my ($self, $active) = @_;
+	
+	if ( $active eq 'yes' or $active eq 'no' ) {
+		$self->hdoc->{'transproxy'}[0]->{'active'} = $active;	
+		$self->writeHashFile();
+		$self->_confFW;
+	}else {
+		throw EBox::Exceptions::InvalidData("Bad argument: $active");
+	}
+}
+
+#returns if service is active or not
+#ret: yes|no
+sub getTransproxy {
+	my $self = shift;    	
+	if ( defined $self->hdoc->{'transproxy'} ) {
+		return $self->hdoc->{'transproxy'}[0]->{'active'} ;	
+	}else{
+		return;
+	}
+}
+#sets port service
+#Par: 0-> port_number
+sub setPort {
+	my ($self, $port) = @_;
+	checkPort($port) or
+                throw EBox::Exceptions::InvalidData( data  => "Listening Port",
+						     value => $port);
+	$self->hdoc->{'service'}[0]->{'port'} = $port;
+	$self->writeHashFile();
+	$self->_confFW;
+}
+
+#returns port_number
+#ret: port_number
+sub getPort {
+	my $self = shift;    	
+	if ( defined $self->hdoc->{'service'} ) {
+		return $self->hdoc->{'service'}[0]->{'port'} ;	
+	}else{
+		return;
+	}
+}
+
+#Updates the squid.conf file with xml user conf
+sub setSquidConf {
+	my $self = shift;
+	my $auth = $self->getAuth();	
+	my $policy = $self->getGlobalPolicy();
+	my @httpaccess = ("http_access $policy all\n");
+	my $objectobj = EBox::Global->modInstance('objects');
+	my $exceptions = $self->getExceptions();
+	my ($htAllow, $htDeny, @objects, $httport);
+	for my $key ( keys %$exceptions ) {
+	          my $pol  = $exceptions->{$key}->{'policy'};
+		  if ( $pol eq 'listAllow' ) {
+		  	$htAllow = "http_access allow listAllow\n";
+		  }
+  	      	  if ( $pol eq 'listDeny' ) {
+		 	$htDeny = "http_access deny listDeny\n";
+		  }	  	     
+	 	  foreach (@{$objectobj->getObjectAddresses($key)}){
+				push @objects,	"acl $pol src  $_\n";
+		  }
+        }
+	unshift @httpaccess, $htAllow if defined $htAllow;
+	unshift @httpaccess, $htDeny  if defined $htDeny;
+	$httport = "http_port " . $self->getPort . "\n";
+	unless  ( open ( SQUIDCONF, "> " . SQUIDCONFILE )){
+		 throw EBox::Exceptions::Internal(
+		 	"Could not open to write ". SQUIDCONFILE . 
+			" Check permissions");
+	}
+	unless  ( open ( SQUIDBASE, EBox::Config->stubs . "/squid/squid.conf")){
+		throw EBox::Exceptions::Internal(
+                	        "Could not open  ". EBox::Config->stubs .
+	                	"/squid/squid.conf" );
+							
+	}
+	my @squidbase = <SQUIDBASE>;
+        foreach (@squidbase){
+		print SQUIDCONF ;
+		print SQUIDCONF "@objects" if ( /TAG_ACL/);
+		print SQUIDCONF "@httpaccess" if ( /TAG_HTTP_ACCESS/);
+		print SQUIDCONF $httport if ( /TAG_HTTP_PORT/);
+		if ( /TAG_TRANSPARENT/ and $self->getTransproxy eq 'yes'){
+			print SQUIDCONF TRANSPARENT_CONF;
+		}
+	}
+       close(SQUIDCONF);
+       close(SQUIDBASE);
+       $self->{logger}->debug("@httpaccess"); 
+       $self->{logger}->debug("@objects"); 
+}
+
+#Executes a command using system function
+#Args:
+#	- String with command to execute
+#Returns:
+#	- True if $? == 0
+#	- False in other case
+# FIXME : use Sudo.pm
+sub __runcmd($$){
+	my ($self, $cmd) = @_;
+
+	my @output = `$cmd`;
+	my $exit   = defined $? ? $? : 'NULL';
+	$self->{logger}->debug("Command '$cmd' with exit code ".$exit
+					 ."  output " . "@output");
+	$? ? return 1 : return;
+}
+
+#manage squid via init.d/squid script
+#Pars 0: start|stop|restart
+sub daemon(){
+	my ($self, $action) = @_;
+	#FIXME Check return values to see if everything was ok
+	# FIXME : use Sudo.pm for this stuff
+	my $command = "sudo " . SQUIDINIT . " " . $action . " 2>&1";
+	if ( $action eq 'start') {
+		$self->__runcmd($command);
+		$self->{logger}->info("starting squid");
+	}
+	elsif ( $action eq 'stop'){
+		$self->__runcmd($command);
+		$self->{logger}->info("stoping squid");
+	}
+	elsif ( $action eq 'reload'){
+		$self->__runcmd($command);
+		$self->{logger}->info("reloading squid");
+	}
+	else {
+		throw EBox::Exceptions::InvalidData("Bad argument: $action");
+	}
+	
+}
+
+#Tests for the above code
+#changeGlobalPolicy("deny");
+#my @objects;
+#my @object = ( 'secretarias', 'listAllow' );
+#push @objects, \@object;
+#my @object1 = ( 'jefes', 'listAllow');
+#$objects[1] = \@object1;
+#my @test;
+#&addExceptions(@objects);
+#my $test = &getExceptions();
+#&setAuth('no');
+#&$self->{debug}->debug(5, &getAuth());
+#&setSquidConf();
+1;

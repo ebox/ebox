@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<module name="squid" class="EBox::Squid" changed="no" >
+	<menu text="Squid" location="Squid/Index" />
+	<test module="EBox::Test::Squid"/>
+	<depends module="objects"/>
+	<depends module="firewall"/>
+</module>

@@ -1,0 +1,161 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<h3>Deny Policy</h3>
+	<form action='Deny' method='POST'>
+		<select name='deny'>
+			<TMPL_IF EXPR="deny eq 'DROP'">
+				<option selected value="DROP"><TMPL_VAR EXPR="__('Drop packets')"></option>
+				<option value="REJECT"><TMPL_VAR EXPR="__('Reject packets')"></option>
+			<TMPL_ELSE>
+				<option selected value="REJECT"><TMPL_VAR EXPR="__('Reject packets')"></option>
+				<option value="DROP"><TMPL_VAR EXPR="__('Drop packets')"></option>
+			</TMPL_IF>
+		</select>
+		<input class='inputButton' type='submit' name='accept' value='Ok'>
+	</form>
+
+<h3><TMPL_VAR EXPR="__('Port redirections')"></h3>
+<form action='Redirection' method='POST'>
+	<table>
+		<tr>
+			<td width='25%'><TMPL_VAR EXPR="__('External port')">:</td>
+			<td width='25%'>
+				<input type='text' class='inputText' name='eport' size='5'>
+			</td>
+			<td width='25%'>&nbsp;&nbsp;<TMPL_VAR EXPR="__('Protocol')">:</td>
+			<td width='25%'>
+				<select name='proto'>
+					<option selected value='tcp'>TCP</option>
+					<option value='udp'>UDP</option>
+				</select>
+			</td>
+			<td width='25%'>
+				<select name='iface'>
+					<option selected value=''>    </option>
+					<TMPL_LOOP name="ifaces">
+						<option value='<TMPL_VAR NAME="name">'>
+							<TMPL_VAR NAME="name">
+						</option>
+					</TMPL_LOOP>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Destination address:</td>
+			<td>
+				<input type='text' class='inputText' name='address'>
+			</td>
+			<td>&nbsp;&nbsp;Destination port:</td>
+			<td>
+				<input type='text' class='inputText' name='dport' size='5'>
+			</td>
+		</tr>
+	</table>
+	<p class='endform'>
+		<input class='inputButton' type='submit' name='add'
+			   value='<TMPL_VAR EXPR="__('Add')">'>
+	</p>
+</form>
+	<!-- TODO: list port redirections -->
+<TMPL_IF NAME="redirections">
+	<table class='dataTable' cellspacing='0'>
+		<thead>
+			<tr>
+				<th>Interface</th>
+				<th>External Port</th>
+				<th>Protocol</th>
+				<th>IP Address</th>
+				<th>Port</th>
+				<th>Change</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<TMPL_LOOP name="redirections">
+			<tr class='border'>
+
+				<form action='Redirection' method='post'>
+					<input type='hidden' name='oldeport'
+						   value='<TMPL_VAR NAME="eport">'>
+					<input type='hidden' name='oldproto'
+						   value='<TMPL_VAR NAME="protocol">'>
+					<input type='hidden' name='oldiface'
+						   value='<TMPL_VAR NAME="iface">'>
+
+					<td>
+						<select name='iface'>
+							<option selected value='<TMPL_VAR NAME="iface">'>
+								<TMPL_VAR NAME="iface">
+							</option>
+							<TMPL_LOOP name="ifaces">
+								<TMPL_IF EXPR="name ne iface">
+									<option value='<TMPL_VAR NAME="name">'>
+										<TMPL_VAR NAME="name">
+									</option>
+								</TMPL_IF>
+							</TMPL_LOOP>
+						</select>
+					</td>
+					<td class='tcenter'>
+						<input type='text' class='inputText'
+							   value='<TMPL_VAR name="eport">' name='eport'
+							   size='5'>
+					</td>
+
+					<td class='tcenter'> <select name='proto'>
+						<TMPL_IF EXPR="protocol eq 'tcp'">
+							<option selected value='tcp'>tcp</option>
+							<option value='udp'>udp</option>
+						<TMPL_ELSE>
+							<option selected value='udp'>udp</option>
+							<option value='tcp'>tcp</option>
+						</TMPL_IF>
+					</select> </td>
+
+					<td class='tcenter'>
+						<input type='text' class='inputText'
+							   value='<TMPL_VAR name="ip">' name='address'
+							   size='16'>
+					</td>
+
+					<td class='tcenter'>
+						<input type='text' class='inputText'
+							   value='<TMPL_VAR name="dport">' name='dport'
+							   size='5'>
+					</td>
+
+					<td class='tcenter'>
+						<input class='inputButton' type='submit' name='change'
+							   value='<TMPL_VAR EXPR="__('Change')">'>
+					</td>
+
+					<td class='tcenter'>
+						<input class='inputButton' type='submit' name='delete'
+							   value='<TMPL_VAR EXPR="__('Delete')">'>
+					</td>
+				</form>
+			</tr>
+			</TMPL_LOOP>
+		</tbody>
+	</table>
+</TMPL_IF>
+
+<h3>Objects</h3>
+	<p>
+		<a href="Object?object=_global">&raquo; Configure default rules</a>
+	</p>
+	<TMPL_IF NAME="objects">
+	<p>
+	Configure rules for a particular Object:
+	<form action='Object' method='post'>
+		<select name='object'>
+			<TMPL_LOOP name="objects">
+				<option value='<TMPL_VAR name="name">'>
+					<TMPL_VAR name="description">
+				</option>
+			</TMPL_LOOP>
+		</select>
+		<input class='inputButton' type='submit' value='Go' name='configobject'>
+	</form>
+	</p>
+	</TMPL_IF>

@@ -1,0 +1,7 @@
+<%args>
+	$lang
+	$port
+</%args>
+<& password.mas &>
+<& language.mas, lang => $lang &>
+<& port.mas, port => $port &>

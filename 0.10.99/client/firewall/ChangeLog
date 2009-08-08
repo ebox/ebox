@@ -1,0 +1,43 @@
+0.10.99
+	+ Fix some typos
+0.10
+	+ Load ip_nat_ftp module
+0.9.100
+	+ Use new model/view framework which implies several changes
+	+ Now the user can add rules to INPUT/OUTPUT chain
+	+ Use the new services module
+0.9.99
+    + New release
+0.9.3
+	+ New release
+0.9.2
+	+ New release
+0.9.1
+	+ Small UI changes
+	+ Fix bug with rules and more than one external interface
+0.9
+	+ Added Polish translation
+        + Added Aragonese translation
+	+ Added German translation
+	+ dhcp-hooks script will be installed by network module
+
+0.8.99
+	+ Add externalInput to FirewallObserver to provide rules for
+	  external interfaces
+0.8.1
+	+ New release
+0.8
+	+ New release
+0.7.99
+	+ Add Portuguese translation
+0.7.1
+	+ GUI fixes
+	+ Use of ebox-sudoers-friendly
+0.7
+	+ First public release
+0.6	
+	+ Separate module from ebox base
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update install
+	+ Update debian scripts

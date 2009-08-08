@@ -1,0 +1,144 @@
+ebox-usersandgroups (0.11.99-0ubuntu6~ppa1) hardy; urgency=low
+
+  * Add patch to try to connect to slapd several times before giving up
+    and throwing an exceptions as slapd might need some time to accept
+    connectiongs after a restart
+
+ -- Javier Uruen Val <javi@warp.es>  Fri, 18 Apr 2008 16:59:00 +0200
+
+ebox-usersandgroups (0.11.99-0ubuntu5) hardy; urgency=low
+
+  * Backport 0.11.100 patch to disable workaround to enable utf8 strings
+    in ldap results. The library does the job for us and we break strings
+    if we do it twice
+  * Backport 0.11.100 patch to remove read permissions for adm group
+    in eBox ldap password file
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 07 Apr 2008 00:17:58 +0200
+
+ebox-usersandgroups (0.11.99-0ubuntu4) hardy; urgency=low
+
+  * Backport 0.11.100 patch to fix backup restoring. Run rm within sh -c
+    to avoid issues with sudo and globbing of a directory without 
+    proper permissions
+
+ -- Javier Uruen Val <javi@warp.es>  Wed, 02 Apr 2008 23:55:33 +0200
+
+ebox-usersandgroups (0.11.99-0ubuntu3) hardy; urgency=low
+
+  * Backport 0.11.100 patch to allow unsafe characters in users' passwords
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 27 Mar 2008 14:49:38 +0100
+
+ebox-usersandgroups (0.11.99-0ubuntu2~ppa1) hardy; urgency=low
+
+  * Backport patch from 0.11.100 to make backup tool aware of the
+    slapd apparmour profile which forces us to read and write from
+    stdin and stdout
+
+  * Backport patch form 0.11.100 to initialise ebox-init-ldap with
+    ebox user before fetching a gconf instance
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 10 Mar 2008 14:38:02 +0100
+
+ebox-usersandgroups (0.11.99-0ubuntu1~ppa1) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 25 Feb 2008 15:31:20 +0100
+
+ebox-usersandgroups (0.11.99) unstable; urgency=low
+
+  * New upstream release
+
+ -- Enrique José Hernández Blasco <quique@warp.es>  Tue,  8 Jan 2008 16:14:41 +0100
+
+ebox-usersandgroups (0.11.3-0ubuntu1~ppa1) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 13 Jan 2008 19:14:30 +0100
+
+ebox-usersandgroups (0.11) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Wed, 28 Nov 2007 15:23:36 +0100
+
+ebox-usersandgroups (0.10.99) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 01 Nov 2007 21:38:16 +0100
+
+ebox-usersandgroups (0.10) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 16 Oct 2007 12:07:12 +0200
+
+ebox-usersandgroups (0.9.100) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 04 Sep 2007 14:24:57 +0200
+
+ebox-usersandgroups (0.9.99) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Amor Garcia <javier.amor.garcia@warp.es>  Tue, 24 Jul 2007 13:04:49 +0200
+
+ebox-usersandgroups (0.9.3) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 24 Jun 2007 16:38:50 +0200
+
+ebox-usersandgroups (0.9.2) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 12 Jun 2007 18:59:29 +0200
+
+ebox-usersandgroups (0.9.1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 15 May 2007 13:02:28 +0200
+
+ebox-usersandgroups (0.9) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Amor Garcia <javier.amor.garcia@warp.es>  Tue, 27 Mar 2007 10:26:29 +0200
+
+ebox-usersandgroups (0.7.1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Daniel Baeyens Sicilia <dani@warp.es>  Wed, 22 Mar 2006 16:08:34 +0100
+
+ebox-usersandgroups (0.7.0.99-rc1+0.7.1-rc1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 17 Jan 2006 11:45:29 +0100
+
+ebox-usersandgroups (0.5.1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Guillermo Ontañón <gontanon@warp.es>  Mon, 14 Mar 2005 14:33:45 +0100
+
+ebox-usersandgroups (0.5) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@debian.org>  Thu,  3 Mar 2005 19:56:15 +0100
+
+ebox-usersandgroups (0.4-2) unstable; urgency=low
+
+  * New upstream release
+
+ -- Isaac Clerencia <isaac@sindominio.net>  Sat,  4 Dec 2004 16:36:45 +0100

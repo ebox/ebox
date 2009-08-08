@@ -1,0 +1,68 @@
+0.12.101
+	+ Detect if there's a l7 capable kernel using modinfo xt_layer7
+0.12.100
+	+ Add traffic shaping rules to POSTROUTING 
+0.12.99
+	+ New release
+0.12.2
+	+ Add support for l7filter
+0.12.1
+	+ Bugfix. Fetch value from rate properly
+0.12
+	+ Add field help to model
+0.11.104
+	+ Do not return a "removed message" with 0 rows removed
+0.11.104
+	+ Bugfix. Return empty array and not undef if there are no rules
+0.11.103
+	+ Bugfix. Extend IptablesRule from Firewall to add setReverseService.
+	  To properly add ingress rules
+0.11.102
+	+ Use the new EBox::Model:Row api
+	+ Do not order iptables rules by priority
+0.11.101
+	+ Fixing typo in actions performed by the module
+0.11.100
+	+ Rules are introduced into a ordered table
+0.11.99
+	+ eBox -> internal networks traffic flow is not shaped
+	anymore
+	+ Exposing API from models
+	+ Removing old code to decrease the module complexity and LOC by
+	more than 500 lines
+	+ Traffic shaping rules may be enabled/disabled by user 
+0.11
+	+ Difference easily internal/external interfaces through GUI
+	+ Normalizing guaranteed rates from two or more rules now works
+	correctly under rate decreasing 
+	+ Warning about a change on gateways when there is at least a rule
+	on internal interfaces models
+	+ Bugfix: Rates are now checked if the source or destination is an
+	object
+0.10.99
+	+ Use last model/view changes to get rid of the multitable code
+	+ Remove rules using an object when it's removed
+	+ Use services module
+	+ Adding a rule using an object with no members is now not
+	possible
+	+ Now rules are applied in PREROUTING chain to avoid NAT
+	+ Now traffic shaping rules are aware about gateway changes
+	+ Use composite with a 'select' layout instead of old tailored
+	version. This includes some refurbishing and enhancing on
+	notifying changes on Network module regarding to traffic shaping
+	rules
+0.9.100
+	+ New release
+0.9.99
+    + New release
+0.9.3
+	+ New release
+0.9.2
+	+ New release
+0.9.1
+	+ Added support for  shaping on internal and external interfaces
+	+ Added support to prioritise traffic (from 0 to 7)
+	+ More fine-grained rules to mark traffic
+0.9
+	+ Added Polish translation
+	+ Initial release

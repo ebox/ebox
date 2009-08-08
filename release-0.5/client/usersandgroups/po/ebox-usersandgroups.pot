@@ -1,0 +1,267 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Warp S.L.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2005-02-18 19:45+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/EBox/CGI/AddUserToGroup.pm:29 src/EBox/CGI/DelUserFromGroup.pm:29
+#: src/EBox/CGI/Group.pm:30
+msgid "group"
+msgstr ""
+
+#: src/EBox/CGI/AddUserToGroup.pm:34 src/EBox/CGI/DelUserFromGroup.pm:34
+msgid "user"
+msgstr ""
+
+#: src/EBox/CGI/AddGroup.pm:30 src/EBox/CGI/ModGroup.pm:25
+#: src/EBox/CGI/ModifyGroup.pm:25 src/EBox/UsersAndGroups.pm:477
+#: src/EBox/UsersAndGroups.pm:482 src/EBox/UsersAndGroups.pm:545
+#: src/EBox/UsersAndGroups.pm:640 src/EBox/UsersAndGroups.pm:663
+#: src/EBox/UsersAndGroups.pm:706 src/EBox/UsersAndGroups.pm:777
+msgid "group name"
+msgstr ""
+
+#: src/EBox/CGI/AddUser.pm:30 src/EBox/CGI/DelGroup.pm:46
+#: src/EBox/CGI/ModifyUser.pm:27 src/EBox/UsersAndGroups.pm:197
+#: src/EBox/UsersAndGroups.pm:203 src/EBox/UsersAndGroups.pm:268
+#: src/EBox/UsersAndGroups.pm:314 src/EBox/UsersAndGroups.pm:331
+#: src/EBox/UsersAndGroups.pm:517 src/EBox/UsersAndGroups.pm:562
+#: src/EBox/UsersAndGroups.pm:635 src/EBox/UsersAndGroups.pm:658
+#: src/EBox/UsersAndGroups.pm:679
+msgid "user name"
+msgstr ""
+
+#: src/EBox/CGI/AddUser.pm:31 src/EBox/CGI/ModifyUser.pm:32
+msgid "full name"
+msgstr ""
+
+#: src/EBox/CGI/AddUser.pm:32 src/EBox/CGI/ModifyUser.pm:34
+msgid "password"
+msgstr ""
+
+#: src/EBox/CGI/AddUser.pm:33
+msgid "retype password"
+msgstr ""
+
+#: src/EBox/CGI/AddUser.pm:34 src/EBox/CGI/ModifyUser.pm:33
+#: src/EBox/CGI/ModifyGroup.pm:32
+msgid "comment"
+msgstr ""
+
+#: src/EBox/CGI/AddUser.pm:46 src/EBox/CGI/ModifyUser.pm:50
+msgid "Passwords do not match."
+msgstr ""
+
+#: src/EBox/CGI/Group.pm:15
+msgid "Edit group"
+msgstr ""
+
+#: src/EBox/CGI/ModifyUser.pm:35
+msgid "confirm password"
+msgstr ""
+
+#: src/EBox/CGI/ModGroup.pm:26
+msgid "old group name"
+msgstr ""
+
+#: src/EBox/CGI/ModGroup.pm:27
+msgid "group id"
+msgstr ""
+
+#: src/EBox/CGI/ModGroup.pm:28
+msgid "group description"
+msgstr ""
+
+#: src/EBox/CGI/User.pm:15
+msgid "Edit user"
+msgstr ""
+
+#: src/EBox/CGI/User.pm:30
+msgid "username"
+msgstr ""
+
+#: src/EBox/CGI/Del.pm:50
+msgid "object name"
+msgstr ""
+
+#: src/EBox/CGI/Del.pm:55
+msgid "object type"
+msgstr ""
+
+#: src/EBox/CGI/Del.pm:75
+msgid "User removed successfully"
+msgstr ""
+
+#: src/EBox/CGI/Del.pm:79
+msgid "Group removed successfully"
+msgstr ""
+
+#: src/EBox/CGI/Groups.pm:15
+msgid "Groups"
+msgstr ""
+
+#: src/EBox/CGI/Users.pm:16
+msgid "Users"
+msgstr ""
+
+#: src/EBox/LdapUserImplementation.pm:42
+msgid "This group contains users"
+msgstr ""
+
+#: src/EBox/UsersAndGroups.pm:192
+msgid "Username must be at most "
+msgstr ""
+
+#: src/EBox/UsersAndGroups.pm:465
+msgid "Groupname must be at most "
+msgstr ""
+
+#: src/EBox/UsersAndGroups.pm:471
+msgid "The group name is not valid because it is used internally"
+msgstr ""
+
+#: src/EBox/UsersAndGroups.pm:850
+msgid "Password must be at most "
+msgstr ""
+
+#: src/templates/group.mas:12
+msgid "Administration of group "
+msgstr ""
+
+#: src/templates/group.mas:16
+msgid ""
+"There are no users the moment. You need at least one  to manage this group "
+"properly"
+msgstr ""
+
+#: src/templates/group.mas:23 src/templates/user.mas:19
+#: src/templates/users.mas:34 src/templates/groups.mas:28
+msgid "Comment"
+msgstr ""
+
+#: src/templates/group.mas:28 src/templates/group.mas:30
+#: src/templates/user.mas:65 src/templates/user.mas:67
+msgid "Change"
+msgstr ""
+
+#: src/templates/group.mas:59
+msgid "Remove"
+msgstr ""
+
+#: src/templates/group.mas:63
+msgid "Remove users from group"
+msgstr ""
+
+#: src/templates/group.mas:72 src/templates/group.mas:76
+msgid "Add users to group"
+msgstr ""
+
+#: src/templates/group.mas:105 src/templates/group.mas:107
+msgid "Delete group"
+msgstr ""
+
+#: src/templates/user.mas:10
+msgid "Administration of user"
+msgstr ""
+
+#: src/templates/user.mas:30 src/templates/users.mas:25
+msgid "Full name"
+msgstr ""
+
+#: src/templates/user.mas:41 src/templates/users.mas:43
+msgid "Password"
+msgstr ""
+
+#: src/templates/user.mas:52 src/templates/users.mas:51
+msgid "Retype password"
+msgstr ""
+
+#: src/templates/user.mas:74 src/templates/user.mas:84
+#: src/templates/user.mas:86
+msgid "Delete user"
+msgstr ""
+
+#: src/templates/users.mas:10
+msgid "Add User"
+msgstr ""
+
+#: src/templates/users.mas:16
+msgid "User name"
+msgstr ""
+
+#: src/templates/users.mas:60
+msgid "Group"
+msgstr ""
+
+#: src/templates/users.mas:78 src/templates/users.mas:80
+#: src/templates/groups.mas:40 src/templates/groups.mas:42
+msgid "Create"
+msgstr ""
+
+#: src/templates/users.mas:89
+msgid "Edit User"
+msgstr ""
+
+#: src/templates/users.mas:92
+msgid "User"
+msgstr ""
+
+#: src/templates/users.mas:101 src/templates/groups.mas:63
+msgid "Edit"
+msgstr ""
+
+#: src/templates/del.mas:13
+msgid "Deleting user"
+msgstr ""
+
+#: src/templates/del.mas:16
+msgid ""
+"The user you tried to delete contains data in the following modules. Please "
+"confirm you want to remove it and all its related data"
+msgstr ""
+
+#: src/templates/del.mas:20
+msgid "Deleting group"
+msgstr ""
+
+#: src/templates/del.mas:23
+msgid ""
+"The group you tried to delete contains data in the following modules. Please "
+"confirm you want to remove it and all its related data"
+msgstr ""
+
+#: src/templates/del.mas:47
+msgid "Delete"
+msgstr ""
+
+#: src/templates/del.mas:51
+msgid "Cancel"
+msgstr ""
+
+#: src/templates/groups.mas:10
+msgid "Add Group"
+msgstr ""
+
+#: src/templates/groups.mas:17
+msgid "Group name"
+msgstr ""
+
+#: src/templates/groups.mas:51
+msgid "Edit Group"
+msgstr ""
+
+#: src/templates/groups.mas:54
+msgid "Group of users"
+msgstr ""

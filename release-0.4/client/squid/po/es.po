@@ -1,0 +1,232 @@
+# translation of es.po to 
+# translation of es.po to
+# translation of es.po to
+# translation of es.po to
+# translation of Ebox Squid.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# <>, 2004.
+# Isaac Clerencia <isaac@sindominio.net>, 2004.
+# Jorge Arcas <jarcas@warp.es>, 2004.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: es\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2004-12-03 06:00+0100\n"
+"PO-Revision-Date: 2004-12-03 04:56+0100\n"
+"Last-Translator: Isaac Clerencia <isaac@sindominio.net>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#: src/EBox/CGI/Enable.pm:42
+msgid "module status"
+msgstr "estado del módulo"
+
+#: src/EBox/CGI/Banned.pm:39 src/EBox/Squid.pm.in:426 src/EBox/Squid.pm.in:431
+msgid "domain name"
+msgstr "nombre de dominio"
+
+#: src/EBox/CGI/Banned.pm:40
+msgid "ban action"
+msgstr "acción de prohibición"
+
+#: src/EBox/CGI/Index.pm:30 src/EBox/CGI/Index.pm:40
+msgid "HTTP Proxy"
+msgstr "Proxy HTTP"
+
+#: src/EBox/CGI/Domains.pm:30 src/EBox/CGI/Domains.pm:40
+#: src/templates/domains.mas:11
+msgid "Banned domains"
+msgstr "Dominios prohibidos"
+
+#: src/EBox/CGI/SetPolicy.pm:30 src/EBox/CGI/Policy.pm:30
+#: src/EBox/CGI/Policy.pm:41
+msgid "HTTP proxy policy"
+msgstr "Política del Proxy HTTP"
+
+#: src/EBox/CGI/General.pm:41
+msgid "content filter threshold"
+msgstr "Umbral de filtrado de contenido"
+
+#: src/EBox/CGI/General.pm:44
+msgid "transparent proxy"
+msgstr "proxy transparente"
+
+#: src/EBox/CGI/General.pm:47 src/EBox/Squid.pm.in:318
+msgid "listening port"
+msgstr "puerto de escucha"
+
+#: src/EBox/CGI/General.pm:50
+msgid "global policy"
+msgstr "política global"
+
+#: src/EBox/Squid.pm.in:161 src/EBox/Squid.pm.in:221
+msgid "object"
+msgstr "objeto"
+
+#: src/EBox/Squid.pm.in:403
+#, perl-brace-format
+msgid "Policy '{policy}' is invalid"
+msgstr "La política {policy} no es válida"
+
+#: src/EBox/Squid.pm.in:452
+msgid "domain"
+msgstr "dominio"
+
+#: src/EBox/Squid.pm.in:477
+msgid "Threshold"
+msgstr "Umbral"
+
+#: src/EBox/Squid.pm.in:680
+msgid "Proxy"
+msgstr "Proxy"
+
+#: src/EBox/Squid.pm.in:686
+msgid "Running"
+msgstr "En ejecución"
+
+#: src/EBox/Squid.pm.in:688
+msgid "Stopped"
+msgstr "Detenido"
+
+#: src/EBox/Squid.pm.in:690
+msgid "Status"
+msgstr "Estado"
+
+#: src/EBox/Squid.pm.in:695 src/templates/index.mas:29
+#: src/templates/index.mas:32
+msgid "Enabled"
+msgstr "Activado"
+
+#: src/EBox/Squid.pm.in:697 src/templates/index.mas:28
+#: src/templates/index.mas:31
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: src/EBox/Squid.pm.in:699 src/templates/index.mas:22
+msgid "Transparent proxy"
+msgstr "Proxy transparente"
+
+#: src/EBox/Squid.pm.in:702
+msgid "Allow"
+msgstr "Permitir"
+
+#: src/EBox/Squid.pm.in:704 src/templates/index.mas:104
+#: src/templates/index.mas:106
+msgid "Deny"
+msgstr "Denegar"
+
+#: src/EBox/Squid.pm.in:706 src/templates/index.mas:93
+msgid "Global policy"
+msgstr "Política global"
+
+#: src/EBox/Squid.pm.in:708
+msgid "Listening port"
+msgstr "Puerto de escucha"
+
+#: src/templates/index.mas:14
+msgid "Enable the HTTP proxy"
+msgstr "Activar el proxy HTTP"
+
+#: src/templates/index.mas:15
+msgid "General Settings"
+msgstr "Configuración general"
+
+#: src/templates/index.mas:40
+msgid "Port"
+msgstr "Puerto"
+
+#: src/templates/index.mas:52
+msgid "Content filter threshold"
+msgstr "Umbral de filtro de contenido"
+
+#: src/templates/index.mas:58 src/templates/index.mas:60
+msgid "Content filter disabled"
+msgstr "Filtro de contenido deshabilitado"
+
+#: src/templates/index.mas:63 src/templates/index.mas:65
+msgid "Very permissive"
+msgstr "Muy permisivo"
+
+#: src/templates/index.mas:68 src/templates/index.mas:70
+msgid "Permissive"
+msgstr "Permisivo"
+
+#: src/templates/index.mas:73 src/templates/index.mas:75
+msgid "Medium"
+msgstr "Medio"
+
+#: src/templates/index.mas:78 src/templates/index.mas:80
+msgid "Strict"
+msgstr "Estricto"
+
+#: src/templates/index.mas:83 src/templates/index.mas:85
+msgid "Very strict"
+msgstr "Muy estricto"
+
+#: src/templates/index.mas:99 src/templates/index.mas:101
+#: src/templates/policy.mas:72 src/templates/policy.mas:74
+msgid "Unfilter"
+msgstr "Sin filtrar"
+
+#: src/templates/index.mas:109 src/templates/index.mas:111
+#: src/templates/policy.mas:38 src/templates/policy.mas:40
+#: src/templates/policy.mas:79 src/templates/policy.mas:81
+msgid "Filter"
+msgstr "Filtrar"
+
+#: src/templates/index.mas:122
+msgid "Ok"
+msgstr "Aceptar"
+
+#: src/templates/domains.mas:13
+msgid "Add here those domains which you do not want to allow access."
+msgstr "Añada aquí los dominos a los que no quiere permitir acceso"
+
+#: src/templates/domains.mas:16
+msgid "Introduce domains in this way: "
+msgstr "Introduzca los dominios de la siguiente forma:"
+
+#: src/templates/domains.mas:17
+msgid "domain.com"
+msgstr "dominio.com"
+
+#: src/templates/domains.mas:23
+msgid "Domain"
+msgstr "Dominio"
+
+#: src/templates/domains.mas:24
+msgid "Action"
+msgstr "Acción"
+
+#: src/templates/policy.mas:16
+msgid "Unfiltered"
+msgstr "Sin filtrar"
+
+#: src/templates/policy.mas:18
+msgid "Filtered"
+msgstr "Filtradas"
+
+#: src/templates/policy.mas:20
+msgid "Banned"
+msgstr "Prohibidas"
+
+#: src/templates/policy.mas:39 src/templates/policy.mas:80
+msgid "Move selected objects to the filtered column"
+msgstr "Mover los objetos seleccionados a la columna de filtrados"
+
+#: src/templates/policy.mas:54 src/templates/policy.mas:56
+msgid "Ban"
+msgstr "Prohibir"
+
+#: src/templates/policy.mas:55
+msgid "Move selected objects to the banned column"
+msgstr "Mover los objetos seleccionados a la columna de baneados"
+
+#: src/templates/policy.mas:73
+msgid "Move selected objects to the unfiltered column"
+msgstr "Mover los objetos seleccionados a la columna de no filtrados"

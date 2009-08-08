@@ -1,0 +1,53 @@
+0.11.101
+	+ Fixed bug when removing users in non-quota installations
+	+ Do not remove init rc scripts
+	+ Add port 465 (SMTP over SSL) to mail service, old outlook version
+	  will use this port
+0.11.100
+	+ Create certificate for smtpd server
+	+ Disabled filter appears in the filter lists as disabled
+	(previously they don't appear at all)
+	+ Module activation dependency with module which provides the
+	acitve filter
+0.11.99
+	+ Add mail dispatcher to notify eBox events using this SMTP server
+	+ Enhanced strings
+0.11
+	+ Wrap service call with ebox-unblock-exec
+	+ Fix typo in message
+0.10.99
+	+ New release
+0.10
+	+ New release
+0.9.100
+	+ Fix some typos 
+0.9.99
+	+ Fixed bug in configuration backup
+	+ Allow other modules to define mail filters
+
+0.9.3
+	+ New release
+0.9.2
+	+ Create sasl configuration which contains password with 0600 mask 
+0.9.1
+	+ Extended backup
+	+ Use host's FQDN. 
+	+ Helo restrictions 
+0.9
+	+ Added Polish translation
+	+ Added German translation
+0.8.1
+	+  Added dependency on sasl2-bin for secure SMTP authentication
+0.8 
+	+ Small GUI fix
+	+ Added firewall rule to access smtp hosts for all interfaces
+0.7.99
+	+ New release
+0.7.1
+	+ GUI improvements
+	+ Added queue managment support
+	+ Use EBox::LDAP singleton
+	+ Added update/clean actions to ebox-mail-ldap
+	+ Use of ebox-sudoers-friendly 
+0.7
+	+ First public release 

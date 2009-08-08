@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+# don't start cups with its script
+update-rc.d -f cupsys remove
+
+# stop cups
+invoke-rc.d cupsys stop
+
+# add ebox to lpdadmin to manage printers and queues
+adduser --quiet ebox lpadmin
+
+# create /etc/cups/printers.conf if it does not exist
+if [ ! -e /etc/cups/printers.conf ]; then
+    touch /etc/cups/printers.conf
+    chmod 600 /etc/cups/printers.conf
+    chown root.lp /etc/cups/printers.conf
+fi
+
+# create log table
+/usr/share/ebox/ebox-sql-table add jobs /usr/share/ebox/sqllog/printers.sql	
+
+# create spool
+if [ ! -d /var/spool/samba ]; then
+    mkdir /var/spool/samba 
+    chown nobody:nogroup /var/spool/samba
+    chmod a+rwt /var/spool/samba
+fi

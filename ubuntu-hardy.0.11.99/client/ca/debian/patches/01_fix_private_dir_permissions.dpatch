@@ -1,0 +1,30 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_fix_private_dir_permissions.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 patch to fix a security issue with  private key 
+## DP: directory's permissions. 
+
+@DPATCH@
+
+Index: ca/src/EBox/CA.pm
+===================================================================
+--- ca/src/EBox/CA.pm	(revisión: 9763)
++++ ca/src/EBox/CA.pm	(copia de trabajo)
+@@ -74,6 +74,7 @@
+ 
+ # Directory mode to allow only owner and readable from others
+ use constant DIRMODE     => 00705;
++use constant PRIVATEDIRMODE     => 00700;
+ 
+ # Use Certification Version 3
+ use constant EXTENSIONS_V3 => "1";
+@@ -222,7 +223,7 @@
+     mkdir (CRLDIR, DIRMODE);
+     mkdir (NEWCERTSDIR, DIRMODE);
+     mkdir (KEYSDIR, DIRMODE);
+-    mkdir (PRIVDIR, DIRMODE);
++    mkdir (PRIVDIR, PRIVATEDIRMODE);
+     mkdir (REQDIR, DIRMODE);
+     # Create index and crl number
+     open ( my $OUT, ">" . INDEXFILE);

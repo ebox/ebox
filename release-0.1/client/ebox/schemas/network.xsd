@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:include schemaLocation="types.xsd"/>
+
+	<xs:simpleType name="methodtype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="dhcp"/>
+			<xs:enumeration value="static"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="addresselementtype">
+		<xs:simpleContent>
+			<xs:extension base="iptype"/>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="ifacetype">
+		<xs:attribute name="name"    type="xs:string"  use="required"/>
+		<xs:attribute name="method"  type="methodtype" use="required"/>
+		<xs:attribute name="address" type="iptype"     use="optional"/>
+		<xs:attribute name="netmask" type="iptype"     use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="routetype">
+		<xs:attribute name="network" type="cidrtype" use="required"/>
+		<xs:attribute name="gateway" type="addresselementtype" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="defaultroutetype">
+		<xs:attribute name="gateway" type="addresselementtype" use="required"/>
+	</xs:complexType>
+
+	<xs:element name="network">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="external" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:attribute name="iface" type="xs:string"
+									  use="required"/>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="interface" minOccurs="0"
+							maxOccurs="unbounded" type="ifacetype"/>
+
+				<xs:element name="routes" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="default" type="defaultroutetype"
+										maxOccurs="1" minOccurs="0"/>
+							<xs:element name="net" type="routetype"
+										maxOccurs="unbounded" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="nameservers" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="address" type="addresselementtype"
+										maxOccurs="3" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

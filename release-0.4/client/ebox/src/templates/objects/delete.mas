@@ -1,0 +1,20 @@
+<%args>
+	$description
+	$object
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<h3><% __('Deleting object') %>: <% $description %></h3>
+<% __('The object you tried to delete is being used by some modules, please confirm that you want to delete it.') %>
+
+<form action='Del' method='POST'>
+	<input type='hidden' name='objectname'
+		   value='<% $object %>'/>
+	<input class='inputButton'
+		   type='submit' name='deleteforce'
+		   value='<% __('Delete') %>'>
+	<input class='inputButton'
+		   type='submit' name='cancel'
+		   value='<% __('Cancel') %>'>
+</form>

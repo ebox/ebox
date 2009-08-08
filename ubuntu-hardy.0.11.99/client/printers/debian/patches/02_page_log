@@ -1,0 +1,39 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_page_log.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to backport 0.11.100 fix to log from page log
+
+@DPATCH@
+
+Index: printers/src/EBox/PrinterLogHelper.pm
+===================================================================
+--- printers/src/EBox/PrinterLogHelper.pm	(revisión: 9785)
++++ printers/src/EBox/PrinterLogHelper.pm	(copia de trabajo)
+@@ -23,7 +23,7 @@
+ use EBox::Config;
+ use EBox::Gettext;
+ 
+-use constant CUPSLOGFILE => '/var/log/cups/error_log';
++use constant CUPSLOGFILE => '/var/log/cups/page_log';
+ 
+ sub new 
+ {
+@@ -68,13 +68,13 @@
+ {
+ 	my ($self, $file, $line, $dbengine, $event) = @_;
+ 
+-	
+-	unless ($line =~ /^.*\[([^ ]+) .*\] Job (\d+) queued on '(\w+)' by '(\w+)'.*/) {
++	unless ($line =~ /^(\w+) (\w+) (\d+) \[([^ ]+) .*\] .*/) {
+ 		return;
+ 	}
+ 
+-	my $data = { 'timestamp' => $1, 'job' => $2, 
+-		     'printer' => $3, 'owner' => $4 };
++	my $data = { 'timestamp' => $4, 'job' => $3, 
++		     'printer' => $1, 'owner' => $2,
++		     'event' => 'queued' };
+ 	$dbengine->insert('jobs', $data);
+ 	
+ }

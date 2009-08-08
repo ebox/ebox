@@ -1,0 +1,12 @@
+Source: ebox
+Section: web
+Priority: optional
+Maintainer: Isaac Clerencia <isaac@sindominio.net>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: ebox
+Architecture: all
+Depends: sudo, iproute, iptables, apache-perl, dhcp3-client, liblog-dispatch-perl, liblog-log4perl-perl, libhtml-mason-perl, liblocale-gettext-perl, liberror-perl, libdevel-stacktrace-perl, libapache-singleton-perl, libapache-authcookie-perl, libgnome2-gconf-perl, libnet-ifconfig-wrapper-perl, libsys-cpu-perl, libsys-cpuload-perl, libintl-perl, libnetwork-ipv4addr-perl, gettext, ${misc:Depends}
+Description: Cool Warp box
+ Warp box

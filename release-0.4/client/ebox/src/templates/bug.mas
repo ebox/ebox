@@ -1,0 +1,13 @@
+<%args>
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<div class='note'>
+	<% __("This page lets you generate a file with information about the state of your system. The file will be useful if you want to report a bug in EBox.")%>
+</div>
+<br/>
+<form action='Backup' method='POST'>
+		<input class='inputButton' type='submit' name='bugreport'
+			   value="<% __('Download bug report file') %>" />
+</form>

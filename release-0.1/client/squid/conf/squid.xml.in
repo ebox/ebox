@@ -1,0 +1,9 @@
+<?xml version='1.0' standalone='yes'?>
+<squid  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation='@SCHEMASPATH@/squid.xsd'>
+  <service active="no" reload="no" port="3128" />
+  <transproxy active="no"/>
+  <auth require="no" />
+  <global policy="deny">
+  </global>
+</squid>

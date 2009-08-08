@@ -1,0 +1,16 @@
+- To install this module you need to install EBox base and dhcp3-server before.
+
+- Once EBox base has been installed:
+	
+	./configure
+	make install
+
+  configure will autodetect EBox base path to install
+
+- Update your sudoers file with the ebox-sudoers command.
+
+- Do not run dhcp3-server on startup, this module takes control of it:
+
+mv /etc/rc2.d/SXXdhcp3-server /etc/rc2.d/K20dhcp3-server
+
+- Stop dhcp3-server if it's running.

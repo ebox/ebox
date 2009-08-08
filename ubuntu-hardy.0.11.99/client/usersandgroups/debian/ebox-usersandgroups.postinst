@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#DEBHELPER#
+
+# Load debconf
+. /usr/share/debconf/confmodule
+
+onInstall() {
+
+	perl -e 'use EBox::UsersAndGroups; EBox::UsersAndGroups::onInstall();'
+} 
+
+case "$1" in
+	configure)
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+		onInstall
+
+		invoke-rc.d ebox users restart
+
+        # Restart eBox apache
+        invoke-rc.d ebox apache restart || true
+    ;;
+esac
+
+
+
+exit 0

@@ -1,0 +1,93 @@
+DEPENDENCIES
+------------
+
++ Debian packages:
+
+# apt-get install <package>
+
+	+ perl
+	+ perl-modules
+	+ sudo
+	+ iproute
+	+ iptables
+	+ apache-perl
+	+ dhcp3-client
+	+ libapache-mod-perl
+	+ liblog-dispatch-perl
+	+ liblog-log4perl-perl
+	+ liblocale-gettext-perl
+	+ libnetwork-ipv4addr-perl
+	+ liberror-perl
+	+ libdevel-stacktrace-perl
+	+ libapache-authcookie-perl
+	+ libgnome2-gconf-perl
+	+ libnet-ifconfig-wrapper-perl
+	+ libsys-cpu-perl
+	+ libsys-cpuload-perl
+	+ libnetwork-ipv4addr-perl
+	+ gettext
+
++ modules from cpan
+
+	none currently
+
+INSTALATION
+-----------
+
+1.- Configure:
+
+    $ ./configure <arguments>
+
+    Accepts standard GNU configure arguments, run ./configure --help
+    for a list
+
+    Apache is autodetected
+
+    Suggested argument: --localstatedir=/var/lib/ , to have variable data
+    installed in /var/lib/
+
+2.- Instalation, as root:
+
+    $ make install
+
+3.- Allow the apache user to run some root commands via sudo, include
+    the output of the ebox-sudoers command in your sudoers file. If the ebox
+    user is the only one that needs to use sudo you can just overwrite the
+    old file with the output of ebox-sudoers:
+
+    ebox-sudoers > /etc/sudoers
+
+4.- To make ebox run on startup:
+
+    cp tools/ebox /etc/init.d
+    ln -s /etc/init.d/ebox /etc/rc2.d/S99ebox
+
+5.- Give write permission to the ebox user (set in $sysconfdir/ebox/ebox.conf)
+    in the localstatedir directory: $prefix/var/ebox or /var/lib/ebox if the
+    --localstatedir=/var parameter was used, and create directories log and
+    tmp inside:
+
+    mkdir /var/ebox/tmp
+    mkdir /var/ebox/log
+    chown -R ebox.ebox /var/ebox
+
+6.- Copy conf/.gconf.path to the $HOME directory of the ebox user.
+
+7.- Remove the link to /etc/init.d/apache from /etc/rc2.d/, the ebox script
+     will handle apache starts/stops.
+
+8.- Start ebox:
+	
+	/etc/init.d/ebox start
+
+RUNNING
+-------
+
+The url for the administration interface is (the default apache port is 80):
+
+http://<ip address>
+
+The default password is 'lala'. It may be changed in the general configuration
+page.
+
+Ebox and apache logs are located in $localstatedir/ebox/log/ 

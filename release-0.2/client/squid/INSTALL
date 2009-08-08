@@ -1,0 +1,21 @@
+- To install this module you need to install EBox base before.
+
+- Once EBox base has been installed:
+	
+	./configure
+	make install
+
+  configure will autodetect EBox base path to install
+
+- Make sure the apache user is able to write  /etc/squid.conf
+
+- Do not run squid on startup, this module takes control of squid:
+
+mv /etc/rc2.d/SXXsquid /etc/rc2.d/K20squid
+
+- Stop squid if it's running.
+
+- Make sure the apache user can write in the ebox localstatedir (the are new
+  files in that directory now):
+
+  chown -R www-data.www-data $localstatedir/ebox/

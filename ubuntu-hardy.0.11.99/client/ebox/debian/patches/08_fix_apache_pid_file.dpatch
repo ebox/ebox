@@ -1,0 +1,44 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 08_fix_apache_pid_file.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Backport 0.11.100 fix to store apache.pid under eBox directories and to 
+## DP: not interfere with the main apache instance
+
+@DPATCH@
+
+Index: ebox/src/EBox/Apache.pm
+===================================================================
+--- ebox/src/EBox/Apache.pm	(revisión: 9825)
++++ ebox/src/EBox/Apache.pm	(copia de trabajo)
+@@ -151,6 +151,7 @@
+ 	push @confFileParams, ( user => EBox::Config::user());
+ 	push @confFileParams, ( group => EBox::Config::group());
+ 	push @confFileParams, ( serverroot => $self->serverroot());
++	push @confFileParams, ( tmpdir => EBox::Config::tmp());
+         push @confFileParams, ( restrictedResources => $self->_restrictedResources() );
+ 
+         my $debugMode =  EBox::Config::configkey('debug') eq 'yes';
+Index: ebox/stubs/apache.mas.in
+===================================================================
+--- ebox/stubs/apache.mas.in	(revisión: 9763)
++++ ebox/stubs/apache.mas.in	(copia de trabajo)
+@@ -3,7 +3,8 @@
+ 	$group
+ 	$user
+ 	$serverroot
+-        $debug => 'no'
++	$tmpdir
++    $debug => 'no'
+ </%args>
+ 
+ 
+@@ -13,6 +14,8 @@
+ KeepAliveTimeout 15
+ AddDefaultCharset utf-8	
+ 
++PidFile <% $tmpdir %>/apache.pid
++
+ <IfModule mpm_prefork_module>
+     StartServers          1 
+     MinSpareServers       1

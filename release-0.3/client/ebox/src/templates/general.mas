@@ -1,0 +1,63 @@
+<%args>
+	$lang
+	$port
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<h3><% __('Change password') %></h3>
+	<form action='Password' method='POST'>
+		<table><tbody>
+			<tr>
+				<td>
+					<% __('Current password') %>:
+				</td>
+				<td>
+					<input type='password' name='currentpwd' size='16'>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<% __('New password') %>:
+				</td>
+				<td>
+					<input type='password' name='newpwd1' size='16'>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+			<% __('Confirm new password') %>:
+				</td>
+				<td>
+					<input type='password' name='newpwd2' size='16'>
+					<input class='inputButton' type='submit' name='password'
+						   value='<% __('Change') %>'>
+				</td>
+			</tr>
+		</tbody></table>
+	</form>
+<h3><% __('Language selection') %></h3>
+	<form action='Lang' method='POST'>
+		<div class='ftitle'><% __('Language') %></div>
+		<select name='lang'>
+%	if($lang eq "C"){
+			<option selected value="C">English</option>
+			<option value="es_ES.UTF-8">Castellano</option>
+%	}else{
+			<option value="C">English</option>
+			<option selected value="es_ES.UTF-8">Castellano</option>
+%	}
+		</select>
+		<input class='inputButton' type='submit' name='setlang'
+			   value='<% __('Ok') %>'>
+	</form>
+<h3><% __('Administration interface TCP port') %></h3>
+	<form action='Port' method='POST'>
+		<div class='ftitle'><% __('Port') %></div>
+		<input type='text' class='inputText' name='port'
+								size='5' value="<% $port %>"/>
+		<input class='inputButton' type='submit' name='setport'
+				value='<% __('Change') %>'>
+	</form>

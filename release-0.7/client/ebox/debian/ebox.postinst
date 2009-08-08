@@ -1,0 +1,72 @@
+#!/bin/bash
+
+webserver=apache-perl
+
+case "$1" in
+	configure)
+
+		# don't start apache-perl with its script
+		update-rc.d -f apache-perl remove
+
+		#add the ebox group and user
+		touch /tmp/test.$$
+		chgrp ebox /tmp/test.$$ >/dev/null 2>&1 || addgroup --system ebox
+		chown ebox /tmp/test.$$ >/dev/null 2>&1 || 
+			adduser --system --home /var/lib/ebox/ --no-create-home \
+				--disabled-password --ingroup ebox ebox
+
+		#change the /var/lib/ebox/ user
+		chown -R ebox.ebox /var/lib/ebox
+
+		# install gconf schemas
+		SCHEMA_LOCATION=/usr/share/gconf/schemas
+		SCHEMA_FILES="global.schemas sysinfo.schemas apache.schemas "
+		for SCHEMA in $SCHEMA_FILES; do
+			if [ -e $SCHEMA_LOCATION/$SCHEMA ]; then
+				HOME=/var/lib/ebox GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` \
+					gconftool-2 \
+						--makefile-install-rule $SCHEMA_LOCATION/$SCHEMA > /dev/null
+			fi
+		done
+
+		kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+		#sudo configuration
+		tmp=`tempfile`
+		ebox-sudoers > $tmp
+		mv $tmp /etc/sudoers
+		chmod 0440 /etc/sudoers
+
+		if test -z "$2"; then
+			# not upgrading
+			if grep '^EB:' /etc/inittab >/dev/null; then
+				cat <<\EOT >&2
+
+There already is an EB entry in /etc/inittab.  In order to have this package
+add an entry with the name EB to have ebox starting by sysvinit you need to
+remove or rename the current EB entry first.
+
+Installation failed.
+
+EOT
+				exit 1
+			fi
+		fi
+		if ! grep '^EB:' /etc/inittab >/dev/null; then
+			echo 'Adding eBox inittab entry...'
+			cp /etc/inittab /etc/inittab'{new}'
+			cat >>/etc/inittab'{new}' <<-\EOT
+#-- ebox begin
+EB:2:once:/etc/init.d/ebox start
+#-- ebox end
+EOT
+			mv -f /etc/inittab'{new}' /etc/inittab
+		fi
+
+		/etc/init.d/ebox start
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

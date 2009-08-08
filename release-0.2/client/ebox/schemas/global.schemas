@@ -1,0 +1,144 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<gconfschemafile>
+	<schemalist>
+
+		<schema>
+			<key>/schemas/ebox/global/lang</key>
+			<applyto>/ebox/global/lang</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>C</default>
+			</locale>
+			<locale name="es">
+				<default>es_ES</default>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/global/modules/global/class</key>
+			<applyto>/ebox/global/modules/global/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::Global</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/summ/text</key>
+			<applyto>/ebox/global/modules/global/menu/summ/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Summary</default>
+			</locale>
+			<locale name="es">
+				<default>Resumen</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/summ/location</key>
+			<applyto>/ebox/global/modules/global/menu/summ/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Summary/Index</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/summ/order</key>
+			<applyto>/ebox/global/modules/global/menu/summ/order</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>first</default>
+			<locale name="C"/>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/gen/text</key>
+			<applyto>/ebox/global/modules/global/menu/gen/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>General</default>
+			</locale>
+			<locale name="es">
+				<default>General</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/gen/location</key>
+			<applyto>/ebox/global/modules/global/menu/gen/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>General</default>
+			<locale name="C"/>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/save/text</key>
+			<applyto>/ebox/global/modules/global/menu/save/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Save/Cancel</default>
+			</locale>
+			<locale name="es">
+				<default>Guardar/Cancelar</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/save/location</key>
+			<applyto>/ebox/global/modules/global/menu/save/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Finish</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/save/order</key>
+			<applyto>/ebox/global/modules/global/menu/save/order</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>last</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/save/style</key>
+			<applyto>/ebox/global/modules/global/menu/save/style</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>last</default>
+			<locale name="C"/>
+		</schema>
+
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/logout/text</key>
+			<applyto>/ebox/global/modules/global/menu/logout/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Logout</default>
+			</locale>
+			<locale name="es">
+				<default>Salir</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/logout/location</key>
+			<applyto>/ebox/global/modules/global/menu/logout/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Logout/Index</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/global/menu/logout/order</key>
+			<applyto>/ebox/global/modules/global/menu/logout/order</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>last-1</default>
+			<locale name="C"/>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

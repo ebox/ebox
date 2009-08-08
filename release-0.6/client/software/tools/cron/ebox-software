@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use EBox;
+use EBox::Global;
+
+EBox::init();
+my $global = EBox::Global->getInstance(1);
+my $software = $global->modInstance('software');
+$software->fetchAllPkgs();
+
+unless ($software->getAutomaticUpdates()) {
+	exit 0;
+}
+
+
+my @pkgs = @{$software->listUpgradablePkgs()};
+my @pkgnames = ();
+foreach my $pkg (@pkgs) {
+	push(@pkgnames, $pkg->{name});
+}
+$software->installPkgs(@pkgnames);

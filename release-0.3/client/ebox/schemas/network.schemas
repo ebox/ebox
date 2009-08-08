@@ -1,0 +1,87 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/class</key>
+			<applyto>/ebox/modules/global/modules/network/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::Network</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/text</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Network</default>
+			</locale>
+			<locale name="es">
+				<default>Red</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/sub/ifaces/text</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/sub/ifaces/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Interfaces</default>
+			</locale>
+			<locale name="es">
+				<default>Interfaces</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/sub/ifaces/location</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/sub/ifaces/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Network/Ifaces</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/sub/dns/text</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/sub/dns/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>DNS</default>
+			</locale>
+			<locale name="es">
+				<default>DNS</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/sub/dns/location</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/sub/dns/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Network/DNS</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/sub/routes/text</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/sub/routes/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Routes</default>
+			</locale>
+			<locale name="es">
+				<default>Rutas</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/network/menu/net/sub/routes/location</key>
+			<applyto>/ebox/modules/global/modules/network/menu/net/sub/routes/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Network/Routes</default>
+			<locale name="C"/>
+		</schema>
+	</schemalist>
+</gconfschemafile>

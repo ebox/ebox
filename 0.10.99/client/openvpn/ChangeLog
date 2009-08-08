@@ -1,0 +1,33 @@
+0.10.99
+	+ Windows bundle can be created to include the openVPN windows installer
+	+ Log openVPN status
+	+ Treat openVPN like internal interfaces
+0.10.99
+	+ New release
+	+ added  log facilities
+	+ client certificates and key validation
+0.10
+	+ Fix issue with www server to guess IP
+	+ Improvements on port availability
+	+ Only announce routes for RFC1918
+	+ Relax checking of advertised routes
+	+ Do not downgrade privileges from root to another user/group to avoid
+	  problems when reconnecting
+0.9.100
+	+ Clients backup their certificates
+	+ Add API to support internal VPNs
+0.9.99
+	+ New openvpn's log directory with log file and status file
+	+ After creating a server the user is redirected to the edit page
+0.9.3
+	+ New release
+0.9.2
+	+ Fix a bug related to unscaped characters
+	+ Added support for hidden clients
+0.9.1
+	+ New release
+0.9
+	+ Added Polish translation
+        + Client bundle generator for Windows and Linux
+0.8.99
+	+ First public release 

@@ -1,0 +1,36 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/global/modules/objects/class</key>
+			<applyto>/ebox/global/modules/objects/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::Objects</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/objects/menu/obj/text</key>
+			<applyto>/ebox/global/modules/objects/menu/obj/text</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<locale name="C">
+				<default>Objects</default>
+			</locale>
+			<locale name="es">
+				<default>Objetos</default>
+			</locale>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/global/modules/objects/menu/obj/location</key>
+			<applyto>/ebox/global/modules/objects/menu/obj/location</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>Objects/Index</default>
+			<locale name="C"/>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

@@ -1,0 +1,13 @@
+<%args>
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<form action='Halt' method='POST'>
+	<p class='endform'>
+		<input class='inputButton' type='submit' name='halt'
+			   value='<% __('Halt') %>' />
+		<input class='inputButton' type='submit' name='reboot'
+			   value='<% __('Reboot') %>' />
+	</p>
+</form>

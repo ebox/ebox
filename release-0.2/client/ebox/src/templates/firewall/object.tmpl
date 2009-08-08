@@ -1,0 +1,236 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<h3>Policy</h3>
+	<form action='ObjectPolicy' method='post'>
+		<input type='hidden' name='object'
+			   value='<TMPL_VAR NAME="object">' />
+		<select name='policy'>
+			<TMPL_IF NAME="policy">
+				<TMPL_IF EXPR="object ne '_global'">
+					<TMPL_IF EXPR="policy eq 'global'">
+						<option selected value="global">Global</option>
+					<TMPL_ELSE>
+						<option value="global">Global</option>
+					</TMPL_IF>
+				</TMPL_IF>
+
+				<TMPL_IF EXPR="policy eq 'deny'">
+					<option selected value="deny">Deny</option>
+				<TMPL_ELSE>
+					<option value="deny">Deny</option>
+				</TMPL_IF>
+
+				<TMPL_IF EXPR="policy eq 'allow'">
+					<option selected value="allow">Allow</option>
+				<TMPL_ELSE>
+					<option value="allow">Allow</option>
+				</TMPL_IF>
+			<TMPL_ELSE>
+				<option value="deny">Deny</option>
+				<option value="allow">Allow</option>
+				<TMPL_IF EXPR="object ne '_global'">
+					<option selected value="global">Global</option>
+				</TMPL_IF>
+			</TMPL_IF>
+		</select>
+		<input class='inputButton' type='submit' name='accept' value='Ok' />
+	</form>
+<TMPL_IF NAME="services">
+<h3>Services</h3>
+<form action='ObjectService' method='post'>
+	<input type='hidden' name='object' value='<TMPL_VAR NAME="object">' />
+	<select name='service'>
+		<TMPL_LOOP NAME="services">
+			<option value='<TMPL_VAR NAME="name">'>
+				<TMPL_VAR NAME="name">
+			</option>
+		</TMPL_LOOP>
+	</select>
+	<select name='policy'>
+		<option value="deny">Deny</option>
+		<option value="allow">Allow</option>
+	</select>
+	<input class='inputButton' type='submit' name='add'
+		   value='<TMPL_VAR EXPR="__('Add')">' />
+</form>
+</TMPL_IF>
+<TMPL_IF NAME="servicepol">
+<table class='dataTable' cellspacing='0'>
+	<thead>
+		<tr>
+			<th class='tleft'>Service</th>
+			<th>Policy</th>
+			<th>Change</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<TMPL_LOOP NAME="servicepol">
+			<form action='ObjectService' method='post'>
+				<input type='hidden' name='object' value='<TMPL_VAR
+				NAME="object">' />
+				<input type='hidden' name='service'
+					   value='<TMPL_VAR NAME="name">' />
+				<tr class='border'>
+					<td>
+						<TMPL_VAR NAME="name">
+					</td>
+					<td class='tcenter'>
+						<select name='policy'>
+							<TMPL_IF EXPR="policy eq 'allow'">
+								<option selected value="allow">Allow</option>
+								<option value="deny">Deny</option>
+							<TMPL_ELSE>
+								<option value="allow">Allow</option>
+								<option selected value="deny">Deny</option>
+							</TMPL_IF>
+						</select>
+					</td>
+					<td class='tcenter'>
+				<input class='inputButton' type='submit' name='change'
+					   value='<TMPL_VAR EXPR="__('Change')">' />
+					</td>
+					<td class='tcenter'>
+				<input class='inputButton' type='submit' name='delete'
+					   value='<TMPL_VAR EXPR="__('Delete')">' />
+					</td>
+				</tr>
+			</form>
+		</TMPL_LOOP>
+	</tbody>
+</table>
+</TMPL_IF>
+
+<h3>Rules</h3>
+<form action='ObjectRule' method='post'>
+	<input type='hidden' name='object' value='<TMPL_VAR NAME="object">' />
+	Protocol
+	<select name='protocol'>
+		<option value="tcp">tcp</option>
+		<option value="udp">udp</option>
+	</select>
+	Port
+	<input class='inputText' type='text' size='5' name='port'/>
+	Address
+	<input type='text' class='inputText' size='13' name='address'/>
+	/
+	<select name='mask'>
+		<option selected value="32">32</option>
+		<option value="30">30</option>
+		<option value="29">29</option>
+		<option value="28">28</option>
+		<option value="27">27</option>
+		<option value="26">26</option>
+		<option value="25">25</option>
+		<option value="24">24</option>
+		<option value="16">16</option>
+		<option value="8">8</option>
+	</select>
+	Action
+	<select name='action'>
+		<option value="allow">Allow</option>
+		<option value="deny">Deny</option>
+	</select>
+	<input class='inputButton' type='submit' name='add'
+		   value='<TMPL_VAR EXPR="__('Add')">' />
+</form>
+<TMPL_IF NAME="rules">
+<table class='dataTable' cellspacing='0'>
+	<thead>
+		<tr>
+			<th>Protocol</th>
+			<th>Port</th>
+			<th>Address</th>
+			<th>Action</th>
+			<th>Active</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<TMPL_LOOP NAME="rules">
+			<tr class='border'>
+				<form action='ObjectRule' method='post'>
+					<input type='hidden' name='object'
+						   value='<TMPL_VAR NAME="object">' />
+					<input type='hidden' name='rulename'
+						   value='<TMPL_VAR NAME="name">' />
+					<input type='hidden' name='order'
+						   value='<TMPL_VAR NAME="order">' />
+					<td>
+						<select name='protocol'>
+							<TMPL_IF EXPR="protocol eq 'tcp'">
+								<option selected value="tcp">tcp</option>
+								<option value="udp">udp</option>
+							<TMPL_ELSE>
+								<option value="tcp">tcp</option>
+								<option selected value="udp">udp</option>
+							</TMPL_IF>
+						</select>
+					</td>
+					<td class='tcenter'>
+						<input type='text' size='5' name='port'
+							   class='inputText' value="<TMPL_VAR NAME='port'>"/>
+					</td>
+					<td class='tcenter'>
+						<input type='text' size='15' name='address'
+							   class='inputText' value="<TMPL_VAR NAME='address'>"/>
+						/
+						<select name='mask'>
+							<option selected value="<TMPL_VAR NAME='mask'>">
+								<TMPL_VAR NAME="mask">
+							</option>
+							<option value="32">32</option>
+							<option value="30">30</option>
+							<option value="29">29</option>
+							<option value="28">28</option>
+							<option value="27">27</option>
+							<option value="26">26</option>
+							<option value="25">25</option>
+							<option value="24">24</option>
+							<option value="16">16</option>
+							<option value="8">8</option>
+						</select>
+					</td>
+					<td class='tcenter'>
+						<select name='action'>
+							<TMPL_IF EXPR="action eq 'allow'">
+								<option selected value="allow">Allow</option>
+								<option value="deny">Deny</option>
+							<TMPL_ELSE>
+								<option value="allow">Allow</option>
+								<option selected value="deny">Deny</option>
+							</TMPL_IF>
+						</select>
+					</td>
+					<td class='tcenter'>
+						<TMPL_IF EXPR="active == 1">
+							<input type='checkbox' checked value="yes"
+								   name='active'/>
+						<TMPL_ELSE>
+							<input type='checkbox' value="yes" name='active'/>
+						</TMPL_IF>
+					</td>
+
+					<td>
+						<input class='inputButton' type='image' name='change'
+							   value='<TMPL_VAR EXPR="__('Change')">'
+							   src='/data/images/apply.png' />
+						<img src='/data/images/sep.png' alt='-' />
+						<input class='inputButton' type='image' name='delete'
+							   value='<TMPL_VAR EXPR="__('Delete')">'
+							   src='/data/images/delete.png' />
+						<img src='/data/images/sep.png' alt='-' />
+						<input class='inputButton' type='image' name='up'
+							   value='<TMPL_VAR EXPR="__('Up')">'
+							   src='/data/images/up.png' />
+						<img src='/data/images/sep.png' alt='-' />
+						<input class='inputButton' type='image' name='down'
+							   value='<TMPL_VAR EXPR="__('Down')">'
+							   src='/data/images/down.png' />
+					</td>
+				</form>
+			</tr>
+		</TMPL_LOOP>
+	</tbody>
+</table>
+</TMPL_IF>

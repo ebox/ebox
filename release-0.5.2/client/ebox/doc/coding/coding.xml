@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
+<!ENTITY % entities SYSTEM "common.ent" > %entities;
+]>
+
+<book lang='es'>
+<!-- Cabeceras -->
+	<bookinfo>
+		<title>&title;</title>
+		<subtitle>&subtitle;</subtitle>
+		<author>
+			<firstname>Héctor</firstname>
+			<surname>Blanco Alcaine</surname>
+			<affiliation><address><email>hector.blanco@hispalinux.es</email></address></affiliation>
+		</author>
+
+		<pubdate>2004</pubdate>
+		<copyright><year>2004</year>
+		<holder>
+		Héctor Blanco Alcaine
+		</holder>
+		</copyright>
+
+
+	</bookinfo>
+
+
+<!-- Texto del libro -->
+
+	&part-programming_languages;
+
+	&part-filenames;
+
+<!-- Apendices 
+<part id='appends'>
+	<title>Apéndices</title>
+	&ap-license;
+	&ap-orlicense;
+</part>
+-->
+
+</book>

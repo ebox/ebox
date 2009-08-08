@@ -1,0 +1,22 @@
+<%args>
+	$lang
+</%args>
+<%init>
+use EBox::Gettext;
+my $langs = langs();
+</%init>
+<h3><% __('Language selection') %></h3>
+	<form action='Lang' method='POST'>
+		<div class='ftitle'><% __('Language') %></div>
+		<select name='lang'>
+%	foreach my $l (keys %{$langs}) {
+%		if($lang eq $l){
+			<option selected value="<% $l %>"><% $langs->{$l} %></option>
+%		}else{
+			<option value="<% $l %>"><% $langs->{$l} %></option>
+%		}
+%	}
+		</select>
+		<input class='inputButton' type='submit' name='setlang'
+			   value='<% __('Ok') %>'>
+	</form>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<network>
+	<external iface="eth0"/>
+	<interface name="eth0" method="dhcp"/>
+	<interface name="eth1" method="static"
+					address="192.168.1.5" netmask="255.255.255.0"/>
+	<routes>
+		<default gateway="192.168.1.3"/>
+		<net network="192.168.7.0/24" gateway="192.168.1.3"/>
+		<net network="192.168.8.0/24" gateway="192.168.1.8"/>
+	</routes>
+	<nameservers>
+		<address>155.210.33.4</address>
+		<address>155.210.12.9</address>
+	</nameservers>
+</network>

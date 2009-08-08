@@ -1,0 +1,24 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_intrepid_clamd.dpatch by Javier Uruen Val <javi@warp.es>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Patch to use the new configuration used by clamd in intrepid
+
+@DPATCH@
+
+Index: mailfilter/stubs/clamd.conf.mas
+===================================================================
+--- mailfilter/stubs/clamd.conf.mas	(.../trunk/client)	(revision 11167)
++++ mailfilter/stubs/clamd.conf.mas	(.../branches/juruen/intrepid-alpha4/client)	(revision 11167)
+@@ -10,10 +10,7 @@
+ FixStaleSocket true
+ User clamav
+ AllowSupplementaryGroups  true
+-ArchiveMaxRecursion 5
+-ArchiveMaxFiles 1000
+-ArchiveMaxFileSize 10M
+-ArchiveMaxCompressionRatio 250
++
+ ReadTimeout 180
+ MaxThreads <% $maxThreads %>
+ MaxConnectionQueueLength 15

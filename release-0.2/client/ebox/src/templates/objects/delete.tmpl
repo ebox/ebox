@@ -1,0 +1,15 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+<h3><TMPL_VAR EXPR="__('Deleting object')">: <TMPL_VAR NAME="description"></h3>
+<TMPL_VAR EXPR="__('The object you tried to delete is being used by some modules, please confirm that you want to delete it.')">
+
+<form action='Del' method='POST'>
+	<input type='hidden' name='objectname'
+		   value='<TMPL_VAR NAME="object">'/>
+	<input class='inputButton'
+		   type='submit' name='deleteforce'
+		   value='<TMPL_VAR EXPR="__('Delete')">'>
+	<input class='inputButton'
+		   type='submit' name='cancel'
+		   value='<TMPL_VAR EXPR="__('Cancel')">'>
+</form>

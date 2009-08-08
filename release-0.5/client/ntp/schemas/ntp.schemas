@@ -1,0 +1,119 @@
+<!-- vim: ts=4 sw=4 nowrap
+-->
+
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/ebox/modules/global/modules/ntp/class</key>
+			<applyto>/ebox/modules/global/modules/ntp/class</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>EBox::NTP</default>
+			<locale name="C"/>
+		</schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/text</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>NTP</default>
+            </locale>
+            <locale name="es">
+                <default>NTP</default>
+            </locale>
+            <locale name="fr">
+                <default>NTP</default>
+            </locale>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/sub/index/text</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/sub/index/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>NTP server</default>
+            </locale>
+            <locale name="es">
+                <default>Servidor NTP</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/sub/index/location</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/sub/index/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>NTP/Index</default>
+            <locale name="C"/>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/sub/datetime/text</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/sub/datetime/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>Date/Time</default>
+            </locale>
+            <locale name="es">
+                <default>Fecha/Hora</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/sub/datetime/location</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/sub/datetime/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>NTP/Datetime</default>
+            <locale name="C"/>
+        </schema>
+
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/sub/timezone/text</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/sub/timezone/text</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <locale name="C">
+                <default>Time Zone</default>
+            </locale>
+            <locale name="es">
+                <default>Zona Horaria</default>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/ebox/modules/global/modules/ntp/menu/ntp/sub/timezone/location</key>
+            <applyto>/ebox/modules/global/modules/ntp/menu/ntp/sub/timezone/location</applyto>
+            <owner>ebox</owner>
+            <type>string</type>
+            <default>NTP/Timezone</default>
+            <locale name="C"/>
+        </schema>
+
+		<schema>
+			<key>/schemas/ebox/modules/ntp/active</key>
+			<applyto>/ebox/modules/ntp/active</applyto>
+			<owner>ebox</owner>
+			<type>bool</type>
+			<default>false</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/ntp/synchronized</key>
+			<applyto>/ebox/modules/ntp/synchronized</applyto>
+			<owner>ebox</owner>
+			<type>bool</type>
+			<default>false</default>
+			<locale name="C"/>
+		</schema>
+		<schema>
+			<key>/schemas/ebox/modules/ntp/server1</key>
+			<applyto>/ebox/modules/ntp/server1</applyto>
+			<owner>ebox</owner>
+			<type>string</type>
+			<default>0.pool.ntp.org</default>
+			<locale name="C"/>
+		</schema>
+		
+	</schemalist>
+</gconfschemafile>

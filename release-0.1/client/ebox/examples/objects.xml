@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<objects>
+<object name="jefe">
+	<member ip="192.168.5.12" nname="Despacho"/>
+</object>
+<object name="secretarias">
+	<member ip="192.168.0.0/20" nname="Oficinas"/>
+	<member ip="192.168.1.0/18" nname="Comerciales"/>
+	<member ip="192.168.2.3" nname="OficinasEste"/>
+</object>
+</objects>

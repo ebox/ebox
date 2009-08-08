@@ -1,0 +1,7 @@
+<%args>
+$name
+$value       => ''
+@extraParams => ()
+</%args>
+<input type='hidden'  name='<% $name %>' value='<% $value | hu%>'
+  <% @extraParams | hu %> />

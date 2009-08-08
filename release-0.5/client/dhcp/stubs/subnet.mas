@@ -1,0 +1,22 @@
+<%args>
+	%info
+</%args>
+	subnet <% $info{'net'} %> netmask <% $info{'netmask'} %> {
+%	my $ranges = $info{'ranges'};
+%	foreach my $range (@{$ranges}) {
+		range <% $range->{'from'} %> <% $range->{'to'} %>;
+%	}
+		option routers <% $info{'address'} %>;
+	}
+%	my $fixedAddresses = $info{'fixed'};
+%	if(@{$fixedAddresses}){
+	group {
+		option routers <% $info{'address'} %>;
+%	foreach my $fixed (@{$fixedAddresses}) {
+		host <% $fixed->{'name'} %> {
+			hardware ethernet <% $fixed->{'mac'} %>;
+			fixed-address <% $fixed->{'ip'} %>;
+		}
+%	}
+	}
+%	}

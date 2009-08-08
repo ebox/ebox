@@ -1,0 +1,458 @@
+# Spanish Warp Team translation of ebox.
+# Copyright (C) 2004 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Isaac Clerencia <isaac@sindominio.net>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2004-07-23 13:17+0200\n"
+"PO-Revision-Date: 2004-07-22 12:39+0200\n"
+"Last-Translator: Isaac Clerencia <isaac@sindominio.net>\n"
+"Language-Team: Spanish Warp Team <lang-es@warp.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/EBox/Firewall.pm:120 src/EBox/CGI/Firewall/ObjectRule.pm:31
+#: src/EBox/CGI/Firewall/ObjectRule.pm:50 src/EBox/CGI/Firewall/Deny.pm:26
+msgid "action"
+msgstr "acción"
+
+#: src/EBox/Firewall.pm:144 src/EBox/Firewall.pm:190 src/EBox/Firewall.pm:271
+#: src/EBox/Firewall.pm:339 src/EBox/Firewall.pm:507 src/EBox/Firewall.pm:558
+#: src/EBox/Firewall.pm:590 src/EBox/Firewall.pm:629
+#: src/EBox/CGI/Firewall/Redirection.pm:26
+#: src/EBox/CGI/Firewall/Redirection.pm:35
+#: src/EBox/CGI/Firewall/Redirection.pm:40
+#: src/EBox/CGI/Firewall/ObjectRule.pm:32
+#: src/EBox/CGI/Firewall/ObjectRule.pm:51
+msgid "protocol"
+msgstr "protocolo"
+
+#: src/EBox/Firewall.pm:148 src/EBox/CGI/Firewall/Redirection.pm:28
+#: src/EBox/CGI/Firewall/Redirection.pm:42
+msgid "destination address"
+msgstr "dirección de destino"
+
+#: src/EBox/Firewall.pm:152 src/EBox/Firewall.pm:194
+#: src/EBox/CGI/Firewall/Redirection.pm:27
+#: src/EBox/CGI/Firewall/Redirection.pm:36
+#: src/EBox/CGI/Firewall/Redirection.pm:41
+msgid "external port"
+msgstr "puerto externo"
+
+#: src/EBox/Firewall.pm:156 src/EBox/CGI/Firewall/Redirection.pm:29
+#: src/EBox/CGI/Firewall/Redirection.pm:43
+msgid "destination port"
+msgstr "puerto de destino"
+
+#: src/EBox/Firewall.pm:274 src/EBox/Firewall.pm:342 src/EBox/Firewall.pm:359
+#: src/EBox/Firewall.pm:510 src/EBox/Firewall.pm:561 src/EBox/Firewall.pm:593
+#: src/EBox/Firewall.pm:632 src/EBox/CGI/Firewall/ObjectRule.pm:33
+#: src/EBox/CGI/Firewall/ObjectRule.pm:52
+msgid "port"
+msgstr "puerto"
+
+#: src/EBox/Firewall.pm:363 src/EBox/Firewall.pm:380
+#: src/EBox/CGI/Firewall/ObjectService.pm:30
+#: src/EBox/CGI/Firewall/ObjectService.pm:36
+msgid "service"
+msgstr "servicio"
+
+#: src/EBox/Firewall.pm:417 src/EBox/Firewall.pm:443
+msgid "object"
+msgstr "objeto"
+
+#: src/EBox/Firewall.pm:438 src/EBox/Firewall.pm:504 src/EBox/Firewall.pm:626
+#: src/EBox/Firewall.pm:706 src/EBox/CGI/Firewall/ObjectPolicy.pm:27
+#: src/EBox/CGI/Firewall/ObjectService.pm:31
+msgid "policy"
+msgstr "política"
+
+#: src/EBox/Firewall.pm:515 src/EBox/Firewall.pm:638
+msgid "address"
+msgstr "dirección"
+
+#: src/EBox/Objects.pm:61 src/EBox/Objects.pm:155
+#: src/EBox/CGI/Firewall/ObjectRule.pm:25
+#: src/EBox/CGI/Firewall/ObjectPolicy.pm:25 src/EBox/CGI/Firewall/Object.pm:30
+#: src/EBox/CGI/Firewall/ObjectService.pm:25
+msgid "Object"
+msgstr "Objeto"
+
+#: src/EBox/Objects.pm:119
+#, fuzzy
+msgid "Object description"
+msgstr "descripción de dirección"
+
+#: src/EBox/Objects.pm:178 src/EBox/CGI/Network/AddRoute.pm:25
+#: src/EBox/CGI/Network/DelRoute.pm:25
+msgid "network address"
+msgstr "dirección de red"
+
+#: src/EBox/CGI/Objects/DelFrom.pm:25 src/EBox/CGI/Objects/Del.pm:26
+#: src/EBox/CGI/Objects/Add.pm:25 src/EBox/CGI/Objects/AddTo.pm:25
+msgid "Object name"
+msgstr "Nombre de objeto"
+
+#: src/EBox/CGI/Objects/DelFrom.pm:26 src/EBox/CGI/Objects/AddTo.pm:26
+msgid "IP address"
+msgstr "dirección IP"
+
+#: src/EBox/CGI/Objects/DelFrom.pm:27 src/templates/objects/index.tmpl:70
+msgid "Mask"
+msgstr "Máscara"
+
+#: src/EBox/CGI/Objects/AddTo.pm:27
+msgid "IP mask"
+msgstr "Máscara IP"
+
+#: src/EBox/CGI/Objects/AddTo.pm:28
+msgid "address description"
+msgstr "descripción de dirección"
+
+#: src/EBox/CGI/Run.pm:37
+msgid "The page could not be found"
+msgstr "La página no pudo encontrarse"
+
+#: src/EBox/CGI/Firewall/ObjectRule.pm:41
+#: src/EBox/CGI/Firewall/ObjectRule.pm:49
+#: src/EBox/CGI/Firewall/ObjectRule.pm:62
+#: src/EBox/CGI/Firewall/ObjectRule.pm:66
+msgid "rule"
+msgstr "regla"
+
+#: src/EBox/CGI/Firewall/Index.pm:17 conf/global.xml.in:25
+msgid "Firewall"
+msgstr "Cortafuegos"
+
+#: src/EBox/CGI/Logout/Index.pm:15 conf/global.xml.in:11
+msgid "Logout"
+msgstr "Salir de sesión"
+
+#: src/EBox/CGI/Network/AddRoute.pm:26 src/EBox/CGI/Network/DelRoute.pm:26
+msgid "network mask"
+msgstr "máscara de red"
+
+#: src/EBox/CGI/Network/AddRoute.pm:27 src/EBox/CGI/Network/Gateway.pm:25
+msgid "gateway address"
+msgstr "dirección del gateway"
+
+#: src/EBox/CGI/Network/Iface.pm:25
+msgid "method"
+msgstr "método"
+
+#: src/EBox/CGI/Network/Iface.pm:26
+msgid "network interface"
+msgstr "interfaz de red"
+
+#: src/EBox/CGI/Network/Iface.pm:32
+msgid "ip address"
+msgstr "dirección IP"
+
+#: src/EBox/CGI/Network/Iface.pm:33
+msgid "netmask"
+msgstr "máscara de red"
+
+#: src/EBox/CGI/General.pm:37
+msgid "Incorrect password."
+msgstr "Contraseña incorrecta"
+
+#: src/EBox/CGI/General.pm:42
+msgid "New passwords do not match."
+msgstr "Las contraseñas no coinciden"
+
+#: src/EBox/CGI/General.pm:46
+msgid "The password must be at least 6 characters long"
+msgstr "La contraseña debe tener al menos 6 caracteres"
+
+#: src/EBox/CGI/General.pm:51
+msgid "The password was changed successfully."
+msgstr "La contraseña fue cambiada correctamente"
+
+#: src/EBox/Network.pm:75 src/EBox/Network.pm:116 src/EBox/Network.pm:152
+#: src/EBox/Network.pm:165 src/EBox/Network.pm:184 src/EBox/Network.pm:203
+#: src/EBox/Network.pm:224 src/EBox/Network.pm:244 src/EBox/Network.pm:275
+#, fuzzy
+msgid "Interface"
+msgstr "Interfaces"
+
+#: src/EBox/Network.pm:188 src/templates/objects/index.tmpl:67
+#: src/templates/network/index.tmpl:67
+msgid "IP Address"
+msgstr "Dirección IP"
+
+#: src/EBox/Network.pm:568 src/templates/network/index.tmpl:148
+#: conf/global.xml.in:21
+msgid "Network"
+msgstr "Red"
+
+#: src/EBox/Network.pm:569
+msgid "Interfaces"
+msgstr "Interfaces"
+
+#: src/EBox/SysInfo.pm:42
+msgid "General information"
+msgstr "Información general"
+
+#: src/EBox/SysInfo.pm:44
+msgid "System"
+msgstr "Sistema"
+
+#: src/EBox/SysInfo.pm:46
+msgid "Host name"
+msgstr "Nombre de máquina"
+
+#: src/EBox/SysInfo.pm:47
+msgid "Uptime"
+msgstr "Tiempo de servicio"
+
+#: src/EBox/SysInfo.pm:48
+msgid "Load"
+msgstr "Carga"
+
+#: src/EBox/SysInfo.pm:50
+msgid "CPU"
+msgstr "Procesador"
+
+#: src/EBox/SysInfo.pm:52
+msgid "Number"
+msgstr "Número"
+
+#: src/EBox/SysInfo.pm:53
+msgid "Type"
+msgstr "Tipo"
+
+#: src/EBox/SysInfo.pm:54
+msgid "Speed"
+msgstr "Velocidad"
+
+#: src/templates/objects/index.tmpl:5
+msgid "New Object"
+msgstr "Nuevo Objeto"
+
+#: src/templates/objects/index.tmpl:6
+msgid "Object Name"
+msgstr "Nombre de objeto"
+
+#: src/templates/objects/index.tmpl:9 src/templates/objects/index.tmpl:10
+msgid "Create"
+msgstr "Crear"
+
+#: src/templates/objects/index.tmpl:14
+msgid "Help about new Object creation."
+msgstr "Ayuda sobre la creación de nuevos Objetos"
+
+#: src/templates/objects/index.tmpl:20
+msgid "Object List"
+msgstr "Lista de objetos"
+
+#: src/templates/objects/index.tmpl:26 src/templates/objects/index.tmpl:64
+msgid "Name"
+msgstr "Nombre"
+
+#: src/templates/objects/index.tmpl:29
+msgid "Modify"
+msgstr "Modificar"
+
+#: src/templates/objects/index.tmpl:32 src/templates/objects/index.tmpl:52
+#: src/templates/objects/index.tmpl:136 src/templates/firewall/index.tmpl:106
+#: src/templates/firewall/object.tmpl:94
+#: src/templates/firewall/object.tmpl:217 src/templates/network/index.tmpl:166
+msgid "Delete"
+msgstr "Borrar"
+
+#: src/templates/objects/index.tmpl:43
+msgid "Show"
+msgstr "Mostrar"
+
+#: src/templates/objects/index.tmpl:46
+msgid "Hide"
+msgstr "Ocultar"
+
+#: src/templates/objects/index.tmpl:73 src/templates/network/index.tmpl:150
+msgid "Action"
+msgstr "Acción"
+
+#: src/templates/objects/index.tmpl:110 src/templates/objects/index.tmpl:111
+#: src/templates/firewall/index.tmpl:45 src/templates/firewall/object.tmpl:54
+#: src/templates/firewall/object.tmpl:134 src/templates/network/index.tmpl:193
+#: src/templates/network/index.tmpl:194
+msgid "Add"
+msgstr "Añadir"
+
+#: src/templates/firewall/index.tmpl:7 src/templates/firewall/index.tmpl:11
+msgid "Drop packets"
+msgstr "Ignorar paquetes"
+
+#: src/templates/firewall/index.tmpl:8 src/templates/firewall/index.tmpl:10
+msgid "Reject packets"
+msgstr "Rechazar paquetes"
+
+#: src/templates/firewall/index.tmpl:16
+msgid "Port redirections"
+msgstr "Redirecciones de puertos"
+
+#: src/templates/firewall/index.tmpl:20
+msgid "External port"
+msgstr "Puerto externo"
+
+#: src/templates/firewall/index.tmpl:24
+msgid "Protocol"
+msgstr "Protocolo"
+
+#: src/templates/firewall/index.tmpl:101 src/templates/firewall/object.tmpl:90
+#: src/templates/firewall/object.tmpl:215 src/templates/general.tmpl:31
+msgid "Change"
+msgstr "Cambiar"
+
+#: src/templates/firewall/object.tmpl:219
+msgid "Up"
+msgstr "Arriba"
+
+#: src/templates/firewall/object.tmpl:221
+msgid "Down"
+msgstr "Abajo"
+
+#: src/templates/general.tmpl:3
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: src/templates/general.tmpl:8
+msgid "Current password"
+msgstr "Contraseña actual"
+
+#: src/templates/general.tmpl:17
+msgid "New password: "
+msgstr "Nueva contraseña:"
+
+#: src/templates/general.tmpl:26
+msgid "Confirm new password: "
+msgstr "Confirmar nueva contraseña:"
+
+#: src/templates/general.tmpl:36
+msgid "Language selection"
+msgstr "Selección de lenguaje"
+
+#: src/templates/general.tmpl:43 src/templates/network/index.tmpl:19
+#: src/templates/network/index.tmpl:101
+msgid "Ok"
+msgstr "Aceptar"
+
+#: src/templates/login/index.tmpl:5
+msgid "Administrator Password"
+msgstr "Contraseña de Administrador"
+
+#: src/templates/logout/index.tmpl:5
+msgid "There are unsaved changes, if you log out now they will be lost."
+msgstr "Hay cambios sin guardar, si sale ahora los perderá"
+
+#: src/templates/logout/index.tmpl:8
+msgid "Exit anyway"
+msgstr "Salir de todos modos"
+
+#: src/templates/logout/index.tmpl:10
+msgid "Exit"
+msgstr "Salir"
+
+#: src/templates/network/index.tmpl:40 src/templates/network/index.tmpl:44
+msgid "Static"
+msgstr "Estática"
+
+#: src/templates/network/index.tmpl:56 src/templates/network/index.tmpl:60
+msgid "Not set"
+msgstr "No configurado"
+
+#: src/templates/network/index.tmpl:72
+msgid "Netmask"
+msgstr "Máscara de red"
+
+#: src/templates/network/index.tmpl:111
+msgid "Primary:"
+msgstr "Primario:"
+
+#: src/templates/network/index.tmpl:118
+msgid "Secondary:"
+msgstr "Secundario:"
+
+#: src/templates/network/index.tmpl:125
+msgid "Tertiary:"
+msgstr "Terciario:"
+
+#: src/templates/network/index.tmpl:136
+msgid "Default Gateway"
+msgstr "Ruta por defecto"
+
+#: src/templates/network/index.tmpl:144
+msgid "Static Routes"
+msgstr "Rutas estáticas"
+
+#: src/templates/network/index.tmpl:149
+msgid "Gateway"
+msgstr "Gateway"
+
+#: src/templates/finish.tmpl:5
+msgid "Help about save or discard configuration changes, for all modules!!!"
+msgstr ""
+"Ayuda sobre guardar o descartar los cambios en la configuración de todos los "
+"modulos!!!"
+
+#: src/templates/finish.tmpl:10
+msgid "Save"
+msgstr "Guardar"
+
+#: src/templates/finish.tmpl:12
+msgid "Discard changes"
+msgstr "Descartar cambios"
+
+#: src/templates/finish.tmpl:16
+msgid "There are no unsaved changes."
+msgstr "No hay cambios sin guardar"
+
+#: conf/global.xml.in:7
+msgid "Summary"
+msgstr "Resumen"
+
+#: conf/global.xml.in:8
+msgid "General"
+msgstr "General"
+
+#: conf/global.xml.in:9
+msgid "Save/Cancel"
+msgstr "Guardar/Cancelar"
+
+#: conf/global.xml.in:17
+msgid "Objects"
+msgstr "Objetos"
+
+#~ msgid "EBox Administration"
+#~ msgstr "Administración de EBox"
+
+#~ msgid "acl"
+#~ msgstr "acl"
+
+#~ msgid "ACL name"
+#~ msgstr "Nombre ACL"
+
+#~ msgid "ACL"
+#~ msgstr "ACL"
+
+#~ msgid "New ACL"
+#~ msgstr "Nueva ACL"
+
+#~ msgid "ACL Name"
+#~ msgstr "Nombre de la ACL"
+
+#~ msgid "ACL List"
+#~ msgstr "Lista de ACLs"
+
+#~ msgid ""
+#~ "Make sure you save your changes before logging out, otherwise your "
+#~ "changes will be discarded"
+#~ msgstr ""
+#~ "Asegurate de guardar los cambios antes de salir de sesión, de otro modo "
+#~ "tus cambios no se guardarán"
+
+#~ msgid "Save or discard changes for all modules"
+#~ msgstr "Guardar o descartar cambios para todos los módulos"
