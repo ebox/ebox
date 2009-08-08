@@ -1,0 +1,170 @@
+<%args>
+$name
+$dev
+$proto
+@servers
+$caCertificate
+$certificate
+$certificateKey
+
+$user
+$group
+$dh
+
+$logFile
+$statusLogFile
+</%args>
+# eBox client-side OpenVPN 2.0 config file #
+# for connecting to multi-client server.     #
+# Client name <% $name %>
+
+
+# Specify that we are a client and that we
+# will be pulling certain config file directives
+# from the server.
+client
+
+
+# virtual device
+<& valueEntry, entry => 'dev', value => $dev  &>
+
+
+# Are we connecting to a TCP or
+# UDP server?  Use the same setting as
+# on the server.
+<& valueEntry, entry => 'proto', value => $proto  &>
+
+
+# The hostname/IP and port of the server.
+# You can have multiple remote entries
+# to load balance between the servers.
+<& .remote, servers => \@servers &>
+
+# Choose a random host from the remote
+# list for load-balancing.  Otherwise
+# try hosts in the order specified.
+;remote-random
+
+# Keep trying indefinitely to resolve the
+# host name of the OpenVPN server.  Very useful
+# on machines which are not permanently connected
+# to the internet such as laptops.
+resolv-retry infinite
+
+# Most clients don't need to bind to
+# a specific local port number.
+nobind
+
+
+# Try to preserve some state across restarts.
+persist-key
+persist-tun
+
+# If you are connecting through an
+# HTTP proxy to reach the actual OpenVPN
+# server, put the proxy server/IP and
+# port number here.  See the man page
+# if your proxy server requires
+# authentication.
+;http-proxy-retry # retry on connection failures
+;http-proxy [proxy server] [proxy port #]
+
+# Wireless networks often produce a lot
+# of duplicate packets.  Set this flag
+# to silence duplicate packet warnings.
+;mute-replay-warnings
+
+# SSL/TLS parms.
+# See the server config file for more
+# description.  It's best to use
+# a separate .crt/.key file pair
+# for each client.  A single ca
+# file can be used for all clients.
+<& valueEntry, entry => 'ca', value => qq{"$caCertificate"}  &>
+<& valueEntry, entry => 'cert', value => qq{"$certificate"} &>
+<& valueEntry, entry => 'key', value => qq{"$certificateKey"}  &> # This file should be kept secret
+
+
+# Verify server certificate by checking
+# that the certicate has the nsCertType
+# field set to "server".  This is an
+# important precaution to protect against
+# a potential attack discussed here:
+#  http://openvpn.net/howto.html#mitm
+#
+# To use this feature, you will need to generate
+# your server certificates with the nsCertType
+# field set to "server".  The build-key-server
+# script in the easy-rsa folder will do this.
+;ns-cert-type server
+
+# If a tls-auth key is used on the server
+# then every client must also have the key.
+;tls-auth ta.key 1
+
+# Select a cryptographic cipher.
+# If the cipher option is used on the server
+# then you must also specify it here.
+;cipher x
+
+# Enable compression on the VPN link.
+# Don't enable this unless it is also
+# enabled in the server config file.
+comp-lzo
+
+
+# Diffie hellman parameters.
+# Generate your own with:
+#   openssl dhparam -out dh1024.pem 1024
+# Substitute 2048 for 1024 if you are using
+# 2048 bit keys. 
+#dh /etc/openvpn/dh1024.pem
+<& valueEntry, entry => 'dh', value => $dh  &>
+
+
+# By default, log messages will go to the syslog (or
+# on Windows, if running as a service, they will go to
+# the "\Program Files\OpenVPN\log" directory).
+# Use log or log-append to override this default.
+# "log" will truncate the log file on OpenVPN startup,
+# while "log-append" will append to it.  Use one
+# or the other (but not both).
+log-append  <% $logFile %>
+status <% $statusLogFile %>
+
+# Set log file verbosity.
+verb 3
+
+# Silence repeating messages
+;mute 20
+
+
+<%def valueEntry>
+<%args>
+$entry
+$value
+</%args>
+% if (defined $value) {
+<% $entry %> <% $value %>
+%}
+</%def>
+
+<%def boolEntry>
+<%args>
+$entry
+$value
+</%args>
+% if ($value) {
+<% $entry %>
+%}
+</%def>
+
+<%def .remote>
+<%args>
+@servers
+</%args>
+% foreach my $server_r (@servers) {
+%  my ($addr, $port) = @{ $server_r };
+   remote <% "$addr $port" %>
+% }
+</%def>

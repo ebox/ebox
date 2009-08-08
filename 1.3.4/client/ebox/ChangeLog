@@ -1,0 +1,406 @@
+1.3.4
+	+ Updated company name in the footer
+	+ Bugfix: humanEventMessage works with multiple tableInfos now
+	+ Add ebox-dbus-check to test if we can actually connect to dbus
+1.3.4
+	+ bugfix: empty cache before calling updatedRowNotify
+	+ enable Log dispatcher by default and not allow users to disable
+	it
+	+ consolidation process continues in disabled but configured modules
+	+ bugfix: Save Changes button doesn't turn red when accessing events for
+	first time
+1.3.2
+	+ bugfix: workaround issue with dhcp configured interfaces at boot time
+1.3.1
+	+ bugfix: wrong regex in service status check
+1.3.0
+	+ bugfix: make full backup work again
+1.1.30
+	+ Change footer to new company holder
+	+  RAID does not generate 'change in completion events, some text
+	problems fixed with RAID events
+	+ Report graphics had a datapoints limit dependent on the active
+	time unit
+	+ Apache certificate can be replaced by CA module
+	+ Fixed regression in detailed report: total row now aggregates
+	properly
+	+ More characters allowed when changing password from web GUI
+	+ Fixed regression with already used values in select types
+	+ Do not a button to restart eBox's apache
+	+ Fixed auth problem when dumping and restoring postgre database
+1.1.20
+	+ Added custom view support
+	+ Bugfix: report models now can use the limit parameter in
+	  reportRows() method
+	+ use a regexp to fetch the PID in a pidfile, some files such as
+	postfix's add tabs and spaces before the actual number
+	+ Changed "pidfile" to "pidfiles" in _daemons() to allow checking more than
+one (now it is a array ref instead of scalar)
+	+ Modified Service.pm to support another output format for /etc/init.d daemon
+status that returns [OK] instead of "running".
+	+ unuformized case in menu entries and some more visual fixes
+1.1.10
+	+ Fix issue when there's a file managed by one module that has been modified
+	  when saving changes
+	+ Bugfix: events models are working again even if an event aware
+	module is uninstalled and it is in a backup to restore
+	+ Select.pm returns first value in options as default
+       + Added 'parentModule' to model class to avoid recursive problems
+	+ Added Float type
+	+ Apache module allows to add configuration includes from other modules
+	+ Display remote services button if subscribed
+	+ Event daemon may received events through a named pipe
+	+ Bugfix. SysInfo revokes its config correctly
+	+ Added storer property to types in order to store the data in
+	somewhere different from GConf
+	+ Added protected property 'volatile' to the models to indicate
+	that they store nothing in GConf but in somewhere different
+	+ System Menu item element 'RAID' is always visible even when RAID
+	is not installed
+	+ Files in deleted rows are deleted when the changes are saved
+	+ Fixed some bug whens backing and restore files
+	+ Components can be subModels of the HasMany type
+	+ Added EBox::Types::Text::WriteOnce type
+	+ Do not use rows(), use row to force iteration over the rows and increase
+	performance and reduce memory use.
+	+ Do not suggest_sync after read operations in gconf
+	+ Increase MaxRequestsPerChild to 200 in eBox's apache
+	+ Make apache spawn only one child process
+	+ Log module is backed up and restored normally because the old
+	problem is not longer here
+	+ Backup is more gentle with no backup files in backup directory,
+	now it does not delete them
+	+ HasMany  can retrieve again the model and row after the weak
+	refence is garbage-collected. (Added to solve a bug in the doenload
+	bundle dialog)
+	+ EBox::Types::DomainName no longer accepts IP addresses as domain
+	names
+	+ Bugfix: modules that fail at configuration stage no longer appear as enabled
+	+ Add parameter to EBox::Types::Select to disable options cache
+
+0.12.103
+	+ Bugfix: fix SQL statement to fetch last rows to consolidate
+0.12.102
+	+ Bugfix: consolidate logs using the last date and not starting from scratch 
+0.12.101
+	+ Bugfix: DomainName type make comparisons case insensitive
+	according to RFC 1035
+0.12.100
+	+ Bugfix: Never skip user's modifications if it set to true
+	override user's changes
+	+ EBox::Module::writeConfFile and EBox::Service scape file's path
+	+ Bugfix. Configure logrotate to actually rotate ebox logs
+	+ Fixed bug in ForcePurge logs model
+	+ Fixed bug in DataTable: ModelManaged was called with tableName
+	instead of context Name
+	+ Fixing an `img` tag closed now properly and adding alternative
+	text to match W3C validation in head title
+	+ Backup pages now includes the size of the archive
+	+ Fixed bug in ForcePurge logs model
+	+ Now the modules can have more than one tableInfo for logging information
+	+ Improve model debugging 
+	+ Improve restart debugging
+	+ Backups and bug reports can be made from the command line
+	+ Bugfix: `isEqualTo` is working now for `Boolean` types
+	+ Bugfix: check if we must disable file modification checks in
+	Manager::skipModification
+
+0.12.99
+	+ Add support for reporting
+	+ Refresh logs automatically
+	+ Reverse log order
+	+ Remove temp file after it is downloaded with FromTempDir controller
+0.12.3
+	+ Bug fix: use the new API in purge method. Now purging logs is working
+	again.
+0.12.2
+	+ Increase random string length used to generate the cookie to
+	2048 bits
+	+ Logs are show in inverse chronological order
+0.12.1
+	+ Bug fix: use unsafeParam for progress indicator or some i18 strings
+	will fail when saving changes
+0.12
+	+ Bugfix: Don't assume timecol is 'timestamp' but defined by
+	module developer. This allows to purge some logs tables again
+	+ Add page titles to models
+	+ Set default values when not given in `add` method in models
+	+ Add method to manage page size in model
+	+ Add hidden field to help with Ajax request and automated testing with
+	  ANSTE
+	+ Bugfix: cast sql types to filter fields in logs
+	+ Bugfix: Restricted resources are back again to make RSS
+	access policy work again
+	+ Workaround bogus mason warnings
+	+ Make postinst script less verbose
+	+ Disable keepalive in eBox apache
+	+ Do not run a startup script in eBox apache
+	+ Set default purge time for logs stored in eBox db to 1 week
+	+ Disable LogAdmin actions in `ebox-global-action` until LogAdmin
+	feature is completely done
+0.11.103
+	+ Modify EBox::Types::HasMany to create directory based on its row 
+	+ Add _setRelationship method to set up relationships between models
+	  and submodels
+	+ Use the new EBox::Model::Row api
+	+ Add help method to EBox::Types::Abstract
+	+ Decrease size for percentage value in disk free watcher
+	+ Increase channel link field size in RSS dispatcher
+0.11.102
+	+ Bugfix: cmp in EBox::Types::HostIP now sorts correctly
+	+ updatedRowNotify in EBox::Model::DataTable receives old row as
+	well as the recently updated row
+	+ Added `override_user_modification` configuration parameter to
+	avoid user modification checkings and override them without asking
+	+ Added EBox::Model::Row to ease the management of data returned
+	by models
+	+ Added support to pre-save and post-save executable files. They
+	must be placed at /etc/ebox/pre-save or /etc/ebox/post-save
+	+ Added `findRow` method to ease find and set
+0.11.101
+	+ Bugfix: Fix memory leak in models while cloning types. Now
+	cloning is controlled by clone method in types
+	+ Bugfix: Union type now checks for its uniqueness
+	+ DESTROY is not an autoloaded method anymore
+	+ HasOne fields now may set printable value from the foreign field
+	to set its value
+	+ findId now searches as well using printableValue
+	+ Bugfix. Minor bug found when key is an IP address in autoloaded
+	methods
+	+ Ordered tables may insert values at the beginning or the end of
+	the table by "insertPosition" attribute
+	+ Change notConfigured template to fix English and add link to the
+	  module status section
+	+ Add loading gif to module status actions
+	+ Remove debug from ServiceInterface.pm
+	+ Add support for custom separators to be used as index separators on
+	  exposedMethods
+	+ Bugfix. Stop eBox correctly when it's removed
+	+ Improve apache-restart to make it more reliable.
+0.11.100
+	+ Bugfix. Fix issue with event filters and empty hashes
+	+ Bugfix. Cache stuff in log and soap watcher to avoid memory leaks
+	+ Bugfix. Fix bug that prevented the user from being warned when a row to
+	  be deleted is being used by other model
+	+ Bugfix. Add missing use of EBox::Global in State event watcher
+	+ Added progress screen, now pogress screen keeps track of the changed
+	  state of the modules and change the top page element properly
+	+ Do not exec() to restart apache outside mod_perl
+	+ Improve apache restart script
+	+ Improve progress screen 
+0.11.99
+	+ DataTable contains the property 'enableProperty' to set a column
+	called 'enabled' to enable/disable rows from the user point of
+	view. The 'enabled' column is put the first
+	+ Added state to the RAID report instead of simpler active boolean
+        + Fix bug when installing new event components and event GConf
+	subtree has not changed
+	+ Add RSS dispatcher to show eBox events under a RSS feed
+	+ Rotate log files when they reach 10MB for 7 rotations
+	+ Configurable minimum free space left for being notified by means
+	of percentage
+	+ Add File type including uploading and downloading
+	+ Event daemon now checks if it is possible to send an event
+	before actually sending it
+	+ Added Action forms to perform an action without modifying
+	persistent data
+	+ Log queries are faster if there is no results
+	+ Show no data stored when there are no logs for a domain
+	+ Log watcher is added in order to notify when an event has
+	happened. You can configure which log watcher you may enable and
+	what you want to be notify by a determined filter and/or event.
+	+ RAID watcher is added to check the RAID events that may happen
+	when the RAID subsystem is configured in the eBox machine
+	+ Change colour dataset in pie chart used for disk usage reporting
+	+ Progress indicator now contains a returned value and error
+	message as well
+	+ Lock session file for HTTP session to avoid bugs
+	related to multiple requests (AJAX) in a short time
+	+ Upgrade runit dependency until 1.8.0 to avoid runit related
+	issues
+0.11
+	+ Use apache2
+	+ Add ebox-unblock-exec to unset signal mask before running  a executable
+	+ Fix issue with multiple models and models with params.
+	  This triggered a bug in DHCP when there was just one static
+	  interface
+	+ Fix _checkRowIsUnique and _checkFieldIsUnique 
+	+ Fix paging 
+	+ Trim long strings in log table, show tooltip with the whole string
+	  and show links for URLs starting with "http://"
+0.10.99
+	+ Add disk usage information
+	+ Show progress in backup process
+	+ Add option to purge logs
+	+ Create a link from /var/lib/ebox/log to /var/log/ebox
+	+ Fix bug with backup descriptions containing spaces
+	+ Add removeAll method on data models
+	+ Add HostIP, DomainName and Port types
+	+ Add readonly forms to display static information
+	+ Add Danish translation thanks to Allan Jacobsen
+0.10
+	+ New release
+0.9.100
+	+ Add checking for SOAP session opened
+	+ Add EventDaemon
+	+ Add Watcher and Dispatch framework to support an event
+	  architecture on eBox
+	+ Add volatile EBox::Types in order not to store their values 
+	  on GConf
+	+ Add generic form
+	+ Improvements on generic table
+	+ Added Swedish translation
+
+0.9.99
+	+ Added Portuguese from Portugal translation
+	+ Added Russian translation
+	+ Bugfix: bad changed state in modules after restore
+
+0.9.3
+	+ New release
+
+0.9.2
+	+ Add browser warning when uploading files
+	+ Enable/disable logging modules
+0.9.1
+	+ Fix backup issue with changed state
+	+ Generic table supports custom ordering
+0.9
+	+ Added Polish translation
+        + Bug in recognition of old CD-R writting devices fixed
+	+ Added Aragonese translation
+	+ Added Dutch translation
+	+ Added German translation
+	+ Added Portuguese translation
+
+0.8.99
+	+ Add data table model for generic Ajax tables
+	+ Add types to be used by models
+	+ Add MigrationBase and ebox-migrate to upgrade data models
+	+ Some English fixes
+0.8.1
+	+ New release
+0.8
+	+ Fix backup issue related to bug reports
+	+ Improved backup GUI
+0.7.99
+        + changed sudo stub to be more permissive
+	+ added startup file to apache web server
+	+ enhanced backup module
+	+ added basic CD/DVD support to backup module
+	+ added test stubs to simplify testing
+	+ added test class in the spirit of Test::Class
+	+ Html.pm now uses mason templates
+0.7.1
+	+ use Apache::Reload to reload modules when changed
+	+ GUI consistency (#12)
+	+ Fixed a bug for passwords longer than 16 chars
+	+ ebox-sudoers-friendly added to not overwrite /etc/sudoers each time
+0.7
+	+ First public release
+0.6
+	+ Move to client
+	+ Remove obsolete TODO list
+	+ Remove firewall module from  base system
+	+ Remove objects module from base system
+	+ Remove network module from base system
+	+ Add modInstances and modInstancesOfType
+	+ Raname Base to ClientBase
+	+ Remove calls to deprecated methods
+	+ API documented using naturaldocs
+	+ Update INSTALL
+	+ Use a new method to get configkeys, now configkey reads every
+	  [0.9
+	+ Added Polish translation][0-9]+.conf file from the EBox::Config::etc() dir and 
+	  tries to get the value from the files in order.
+	+ Display date in the correct languae in Summary
+	+ Update debian scripts
+	+ Several bugfixes
+0.5.2
+	+ Fix some packaging issues
+0.5.1
+	+ New menu system
+	+ New firewall filtering rules
+	+ 802.1q support
+
+0.5
+	+ New bug-free menus (actually Internet Explorer is the buggy piece
+	  of... software that caused the reimplementation)
+	+ Lots of small bugfixes
+	+ Firewall: apply rules with no destination address to packets
+	  routed through external interfaces only
+	+ New debianize script
+	+ Firewall: do not require port and protocol parameters as they
+	  are now optional.
+	+ Include SSL stuff in the dist tarball
+	+ Let modules block changes in the network interfaces
+	  configuration if they have references to the network config in
+	  their config.
+	+ Debian network configuration import script
+	+ Fix the init.d script: it catches exceptions thrown by modules so that
+	  it can try to start/stop all of them if an exception is thrown.
+	+ Firewall: fix default policy bug in INPUT chains.
+	+ Restore textdomain in exceptions
+	+ New services section in the summary
+	+ Added Error item to Summary. Catch exceptions from modules in
+	  summary and generate error item
+	+ Fix several errors with redirections and error handling in CGIs
+	+ Several data validation functions were fixed, and a few others added
+	+ Prevent the global module from keeping a reference to itself. And make
+	  the read-only/read-write behavior of the factory consistent.
+	+ Stop using ifconfig-wrapper and implement our own NetWrapper module
+	  with wrappers for ifconfig and ip.
+	+ Start/stop apache, network and firewall modules in first place.
+	+ Ignore some network interface names such as irda, sit0, etc.
+	+ The summary page uses read-only module instances.
+	+ New DataInUse exception, old one renamed to DataExists.
+	+ Network: do not overwrite resolv.conf if there are nameservers
+	  given via dhcp.
+	+ Do not set a default global policy for the ssh service.
+	+ Check for forbiden characters when the parameter value is
+	  requested by the CGI, this allows CGI's to handle the error,
+	  and make some decissions before it happens.
+	+ Create an "edit object" template and remove the object edition stuff
+	  from the main objects page.
+	+ Fix the apache restarting code.
+	+ Network: Remove the route reordering feature, the kernel handles that
+	  automatically.
+	+ Fix tons of bugs in the network restarting code.
+	+ Network: removed the 3rd nameserver configuration.
+	+ Network: Get gateway info in the dhcp hook.
+	+ Network: Removed default configuration from the gconf schema.
+	+ New function for config-file generation
+	+ New functions for pid file handling
+
+0.4
+	+ debian package
+	+ added module to export/import configuration
+	+ changes in firewall's API
+	+ Added content filter based on dansguardian
+	+ Added French translation
+	+ Added Catalan translation
+	+ Sudoers file is generated automatically based on module's needs
+	+ Apache config file is generated by ebox  now
+	+ Use SSL
+	+ Added ebox.conf file
+	+ Added module template generator
+
+0.3
+	+ Supports i18n
+	+ API name consistency
+	+ Use Mason for templates
+	+ added tips to GUI 
+	+ added dhcp hooks
+	+ administration port configuration 
+	+ Fixed bugs to IE compliant
+	+ Revoke changes after logout
+	+ Several bugfixes
+
+0.2
+	+ All modules are now based on gconf.
+	+ Removed dependencies on xml-simple, xerces and xpath
+	+ New MAC address field in Object members.
+	+ Several bugfixes.
+
+0.1
+	+ Initial release
