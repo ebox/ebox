@@ -1,0 +1,22 @@
+Dir {
+  ArchiveDir "ARCHIVE_DIR";
+};
+
+TreeDefault {
+  Directory "pool/";
+};
+
+BinDirectory "pool/extras" {
+  Packages "dists/hardy/extras/binary-ARCH/Packages";
+};
+
+Default {
+  Packages {
+    Extensions ".deb";
+    Compress ". gzip";
+  };
+};
+
+Contents {
+  Compress "gzip";
+};
