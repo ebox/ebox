@@ -1,0 +1,5 @@
+1.2.1
+	+ An active event's  watcher is not longer needed for
+	the cron job
+	+ cron job is written on config regeneration
+	+ Fix issue with LOG file in backup script
