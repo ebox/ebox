@@ -1,9 +1,0 @@
-<%args>
-	@extensions
-</%args>
-
-#Banned extension list
-
-% foreach my $extension (@extensions) {
-<% '.' . $extension %>
-% }
