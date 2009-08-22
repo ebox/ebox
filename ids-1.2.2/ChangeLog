@@ -1,0 +1,8 @@
+1.2.2
+	+ Bugfix: don't try to start snort if there are no valid interfaces selected
+1.2.1
+	+ Bugfix in logs consolidation, now it works
+1.1.20
+	+ New release
+1.1.10
+	+ Initial release
