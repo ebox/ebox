@@ -1,0 +1,35 @@
+ebox-ebackup (1.2.2) hardy; urgency=low
+
+  * New upstream release
+
+ -- José A. Calvo <jacalvo@ebox-technologies.com>  Thu, 03 Sep 2009 18:09:52 +0200
+
+ebox-ebackup (1.2.1) hardy; urgency=low
+
+  *  New upstream version
+
+ -- Javier Uruen Val <javi@warp.es>  Fri, 14 Aug 2009 17:42:19 +0200
+
+ebox-ebackup (1.2) hardy; urgency=low
+
+  * New upstream version
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 12 Jul 2009 19:09:12 +0200
+
+ebox-ebackup (1.1.40) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 06 Jul 2009 16:30:05 +0200
+
+ebox-ebackup (1.1.30) hardy; urgency=low
+
+  * New upstream release.
+
+ -- José Antonio Calvo <jacalvo@ebox-platform.com>  Mon, 15 Jun 2009 16:14:36 +0200
+
+ebox-ebackup (1.1) hardy; urgency=low
+
+  * Initial release.
+
+ -- Jorge Salamero Sanz <jsalamero@ebox-platform.com>  Sat, 07 Mar 2009 15:10:39 +0000
