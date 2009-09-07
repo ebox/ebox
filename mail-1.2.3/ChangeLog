@@ -1,0 +1,117 @@
+1.2.3
+	+ Now you can specify a port for the smarthost (if not specified
+	  the default port continues to be 25)
+1.2.2
+	+ Bug fix: typo in isAllowed function that prevented objects
+	  from being removed properly
+1.2.1
+	+ tableInfo returns an array of hash refs
+1.1.41
+	+ bugfix: Allow unsafe characters in smtp auth password
+1.1.30
+	+ SMTP and POP/iMAP certificates can be changed via  the CA module
+1.1.20
+	+ UI improvement: hide and show mail filter fields depending on the
+	configuration
+1.1.10
+	+ New release
+1.1
+	+ Replaced courier with dovecot
+	+ Added aliases for whole domains
+	+ Use the new row() and ids() API
+	+ Bugfix: alias are deleted when user account is deleted
+	+ Bugfix: when already exists the maildir, create a new account is
+	not allowed
+	+ Bugfix: fixed error in mail queue template: avoid to reference a
+	possible undefined value
+	+ Bugfix: running method in Greylist does not fail if there is not
+	eventd fil
+	+ Bugfix: force removal of previous data in backup
+	+Bugfix: removed bad superfluous call that was the source of
+	, at least, restore errors
+	+ Mail queue parsing error fixed and more robust mail queue template
+0.12.101
+	+ Bugfix: Postgrey daemon is disabled by default
+0.12.100
+	+ EBox::MailUserLdap::userAccount and
+	EBox::MailUserLdap::getUserLdapValue  don't longer assume that the
+	user exists
+	+ Bugfix: MDSize attribute should not be restored in systems with
+	MDSize feature disabled
+	+ Bugfix in logs: mail relayed to external smarthost is now
+	logged, external smarthost relay denied action also logged, relay
+	field now only logs relay data and no unrelated data
+	+ Summary changed to reflect the changes in mailfilter module
+	+ Added greylist support
+	+ Added authentication for external smarthost
+	+ Added TLS support for external smarthost
+	+ Replaced courier with dovecot
+	+ Simpler interface to choose mail retrieval protocols
+0.12.99
+	+ Add support for reporting
+0.12.2
+	+ Bugfix: Start POP3 over SSL (Port: 995)
+0.12.1
+	+ Bugfix: Use EBox::Types::Union::Text for unlimited message size
+0.12
+	+ Bugfix: Checkbox for unlimited size is unchecked, the field
+	mentioned, i.e. Size (MB) is activated.
+	+ Use the new MVC framework
+	+ Add postfix to sasl group instead of dpkg-stateoverriding stuff
+	+ Update INSTALL doc
+	+ Use eBox OID number in LDAP schemas
+0.11.101
+	+ Fixed bug when removing users in non-quota installations
+	+ Do not remove init rc scripts
+	+ Add port 465 (SMTP over SSL) to mail service, old outlook version
+	  will use this port
+	+ Fixed bug in group alias that broke this feature for mail
+	accounts which its name was different to the username
+0.11.100
+	+ Create certificate for smtpd server
+	+ Disabled filter appears in the filter lists as disabled
+	(previously they don't appear at all)
+	+ Module activation dependency with module which provides the
+	active filter
+0.11.99
+	+ Add mail dispatcher to notify eBox events using this SMTP server
+	+ Enhanced strings
+0.11
+	+ Wrap service call with ebox-unblock-exec
+	+ Fix typo in message
+0.10.99
+	+ New release
+0.10
+	+ New release
+0.9.100
+	+ Fix some typos 
+0.9.99
+	+ Fixed bug in configuration backup
+	+ Allow other modules to define mail filters
+
+0.9.3
+	+ New release
+0.9.2
+	+ Create sasl configuration which contains password with 0600 mask 
+0.9.1
+	+ Extended backup
+	+ Use host's FQDN. 
+	+ Helo restrictions 
+0.9
+	+ Added Polish translation
+	+ Added German translation
+0.8.1
+	+  Added dependency on sasl2-bin for secure SMTP authentication
+0.8 
+	+ Small GUI fix
+	+ Added firewall rule to access smtp hosts for all interfaces
+0.7.99
+	+ New release
+0.7.1
+	+ GUI improvements
+	+ Added queue management support
+	+ Use EBox::LDAP singleton
+	+ Added update/clean actions to ebox-mail-ldap
+	+ Use of ebox-sudoers-friendly 
+0.7
+	+ First public release 
