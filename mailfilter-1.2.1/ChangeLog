@@ -1,0 +1,56 @@
+1.2.1
+	+ Bug fix: fix banned extension regexp
+1.1.30
+	+ Bugfix: when the user spam/ham does not exist do not try to
+	remove its account
+1.1.20
+	+ New release
+1.1.10
+	+ New release
+1.1
+	+ Use the new row() and ids() API
+	+ bugfix: if the module is disabled the filter now appears as disabled as it should be
+	+ Now antivirus service has its own eBox module
+	+ Fixed migration script that broke in new  versions
+	+ Bug fix: when adding/removing vdomains we assure that amavis is
+	notified of the changes
+	+ Bug fix: configuration is sette only if module is enabled; this
+	avoid some error when LDAP data was not set (like some first time installations)
+0.12.100
+	+ Bugfix: validation of General model now works properly
+	+ Added POP transparent proxy
+	+ SMTP filter separated from main module
+	+ Interface overhaul to reflect changes in SMTP filter and addition
+	of POP proxy
+	+ Fixed bug in learnspamd: adapted to spam/ham accoutns interface
+	change
+       + Bugfix: force removal of previous data in backup
+       + Bugfix: fixed regression bug, amavisd now prepends spam subject tag
+0.12.99
+	+ New release
+0.12.1
+	+ Run clamd with "su clamav -c ..."
+0.12
+	+ Use eBox OID number in LDAP schemas
+0.11.101
+	+ New release
+0.11.100
+	+ Stop daemons in pre-start upstart script
+	+ Create /var/run/* directories in pre-start 
+	+ Removed erroneous activation order dependency with module mail
+	+ Added module activation with mail only when mail is not
+	configured (mailfilter depends on ldap data created in
+	configuration of mail module)
+0.11.99
+	+ Bugfix: Banned file names regular expressions are case
+	insensitive
+0.11
+	+ New release
+0.10.99
+	+ New release
+0.10
+	+ Bugfix. Removal of external domain
+0.9.100
+	+ Configure firewall to open fort for freshclam
+0.9.99
+	+ First release
