@@ -1,0 +1,47 @@
+ebox-monitor (1.2.3) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Thu, 08 Oct 2009 12:54:30 +0200
+
+ebox-monitor (1.2.2) hardy; urgency=low
+
+  * New upstream version
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 07 Sep 2009 16:23:38 +0200
+
+ebox-monitor (1.2.1) hardy; urgency=low
+
+  * New upstream version
+
+ -- Enrique J. Hernández <quique@ebox-platform.com>  Sun, 22 Jul 2009 08:50:16 +0200
+
+ebox-monitor (1.2) hardy; urgency=low
+
+  * New upstream version
+
+ -- Javier Uruen Val <javi@warp.es>  Sun, 12 Jul 2009 19:09:16 +0200
+
+ebox-monitor (1.1.40) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Mon, 06 Jul 2009 16:30:09 +0200
+
+ebox-monitor (1.1.30) hardy; urgency=low
+
+  * New upstream release
+
+ -- José Antonio Calvo <jacalvo@ebox-platform.com>  Mon, 15 Jun 2009 16:16:05 +0200
+
+ebox-monitor (0.12.100) hardy; urgency=low
+
+  * New upstream release
+
+ -- Javier Uruen Val <javi@warp.es>  Tue, 13 Jan 2009 12:06:08 +0100
+
+ebox-monitor (0.1) hardy; urgency=low
+
+  * New upstream realese
+
+ -- Automatic eBox module creator <foo@bar.es>  Sun, 01 Jun 2008 17:25:07 +0200

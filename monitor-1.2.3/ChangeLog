@@ -1,0 +1,15 @@
+1.2.3
+	+ Bugfix: ignore cooling devices to avoid unexpected exceptions
+	+ Bugfix: Df measure shows free and used correctly, they were
+	swapt
+	+ Bugfix: do not show graph if data has not been collected
+1.2.2
+	+ Bugfix: Df measure shows free and used correctly, they were swapped
+1.2.1
+	+ Bugfix: Do not show graphs if the module is not configured
+1.1.10
+	+ Bugfix: Monitor graph updates don't glitch anymore
+	+ Bugfix: Set a fixed hostname in order not to let collectd daemon
+	to search for hostname on its own
+1.1.0
+	+ Initial release
