@@ -1,0 +1,1225 @@
+# French translations for EBox-mailfilter package.
+# Copyright (C) 2006 Warp S.L.
+# This file is distributed under the same license as the EBox-mailfilter package.
+# Automatically generated, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-mailfilter 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-09-26 19:33+0100\n"
+"PO-Revision-Date: 2009-07-28 04:41+0200\n"
+"Last-Translator: David Ande <david@andeprasfamily.ath.cx>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/MailFilter.pm:60
+msgid "Mail Filter"
+msgstr "Filtre de courrier"
+
+#: src/EBox/MailFilter.pm:84
+msgid "Add clamav user to amavis group"
+msgstr "Ajouter l'utilisateur clamav au groupe amavis"
+
+#: src/EBox/MailFilter.pm:85
+msgid "Clamav need access to amavis fields to properly scan mail"
+msgstr ""
+"Clamav doit accéder au champs d'amavis pour analyser convenablement les "
+"courriers"
+
+#: src/EBox/MailFilter.pm:89
+msgid "Add clamav user to p3scan group"
+msgstr "Ajouter l'utilisateur clamav au groupe p3scan"
+
+#: src/EBox/MailFilter.pm:90
+msgid "Clamav need access to p3scan group to properly scan in the POP Proxy"
+msgstr ""
+"Clamav doit accéder au champs de p3scan pour analyser convenablement le "
+"proxy POP"
+
+#: src/EBox/MailFilter.pm:94
+msgid "Update LDAP"
+msgstr "Mise à jour du LDAP"
+
+#: src/EBox/MailFilter.pm:95
+msgid "Add amavis specific classes and fields"
+msgstr "Ajouter les classes et champs spécifiques d'amavis"
+
+#: src/EBox/MailFilter.pm:352
+msgid "Cannot proceed because the filter is in use"
+msgstr "Impossible d'exécuter l'opération car le filtre est utilisé"
+
+#: src/EBox/MailFilter.pm:480
+msgid "Mail filter"
+msgstr "Filtre de courrier"
+
+#: src/EBox/MailFilter.pm:501 src/EBox/MailFilter.pm:548
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:69
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:74
+msgid "Date"
+msgstr "Date"
+
+#: src/EBox/MailFilter.pm:503
+msgid "Action"
+msgstr "Action"
+
+#: src/EBox/MailFilter.pm:504 src/EBox/MailFilter.pm:552
+msgid "Event"
+msgstr "Évènement"
+
+#: src/EBox/MailFilter.pm:506
+msgid "Sender address"
+msgstr "Adresse de l'expéditeur"
+
+#: src/EBox/MailFilter.pm:507
+msgid "Recipient address"
+msgstr "Adresse du destinataire"
+
+#: src/EBox/MailFilter.pm:509
+msgid "Spam hits"
+msgstr "Scores des spams"
+
+#: src/EBox/MailFilter.pm:514
+msgid "Bad header found"
+msgstr "Mauvaise entête trouvée"
+
+#: src/EBox/MailFilter.pm:515
+msgid "Spam found"
+msgstr "Spam trouvé"
+
+#: src/EBox/MailFilter.pm:516
+msgid "Forbidden attached file  found"
+msgstr "Pièce jointe interdite trouvée"
+
+#: src/EBox/MailFilter.pm:517
+msgid "Address in blacklist found"
+msgstr "Adresse de la liste noire trouvée"
+
+#: src/EBox/MailFilter.pm:518
+msgid "Virus found"
+msgstr "Virus trouvé"
+
+#: src/EBox/MailFilter.pm:519
+msgid "Clean message"
+msgstr "Message nettoyé"
+
+#: src/EBox/MailFilter.pm:529 src/EBox/MailFilter/Composite/Amavis.pm:61
+msgid "SMTP filter"
+msgstr "Filtre SMTP"
+
+#: src/EBox/MailFilter.pm:550
+msgid "Account"
+msgstr "Compte"
+
+#: src/EBox/MailFilter.pm:551
+msgid "Client's address"
+msgstr "Adresse cliente"
+
+#: src/EBox/MailFilter.pm:554
+msgid "Total messages"
+msgstr "Total des messages"
+
+#: src/EBox/MailFilter.pm:555
+msgid "Clean messages"
+msgstr "Messages propres"
+
+#: src/EBox/MailFilter.pm:556
+msgid "Virus messages"
+msgstr "Messages contenant un virus"
+
+#: src/EBox/MailFilter.pm:557
+msgid "Spam messages"
+msgstr "Messages contenant un spam"
+
+#: src/EBox/MailFilter.pm:564
+msgid "POP3 transmission complete"
+msgstr "Transmission POP3 terminée"
+
+#: src/EBox/MailFilter.pm:566
+msgid "POP3 transmission aborted"
+msgstr "Transmission POP3 annulée"
+
+#: src/EBox/MailFilter.pm:574
+msgid "POP3 proxy"
+msgstr "Proxy POP3"
+
+#: src/EBox/MailFilter.pm:674
+msgid "SMTP Mail Filter"
+msgstr "Filtre de courrier SMTP "
+
+#: src/EBox/MailFilter.pm:681
+msgid "POP Transparent Proxy"
+msgstr "Proxy transparent POP"
+
+#: src/EBox/MailFilter.pm:689 src/EBox/MailFilter/POPProxy.pm:350
+#: src/EBox/MailFilter/Amavis.pm:468
+#: src/EBox/MailFilter/Composite/Antispam.pm:63
+msgid "Antispam"
+msgstr "Antispam"
+
+#: src/EBox/MailFilter.pm:696
+msgid "Files ACL"
+msgstr "Fichiers ACL (sécurité)"
+
+#: src/EBox/MailFilter/POPProxy.pm:47
+msgid " To configure p3scan"
+msgstr "Configurer p3scan"
+
+#: src/EBox/MailFilter/POPProxy.pm:52
+msgid "To configure renattach"
+msgstr "Configurer renattach"
+
+#: src/EBox/MailFilter/POPProxy.pm:323
+msgid "Transparent POP Proxy"
+msgstr "Proxy Transparent POP"
+
+#: src/EBox/MailFilter/POPProxy.pm:329 src/EBox/MailFilter/Amavis.pm:452
+msgid "Status"
+msgstr "Statut"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:65
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:58
+msgid "Enabled"
+msgstr "Activé"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:71
+msgid "Antivirus enabled"
+msgstr "Antivirus activé"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:77
+msgid "Antispam enabled"
+msgstr "Antispam activé"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:84
+msgid "Service's port"
+msgstr "Port de service"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:91
+msgid "Notify of non-spam problematic messages"
+msgstr "Avertir en cas de messages problématiques non-spam"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:95
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:100
+msgid "mail address"
+msgstr "adresse de courrier"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:110
+msgid "General  settings"
+msgstr "Paramètres généraux"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:141
+#, perl-brace-format
+msgid "The port {port} is already used by module {mod}"
+msgstr "Le port {port} est déjà utilisé par le module {mod}"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:68
+msgid "External mail server"
+msgstr "Serveur de courrier externe"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:74
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:76
+msgid "Allow connection"
+msgstr "Connexion permise"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:82
+msgid "External mail servers"
+msgstr "Serveurs de courrier externe"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:94
+msgid "external mail server"
+msgstr "serveur de courrier externe"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:95
+msgid ""
+"Here you can specify which external mail servers can connect to the mail "
+"filter"
+msgstr ""
+"Ici, vous pouvez préciser les serveurs de courrier externe qui peuvent se "
+"connecter au filtre de courrier"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:142
+#, perl-brace-format
+msgid "Invalid external MTA {mta}. Local network addresses are not allowed"
+msgstr ""
+"MTA externe invalide {mta}. Les adresses du réseau locale ne sont pas "
+"permises"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:70
+msgid "External mail domain"
+msgstr "Domaine de courrier externe"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:84
+msgid "External mail domains"
+msgstr "Domaines de courrier externes"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:96
+msgid "external mail domain"
+msgstr "domaine de courrier externe"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:97
+msgid ""
+"Here you can specify which external mail domains can connect to the mail "
+"filter"
+msgstr ""
+"Ici vous pouvez préciser quels domaines de courrier externes peuvent se "
+"connecter au filtre de courrier"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:115
+#, perl-brace-format
+msgid "{d} is a internal eBox's virtual main domain"
+msgstr "{d} est un domaine virtuel interne principal d'eBox"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:63
+msgid "Virus policy"
+msgstr "Politique antivirus"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:69
+msgid "Spam policy"
+msgstr "Politique antispam"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:75
+msgid "Banned files policy"
+msgstr "Politique des fichiers bannis"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:81
+msgid "Bad header policy"
+msgstr "Politique des mauvaise entêtes"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:91
+msgid "SMTP filter policies"
+msgstr "Politiques des filtres SMTP"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:69
+msgid "Domain"
+msgstr "Domaine"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:79
+msgid "Use virus filtering"
+msgstr "Utiliser le filtrage antivirus"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:85
+msgid "Use spam filtering"
+msgstr "Utiliser le filtrage antispam"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:91
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:63
+#: src/EBox/MailFilter/SpamAssassin.pm:333
+msgid "Spam threshold"
+msgstr "Seuil des spams"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:98
+msgid "default"
+msgstr "Par défaut"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:102
+msgid "custom threshold"
+msgstr "Seuil personnalisé"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:113
+msgid "Learning ham account"
+msgstr "Compte d'apprentissage des courriers valides"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:114
+msgid ""
+"An address (ham@domain) will be created for this domain, ham messages "
+"incorrectly classified as spam may be forwarded to this addres to train the "
+"filter"
+msgstr ""
+"Une adresse (ham@domain) va être créée dans ce domaine, les courriers "
+"valides qui ne pourront être correctement classifiés comme spam seront "
+"transférés à cette adresse pour entrainer le filtre"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:125
+msgid "Learning spam account"
+msgstr "Compte d'apprentissage des spams"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:126
+msgid ""
+"An address (spam@domain) will be created for this domain, spam messages "
+"incorrectly classified as ham may be forwarded to this addres to train the "
+"filter"
+msgstr ""
+"Une adresse (spam@domain) va être créée dans ce domaine, les spams qui ne "
+"pourront être correctement classifiés comme courrier valide seront "
+"transférés à cette adresse pour entrainer le filtre"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:137
+msgid "Antispam sender policy"
+msgstr "Politique Antispam de l'expéditeur"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:148
+msgid "Virtual domains configuration"
+msgstr "Configuration des domaines virtuels"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:159
+msgid "virtual domain"
+msgstr "domaine virtuel"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:70
+msgid "Filter virus"
+msgstr "Filtre de virus"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:76
+msgid "Filter spam"
+msgstr "Filtre de spam"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:82
+msgid "ISP spam subject"
+msgstr "Entête spam du fournisseur d'accès"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:86
+msgid ""
+"This option allows you to set the string your ISP uses if\n"
+"it processes your email for SPAM."
+msgstr ""
+"Cette option vous permet de définir le texte que votre Fournisseur d'accès "
+"utilise si le courrier est considéré comme un SPAM"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:93
+msgid "POP transparent proxy configuration"
+msgstr "Configuration du proxy transparent POP"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:113
+msgid ""
+"The POP transparent proxy must scan for something to be useful. If you do "
+"not need either antivirus of spam scan we suggest you turn it off"
+msgstr ""
+"Le proxy transparent POP doit analyser quelque chose pour être utile. Si "
+"vous n'avez pas besoin d'un analyseur antivirus ou antispam, nous vous "
+"recommandons de le désactiver"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:68
+msgid "File extension"
+msgstr "Extension du fichier"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:74
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:74
+msgid "Allow"
+msgstr "Permis"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:82
+msgid "File extensions"
+msgstr "Extensions des fichiers"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:94
+#: src/EBox/MailFilter/Types/FileExtension.pm:59
+msgid "file extension"
+msgstr "extension du fichier"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:95
+msgid "Extensions which are not listed below are allowed"
+msgstr "Les extensions listées ci-dessous sont autorisées"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:67
+msgid "The score threshold to mark a message as spam"
+msgstr "Seuil de score à atteindre pour marquer le message en tant que spam"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:71
+msgid "Spam subject tag"
+msgstr "Etiquette du sujet de spam"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:74
+msgid "Tag which will be added to the spam mail subject"
+msgstr "Etiquette qui sera ajoutée au sujet du pourriel"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:78
+msgid "Use bayesian classifier"
+msgstr "Utiliser la classification bayésienne"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:84
+msgid "Auto-whitelist"
+msgstr "Liste Blanche automatique"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:87
+msgid "Change the score of mail according to the sender history"
+msgstr ""
+"Modifier le score des mails en accord avec l'historique de l'expéditeur"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:91
+msgid "Auto-learn"
+msgstr "Auto-apprentissage"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:94
+msgid "Feedback the learning system with messages that reach the threshold"
+msgstr ""
+"Retour d'information du système d'apprentissage avec les messages qui "
+"atteignent le seuil"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:99
+msgid "Autolearn spam threshold"
+msgstr "Seuil d'auto-apprentissage spam"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:103
+msgid ""
+"Spam messages with a score equal or greater than this threshold will be "
+"added to the learning system "
+msgstr ""
+"Les pourriels avec un score égal ou supérieur au seuil seront introduits "
+"dans le système d'apprentissage"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:107
+msgid "Autolearn ham threshold"
+msgstr "Seuil d'auto-apprentissage des mails valides (ham)"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:110
+msgid ""
+"Ham messages with a score below this threshold will be added to the learning "
+"system"
+msgstr ""
+"Les mails valides (ham) avec un score inférieur à ce seuil seront introduits "
+"dans le système d'apprentissage"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:116
+msgid "Antispam configuration"
+msgstr "Configuration de l'antispam"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:168
+msgid ""
+"You must define autolearn spam threshold when autolearn option is active"
+msgstr ""
+"Vous devez définir un seuil d'auto-apprentissage des spams quand l'auto-"
+"apprentissage est actif "
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:174
+msgid "You must define autolearn ham threshold when autolearn option is active"
+msgstr ""
+"Vous devez définir un seuil d'auto-apprentissage des mails valides (ham) "
+"quand l'auto-apprentissage est actif "
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:180
+msgid ""
+"The spam's autolearn threshold cannot be lower than the default spam's "
+"treshold "
+msgstr ""
+"Le seuil d'auto-apprentissage des spams ne peut pas être inférieur au seuil "
+"par défaut"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:186
+msgid ""
+"The ham's autolearn threshold canot be higher or equal than the default spam "
+"level"
+msgstr ""
+"Le seuil d'auto-apprentissage des mails valides (ham) ne peut être supérieur "
+"ou égale au seul par défaut des spams"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:51
+msgid "Mail filter graph"
+msgstr "Graphique du filtre de courrier"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:60
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:49
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:80
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:66
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:46
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:80
+msgid "clean messages"
+msgstr "messages nettoyés"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:64
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:49
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:90
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:98
+msgid "spam"
+msgstr "spam"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:68
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:52
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:95
+msgid "banned files"
+msgstr "fichiers bannis"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:72
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:55
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:85
+msgid "infected"
+msgstr "infectés"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:76
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:58
+msgid "bad header"
+msgstr "mauvaise en-têtes"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:80
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:61
+msgid "blacklisted"
+msgstr "mise en liste noire"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:103
+msgid "Filter traffic"
+msgstr "trafic du filtre"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:46
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:75
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:63
+msgid "total messages"
+msgstr "total des messages"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:52
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:69
+msgid "infected messages "
+msgstr "messages infectés"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:56
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:90
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:73
+msgid "spam messages"
+msgstr "messages spam"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:85
+msgid "infected messages"
+msgstr "messages infectés"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:102
+msgid "Transparent POP proxy traffic details"
+msgstr "Détails du trafic du proxy transparent POP"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:110
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:125
+msgid "traffic"
+msgstr "trafic"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:51
+msgid "POP proxy graph"
+msgstr "Graphique du proxy POP"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:95
+msgid "Transparent POP proxy traffic"
+msgstr "Trafic du proxy transparent POP"
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:101
+msgid "blacklisted senders"
+msgstr "expéditeurs mis en liste noire"
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:106
+msgid "bad message header"
+msgstr "mauvaise entête de message"
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:117
+msgid "Filter traffic details"
+msgstr "Détails du trafic du filtre"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:62
+msgid "Mail sender"
+msgstr "Expéditeur du courrier"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:68
+msgid "Policy"
+msgstr "Politique"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:77
+msgid "Sender policy"
+msgstr "Politique d'envoi "
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:89
+msgid "sender policy"
+msgstr "politique d'envoi"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:98
+msgid "whitelist"
+msgstr "liste blanche"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:99
+msgid "blacklist"
+msgstr "liste noire"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:100
+msgid "process"
+msgstr "processus"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:60
+msgid "Mailbox"
+msgstr "Boîte mail"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:66
+msgid "Mailbox contains"
+msgstr "La boîte mail contient"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:76
+msgid "Train bayesian spam filter"
+msgstr "Entrainer le filtre de spam bayésien"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:81
+msgid "Learned from messages"
+msgstr "Appris depuis des messages"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:83
+msgid "Train"
+msgstr "Entraîner"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:99
+msgid "ham"
+msgstr "Courrier valide"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:131
+#, perl-brace-format
+msgid "Invalid mailbox type: {type}"
+msgstr "Type de boîte mail invalide : {type}"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:68
+msgid "MIME Type"
+msgstr "Type MIME"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:82
+msgid "MIME types"
+msgstr "Types MIME"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:94
+#: src/EBox/MailFilter/Types/MIMEType.pm:61
+msgid "MIME type"
+msgstr "Types MIME"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:95
+msgid ""
+"MIME types which are not listed below are allowed. MIME types aren't used by "
+"POP transparent proxy"
+msgstr ""
+"Les types MIME qui ne sont pas listés ci dessous sont permis. Les types MIME "
+"ne sont pas utilisés par le proxy transparent POP"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:55
+msgid " To configure spamassassin daemon"
+msgstr "Configurer le service SpamAssassin"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:333
+msgid "It must be a number(decimal point allowed)"
+msgstr "Doit être un nombre (séparateur . de décimale toléré)"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:343
+msgid "The spam's threshold cannot be higher than its autolearn threshold"
+msgstr ""
+"Le seuil des pourriels ne peut être supérieur que son seuil d'auto-"
+"apprentissage"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:347
+msgid ""
+"The spam's threshold cannot be lower or equal than its ham's autolearn "
+"threshold"
+msgstr ""
+"Le seuil de pourriels ne peut pas être inférieur ou égale à son seuil d'auto-"
+"apprentissage de mails valides (ham)"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:384
+msgid ""
+"Cannot learn because bayesian filter is disabled in the current "
+"configuration. In order to be able to learn enable the bayesian filter and "
+"save changes"
+msgstr ""
+"Apprentissage impossible car le filtre bayésien est désactivé dans la "
+"configuration actuelle. "
+
+#: src/EBox/MailFilter/SpamAssassin.pm:399
+#, perl-brace-format
+msgid "Unsupported or incorrect input source fonrmat: {format}"
+msgstr "Format de donnée incorrect ou non supporté : {format}"
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:136
+msgid "Write down a decimal number"
+msgstr "Écrire un nombre décimal"
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:141
+msgid "Only non-zero positive numbers are allowed"
+msgstr "Uniquement les nombres positifs différents de 0 sont autorisés"
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:150
+#, perl-brace-format
+msgid "Write down a number lesser than {m}"
+msgstr "Écrire un nombre plus petit que {m}"
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:157
+#, perl-brace-format
+msgid "Write down a number greater  than {m}"
+msgstr "Écrire un nombre plus grand que {m}"
+
+#: src/EBox/MailFilter/Types/AmavisSender.pm:79
+msgid "domain name"
+msgstr "nom de domaine"
+
+#: src/EBox/MailFilter/Types/AmavisSender.pm:83
+msgid "email address"
+msgstr "adresse mail"
+
+#: src/EBox/MailFilter/Types/AmavisSender.pm:87
+msgid ""
+"The sender ought be either an email address or a domain name prefixed with "
+"'@'"
+msgstr ""
+"L'expéditeur peut uniquement être une adresse mail ou un nom de domaine "
+"commençant par '@'"
+
+#: src/EBox/MailFilter/Types/Policy.pm:30
+msgid "Pass"
+msgstr "Passé"
+
+#: src/EBox/MailFilter/Types/Policy.pm:31
+msgid "Reject"
+msgstr "Rejet"
+
+#: src/EBox/MailFilter/Types/Policy.pm:32
+msgid "Bounce"
+msgstr "Rebond"
+
+#: src/EBox/MailFilter/Types/Policy.pm:33
+msgid "Discard"
+msgstr "Mise à l'écart"
+
+#: src/EBox/MailFilter/Types/Policy.pm:53
+msgid "Mailfilter's policy"
+msgstr "Politique du filtre de courrier"
+
+#: src/EBox/MailFilter/VDomainsLdap.pm:604
+#, perl-brace-format
+msgid "Virtual mail domain {vd} does not exist"
+msgstr "Le domaine virtuel de courrier {vd} n'existe pas"
+
+#: src/EBox/MailFilter/Amavis.pm:48
+msgid "To configure amavis"
+msgstr "Configurer amavis"
+
+#: src/EBox/MailFilter/Amavis.pm:432
+msgid "eBox internal mail filter"
+msgstr "Filtre de courrier interne à eBox"
+
+#: src/EBox/MailFilter/Amavis.pm:446
+msgid "SMTP filter proxy"
+msgstr "Filtre du proxy SMTP"
+
+#: src/EBox/MailFilter/Composite/ExternalConnections.pm:60
+msgid "External connections"
+msgstr "Connexions externes"
+
+#: src/EBox/MailFilter/Composite/Report/FilterReport.pm:70
+#: src/EBox/MailFilter/Composite/Report/POPProxyReport.pm:70
+msgid "Mail filter report"
+msgstr "Rapport du filtre de courrier"
+
+#: src/EBox/MailFilter/Composite/Report/FilterReport.pm:71
+msgid "Mail Filter report"
+msgstr "Rapport du Filtre de courrier"
+
+#: src/EBox/MailFilter/Composite/Report/POPProxyReport.pm:71
+msgid "Transparent POP proxy report"
+msgstr "Rapport du proxy transparent POP"
+
+#: src/EBox/MailFilter/Composite/FileFilter.pm:59
+msgid "Attached files filter"
+msgstr "Filtre des pièces jointes"
+
+#: src/EBox/MailFilter/Composite/FileFilter.pm:61
+msgid ""
+"Filter mail messages according attached files. The transparent POP proxy "
+"only filters by extension"
+msgstr ""
+"Le filtre de courrier analyse les pièces jointes. Le proxy transparent POP "
+"ne fait que du filtrage par extension."
+
+#: migration/0004_add_firewall_services.pl:32
+msgid "POP transparent proxy"
+msgstr "Proxy transparent POP"
+
+#: migration/0004_add_firewall_services.pl:50
+msgid "POP3 protocol"
+msgstr "Protocole POP3"
+
+#: stubs/p3scan.conf.mas:15
+msgid "[Virus] found in a mail to you:"
+msgstr "[Virus] trouvé dans un de vos courriers:"
+
+#~ msgid "To add the LDAP schemas used by eBox mailfilter"
+#~ msgstr "Ajouter les modèles LDAP utilisés par le filtre de courrier d'eBox"
+
+#~ msgid "UTM"
+#~ msgstr "UTM"
+
+#, fuzzy
+#~ msgid "Antivirus database update status"
+#~ msgstr "Status des mises-à-jours des définitions de virus"
+
+#, fuzzy
+#~ msgid "The last update failed"
+#~ msgstr "Dernière tentative de mise-à-jour le {date}"
+
+#, fuzzy
+#~ msgid ""
+#~ "Update failed.\n"
+#~ "Your version of freshclam  is outdated.Please, install version {version} "
+#~ "or higher"
+#~ msgstr ""
+#~ "Mise-à-jour échouée le {date}. \n"
+#~ " Votre version de freshclam est dépassée. Veuillez installer la version "
+#~ "{version} ou supérieure"
+
+#, fuzzy
+#~ msgid "Last update successful"
+#~ msgstr "Dernière mise-à-jour réussie le {date}"
+
+#~ msgid "Antivirus"
+#~ msgstr "Antivirus"
+
+#~ msgid "Mail filter system"
+#~ msgstr "Système de filtrage mail"
+
+#~ msgid "Mail filter settings"
+#~ msgstr "Configuration du filtrage mail"
+
+#, fuzzy
+#~ msgid "Internal mailfilter"
+#~ msgstr "Filtre mail interne à eBox"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Actions"
+
+#, fuzzy
+#~ msgid "Database update status"
+#~ msgstr "Status des mises-à-jours des définitions de virus"
+
+#~ msgid "Learned from mailbox file"
+#~ msgstr "Appris du fichier de boîte mail"
+
+#~ msgid "Denied settings changed"
+#~ msgstr "Configuration des accès refusés modifiée"
+
+#~ msgid ""
+#~ "The sender can be either an email address or a domain name prefixed with "
+#~ "'@'"
+#~ msgstr ""
+#~ "L'expéditeur peut uniquement être une adresse mail ou un nom de domaine "
+#~ "commençant par '@'"
+
+#~ msgid "Mail domain"
+#~ msgstr "Domaine mail"
+
+#~ msgid "The last update failed at {date}"
+#~ msgstr "Dernière tentative de mise-à-jour le {date}"
+
+#~ msgid ""
+#~ "Update failed at {date}.\n"
+#~ "Your version of freshclam  is outdated.Please, install version {version} "
+#~ "or higher"
+#~ msgstr ""
+#~ "Mise-à-jour échouée le {date}. \n"
+#~ " Votre version de freshclam est dépassée. Veuillez installer la version "
+#~ "{version} ou supérieure"
+
+#~ msgid "{plural} which are not listed below are allowed"
+#~ msgstr "{plural} qui ne sont pas listés ci-dessous sont autorisés"
+
+#~ msgid "Delete"
+#~ msgstr "Effacer"
+
+#~ msgid ""
+#~ "Spam messages which a score equal or greater than this threshold will be "
+#~ "added to the learning system "
+#~ msgstr ""
+#~ "Les pourriels qui ont un score égal ou supérieur au seuil seront "
+#~ "introduits dans le système d'apprentissage"
+
+#~ msgid ""
+#~ "Ham messages which a score below this threshold will be added to the "
+#~ "learning system"
+#~ msgstr ""
+#~ "Les mails valides (ham) qui ont un score inférieur à ce seuil seront "
+#~ "introduits dans le système d'apprentissage"
+
+#~ msgid "Antispam options"
+#~ msgstr "Options antispam"
+
+#~ msgid "Service port"
+#~ msgstr "Port du service"
+
+#~ msgid "Antispam sender access lists"
+#~ msgstr "Listes d'accès d'expéditeur d'Antispam"
+
+#~ msgid ""
+#~ "External mail server {mta} removed. Remember to remove its mail domains "
+#~ "from the external mail domain's list"
+#~ msgstr ""
+#~ "Serveur de mail externe {mta} supprimé. Rappelez-vous d'enlever son nom "
+#~ "de domaine de la liste des noms de domaine externe"
+
+#~ msgid "{name} is already registered"
+#~ msgstr "{name} est déjà enregistré"
+
+#~ msgid "{name} added"
+#~ msgstr "{name} ajouté"
+
+#~ msgid "No changes were specified by the user"
+#~ msgstr "Aucun changement n'a été spécifié par l'utilisateur"
+
+#~ msgid "{name} is not registered"
+#~ msgstr "{name} n'est pas enregistré"
+
+#~ msgid "{name} removed"
+#~ msgstr "{name} supprimé"
+
+#~ msgid "The specified sender is not in the ACL"
+#~ msgstr "L'expéditeur spécifié n'est pas dans les ACL"
+
+#~ msgid "Mail domain {domain} added to external domain's list."
+#~ msgstr ""
+#~ "Nom de domaine {domain} ajouté à la liste des noms de domaines externes"
+
+#~ msgid "Mail domain {domain} removed from external domain's list."
+#~ msgstr ""
+#~ "Nom de domaine de courrier {domain} supprimé de la liste des noms de "
+#~ "domaines externes"
+
+#~ msgid "All entries were removed"
+#~ msgstr "Toutes les entrées ont été supprimées"
+
+#~ msgid ""
+#~ "External mail server {mta} allowed. Remember to add its mail domains to "
+#~ "the external mail domain's list"
+#~ msgstr ""
+#~ "Serveur de courrier externe {mta} autorisé. Rappelez-vous de l'ajouter à "
+#~ "la liste des domaines externes"
+
+#~ msgid "{ext} is not registered in the extensions list"
+#~ msgstr "{ext} n'est pas enregistré dans la liste d'extensions"
+
+#~ msgid "{ext} is not registered in the mimeTypes list"
+#~ msgstr "{ext} n'est pas enregistré dans la liste de types MIME"
+
+#~ msgid "The spam's autolearn threshold must be higher than 6.0"
+#~ msgstr "Le seuil d'auto-apprentissage des spams doit être supérieur à 6.0"
+
+#~ msgid "The ham's autolearn threshold cannot be higher than spam's threshold"
+#~ msgstr ""
+#~ "Le seuil d'auto-apprentissage des mails valides (ham) ne peut pas être "
+#~ "supérieur à celui du spam"
+
+#~ msgid "MTA's address"
+#~ msgstr "Adresse du MTA"
+
+#~ msgid "{mta} is already allowed"
+#~ msgstr "{mta} est déjà autorisé"
+
+#~ msgid "{mta} not found"
+#~ msgstr "{mta} introuvable"
+
+#~ msgid "{domain} is already acknowledged as external mail domain"
+#~ msgstr "{domain} est déjà autorisé en tant que domaine de mails externe"
+
+#~ msgid "Domain {domain} was not acknowledged as external mail domain"
+#~ msgstr ""
+#~ "Le domaine {domain} n'est pas autorisé en tant que domaine de mails "
+#~ "externe"
+
+#~ msgid "Administrator address"
+#~ msgstr "Adresse de l'administrateur"
+
+#~ msgid "policy type"
+#~ msgstr "Type de politique"
+
+#~ msgid "filter type"
+#~ msgstr "Type de filtre"
+
+#~ msgid "The last successful update was at {date}"
+#~ msgstr "Dernière mise-à-jour réussie le {date}"
+
+#~ msgid "Deny"
+#~ msgstr "Interdire"
+
+#~ msgid "Add {element}"
+#~ msgstr "Ajouter {element}"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "All registered {plural}"
+#~ msgstr "{plural} tous enregistrés"
+
+#~ msgid "Delete them all"
+#~ msgstr "Tous les supprimer"
+
+#~ msgid "Change"
+#~ msgstr "Modifier"
+
+#~ msgid "Antispam global sender access lists"
+#~ msgstr "Listes globales d'accès d'expéditeur d'Antispam"
+
+#~ msgid "Spam filter training"
+#~ msgstr "Entraînement du filtre spam"
+
+#~ msgid "Whitelist"
+#~ msgstr "Liste blanche"
+
+#~ msgid "Blacklist"
+#~ msgstr "Liste noire"
+
+#~ msgid "Sender"
+#~ msgstr "Expéditeur"
+
+#~ msgid "Add sender to {type}"
+#~ msgstr "Ajouter l'expéditeur à {type}"
+
+#~ msgid "Notification address"
+#~ msgstr "Adresse de notification"
+
+#~ msgid "Notification"
+#~ msgstr "Avertissement"
+
+#~ msgid "External Mail server"
+#~ msgstr "Serveur mail externe"
+
+#~ msgid "Allowed external mail servers"
+#~ msgstr "Serveurs mail externes autorisés"
+
+#~ msgid "Add external mail server"
+#~ msgstr "Ajouter un serveur de mail externe"
+
+#~ msgid "External Mail domain"
+#~ msgstr "Domaine mail externe"
+
+#~ msgid "Add external mail domain"
+#~ msgstr "Ajouter un domaine mail externe"
+
+#~ msgid ""
+#~ "The \"{name}\"  setting will not have effect until the\n"
+#~ "   antivirus service will be enabled in the mail filter"
+#~ msgstr ""
+#~ "Le paramètre de \"{name}\" ne sera effectif que lorsque le service "
+#~ "antivirus sera activé dans le filtre du courrier"
+
+#~ msgid ""
+#~ "The \"{name}\"  setting will not have effect until the\n"
+#~ "   antispam sergice will be enabled in the mail filter"
+#~ msgstr ""
+#~ "Le paramètre de \"{name}\" ne sera effectif que lorsque le service "
+#~ "antivirus sera activé dans le filtre du courrier"
+
+#~ msgid "Use default spam threshold (current value is {v})"
+#~ msgstr ""
+#~ "Utilise le seuil antispam par défaut (la valeur courante est de {v})"
+
+#~ msgid "Spam threshold for {domain} virtual domain"
+#~ msgstr "Seuil antispam pour le domaine virtuel {domain}"
+
+#~ msgid "Mail filter options"
+#~ msgstr "Options du filtre mail"
+
+#~ msgid "General"
+#~ msgstr "Général"
+
+#~ msgid "Extensions filter"
+#~ msgstr "Filtre d'extensions"
+
+#~ msgid "Unsupported or incorrect input source format: {format}"
+#~ msgstr "Format de donnée source incorrect ou non supporté : {format}"
+
+#~ msgid "module status"
+#~ msgstr "Status du module"
+
+#~ msgid "Configure denied file extensions"
+#~ msgstr "Configurer les extensions de fichiers interdites"
+
+#~ msgid "extensions"
+#~ msgstr "extensions"
+
+#~ msgid "Update failed at {date}.\n"
+#~ msgstr "Mise-à-jour échouée le {date}.\n"
+
+#~ msgid "Add"
+#~ msgstr "Ajouter"
+
+#~ msgid "Are you sure you want to delete all {plural}?"
+#~ msgstr "Etes-vous sûr de vouloir tous les effacer {plural} ?"
+
+#~ msgid "There isn't any sender in {type} "
+#~ msgstr "Il n'y a aucun expéditeur dans {type}"
+
+#~ msgid "Enable Mail filter system"
+#~ msgstr "Activer le système de filtrage mail"
+
+#~ msgid "No allowed external mail servers"
+#~ msgstr "Serveurs mail externes interdits"
+
+#~ msgid "No external mail domains"
+#~ msgstr "Aucun domaine mail externe"
+
+#~ msgid "Configure denied MIME types"
+#~ msgstr "Configurer les types MIME refusés"
+
+#~ msgid ""
+#~ "External mail server {mta} removed. Remember to remove his mail domains "
+#~ "from the external mail domains list"
+#~ msgstr ""
+#~ "Serveur de mail externe {mta} supprimé. Rappelez-vous d'enlever son nom "
+#~ "de domaine de la liste des noms de domaine externe"
+
+#~ msgid "No changes where specified by the user"
+#~ msgstr "Aucun changement n'a été spécifié par l'utilisateur"
+
+#~ msgid "Mail domain{domain} removed from external domains list."
+#~ msgstr ""
+#~ "Nom de domaine {domain} supprimé de la liste des noms de domaines externes"
+
+#~ msgid ""
+#~ "External mail server {mta} allowed. Remember to add his mail domains to "
+#~ "the external mail domains list"
+#~ msgstr ""
+#~ "Serveur de mail externe {mta} autorisé. Rappelez-vous de l'ajouter à la "
+#~ "liste des domaines externes"
+
+#~ msgid "The spam's threshold cannot be higher than his autolearn threshold"
+#~ msgstr ""
+#~ "Le seuil des spams ne peut être supérieur que son seuil d'auto-"
+#~ "apprentissage"
+
+#~ msgid ""
+#~ "The spam's threshold cannot be lower or equalthan his ham's autolearn "
+#~ "threshold"
+#~ msgstr ""
+#~ "Le seuil de spams ne peut pas être inférieur ou égale à son seuil d'auto-"
+#~ "apprentissage de mails valides (ham)"
+
+#~ msgid ""
+#~ "Cannot learn because bayesian filter is disabled in the current "
+#~ "configuration. In order to be able to learn  enable ithe bayesian filter "
+#~ "and save the changes"
+#~ msgstr ""
+#~ "Apprentissage impossible car le filtre bayésien est désactivé dans la "
+#~ "configuration actuelle. "
+
+#~ msgid ""
+#~ "The sender can only be a email address or a domain name prefixed with '@'"
+#~ msgstr ""
+#~ "L'expéditeur peut uniquement être une adresse mail ou un nom de domaine "
+#~ "commençant par '@'"
+
+#~ msgid "Invalid externa; MTA {mta}. Local net addresses are not allowed"
+#~ msgstr ""
+#~ "MTA {mta} externe invalide. Les adresses locales ne sont pas permises"
+
+#~ msgid "Tag which will be added to the subject of spam mail"
+#~ msgstr "Etiquette qui sera ajoutée au sujet du spam"
+
+#~ msgid "Use bayesian classefier"
+#~ msgstr "Utiliser la classification bayésienne"
+
+#~ msgid "Change the score of mail according the history of the sender"
+#~ msgstr ""
+#~ "Modifier le score des mails en accord avec l'historique de l'expéditeur"
+
+#~ msgid ""
+#~ "Spam messages which a score equal or greater than this threshold will be  "
+#~ "introduced  in the learning system "
+#~ msgstr ""
+#~ "Les spams qui ont un score égal ou supérieur au seuil seront introduits "
+#~ "dans le système d'apprentissage"
+
+#~ msgid ""
+#~ "Ham messages which a score below this treshold will be introduced in the "
+#~ "learning system"
+#~ msgstr ""
+#~ "Les mails valides (ham) qui ont un score inférieur à ce seuil seront "
+#~ "introduits dans le système d'apprentissage"
+
+#~ msgid "The last update was successful at {date}"
+#~ msgstr "Dernière mise-à-jour réussie le {date}"
