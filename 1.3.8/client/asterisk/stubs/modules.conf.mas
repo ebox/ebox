@@ -1,0 +1,31 @@
+;
+; Asterisk module loader configuration file
+;
+
+[modules]
+autoload=yes
+
+; preload: any modules that need to be loaded before the Asterisk
+; core has been initialized. frequently needed if mapping the module
+; configuration into a Realtime storage.
+
+; res_phoneprov requires func_strings.so to be loaded:
+preload => func_strings.so
+
+; leave the GTK console right away
+noload => pbx_gtkconsole.so
+; by default we load chan_oss only
+noload => chan_alsa.so
+
+; disabled for the eBox module
+noload => chan_skinny.so
+noload => chan_unistim.so
+noload => pbx_dundi.so
+noload => chan_mgcp.so
+noload => res_config_pgsql
+noload => app_voicemail_odbc.so
+noload => app_directory_odbc.so
+noload => res_config_odbc.so
+noload => res_odbc.so
+noload => res_snmp.so
+noload => pbx_lua.so
