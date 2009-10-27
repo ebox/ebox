@@ -1,0 +1,16 @@
+1.2.2
+	+ Bugfix: Disable apparmor during setConf and not in packaging scripts
+1.2.1
+	+ bugfix: notify squid module when antivirus is enabled, so it
+	could change its configuration if needed
+	+ Change description string to be more accurate
+1.1.20
+	+  run it as root for now to make it work samba-vscan
+	+  do not use upstart for clamd
+	+ use pidfiles() and pidfile
+	+ freshclam status file is store in a ebox directory with
+	clamav persmisions
+1.1.10
+	+ New release	
+1.1
+	+ Initial release
