@@ -1,0 +1,59 @@
+<%doc>
+   This stub writes the DHCP server configuration file
+
+Parameters:
+
+    ifaces - Hash
+    real_ifaces - Hash containing the interface name as key and an 
+                  array ref containing the virtual interface names as value
+    thinClientOption - Boolean indicating whether the thin client
+                       options have been used or not
+    dnsone - String the default primary DNS server
+    dnstwo - String the default secondary DNS server
+</%doc>
+<%args>
+	%ifaces
+	%real_ifaces
+        $thinClientOption => 0
+	$dnsone => ""
+	$dnstwo => ""
+</%args>
+# DHCP server is authoritative for all networks
+authoritative;
+
+# extra options
+# RFC3442 routes
+option rfc3442-classless-static-routes code 121 = array of integer 8;
+# MS routes
+option ms-classless-static-routes code 249 = array of integer 8;
+
+ddns-update-style none;
+
+%	if(length($dnsone) != 0) {
+option domain-name-servers <% $dnsone %>\
+%		if(length($dnstwo) != 0) {
+, <% $dnstwo %>;
+% 		}else{
+;
+%		}
+%	}
+
+% if($thinClientOption) {
+allow booting;
+allow bootp;
+% }
+
+default-lease-time 1800;
+max-lease-time 7200;
+
+<%perl>
+	foreach my $iface (keys(%real_ifaces)) {
+           # Write configuration if there are any range or fixed addresses
+           my @ifacesToCheck = @{$real_ifaces{$iface}};
+           push(@ifacesToCheck, $iface);
+           my $nIfaceToWrite = grep { @{$ifaces{$_}->{ranges}} > 0 or @{$ifaces{$_}->{fixed}} > 0 } @ifacesToCheck;
+           if ( $nIfaceToWrite > 0) {
+</%perl>
+<& dhcp/shared-network.mas, iface => $iface, ifaces => \%ifaces, vifaces => $real_ifaces{$iface} &>
+%          }
+%	}
