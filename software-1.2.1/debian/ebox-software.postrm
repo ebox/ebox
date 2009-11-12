@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# We need to unconfigure and purge module's configuration
+# before the gconf schemas have been removed (i.e before gconf
+# debhelper has been run). That's why we do things before
+# and after gconf debhelper is run
+if [ "$1" = "purge" ]; then
+        # Purge configuration
+        /usr/share/ebox/ebox-clean-gconf software || true
+        # Remove PPA key
+        uid=$(apt-key list | grep -i -B 1 'ebox' | cut -d' ' -f4 | cut -d'/' -f2)
+        [ -n "$uid" ] && apt-key del $uid > /dev/null 2>&1
+fi
+
+
+#DEBHELPER#
+
+case "$1" in
+	remove)
+        # Remove
+        dpkg-trigger --no-await ebox
+        ;;
+esac
+
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#DEBHELPER#
+case "$1" in
+    configure)
+        kill `pidof gconfd-2` >/dev/null 2>&1 || true
+
+        # Import eBox platform PPA public key to trust into their packages
+        /usr/bin/apt-key add /etc/ebox/ppa.gpg > /dev/null 2>&1 
+
+        # migrate data if needed
+        /usr/share/ebox/ebox-migrate /usr/share/ebox-software/migration/	
+
+        dpkg-trigger --no-await ebox
+    ;;
+
+esac
+
+
+
+exit 0
