@@ -1,0 +1,11 @@
+1.2.2
+	+ Bugfix: Better error handling in notify job results
+	+ Bugfix: Using ebox as common base for Via protocol
+	+ Bugfix: Add CACertificatePath to trust in CC job dispatchers
+	+ Run cronjob sent by eBox CC
+1.2.1
+	+ Fix help messages to point to correct places
+1.1.20
+	+ New release
+1.1
+	+ Initial release
