@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Check latest version
+URL="http://update.ebox-platform.com/stable.txt"
+TIMEOUT="300"
+DEST="/var/lib/ebox/tmp/latestversion"
+wget --timeout $TIMEOUT $URL -O $DEST >/dev/null 2>&1
