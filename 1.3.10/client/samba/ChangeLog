@@ -1,0 +1,173 @@
+1.3.10
+	+ bugfix: ignore case when comparing domain and netbios names
+	+ Added support for Recycle Bin in shares
+	+ bugfix: restore Domain Users with GID 513 and not 512.
+	  as this made Domain Admins not work
+	+ Remove unused quota related methods
+1.3.7
+	+ Create .V2 profile directories. Windows Vista looks for them.
+	+ remove extendedBackup, data files must be backuped using ebackup
+1.3.6
+	+ bugfix: do not allow netbios names longer than 15 characters
+1.3.4
+	+ bugfix: some samba actions never appeared in the access log
+1.3.3
+	+ bugfix: we dont consults users when users is not configured in EBox::Samba::existsShareResource
+1.3.1
+	+ bugfix: use right number for Domain Computers group
+1.3.0
+	+ bugfix: keep sambaMinPwdLength attribute
+1.1.30
+	+ bugfix: add user works if quota is disabled
+	+ bugfix: replaced storeElementByName with store to avoid bug when restoring
+1.1.20
+	+ samba allows the use of internal virtual ifaces now
+	+ bugfix: importFromLdif was calling a maethod that was removed in a previous merge
+1.1.10
+	+ Only update sambaPaths on users with sambaSamAccount object
+	class
+	+ UI imrpovement: in general setting some fileds are disabled when
+	PDC is not selected
+1.1
+	+ Bugfix: issue with codepages on shares
+	+ Home drive letter can be changed now from general settings
+	+ Added new PDC model with password settings
+	+ Use the new row() and ids() API
+	+ Windows user's profiles are backed up only in extended backups
+	+ Enable quota support again
+	+ Bugfix: when importing data from ldiff we assure that the
+	default group is created before any group assignment to avoid
+	'group not existent' errors
+
+0.12.101
+	+ Bugfix: set force directory mode and force create mode to 0660 in shares
+0.12.100
+	+ Admin user method is more robust in face of user's incomplete
+	groups membership
+	+ Bugfix: `printers` method returns an empty list when
+	`ebox-printers` package is not installed
+	+ Add per-user disk quota
+0.12.99
+	+ New release
+0.12.6.101
+	+ Bugfix. roaming profiles are not created automatically when they are
+	disabled
+0.12.6.100
+	+ Support for external printers configured with CUPS
+	+ Bugfix. Set users and groups suffix properly in smb.conf
+0.12.5
+	+ Bugfix. Set loginShell when adding users. By default it takes /bin/false
+	but users can change it using /etc/ebox/80samba.conf
+0.12.4
+	+ Bugfix. Check and correct if there is a user or group with a wrong SID.
+	It's possible to run into that scenarion depending when the user/group is
+	created
+	+ Do not delete some domain attributes that are used to store password
+	attributes such us password length, expiration...
+0.12.3
+	+ Add configuration variable to enable/disable quota support
+	  as it might be really slow if we have many users
+0.12.2
+	+ Restore group share names when restoring a backup
+0.12.1
+	+ Leave Logon Home empty, as Logon Home = "" as stated by smb.conf
+	documentation doesn't seem to work
+	+ Make sure  workgroup and netbios names are different
+0.12
+	+ Add help to model fields
+	+ Fix typo in defaultEnabledValue. Now shares are enabled by default.
+	+ Fix typo in administrator label
+	+ Mark shares strings to translate
+	+ Use eBox OID number in LDAP schemas
+	+ Do not use shares that don't have permission for any user or group
+	+ Remove deprecated printer admin configuration key in smb.conf.mas
+	+ Enable dns proxy in smb.conf.mas
+0.11.103
+	+ Bugfix. Add and use EBox::Samba::Types::Select to avoid 
+	  issues with the options cache
+0.11.102
+	+ Extend functinality to add custom shares and not only one per-group:
+		- Any share within the file system
+		- Any share automatically created under /home/samba/shares
+		- Fine-grained access to the share: read-only, read and write,
+		  administrator, per user and per group.
+	+ Set editable attribute to 1 in User field. To comply with
+	  what the type expects and avoid warnings
+
+0.11.101
+	+ New release
+0.11.100
+	+ Change slapd.conf ownership to module users
+	+ Fix typos
+	+ onInstall() functionality moved to migration script 
+0.11.99
+	+ Allow others to read contents from users home directory to
+	publish HTML
+0.11
+	+ New release
+0.10.99
+	+ New release
+0.10
+	+ Create directory with 0770
+	+ Add users to Domain Users group
+0.9.100
+	+ New release
+0.9.99
+	+ New release
+0.9.3
+	+ New release
+0.9.2
+	+ Add ebox backup directory as a shared resource to download/upload
+	  files
+	+ Create smbldap_bind.conf which contains password with mask 0600
+0.9.1
+	+ New release
+0.9
+	+ Added Polish translation
+	+ Added German translation
+	+ Added Dutch  translation
+
+0.8.99
+	+ New release
+0.8.1
+	+ bugfix. Do not mess up home directories when upgrading
+	+ Minor workaround. Create slapd run directory in case it does not
+	  exist
+0.8
+	+ New release
+0.7.99
+	+ Full backup mode stores shared files
+	+ Unlimited i-node quota
+	+ Various bug-fixes
+	+ Portuguese translation
+ 
+0.7.1
+	+ Initial support for PDC
+	+ GUI improvements
+	+ Added update/clean actions to eobx-samba-ldap
+	+ Use EBox::LDAP singleton
+	+ Debian package fixes
+	+ Fetch SID from configuration file
+	+ Use of ebox-sudoers-friendly
+
+0.7
+	+ First public release
+0.6
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update install
+	+ Update debian scripts
+	+ Enable/disable printer sharing and file sharing independentely
+	+ Use new syntax to define ACLs in slapd.conf
+	+ Implements usesPort
+	+ Add full support for printers
+	+ Several bugfixes
+
+0.5.2
+	+ Fix some packaging issues
+
+0.5.1
+	+ Convert module to new menu system
+
+0.5
+	+ Initial release

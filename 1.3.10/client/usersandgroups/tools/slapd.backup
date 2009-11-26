@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Backup LDAP directories
+#
+umask 077
+
+BACKUPDIR="/var/backups/slapd"
+
+# Check if there is a directory slapd, otherwise create it.
+if [ ! -d "$BACKUPDIR" ]; then
+  mkdir -p -m 0700 "$BACKUPDIR"
+fi
+
+date=$(date +%C%y%m%d-%H%M%S)
+DESTDIR="$BACKUPDIR/slapd-preebox-$date"
+mkdir -p -m 0700 $DESTDIR
+
+slapcat > "$DESTDIR/ldap.db"
+test -d /etc/ldap/slapd.d && cp -a /etc/ldap/slapd.d "$DESTDIR/slapd.d"
+
+exit 0

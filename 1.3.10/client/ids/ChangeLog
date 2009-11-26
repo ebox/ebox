@@ -1,0 +1,11 @@
+1.3.10
+	+ Limited set of default rules by default to avoid high CPU consumption
+	+ Bugfix: don't add deleted snort rules
+1.3.6
+	+ Bugfix: don't try to start snort if there are no valid interfaces selected
+1.3.3
+	+ Bugfix in logs consolidation, now it works
+1.1.20
+	+ New release
+1.1.10
+	+ Initial release
