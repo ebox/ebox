@@ -1,0 +1,12 @@
+1.3.12
+	+ Add page title
+1.3.10
+	+ Bugfix do not include '/' as it is already used as source directory
+	+ Get rid of former local backup code
+	+ Send events when backup is done
+1.3.7
+	+ Include configuration backup in backup
+1.3.3
+	+ an active event's  watcher is not longer needed for
+	the cron job
+	+ cron job is written on config regeneration

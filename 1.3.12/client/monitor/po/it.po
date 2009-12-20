@@ -1,0 +1,420 @@
+# Italian translations for EBox-monitor package.
+# Copyright (C) 2008 Warp S.L.
+# This file is distributed under the same license as the EBox-monitor package.
+# Automatically generated, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: EBox-monitor 0.1\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-12-03 12:58+0000\n"
+"PO-Revision-Date: 2009-06-28 00:15+0200\n"
+"Last-Translator: Nicola <register1@interfree.it>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Monitor/Types/MeasureAttribute.pm:133
+#: src/EBox/Monitor/Types/MeasureAttribute.pm:147
+#: src/EBox/Monitor/Types/MeasureAttribute.pm:157
+msgid "not applicable"
+msgstr ""
+
+#: src/EBox/Monitor/Types/MeasureAttribute.pm:135
+#: src/EBox/Monitor/Types/MeasureAttribute.pm:145
+msgid "any"
+msgstr ""
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:102
+msgid "At least a threshold (maximum or minimum) must be set"
+msgstr "Impostare almeno un valore (massimo o minimo)"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:107
+msgid "This threshold rule will override the current ones"
+msgstr "Questo valore sovrascrive i valori attuali"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:156
+msgid ""
+"Current monitoring tool version does not support distinction among data "
+"sources"
+msgstr ""
+"La versione dello strumento di monitoraggio non supporta le distinzioni tra "
+"le fonti di dati"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:221
+msgid "Failure minimum"
+msgstr "Valore minimo non supportato"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:224
+msgid ""
+"Set the lower bound of acceptable values. If unset defaults to negative "
+"infinity."
+msgstr ""
+"Impostare il limite inferiore di valori accettabili. Se non settato di "
+"default sarà negativo infinito"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:229
+msgid "Warning minimum"
+msgstr "Allarme minimo"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:232
+#, perl-brace-format
+msgid ""
+"If the value is less than this value and greater than {fmin} a warn event is "
+"sent"
+msgstr ""
+"Se il valore é minore di questo valore e maggiore di {fmin} l'evento allerta "
+"sarà inviato"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:234
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:260
+msgid "failure minimum"
+msgstr "valore minimo non corretto"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:238
+msgid "Warning maximum"
+msgstr "Attenzione al volore massimo"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:241
+#, perl-brace-format
+msgid ""
+"If the value is greater than this value and less than {fmax} a warn event is "
+"sent"
+msgstr ""
+"Se il valore é maggiore di questo valore e minore di {fmax} l'evento allerta "
+"sarà inviato"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:243
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:260
+msgid "failure maximum"
+msgstr "Valore massimo non corretto"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:247
+msgid "Failure maximum"
+msgstr "Valore massimo non corretto"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:250
+msgid ""
+"Set the upper bound of acceptable values. If unset defaults to positive "
+"infinity."
+msgstr ""
+"Impostare il limite superiore dei valori accettabili. Se non settati di "
+"default il valore sarà positivo infinito"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:255
+msgid "Invert"
+msgstr "invertito"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:258
+#, perl-brace-format
+msgid ""
+"If set to true, the range of acceptable values is inverted, i.e. values "
+"between {fmin} and {fmax} ({wmin} and {wmax}) are not okay."
+msgstr ""
+"Se impostato su vero, la gamma di valori accettabili è invertita, i valori i."
+"e. tra {fmin} e {fmax} e ({wmin} e {wmax}) non sono corretti."
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:261
+msgid "warning minimum"
+msgstr "Attenzione al valore minimo"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:261
+msgid "warning maximum"
+msgstr "Attenzione al valore massimo"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:265
+msgid "Persistent"
+msgstr "Persistente"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:268
+msgid ""
+"If set to true, an event will be dispatched for each value that is out of "
+"the acceptable range. If set to false, only a change from an acceptable "
+"value to an unacceptable one will be dispatched"
+msgstr ""
+"Se impostato su vero, un messaggio sarà spedito per ogni valore che è fuori "
+"dalla gamma accettabile. Se impostato a falso, solo un passaggio da un "
+"valore accettabile per un inaccettabile sarà spedito"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:275
+msgid "Measure instance"
+msgstr "Misura di esempio"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:281
+msgid "Type"
+msgstr "digitare"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:287
+msgid "Data Source"
+msgstr "Sorgente dati"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:295
+msgid "Threshold configuration"
+msgstr "valore minimo di configurazione"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:296
+msgid "Threshold's list"
+msgstr "Lista valori minimi"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:298
+msgid "Threshold"
+msgstr "valore minimo"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:302
+#, fuzzy, perl-brace-format
+msgid ""
+"Every check is done with the highest possible resolution: {nSec} seconds"
+msgstr ""
+"Tutti i controlli sono stati svolti con la massima risoluzione possibile: "
+"{nSec} secondi"
+
+#: src/EBox/Monitor/Model/ThresholdConfiguration.pm:304
+#, perl-brace-format
+msgid ""
+"Take into account this configuration will be only applied if monitor "
+"{openhref}event watcher is enabled{closehref}"
+msgstr ""
+
+#: src/EBox/Monitor/Model/MeasureWatchers.pm:122
+msgid "Measure"
+msgstr "Misura"
+
+#: src/EBox/Monitor/Model/MeasureWatchers.pm:129
+msgid "Thresholds"
+msgstr "Valore minimo"
+
+#: src/EBox/Monitor/Model/MeasureWatchers.pm:138
+msgid "Configure monitor watchers"
+msgstr ""
+
+#: src/EBox/Monitor/Model/MeasureWatchers.pm:139
+msgid "measure"
+msgstr ""
+
+#: src/EBox/Monitor/Model/MeasureWatchers.pm:144
+msgid "Every measure may have several thresholds to monitor"
+msgstr ""
+
+#: src/EBox/Monitor/Configuration.pm:121
+msgid "Last hour"
+msgstr ""
+
+#: src/EBox/Monitor/Configuration.pm:127
+msgid "Last day"
+msgstr ""
+
+#: src/EBox/Monitor/Configuration.pm:133
+msgid "Last month"
+msgstr ""
+
+#: src/EBox/Monitor/Configuration.pm:139
+msgid "Last year"
+msgstr ""
+
+#: src/EBox/Monitor/Measure/Load.pm:55
+msgid "System load"
+msgstr "Carico del sistema"
+
+#: src/EBox/Monitor/Measure/Load.pm:56
+msgid "Collect the system load that gives a rough overview of the system usage"
+msgstr ""
+"Monitor del sistema che fornisce un quadro di massima sull'utilizzo del "
+"server"
+
+#: src/EBox/Monitor/Measure/Load.pm:59
+msgid "short term"
+msgstr "breve termine"
+
+#: src/EBox/Monitor/Measure/Load.pm:59
+msgid "mid term"
+msgstr "medio termine"
+
+#: src/EBox/Monitor/Measure/Load.pm:59
+msgid "long term"
+msgstr "lungo termine"
+
+#: src/EBox/Monitor/Measure/Df.pm:76
+#, perl-brace-format
+msgid "used in {partition}"
+msgstr "usato nella {partition}"
+
+#: src/EBox/Monitor/Measure/Df.pm:78
+#, perl-brace-format
+msgid "free in {partition}"
+msgstr "libero nella {partition}"
+
+#: src/EBox/Monitor/Measure/Df.pm:83
+msgid "File system usage"
+msgstr "File di sistema utilizzato"
+
+#: src/EBox/Monitor/Measure/Df.pm:84
+msgid ""
+"Collect the mounted file system usage information as \"df\" command does"
+msgstr ""
+"monitor del file di sistema montato e l'uso delle informazioni come il "
+"comando \"df\""
+
+#: src/EBox/Monitor/Measure/Thermal.pm:111
+#: src/EBox/Monitor/Measure/Thermal.pm:117
+msgid "temperature"
+msgstr "temperatura"
+
+#: src/EBox/Monitor/Measure/Thermal.pm:129
+msgid "cooling device"
+msgstr "disposistivo di raffreddamento"
+
+#: src/EBox/Monitor/Measure/Thermal.pm:131
+msgid "sensor"
+msgstr "sensore"
+
+#: src/EBox/Monitor/Measure/Thermal.pm:133
+#, perl-brace-format
+msgid "Temperature for {what}"
+msgstr "Temperatura per {what}"
+
+#: src/EBox/Monitor/Measure/Thermal.pm:139
+msgid "Thermal"
+msgstr "Termica"
+
+#: src/EBox/Monitor/Measure/Thermal.pm:140
+#, perl-brace-format
+msgid ""
+"Collect thermal information (CPU sensors temperature) if possible from {dir}"
+msgstr ""
+"Monitor informazione termica (per temperature sensore CPU) se possibile da "
+"{dir}"
+
+#: src/EBox/Monitor/Measure/Base.pm:621
+msgid "value"
+msgstr "valore"
+
+#: src/EBox/Monitor/Measure/CPU.pm:59
+#, perl-brace-format
+msgid "CPU {no} usage"
+msgstr "Uso {no} CPU"
+
+#: src/EBox/Monitor/Measure/CPU.pm:65
+msgid "CPU usage"
+msgstr "Uso CPU"
+
+#: src/EBox/Monitor/Measure/CPU.pm:66
+msgid ""
+"Collect the amount of time spent by the CPU in various states, most notably "
+"executing user code, executing system code, waiting for IO operations and "
+"being idle"
+msgstr ""
+
+#: src/EBox/Monitor/Measure/CPU.pm:73 src/EBox/Monitor/Measure/CPU.pm:82
+msgid "idle"
+msgstr "inattivo"
+
+#: src/EBox/Monitor/Measure/CPU.pm:74 src/EBox/Monitor/Measure/CPU.pm:82
+msgid "user"
+msgstr "utente"
+
+#: src/EBox/Monitor/Measure/CPU.pm:75 src/EBox/Monitor/Measure/CPU.pm:82
+msgid "interrupt"
+msgstr "interrotto"
+
+#: src/EBox/Monitor/Measure/CPU.pm:76 src/EBox/Monitor/Measure/CPU.pm:83
+msgid "nice"
+msgstr "esatto"
+
+#: src/EBox/Monitor/Measure/CPU.pm:77 src/EBox/Monitor/Measure/CPU.pm:83
+msgid "soft interrupt"
+msgstr ""
+
+#: src/EBox/Monitor/Measure/CPU.pm:78 src/EBox/Monitor/Measure/CPU.pm:83
+msgid "steal"
+msgstr "sottratto"
+
+#: src/EBox/Monitor/Measure/CPU.pm:79 src/EBox/Monitor/Measure/CPU.pm:84
+msgid "system"
+msgstr "sistema"
+
+#: src/EBox/Monitor/Measure/CPU.pm:80 src/EBox/Monitor/Measure/CPU.pm:84
+msgid "wait"
+msgstr "attendere"
+
+#: src/EBox/Monitor/Measure/Memory.pm:55
+msgid "Physical memory usage"
+msgstr "Memoria fisica utilizzata"
+
+#: src/EBox/Monitor/Measure/Memory.pm:56
+msgid "Collect the physical memory usage"
+msgstr "Monitor della memoria fisica utilizzata"
+
+#: src/EBox/Monitor/Measure/Memory.pm:57
+msgid "free"
+msgstr "libero"
+
+#: src/EBox/Monitor/Measure/Memory.pm:57
+msgid "page cache"
+msgstr "pagina di cache"
+
+#: src/EBox/Monitor/Measure/Memory.pm:57
+msgid "buffer cache"
+msgstr "buffer cache"
+
+#: src/EBox/Monitor/Measure/Memory.pm:57
+msgid "used"
+msgstr "usato"
+
+#: src/EBox/CGI/Index.pm:44
+msgid "Monitoring"
+msgstr ""
+
+#: src/EBox/CGI/Index.pm:70
+#, perl-brace-format
+msgid ""
+"You must enable monitor module to see monitor graphs in {openhref}Module "
+"Status section{closehref}"
+msgstr ""
+
+#: src/EBox/CGI/Index.pm:98
+#, perl-brace-format
+msgid ""
+"You must save the changes in module status to see monitor graphs in the "
+"{openhref}Save changes{closehref} section. In case it is already enabled you "
+"must wait for a few seconds to collect the first monitor data"
+msgstr ""
+
+#: src/EBox/Event/Watcher/Monitor.pm:145 src/EBox/Monitor.pm:72
+#: src/EBox/Monitor.pm:164
+msgid "Monitor"
+msgstr "Monitor"
+
+#: src/EBox/Event/Watcher/Monitor.pm:162
+msgid "Notify when a certain value has reached a certain threshold"
+msgstr ""
+
+#: src/EBox/Event/Watcher/Monitor.pm:302
+#, perl-brace-format
+msgid "{what} \"{dS}\" is currently {value}."
+msgstr ""
+
+#: src/EBox/Event/Watcher/Monitor.pm:308
+#, perl-brace-format
+msgid "That is within the {severity} region of {minBound} and {maxBound}."
+msgstr ""
+
+#: src/EBox/Event/Watcher/Monitor.pm:315
+#, perl-brace-format
+msgid "That is above the {severity} threshold of {bound}."
+msgstr ""
+
+#: src/EBox/Event/Watcher/Monitor.pm:318
+#, perl-brace-format
+msgid "That is below the {severity} threshold of {bound}."
+msgstr ""
+
+#: src/EBox/Monitor.pm:133
+msgid "Collectd main configuration file"
+msgstr "Raccoglitore principale file di configurazione"
+
+#: src/EBox/Monitor.pm:137
+msgid "Collectd threshold configuration file"
+msgstr "Raccoglitore soglia file di configurazione"

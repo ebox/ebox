@@ -1,0 +1,328 @@
+# French translations for ebox-dns-cache package.
+# Copyright (C) 2005 Warp S.L.
+# This file is distributed under the same license as the ebox-dns-cache package.
+# Automatically generated, 2005.
+# Ignacio Correas <icorreas@warp.es>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-dns 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-12-03 12:53+0000\n"
+"PO-Revision-Date: 2009-09-30 11:14+0200\n"
+"Last-Translator: Nicolas Liaudat <nliaudat@pompiers-chatel.ch>\n"
+"Language-Team: Español <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/DNS.pm.in:51 src/EBox/Model/DNSComposite.pm:75
+msgid "DNS"
+msgstr "DNS"
+
+#: src/EBox/DNS.pm.in:394 src/EBox/Model/DomainTable.pm:115
+msgid "domain"
+msgstr "domaine"
+
+#: src/EBox/DNS.pm.in:711
+#, perl-brace-format
+msgid "configuration file for zone {zone}"
+msgstr "Fichier de configuration pour la zone {zone}"
+
+#: src/EBox/DNS.pm.in:727
+#, perl-brace-format
+msgid "configuration file for reverse resolution zone {zone}"
+msgstr "Fichier de configuration pour la zone de recherche inversée {zone}"
+
+#: src/EBox/DNS.pm.in:856
+msgid "Infrastructure"
+msgstr "Infrastructure"
+
+#: src/EBox/Model/HostnameTable.pm:135
+#, perl-brace-format
+msgid ""
+"There is an alias with the same name \"{name}\" for \"{hostname}\" in the "
+"same domain"
+msgstr ""
+"Il existe un alias avec le même nom \"{name}\" pour \"{hostname}\" dans le "
+"même domaine"
+
+#: src/EBox/Model/HostnameTable.pm:159 src/EBox/Model/MailExchanger.pm:123
+#: src/EBox/Model/NameServer.pm:104 src/templates/edit.mas:20
+msgid "Host name"
+msgstr "Nom d'hôte"
+
+#: src/EBox/Model/HostnameTable.pm:167 src/EBox/Model/DomainTable.pm:99
+msgid "IP Address"
+msgstr "Adresse IP"
+
+#: src/EBox/Model/HostnameTable.pm:175 src/EBox/Model/AliasTable.pm:130
+#: src/EBox/Model/AliasTable.pm:140 src/EBox/Model/AliasTable.pm:146
+#: src/templates/edit.mas:64 src/templates/edit.mas:85
+msgid "Alias"
+msgstr "Alias"
+
+#: src/EBox/Model/HostnameTable.pm:186
+msgid "Host names"
+msgstr "Noms d'hôtes"
+
+#: src/EBox/Model/HostnameTable.pm:192 src/EBox/Model/DomainTable.pm:74
+msgid "Hostnames"
+msgstr "Noms d'hôtes"
+
+#: src/EBox/Model/HostnameTable.pm:193
+msgid "host name"
+msgstr "nom d'hôte"
+
+#: src/EBox/Model/DomainTable.pm:66
+msgid "Domain"
+msgstr "Domaine"
+
+#: src/EBox/Model/DomainTable.pm:83
+msgid "Mail Exchangers"
+msgstr "Gestionnaires de Courrier"
+
+#: src/EBox/Model/DomainTable.pm:91
+#, fuzzy
+msgid "Name Servers"
+msgstr "Serveur DNS"
+
+#: src/EBox/Model/DomainTable.pm:109
+msgid "Domains"
+msgstr "Domaines"
+
+#: src/EBox/Model/DNSComposite.pm:77
+msgid "The DNS server allows you to resolve names for your own domains."
+msgstr ""
+"Le serveur DNS vous permet de résoudre les noms de votre propre domaine."
+
+#: src/EBox/Model/MailExchanger.pm:86
+#, perl-brace-format
+msgid "Invalid preference number. Allowed range: ({min}, {max})"
+msgstr "Nombre invalide. Intervalle autorisé: ({min}, {max})"
+
+#: src/EBox/Model/MailExchanger.pm:96
+#, perl-brace-format
+msgid ""
+"The given host name is not a fully qualified domain name (FQDN). Do you mean "
+"mx.{name}?"
+msgstr ""
+
+#: src/EBox/Model/MailExchanger.pm:126 src/EBox/Model/NameServer.pm:107
+msgid "If you choose \"Custom\", it should be a Fully Qualified Domain Name"
+msgstr ""
+
+#: src/EBox/Model/MailExchanger.pm:132 src/EBox/Model/NameServer.pm:113
+msgid "This domain"
+msgstr "Ce domaine"
+
+#: src/EBox/Model/MailExchanger.pm:140 src/EBox/Model/NameServer.pm:121
+msgid "Custom"
+msgstr "Personnalisé"
+
+#: src/EBox/Model/MailExchanger.pm:148
+msgid "Preference"
+msgstr "Préférence"
+
+#: src/EBox/Model/MailExchanger.pm:157
+msgid "Mail exchangers"
+msgstr "Gestionnaires de Courrier"
+
+#: src/EBox/Model/MailExchanger.pm:163
+#, perl-brace-format
+msgid ""
+"The smallest preference number has the highest priority  and is the first "
+"server to be tried when a remote client (typically another mail server) does "
+"an MX lookup for the domain name. Allowed preference number interval = "
+"({min}, {max})"
+msgstr ""
+"Le plus petit nombre \"préférence\" possède la plus haute priorité et sera "
+"le premier serveur a être interrogé quand un client distant (typiquement un "
+"autre serveur de courrier) fera un MX lookup pour ce nom de domaine. "
+"L'intervalle de nombre autorisé pour \"préférence\" est ({min}, {max})"
+
+#: src/EBox/Model/MailExchanger.pm:169
+msgid "Mail exchanger record"
+msgstr "Enregistrement du gestionnaire de courrier"
+
+#: src/EBox/Model/AliasTable.pm:80
+#, perl-brace-format
+msgid ""
+"An alias cannot be the nameserver host name \"{ns}\". Use a hostname instead"
+msgstr ""
+"Un alias ne peut pas être le nom du serveur \"{ns}\". Utiliser plutôt un nom "
+"d'hôte"
+
+#: src/EBox/Model/AliasTable.pm:93
+#, perl-brace-format
+msgid "There is a hostname with the same name \"{name}\" in the same domain"
+msgstr "Il existe déjà un hôte dont le nom est \"{name}\" dans le même domaine"
+
+#: src/EBox/Model/AliasTable.pm:102
+#, perl-brace-format
+msgid ""
+"There is an alias for {hostname} hostname with the same name \"{name}\" in "
+"the same domain"
+msgstr ""
+"Il existe déjà un hôte {hostname} dont le nom est \"{name}\" dans le même "
+"domaine"
+
+#: src/EBox/Model/AliasTable.pm:147
+msgid "alias"
+msgstr "alias"
+
+#: src/EBox/Model/NameServer.pm:77
+#, perl-brace-format
+msgid ""
+"The given host name is not a fully qualified domain name (FQDN). Do you mean "
+"ns.{name}?"
+msgstr ""
+
+#: src/EBox/Model/NameServer.pm:132
+#, fuzzy
+msgid "Name servers"
+msgstr "Serveur DNS"
+
+#: src/EBox/Model/NameServer.pm:138
+msgid "It manages the name server (NS) records for this domain"
+msgstr ""
+
+#: src/EBox/Model/NameServer.pm:139
+#, fuzzy
+msgid "name server record"
+msgstr "Enregistrement du gestionnaire de courrier"
+
+#: src/templates/index.mas:16
+msgid "Domain list"
+msgstr "Liste de domaines"
+
+#: src/templates/index.mas:21
+msgid "Name"
+msgstr "Nom"
+
+#: src/templates/index.mas:24 src/templates/edit.mas:23
+msgid "Action"
+msgstr "Action"
+
+#: src/templates/index.mas:37 src/templates/index.mas:38
+#: src/templates/index.mas:39 src/templates/edit.mas:40
+#: src/templates/edit.mas:41 src/templates/edit.mas:42
+#: src/templates/edit.mas:74 src/templates/edit.mas:75
+#: src/templates/edit.mas:76
+msgid "Add"
+msgstr "Ajouter"
+
+#: src/templates/index.mas:49
+msgid "Edit"
+msgstr "Editer"
+
+#: src/templates/index.mas:53 src/templates/index.mas:54
+#: src/templates/edit.mas:54 src/templates/edit.mas:55
+#: src/templates/edit.mas:93 src/templates/edit.mas:94
+msgid "Delete"
+msgstr "Effacer"
+
+#: src/templates/index.mas:65
+msgid "edit"
+msgstr "éditer"
+
+#: src/templates/index.mas:70 src/templates/edit.mas:110
+msgid "delete"
+msgstr "effacer"
+
+#: src/templates/edit.mas:12
+#, perl-brace-format
+msgid "Host list for domain {domain}"
+msgstr "Liste des hôtes pour le domaine {domain}"
+
+#: src/templates/edit.mas:17
+msgid "IP"
+msgstr "IP"
+
+#~ msgid "Owner domain"
+#~ msgstr "Domaine propriétaire"
+
+#~ msgid "Service enabled"
+#~ msgstr "Service activé"
+
+#~ msgid "Service disabled"
+#~ msgstr "Service désactivé"
+
+#~ msgid "Domain Name System"
+#~ msgstr "Contrôleur de domaine"
+
+#~ msgid "There is an alias with the same name \"{name}\" in the same domain"
+#~ msgstr ""
+#~ "Il existe déjà un alias dont le nom est \"{name}\" dans le même domaine"
+
+#~ msgid "Hostname"
+#~ msgstr "Nom d'hôte"
+
+#~ msgid "hostname"
+#~ msgstr "nom d'hôte"
+
+#~ msgid "IP address"
+#~ msgstr "Adresse IP"
+
+#~ msgid "Alias name"
+#~ msgstr "Nom d'alias"
+
+#~ msgid "dns"
+#~ msgstr "dns"
+
+#~ msgid "module status"
+#~ msgstr "statut du module"
+
+#~ msgid "domain name"
+#~ msgstr "nom de domaine"
+
+#~ msgid ""
+#~ "The domain '{name}' is already used. Please choose another domain name"
+#~ msgstr ""
+#~ "Le nom de domaine '{name}' est déjà utilisé. Veuillez en choisir un autre"
+
+#~ msgid "Host name can't contain dots"
+#~ msgstr "Le nom d'hôte ne peut pas contenir un point"
+
+#~ msgid ""
+#~ "The host name '{name}' is already used. Please choose another host name"
+#~ msgstr ""
+#~ "Le nom d'hôte '{name}' est déjà utilisé. Veuillez en choisir un autre"
+
+#~ msgid ""
+#~ "The IP address '{ip}' is already used. Please choose another IP address"
+#~ msgstr ""
+#~ "L'adresse IP '{ip}' est déjà utilisée. Veuillez en choisir une autre"
+
+#~ msgid "An alias can't contain dots"
+#~ msgstr "Un alias ne peut pas contenir de point"
+
+#~ msgid ""
+#~ "The alias '{name}' is already used as a host name. Please choose another "
+#~ "alias"
+#~ msgstr ""
+#~ "L'alias '{name}' est déjà utilisé comme nom d'hôte. Veuillez en choisir "
+#~ "un autre"
+
+#~ msgid ""
+#~ "The alias '{name}' is already used as alias in the host '{host}'. Please "
+#~ "choose another alias"
+#~ msgstr ""
+#~ "L'alias '{name}' est déjà utilisé comme alias pour l'hôte '{host}'. "
+#~ "Veuillez en choisir un autre"
+
+#~ msgid "DNS service status"
+#~ msgstr "Statut du service DNS"
+
+#~ msgid "DNS cache"
+#~ msgstr "Cache DNS"
+
+#~ msgid "DNS Cache"
+#~ msgstr "Cache DNS"
+
+#~ msgid "Enable the DNS Cache"
+#~ msgstr "Habiliter Cache DNS"
+
+#~ msgid "Domain name"
+#~ msgstr "Nom de domaine"
