@@ -1,0 +1,22 @@
+1.2.4
+	+ Show the email address is available to authenticate with
+	+ Passwordless from Control Center is now the default option and
+	  it is not editable from GUI anynmore
+	+ Run cron getter after subscribing while saving changes
+	+ Configure/enable OpenVPN module when subscribing
+	+ Add widget to know the Control Center connection status
+	+ Add support for automatic backups done daily for a maximum number
+1.2.3
+	+ Bugfix: Use name in VPN client configuration for reaching the
+  	  VPN server to avoid problems if we change the IP addresses
+1.2.2
+	+ Bugfix: Better error handling in notify job results
+	+ Bugfix: Using ebox as common base for Via protocol
+	+ Bugfix: Add CACertificatePath to trust in CC job dispatchers
+	+ Run cronjob sent by eBox CC
+1.2.1
+	+ Fix help messages to point to correct places
+1.1.20
+	+ New release
+1.1
+	+ Initial release
