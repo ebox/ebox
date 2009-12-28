@@ -1,0 +1,20 @@
+<%args>
+$tableName
+$data
+$cssClass => ''
+$disabled => undef
+</%args>
+<%perl>
+my $id = $tableName . '_' . $data->fieldName();
+
+my %args = ('name'  => "$id",
+    'value' => $data->printableValue(),
+    'id'    => "$id",
+    'class' => "$cssClass");
+
+if (not $data->editable() or $disabled) {
+  $args{'disabled'} = 'disabled';
+}
+</%perl>
+<& /input/checkbox.mas, %args &>
+<% $data->trailingText() %>
