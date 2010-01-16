@@ -1,0 +1,669 @@
+# Bulgarian translations for ebox-dhcp package.
+# Copyright (C) 2008 Warp S.L.
+# This file is distributed under the same license as the ebox-dhcp package.
+# Automatically generated, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-dhcp 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-09 16:08+0100\n"
+"PO-Revision-Date: 2009-07-01 09:53+0200\n"
+"Last-Translator: Тони Стоев <ebox@tonistoev.info>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: migration/0002_add_services.pl:117
+msgid "Trivial File Transfer Protocol"
+msgstr "Тривиален протокол за прехвърляне на файлове"
+
+#: migration/0002_add_services.pl:126
+msgid "Dynamic Host Configuration Protocol"
+msgstr "Протокол за динамично настройване на хостове"
+
+#: src/EBox/CGI/Status.pm:42
+msgid "Module Status"
+msgstr "Състояние на модула"
+
+#: src/EBox/CGI/AddFixed.pm:39 src/EBox/CGI/RemoveRange.pm:39
+#: src/EBox/CGI/AddRange.pm:39 src/EBox/CGI/RemoveFixed.pm:39
+#: src/EBox/CGI/SetIfaceOptions.pm:39 src/EBox/DHCP.pm:426
+#: src/EBox/DHCP.pm:462 src/EBox/DHCP.pm:512 src/EBox/DHCP.pm:558
+#: src/EBox/DHCP.pm:604 src/EBox/DHCP.pm:702 src/EBox/DHCP.pm:756
+#: src/EBox/DHCP.pm:817 src/EBox/DHCP.pm:873 src/EBox/DHCP.pm:1264
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: src/EBox/CGI/AddFixed.pm:43 src/EBox/Model/FixedAddressTable.pm:218
+#: src/EBox/DHCP.pm:1265 src/EBox/DHCP.pm:1333 src/templates/fixed.mas:9
+msgid "MAC address"
+msgstr "MAC адрес"
+
+#: src/EBox/CGI/AddFixed.pm:44 src/EBox/Model/ThinClientOptions.pm:242
+#: src/EBox/Model/FixedAddressTable.pm:224 src/EBox/DHCP.pm:1333
+#: src/templates/fixed.mas:10
+msgid "IP address"
+msgstr "IP адрес"
+
+#: src/EBox/CGI/AddFixed.pm:45 src/EBox/CGI/AddRange.pm:43
+#: src/EBox/Model/FixedAddressTable.pm:212 src/EBox/Model/RangeTable.pm:213
+#: src/templates/fixed.mas:8 src/templates/ranges.mas:53
+msgid "Name"
+msgstr "Име"
+
+#: src/EBox/CGI/AddRange.pm:44 src/EBox/Model/RangeTable.pm:219
+#: src/templates/ranges.mas:54
+msgid "From"
+msgstr "От"
+
+#: src/EBox/CGI/AddRange.pm:45 src/EBox/Model/RangeTable.pm:225
+#: src/templates/ranges.mas:55
+msgid "To"
+msgstr "До"
+
+#: src/EBox/CGI/Enable.pm:39
+msgid "module status"
+msgstr "състояние на модула"
+
+#: src/EBox/Model/ThinClientOptions.pm:118 src/EBox/Model/LeaseTimes.pm:112
+#: src/EBox/Model/FixedAddressTable.pm:96 src/EBox/Model/DynamicDNS.pm:111
+#: src/EBox/Model/RangeInfo.pm:108 src/EBox/Model/Options.pm:119
+#: src/EBox/Model/RangeTable.pm:95 src/EBox/Composite/OptionsTab.pm:87
+#: src/EBox/Composite/InterfaceConfiguration.pm:87
+#: src/EBox/Composite/AdvancedOptions.pm:88
+#, perl-brace-format
+msgid "interface {iface}"
+msgstr "интерфейс {iface}"
+
+#: src/EBox/Model/ThinClientOptions.pm:139
+msgid "You need to upload a boot image to eBox if you set it as next server"
+msgstr ""
+"Трябва да качите образ за зареждане в eBox, ако го зададете като следващ "
+"сървър."
+
+#: src/EBox/Model/ThinClientOptions.pm:146
+msgid ""
+"In order to upload a boot image to eBox, you need to set eBox as next server"
+msgstr ""
+"За да качите образ за зареждане в eBox, трябва да зададете eBox като следващ "
+"сървър."
+
+#: src/EBox/Model/ThinClientOptions.pm:153
+msgid "You need to specify a path to the boot image in the remote server"
+msgstr "Трябва да зададете път до образа за зареждане на отдалечения сървър."
+
+#: src/EBox/Model/ThinClientOptions.pm:158
+msgid ""
+"You can only specify a file name if you have a next server and it is not eBox"
+msgstr ""
+"Можете да зададете име на файл, само ако имате следващ сървър и той не е "
+"eBox."
+
+#: src/EBox/Model/ThinClientOptions.pm:209
+#, perl-brace-format
+msgid ""
+"Removing previously uploaded boot image since next server option has been "
+"changed from eBox to {option}"
+msgstr ""
+"Премахва се каченият образ за зареждане, тъй като опцията следващ сървър е "
+"променена от eBox на {option}."
+
+#: src/EBox/Model/ThinClientOptions.pm:232
+msgid "Next server"
+msgstr "Следващ сървър"
+
+#: src/EBox/Model/ThinClientOptions.pm:236 src/EBox/Model/Options.pm:394
+#: src/EBox/Model/Options.pm:405 src/EBox/Model/Options.pm:409
+#: src/EBox/Model/Options.pm:423 src/EBox/Model/Options.pm:456
+msgid "None"
+msgstr "Няма"
+
+#: src/EBox/Model/ThinClientOptions.pm:239 src/EBox/Model/Options.pm:446
+msgid "eBox"
+msgstr "eBox"
+
+#: src/EBox/Model/ThinClientOptions.pm:246
+msgid "name"
+msgstr "име"
+
+#: src/EBox/Model/ThinClientOptions.pm:252
+msgid "File name"
+msgstr "Име на файл"
+
+#: src/EBox/Model/ThinClientOptions.pm:261
+msgid "File path in next server"
+msgstr "Файлов път на следващия сървър"
+
+#: src/EBox/Model/ThinClientOptions.pm:269
+msgid "Thin client"
+msgstr "Тънък клиент"
+
+#: src/EBox/Model/ThinClientOptions.pm:274
+#, perl-brace-format
+msgid ""
+"You may want to customise your thin client options.To do so, you may include "
+"all the files you require under {path} directory"
+msgstr ""
+"Може да искате да изберете опции за вашия тънък клиент. За да го направите, "
+"може да добавите всички файлове, които ви трябват в директория {path}."
+
+#: src/EBox/Model/LeaseTimes.pm:132
+msgid "Default leased time must be higher than 0 seconds"
+msgstr "Времето на заемане по подразбиране трябва да е повече от 0 секунди."
+
+#: src/EBox/Model/LeaseTimes.pm:138
+#, perl-brace-format
+msgid "Default leased time {default} must be lower than maximum one {max}"
+msgstr ""
+"Времето на заемане по подразбиране {default} трябва да е по-малко от "
+"максималното {max}."
+
+#: src/EBox/Model/LeaseTimes.pm:150
+msgid "Maximum leased time must be higher than 0 seconds"
+msgstr "Максималното време на заемане трябва да е повече от 0 секунди."
+
+#: src/EBox/Model/LeaseTimes.pm:156
+#, perl-brace-format
+msgid "Maximum leased time {max} must be higher than default one {default}"
+msgstr ""
+"Максималното време на заемане {max} трябва да е по-голямо от това по "
+"подразбиране {default}."
+
+#: src/EBox/Model/LeaseTimes.pm:200
+msgid "Default leased time"
+msgstr "Време на заемане по подразбиране"
+
+#: src/EBox/Model/LeaseTimes.pm:203 src/EBox/Model/LeaseTimes.pm:210
+msgid "seconds"
+msgstr "секунди"
+
+#: src/EBox/Model/LeaseTimes.pm:207
+msgid "Maximum leased time"
+msgstr "Максимално време на заемане"
+
+#: src/EBox/Model/LeaseTimes.pm:216
+msgid "Lease times"
+msgstr "Времена на заемане"
+
+#: src/EBox/Model/LeaseTimes.pm:221
+msgid ""
+"Leased time is the time which a given IP address is valid by the DHCP server"
+msgstr ""
+"Време на заемане е времето, през което даден IP адрес е валиден според DHCP "
+"сървъра."
+
+#: src/EBox/Model/FixedAddressTable.pm:122
+#, perl-brace-format
+msgid "IP address {ip} is not in network {net}"
+msgstr "IP адресът {ip} не е в мрежа {net}."
+
+#: src/EBox/Model/FixedAddressTable.pm:133
+#, perl-brace-format
+msgid "The selected IP is the interface IP address: {ifaceIP}"
+msgstr "Избраното IP е IP адресът на интерфейса: {ifaceIP}"
+
+#: src/EBox/Model/FixedAddressTable.pm:150
+#, perl-brace-format
+msgid "IP address {ip} is in range '{range}': {from}-{to}"
+msgstr "IP адресът {ip} е в обхват '{range}': {from} - {to}"
+
+#: src/EBox/Model/FixedAddressTable.pm:162
+#, perl-brace-format
+msgid "{name} cannot contain spaces"
+msgstr "{name} не може да съдържа интервали."
+
+#: src/EBox/Model/FixedAddressTable.pm:180
+msgid "update"
+msgstr "обновяване"
+
+#: src/EBox/Model/FixedAddressTable.pm:182
+msgid "add"
+msgstr "добавяне"
+
+#: src/EBox/Model/FixedAddressTable.pm:184
+#, perl-brace-format
+msgid ""
+"You cannot {action} a fixed address with a name which is already used in "
+"other fixed address table"
+msgstr ""
+"Не можете да извършите действие {action} за фиксиран адрес с име, което вече "
+"се ползва в друга таблица на фиксирани адреси."
+
+#: src/EBox/Model/FixedAddressTable.pm:227
+msgid "You cannot use an IP address contained in the above ranges."
+msgstr "Не можете да използвате IP адрес, съдържан в горните обхвати."
+
+#: src/EBox/Model/FixedAddressTable.pm:232
+msgid "Description"
+msgstr ""
+
+#: src/EBox/Model/FixedAddressTable.pm:240 src/templates/fixed.mas:5
+msgid "Fixed addresses"
+msgstr "Фиксирани адреси"
+
+#: src/EBox/Model/FixedAddressTable.pm:247
+msgid "fixed address"
+msgstr "фиксиран адрес"
+
+#: src/EBox/Model/DynamicDNS.pm:132 src/EBox/Model/DynamicDNS.pm:140
+#: src/EBox/Model/DynamicDNS.pm:387
+#, perl-brace-format
+msgid "Domain {domain} has already been defined manually in DNS section"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:241
+msgid "DNS module must be configured to work with this feature"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:244
+#, perl-brace-format
+msgid "{pkg} must be installed to use this feature"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:266
+msgid ""
+"Domains will be added/set automatically in DNS section in read-only mode."
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:268
+msgid "DNS module must be enabled to make this feature work. "
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:332
+#, fuzzy
+msgid "Dynamic domain"
+msgstr "Област за търсене"
+
+#: src/EBox/Model/DynamicDNS.pm:334
+msgid ""
+"Domain name appended to the hostname from those clients whose leased IP "
+"address comes from a range"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:339
+#, fuzzy
+msgid "Static domain"
+msgstr "Област за търсене"
+
+#: src/EBox/Model/DynamicDNS.pm:341
+msgid ""
+"Domain name appended to the hostname from those clients with a fixed address "
+"mapping"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:346
+msgid "Same as Dynamic Domain"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:350 src/EBox/Model/Options.pm:371
+#: src/EBox/Model/Options.pm:399 src/EBox/Model/Options.pm:418
+#: src/EBox/Model/Options.pm:432
+msgid "Custom"
+msgstr "По избор"
+
+#: src/EBox/Model/DynamicDNS.pm:358
+msgid "Dynamic DNS Options"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:363
+msgid "The domains will be added automatically to DNS module in read-only mode"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:395
+#, perl-brace-format
+msgid "Domain \"{domain}\" added to DNS section"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:406
+#, perl-brace-format
+msgid "Domain \"{domain}\" removed from DNS section"
+msgstr ""
+
+#: src/EBox/Model/RangeInfo.pm:143
+msgid "Interface IP address"
+msgstr "IP адрес на интерфейса"
+
+#: src/EBox/Model/RangeInfo.pm:147 src/templates/ranges.mas:20
+msgid "Subnet"
+msgstr "Подмрежа"
+
+#: src/EBox/Model/RangeInfo.pm:151 src/templates/ranges.mas:40
+msgid "Available range"
+msgstr "Наличен обхват"
+
+#: src/EBox/Model/RangeInfo.pm:157 src/templates/ranges.mas:15
+msgid "DHCP ranges"
+msgstr "DHCP обхвати"
+
+#: src/EBox/Model/Options.pm:157
+#, perl-brace-format
+msgid "{gateway} is not in the current network"
+msgstr "{gateway} не е в настоящата мрежа."
+
+# DNS service must be active to be able to select eBox as primary DNS server
+#: src/EBox/Model/Options.pm:169
+#, fuzzy
+msgid ""
+"DNS module must be enabled to be able to select eBox as primary DNS server"
+msgstr ""
+"DNS услугата трябва да е активна, за да може да бъде избран eBox като "
+"първичен DNS сървър."
+
+# DNS service must be active to be able to select eBox as primary DNS server
+#: src/EBox/Model/Options.pm:179
+#, fuzzy
+msgid "NTP module must be enabled to be able to select eBox as NTP server"
+msgstr ""
+"DNS услугата трябва да е активна, за да може да бъде избран eBox като "
+"първичен DNS сървър."
+
+# DNS service must be active to be able to select eBox as primary DNS server
+#: src/EBox/Model/Options.pm:190
+#, fuzzy
+msgid "Samba module must be enabled to be able to select eBox as WINS server"
+msgstr ""
+"DNS услугата трябва да е активна, за да може да бъде избран eBox като "
+"първичен DNS сървър."
+
+#: src/EBox/Model/Options.pm:379
+msgid "eBox's domain"
+msgstr "Областта на eBox"
+
+#: src/EBox/Model/Options.pm:387
+msgid "local eBox DNS"
+msgstr "DNS на локалния eBox"
+
+#: src/EBox/Model/Options.pm:414
+#, fuzzy
+msgid "local eBox NTP"
+msgstr "DNS на локалния eBox"
+
+#: src/EBox/Model/Options.pm:428
+#, fuzzy
+msgid "local eBox"
+msgstr "DNS на локалния eBox"
+
+#: src/EBox/Model/Options.pm:440 src/templates/options.mas:18
+msgid "Default gateway"
+msgstr "Шлюз по подразбиране"
+
+#: src/EBox/Model/Options.pm:450
+msgid "Custom IP address"
+msgstr "IP адрес по желание"
+
+#: src/EBox/Model/Options.pm:460
+msgid "Configured ones"
+msgstr "Настроените"
+
+#: src/EBox/Model/Options.pm:466
+msgid ""
+"Setting \"eBox\" as default gateway will set the interface IP address as "
+"gateway"
+msgstr ""
+"Задаването на \"eBox\" като шлюз по подразбиране ще зададе IP адреса на "
+"интерфейса като шлюз."
+
+#: src/EBox/Model/Options.pm:472 src/templates/options.mas:29
+msgid "Search domain"
+msgstr "Област за търсене"
+
+#: src/EBox/Model/Options.pm:475
+msgid ""
+"The selected domain will complete on your clients those DNS queries which "
+"are not fully qualified"
+msgstr ""
+"Избраната област ще допълва за вашите клиенти онези DNS заявки, които не са "
+"пълни."
+
+#: src/EBox/Model/Options.pm:480 src/templates/options.mas:41
+msgid "Primary nameserver"
+msgstr "Първичен сървър за имена"
+
+#: src/EBox/Model/Options.pm:483
+msgid ""
+"If \"eBox DNS\" is present and selected, the eBox server will act as cache "
+"DNS server"
+msgstr ""
+"Ако \"eBox DNS\" е наличен и избран, eBox сървърът ще действа като кеширащ "
+"DNS сървър."
+
+#: src/EBox/Model/Options.pm:488 src/templates/options.mas:52
+msgid "Secondary nameserver"
+msgstr "Вторичен сървър за имена"
+
+#: src/EBox/Model/Options.pm:494
+#, fuzzy
+msgid "NTP server"
+msgstr "Следващ сървър"
+
+#: src/EBox/Model/Options.pm:497
+#, fuzzy
+msgid ""
+"If \"eBox NTP\" is present and selected, eBox will be the NTP server for "
+"DHCP clients"
+msgstr ""
+"Ако \"eBox DNS\" е наличен и избран, eBox сървърът ще действа като кеширащ "
+"DNS сървър."
+
+#: src/EBox/Model/Options.pm:502
+#, fuzzy
+msgid "WINS server"
+msgstr "Следващ сървър"
+
+#: src/EBox/Model/Options.pm:505
+#, fuzzy
+msgid ""
+"If \"eBox Samba\" is present and selected, eBox will be the WINS server for "
+"DHCP clients"
+msgstr ""
+"Ако \"eBox DNS\" е наличен и избран, eBox сървърът ще действа като кеширащ "
+"DNS сървър."
+
+#: src/EBox/Model/Options.pm:512
+msgid "Common options"
+msgstr "Общи опции"
+
+#: src/EBox/Model/Options.pm:517
+msgid ""
+"If you set a \"configured ones\" as default gateway, you may choose one the "
+"configured gateways. As \"search domain\" value, one of the configured DNS "
+"domains on eBox might be chosen. All fields are optionals setting its value "
+"as \"None\" or leaving blank."
+msgstr ""
+"Ако сте задали \"настроените\" като шлюз по подразбиране, може да изберете "
+"един от настроените шлюзове. Като стойност на \"област за търсене\" може да "
+"бъде избрана една от настроените DNS области на eBox. Всички полета са "
+"незадължителни, като можете да им зададете стойност \"None\" или да ги "
+"оставите празни."
+
+#: src/EBox/Model/RangeTable.pm:117
+#, perl-brace-format
+msgid "{from} - {to} is an invalid range"
+msgstr "{from} - {to} е невалиден обхват."
+
+#: src/EBox/Model/RangeTable.pm:128
+#, perl-brace-format
+msgid "Range {from}-{to} is not in network {net}"
+msgstr "Обхватът {from} - {to} не е в мрежа {net}."
+
+#: src/EBox/Model/RangeTable.pm:141
+#, perl-brace-format
+msgid "Range {from}-{to} includes interface with IP address: {ifaceIP}"
+msgstr "Обхватът {from} - {to} включва интерфейс с IP адрес: {ifaceIP}"
+
+#: src/EBox/Model/RangeTable.pm:164
+#, perl-brace-format
+msgid ""
+"Range {newFrom}-{newTo} overlaps with range '{range}': {oldFrom}-{oldTo}"
+msgstr ""
+"Обхватът {newFrom} - {newTo} се застъпва с обхват '{range}': {oldFrom} - "
+"{oldTo}"
+
+#: src/EBox/Model/RangeTable.pm:182
+#, perl-brace-format
+msgid "Range {from}-{to} includes fixed address '{name}': {fixedIP}"
+msgstr "Обхватът {from} - {to} включва фиксиран адрес '{name}': {fixedIP}"
+
+#: src/EBox/Model/RangeTable.pm:233 src/templates/ranges.mas:49
+msgid "Ranges"
+msgstr "Обхвати"
+
+#: src/EBox/Model/RangeTable.pm:240
+msgid "range"
+msgstr "обхват"
+
+#: src/EBox/DHCP.pm:432 src/EBox/DHCP.pm:468 src/EBox/DHCP.pm:518
+#: src/EBox/DHCP.pm:564 src/EBox/DHCP.pm:610 src/EBox/DHCP.pm:708
+#: src/EBox/DHCP.pm:823 src/EBox/DHCP.pm:879
+#, perl-brace-format
+msgid "{iface} is not static"
+msgstr "{iface} не е статичен."
+
+#: src/EBox/DHCP.pm:694
+msgid "Not a valid action: add, set and del are available"
+msgstr "Невалидно действие: Валидни са добавяне, задаване и изтриване."
+
+#: src/EBox/DHCP.pm:809
+msgid "No valid action. Available ones are: add, set and del"
+msgstr "Невалидно действие. Валидни са: добавяне, задаване и изтриване."
+
+#: src/EBox/DHCP.pm:1048
+#, perl-brace-format
+msgid ""
+"The IP address of the virtual interface you are trying to add is already "
+"used by the DHCP range '{range}' in the interface '{iface}'. Please, remove "
+"it before trying to add a virtual interface using it."
+msgstr ""
+"IP адресът на виртуалния интерфейс, който опитвате да добавите, вече се "
+"използва от DHCP обхват '{range}' в интерфейс '{iface}'. Моля, премахнете го "
+"преди да опитате да добавите виртуален интерфейс, който го ползва."
+
+#: src/EBox/DHCP.pm:1067
+#, perl-brace-format
+msgid ""
+"The IP address of the virtual interface you are trying to add is already "
+"used by the DHCP fixed address '{fixed}' in the interface '{iface}'. Please, "
+"remove it before trying to add a virtual interface using it."
+msgstr ""
+"IP адресът на виртуалния интерфейс, който опитвате да добавите, вече се "
+"използва от DHCP фиксиран адрес '{fixed}' в интерфейс '{iface}'. Моля, "
+"премахнете го преди да опитате да добавите виртуален интерфейс, който го "
+"ползва."
+
+#: src/EBox/DHCP.pm:1263
+msgid "Date"
+msgstr "Дата"
+
+#: src/EBox/DHCP.pm:1266
+msgid "IP"
+msgstr "IP"
+
+#: src/EBox/DHCP.pm:1267
+msgid "Event"
+msgstr "Събитие"
+
+#: src/EBox/DHCP.pm:1270
+msgid "Leased"
+msgstr "Зает"
+
+#: src/EBox/DHCP.pm:1270
+msgid "Released"
+msgstr "Освободен"
+
+#: src/EBox/DHCP.pm:1273
+msgid "DHCP"
+msgstr "DHCP"
+
+# Име на компютър
+#: src/EBox/DHCP.pm:1333
+msgid "Host name"
+msgstr "Име на хост"
+
+#: src/EBox/DHCP.pm:1360
+msgid "DHCP leases"
+msgstr "DHCP заеми"
+
+#: src/EBox/Composite/General.pm:79
+#, perl-brace-format
+msgid ""
+"An interface must set as static to configure the DHCP service on it. To do "
+"so, change {openhref}interfaces configuration{closehref} in network module"
+msgstr ""
+"За да се настройва DHCP услугата на интерфейс, той трябва да бъде зададен "
+"като статичен. За да го направите, променете {openhref}Настройки на "
+"интерфейси{closehref} в модул Мрежа."
+
+#: src/EBox/Composite/Interfaces.pm:108
+msgid "Choose a static interface to configure:"
+msgstr "Изберете статичен интерфейс за настройване:"
+
+#: src/EBox/Composite/Interfaces.pm:109
+msgid "Service configuration"
+msgstr "Настройки на услуги"
+
+#: src/EBox/Composite/Interfaces.pm:110
+msgid ""
+"In order to serve IP addresses on an interface, it is required to set at "
+"least a range or a fixed address."
+msgstr ""
+"За да предоставяте IP адреси през даден интерфейс, трябва да зададете поне "
+"един обхват или фиксиран адрес."
+
+#: src/EBox/Composite/InterfaceConfiguration.pm:112
+#, perl-brace-format
+msgid ""
+"In order to serve IP addresses on a external interface, you must open the "
+"service on {openhref}firewall module{closehref}"
+msgstr ""
+"За да обслужвате IP адреси на външен интерфейс, трябва да пуснете услугата в "
+"{openhref}модул Защитна стена{closehref}."
+
+#: src/EBox/Composite/AdvancedOptions.pm:133
+msgid "Advanced options"
+msgstr "Разширени опции"
+
+#: src/templates/fixed.mas:11 src/templates/ranges.mas:56
+msgid "Action"
+msgstr "Действие"
+
+#: src/templates/fixed.mas:34 src/templates/fixed.mas:37
+#: src/templates/fixed.mas:38 src/templates/ranges.mas:74
+#: src/templates/ranges.mas:75 src/templates/ranges.mas:76
+msgid "Add"
+msgstr "Добавяне"
+
+#: src/templates/fixed.mas:51 src/templates/fixed.mas:53
+#: src/templates/fixed.mas:54
+msgid "Remove"
+msgstr "Премахване"
+
+#: src/templates/ranges.mas:30
+msgid "Subnet netmask"
+msgstr "Маска на подмрежа"
+
+#: src/templates/ranges.mas:91 src/templates/ranges.mas:92
+#: src/templates/ranges.mas:93
+msgid "Delete"
+msgstr "Изтриване"
+
+#: src/templates/options.mas:8
+msgid "Options"
+msgstr "Опции"
+
+#: src/templates/options.mas:10
+msgid ""
+"You can leave empty the Default Gateway field to use eBox as default gateway "
+"for this subnet"
+msgstr ""
+"Можете да оставите празно полето Шлюз по подразбиране, за да използвате eBox "
+"като шлюз за тази подмрежа."
+
+#: src/templates/options.mas:64
+msgid "Apply"
+msgstr "Прилагане"
+
+#~ msgid "Infrastructure"
+#~ msgstr "Инфраструктура"
