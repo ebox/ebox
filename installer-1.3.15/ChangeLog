@@ -1,0 +1,8 @@
+1.3.15
+    + Improved messages on external interfaces selection
+    + Added warning when gateway is selected with less than 2 interfaces
+    + Added auto-partitioning mode
+    + Use new kernel and dahdi packages from the PPA
+    + Removed LDAP password autogeneration (not needed now)
+    + Show a warning if there is no enough space in automatic mode
+    + Set virtual mail domain also for egroupware

@@ -1,0 +1,119 @@
+#!/bin/bash
+
+# eBox installation script to execute after reboot but before login
+
+# Define some quick variables
+export LOG=/tmp/ebox-installer.log
+SOURCES_LIST=/etc/apt/sources.list
+PPA_URL="http://ppa.launchpad.net/ebox/1.3/ubuntu"
+EBOX_SOURCES="deb $PPA_URL hardy main"
+PKG_DIR=/var/tmp/ebox-packages
+LOCAL_SOURCES="deb file:$PKG_DIR ./"
+BASE_PACKAGES="libebox"
+
+get_base_packages() {
+    # Workaround to avoid dependency problems with our ldap version
+    apt-get remove --purge -y --force-yes apparmor-utils >> $LOG 2>&1
+    echo "Installing eBox base packages...";
+    if apt-get install -y --force-yes $BASE_PACKAGES >> $LOG 2>&1; then
+        echo "Base packages installed successfully."
+    else
+        bail_out
+    fi
+}
+
+# Generic Bailout
+bail_out() {
+    echo "Installation failed. Check contents of $LOG to see what happened."
+    echo "You may log in as root and re-run the installer from /etc/rc.local"
+    exit 1 # Indicate failure
+}
+
+create_repository() {
+    echo "Creating list of available packages..."
+    cd $PKG_DIR
+    apt-ftparchive packages . | gzip > Packages.gz 2>>$LOG
+    cd - > /dev/null
+    # Update the package database with only the local repository
+    # just in case we are installing without internet connection
+    mv ${SOURCES_LIST} /var/tmp
+    echo ${LOCAL_SOURCES} > ${SOURCES_LIST}
+    apt-get update >> $LOG 2>&1
+    # Restore the original sources.list
+    mv /var/tmp/sources.list ${SOURCES_LIST}
+    # Move packages to the cache
+    mv $PKG_DIR/*.deb /var/cache/apt/archives/
+}
+
+update_if_network() {
+    # Import PPA key to avoid warning
+    apt-key add /var/tmp/ebox-ppa.asc >> $LOG 2>&1
+    # Check if we can connect to the PPA url
+    if $(wget -T 10 -t 1 $PPA_URL >> $LOG 2>&1); then
+        echo "Updating package database from the network..."
+        apt-get update >> $LOG 2>&1
+    else
+        echo "Warning: Can't connect to $PPA_URL. Updates won't be installed."
+    fi
+}
+
+purge_config() {
+    echo "Critical Error! Restoring original configuration state by purging libebox."
+    # Wipe out all configuration.
+    apt-get remove --purge -y --force-yes libebox >> $LOG 2>&1
+    # We need libebox installed again.
+    rm -f /var/tmp/ebox-base-packages.installed
+}
+
+installed_ok() {
+    echo "Installation Complete. Cleaning up eBox package installer files..."
+    rm -f /var/tmp/locale.gen
+    rm -fr /var/tmp/ebox-*
+    rm -fr /var/tmp/po
+    apt-get clean
+    # Restore original rc.local
+    mv /var/tmp/rc.local /etc/rc.local
+    exit 0
+}
+
+do_installer() { # Make sure we've got all our base packages
+    if [ -e /var/tmp/ebox-base-packages.installed ]; then
+        package_installer
+    else
+        get_base_packages # Get packages, including libebox if purged
+        # Mark our work complete so we don't re-do it needlessly
+        touch /var/tmp/ebox-base-packages.installed
+        # Run the main package installer
+        package_installer
+    fi
+}
+
+package_installer() {
+    echo "Launching eBox package installer..."
+    if /var/tmp/ebox-package-installer; then
+        installed_ok
+    else
+        purge_config
+        bail_out
+    fi
+    # Restore noisy logging
+    sed -i '1 d' /etc/lsb-base-logging.sh
+}
+
+
+echo "Starting eBox installer..."
+# Main checks for re-runs. Just run the installer if we've been here before.
+if [ -e /var/tmp/ebox-sources-list.updated ]; then
+    do_installer
+else
+    create_repository # Set up local package repository
+    echo ${LOCAL_SOURCES} >> ${SOURCES_LIST} # add local sources
+    echo ${EBOX_SOURCES} >> ${SOURCES_LIST} # add ppa sources
+    export HOME=/root  # Needed for ssl-cert postinst
+    source /etc/default/locale; export LANG; # Set up locale
+    sed -i '1 i QUIET=yes' /etc/lsb-base-logging.sh  # initjobs are noisy.
+    update_if_network # apt-get update if we are connected to the internet
+    # Mark our work complete so we don't re-do it needlessly
+    touch /var/tmp/ebox-sources-list.updated
+    do_installer
+fi

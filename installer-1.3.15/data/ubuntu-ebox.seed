@@ -1,0 +1,64 @@
+# ubuntu-ebox.seed - ebox preseeding for ubuntu server
+
+##
+## ebox stuff
+##
+
+# always install the server kernel
+d-i base-installer/kernel/override-image string linux-server
+# only install basic language packs
+d-i pkgsel/language-pack-patterns string
+# no language support packages
+d-i pkgsel/install-language-support boolean false
+# install ssh, bc and custom eBox kernel
+d-i pkgsel/include string ssh bc linux-image-2.6.24-26-ebox
+
+##
+## automatic install (for testing purposes)
+##
+
+# locale sets language and country
+# this preseeding needs to be done in initrd
+#d-i debian-installer/locale string en_US
+#d-i console-setup/ask_detect boolean false
+#d-i console-setup/layoutcode string us
+#d-i console-setup/variant select USA
+
+# network
+#d-i netcfg/choose_interface select auto
+#d-i netcfg/get_hostname string ebox
+#d-i netcfg/get_domain string unassigned-domain
+
+# mirror
+#d-i mirror/http/proxy string
+
+# clock
+#d-i clock-setup/utc boolean true
+
+# to create a normal user account
+#d-i passwd/user-fullname string user
+#d-i passwd/username string user
+#d-i passwd/user-password password user
+#d-i passwd/user-password-again password user
+
+# grub
+#d-i grub-installer/only_debian boolean true
+
+# finish
+#d-i finish-install/reboot_in_progress note
+
+##
+## packages configuration preseeding
+##
+
+# tasksel answers
+tasksel tasksel/first multiselect
+# postfix answers
+postfix postfix/main_mailer_type select No configuration
+
+# late command (we prepare here the ebox custom installer)
+d-i preseed/late_command string \
+    cp -r /cdrom/ebox/* /target/tmp/ || \
+    cp -r /target/cdrom/ebox/* /target/tmp/ && \
+    chroot /target sh /tmp/prepare-ebox-install.sh
+
