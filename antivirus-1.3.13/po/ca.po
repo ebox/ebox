@@ -1,0 +1,79 @@
+# Catalan translations for EBox-modulename package.
+# Copyright (C) 2009 Warp S.L.
+# This file is distributed under the same license as the EBox-modulename package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-antivirus 0.1\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-09 16:06+0100\n"
+"PO-Revision-Date: 2009-11-28 15:08+0100\n"
+"Last-Translator: Sergio Vergara Ruiz <svruiz@gmail.com>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/AntiVirus.pm:69 src/EBox/AntiVirus.pm:395
+#: src/EBox/AntiVirus.pm:400 src/EBox/AntiVirus/Model/FreshclamStatus.pm:72
+msgid "Antivirus"
+msgstr "Antivirus"
+
+#: src/EBox/AntiVirus.pm:212
+msgid " To configure clamd daemon"
+msgstr "Per configurar el dimoni clamd"
+
+#: src/EBox/AntiVirus.pm:217
+msgid "To configure freshclam updater"
+msgstr "Per configurar l'actualització freshclam"
+
+#: src/EBox/AntiVirus.pm:222
+msgid "To schedule the launch of the updater"
+msgstr "Per programar el llançament de l'actualització"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:59
+msgid "Status"
+msgstr "Estat"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:63
+msgid "Date"
+msgstr "Data"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:71
+#, fuzzy
+msgid "Database Update Status"
+msgstr "La base de dades de l'antivirus a sigut actualitzada."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:127
+#, fuzzy
+msgid ""
+"The antivirus database has not been updated since the module was enabled."
+msgstr ""
+"La base de dades de l'antivirus no a sigut actualitzada, necessita "
+"instal·lar el modul."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:130
+msgid "The last update failed."
+msgstr "L'ultima actualització a fallat."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:134
+#, perl-brace-format
+msgid ""
+"Update successful but your freshclam version is outdated.\n"
+"The antivirus will not be able to use all the signatures.Please, install "
+"version {version} or higher."
+msgstr ""
+"L'actualització a sigut un èxit, però la versió freshclam està obsoleta.\n"
+"L'antivirus no serà capaç d'utilitzar totes les signatures. Si us plau, "
+"instal·li la versió {version} o superior."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:141
+msgid "Last update successful."
+msgstr "L'ultima actualització a sigut un èxit."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:144
+#, perl-brace-format
+msgid "Unknown event {event}."
+msgstr "Esdeveniment desconegut {event}."

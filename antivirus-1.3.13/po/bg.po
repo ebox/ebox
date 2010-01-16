@@ -1,0 +1,84 @@
+# Bulgarian translations for EBox-modulename package.
+# Copyright (C) 2009 Warp S.L.
+# This file is distributed under the same license as the EBox-modulename package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-antivirus 0.1\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-09 16:06+0100\n"
+"PO-Revision-Date: 2009-10-04 07:29+0200\n"
+"Last-Translator: Тони Стоев <ebox@tonistoev.info>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/AntiVirus.pm:69 src/EBox/AntiVirus.pm:395
+#: src/EBox/AntiVirus.pm:400 src/EBox/AntiVirus/Model/FreshclamStatus.pm:72
+msgid "Antivirus"
+msgstr "Антивирусна система"
+
+#: src/EBox/AntiVirus.pm:212
+msgid " To configure clamd daemon"
+msgstr "Настройване на демона clamd"
+
+#: src/EBox/AntiVirus.pm:217
+msgid "To configure freshclam updater"
+msgstr "Настройване на обновителя freshclam"
+
+#: src/EBox/AntiVirus.pm:222
+msgid "To schedule the launch of the updater"
+msgstr "Насрочване на обновяването"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:59
+msgid "Status"
+msgstr "Състояние"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:63
+msgid "Date"
+msgstr "Дата"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:71
+#, fuzzy
+msgid "Database Update Status"
+msgstr "Обновления на антивирусната база данни"
+
+# Филтър на поща
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:127
+#, fuzzy
+msgid ""
+"The antivirus database has not been updated since the module was enabled."
+msgstr "Антивирусната база данни не е обновявана откакто модулът е инсталиран."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:130
+msgid "The last update failed."
+msgstr "Последното обновяване е неуспешно."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:134
+#, perl-brace-format
+msgid ""
+"Update successful but your freshclam version is outdated.\n"
+"The antivirus will not be able to use all the signatures.Please, install "
+"version {version} or higher."
+msgstr ""
+"Обновяването е успешно, но тази версия на freshclam е стара.\n"
+"Антивирусната система няма да може да използва всички дефиниции. Моля, "
+"инсталирайте версия {version} или по-нова."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:141
+msgid "Last update successful."
+msgstr "Последното обновяване е успешно."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:144
+#, perl-brace-format
+msgid "Unknown event {event}."
+msgstr "Непознато събитие {event}."
+
+#~ msgid "UTM"
+#~ msgstr "Цялостно справяне със заплахи"
+
+#~ msgid "Update status"
+#~ msgstr "Обновление"
