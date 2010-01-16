@@ -1,0 +1,356 @@
+# Swedish translations for ebox-dns package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-dns package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-dns 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-09 16:07+0100\n"
+"PO-Revision-Date: 2009-07-19 12:16+0200\n"
+"Last-Translator: Gabriel Lindeborg <gabriel@lindeborg.org>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/DNS.pm.in:52 src/EBox/Model/DomainTable.pm:232
+#: src/EBox/Model/DNSComposite.pm:75 src/EBox/Model/DNSComposite.pm:76
+msgid "DNS"
+msgstr "DNS"
+
+#: src/EBox/DNS.pm.in:259 src/EBox/Model/DomainTable.pm:239
+msgid "domain"
+msgstr "domän"
+
+#: src/EBox/DNS.pm.in:512
+msgid "main bind9 configuration file"
+msgstr ""
+
+#: src/EBox/DNS.pm.in:517
+msgid "bind9 options configuration file"
+msgstr ""
+
+#: src/EBox/DNS.pm.in:522
+msgid "local bind9 configuration file"
+msgstr ""
+
+#: src/EBox/DNS.pm.in:527
+#, fuzzy
+msgid "Keys configuration file"
+msgstr "Konfigurationsfil för zon {zone}"
+
+#: src/EBox/DNS.pm.in:544
+#, perl-brace-format
+msgid "configuration file for zone {zone}"
+msgstr "Konfigurationsfil för zon {zone}"
+
+#: src/EBox/DNS.pm.in:560
+#, perl-brace-format
+msgid "configuration file for reverse resolution zone {zone}"
+msgstr "konfigurationsfil för inverterad uppslagszon {zone}"
+
+#: src/EBox/DNS.pm.in:578
+#, perl-brace-format
+msgid "Change the permissions for {dir} to allow writing to bind group"
+msgstr ""
+
+#: src/EBox/DNS.pm.in:580
+msgid "Let the bind daemon to be dynamically updated"
+msgstr ""
+
+#: src/EBox/Model/HostnameTable.pm:135
+#, perl-brace-format
+msgid ""
+"There is an alias with the same name \"{name}\" for \"{hostname}\" in the "
+"same domain"
+msgstr ""
+"Det finns ett alias med samma namn,\"{name}\" för \"{hostname}\" i samma "
+"domän"
+
+#: src/EBox/Model/HostnameTable.pm:169
+msgid "The domain is set as read only. You cannot add host names"
+msgstr ""
+
+#: src/EBox/Model/HostnameTable.pm:187 src/EBox/Model/MailExchanger.pm:151
+#: src/EBox/Model/NameServer.pm:131 src/templates/edit.mas:20
+msgid "Host name"
+msgstr "Värdnamn"
+
+#: src/EBox/Model/HostnameTable.pm:195 src/EBox/Model/DomainTable.pm:202
+msgid "IP Address"
+msgstr "IP-adress"
+
+#: src/EBox/Model/HostnameTable.pm:203 src/EBox/Model/AliasTable.pm:130
+#: src/EBox/Model/AliasTable.pm:140 src/EBox/Model/AliasTable.pm:146
+#: src/templates/edit.mas:64 src/templates/edit.mas:85
+msgid "Alias"
+msgstr "Alias"
+
+#: src/EBox/Model/HostnameTable.pm:215
+msgid "Host names"
+msgstr "Värdnamn"
+
+#: src/EBox/Model/HostnameTable.pm:222 src/EBox/Model/DomainTable.pm:177
+msgid "Hostnames"
+msgstr "Värdnamn"
+
+#: src/EBox/Model/HostnameTable.pm:223
+msgid "host name"
+msgstr "värdnamn"
+
+#: src/EBox/Model/DomainTable.pm:169
+msgid "Domain"
+msgstr "Domän"
+
+#: src/EBox/Model/DomainTable.pm:186
+msgid "Mail Exchangers"
+msgstr "MX-pekare"
+
+#: src/EBox/Model/DomainTable.pm:194
+#, fuzzy
+msgid "Name Servers"
+msgstr "DNS server"
+
+#: src/EBox/Model/DomainTable.pm:210
+msgid "Dynamic"
+msgstr ""
+
+#: src/EBox/Model/DomainTable.pm:214
+msgid "A domain is dynamic when the DHCP server updates the domain"
+msgstr ""
+
+#: src/EBox/Model/DomainTable.pm:231
+#, fuzzy
+msgid "List of Domains"
+msgstr "Domän"
+
+#: src/EBox/Model/DNSComposite.pm:78
+msgid "The DNS server allows you to resolve names for your own domains."
+msgstr "DNS servern låter dig göra domännamnsuppslag för dina egna domäner."
+
+#: src/EBox/Model/MailExchanger.pm:86
+#, perl-brace-format
+msgid "Invalid preference number. Allowed range: ({min}, {max})"
+msgstr "Ogiltigt värde. Tillåtna värden är: ({min}, {max})"
+
+#: src/EBox/Model/MailExchanger.pm:96
+#, perl-brace-format
+msgid ""
+"The given host name is not a fully qualified domain name (FQDN). Do you mean "
+"mx.{name}?"
+msgstr ""
+
+#: src/EBox/Model/MailExchanger.pm:132
+msgid "The domain is set as read only. You cannot add mail exchangers"
+msgstr ""
+
+#: src/EBox/Model/MailExchanger.pm:154 src/EBox/Model/NameServer.pm:134
+msgid "If you choose \"Custom\", it should be a Fully Qualified Domain Name"
+msgstr ""
+
+#: src/EBox/Model/MailExchanger.pm:160 src/EBox/Model/NameServer.pm:140
+#, fuzzy
+msgid "This domain"
+msgstr "domän"
+
+#: src/EBox/Model/MailExchanger.pm:168 src/EBox/Model/NameServer.pm:148
+msgid "Custom"
+msgstr "Anpassad"
+
+#: src/EBox/Model/MailExchanger.pm:176
+msgid "Preference"
+msgstr "Inställning"
+
+#: src/EBox/Model/MailExchanger.pm:185
+msgid "Mail exchangers"
+msgstr "MX-pekare"
+
+#: src/EBox/Model/MailExchanger.pm:191
+#, perl-brace-format
+msgid ""
+"The smallest preference number has the highest priority  and is the first "
+"server to be tried when a remote client (typically another mail server) does "
+"an MX lookup for the domain name. Allowed preference number interval = "
+"({min}, {max})"
+msgstr ""
+"Det minsta värdet har den högsta prioriteten och är den första servern som "
+"provas när en fjärrklient (oftast en annan mailserver) gör ett MX uppslag "
+"för domännamnet. Tillåtna värden ligger i intervallet ({min}, {max})"
+
+#: src/EBox/Model/MailExchanger.pm:197
+msgid "Mail exchanger record"
+msgstr "E-post MX register"
+
+#: src/EBox/Model/AliasTable.pm:80
+#, perl-brace-format
+msgid ""
+"An alias cannot be the nameserver host name \"{ns}\". Use a hostname instead"
+msgstr ""
+"Ett alias kan inte be namnserverns värdnamn \"{ns}\". Använd ett annat "
+"värdnamn istället."
+
+#: src/EBox/Model/AliasTable.pm:93
+#, perl-brace-format
+msgid "There is a hostname with the same name \"{name}\" in the same domain"
+msgstr "Det finns ett värdnamn med samma namn i samma domän, \"{name}\""
+
+#: src/EBox/Model/AliasTable.pm:102
+#, fuzzy, perl-brace-format
+msgid ""
+"There is an alias for {hostname} hostname with the same name \"{name}\" in "
+"the same domain"
+msgstr "Det finns ett värdnamn med samma namn i samma domän, \"{name}\""
+
+#: src/EBox/Model/AliasTable.pm:147
+msgid "alias"
+msgstr "alias"
+
+#: src/EBox/Model/NameServer.pm:77
+#, perl-brace-format
+msgid ""
+"The given host name is not a fully qualified domain name (FQDN). Do you mean "
+"ns.{name}?"
+msgstr ""
+
+#: src/EBox/Model/NameServer.pm:112
+msgid "The domain is set as read only. You cannot add name servers"
+msgstr ""
+
+#: src/EBox/Model/NameServer.pm:159
+#, fuzzy
+msgid "Name servers"
+msgstr "DNS server"
+
+#: src/EBox/Model/NameServer.pm:165
+msgid "It manages the name server (NS) records for this domain"
+msgstr ""
+
+#: src/EBox/Model/NameServer.pm:166
+#, fuzzy
+msgid "name server record"
+msgstr "E-post MX register"
+
+#: src/templates/index.mas:16
+msgid "Domain list"
+msgstr "Domänlista"
+
+#: src/templates/index.mas:21
+msgid "Name"
+msgstr "Namn"
+
+#: src/templates/index.mas:24 src/templates/edit.mas:23
+msgid "Action"
+msgstr "Åtgärd"
+
+#: src/templates/index.mas:37 src/templates/index.mas:38
+#: src/templates/index.mas:39 src/templates/edit.mas:40
+#: src/templates/edit.mas:41 src/templates/edit.mas:42
+#: src/templates/edit.mas:74 src/templates/edit.mas:75
+#: src/templates/edit.mas:76
+msgid "Add"
+msgstr "Lägg till"
+
+#: src/templates/index.mas:49
+msgid "Edit"
+msgstr "Redigera"
+
+#: src/templates/index.mas:53 src/templates/index.mas:54
+#: src/templates/edit.mas:54 src/templates/edit.mas:55
+#: src/templates/edit.mas:93 src/templates/edit.mas:94
+msgid "Delete"
+msgstr "Ta bort"
+
+#: src/templates/index.mas:65
+msgid "edit"
+msgstr "redigera"
+
+#: src/templates/index.mas:70 src/templates/edit.mas:110
+msgid "delete"
+msgstr "ta bort"
+
+#: src/templates/edit.mas:12
+#, perl-brace-format
+msgid "Host list for domain {domain}"
+msgstr "Värdlista för domänen {domain}"
+
+#: src/templates/edit.mas:17
+msgid "IP"
+msgstr "IP"
+
+#~ msgid "Infrastructure"
+#~ msgstr "Infrastruktur"
+
+#~ msgid "Owner domain"
+#~ msgstr "Ägande domän"
+
+#~ msgid "Service enabled"
+#~ msgstr "Service aktiverad"
+
+#~ msgid "Service disabled"
+#~ msgstr "Service inaktiverad"
+
+#~ msgid "Domain Name System"
+#~ msgstr "Domännamn"
+
+#~ msgid "There is an alias with the same name \"{name}\" in the same domain"
+#~ msgstr "Det finns ett alias med samma namn i samma domän, \"{name}\""
+
+#~ msgid "Hostname"
+#~ msgstr "Värdnamn"
+
+#~ msgid "hostname"
+#~ msgstr "värdnamn"
+
+#~ msgid "IP address"
+#~ msgstr "IP-adress"
+
+#, fuzzy
+#~ msgid "Alias name"
+#~ msgstr "Alias"
+
+#~ msgid "module status"
+#~ msgstr "modulstatus"
+
+#~ msgid "domain name"
+#~ msgstr "domännamn"
+
+#~ msgid ""
+#~ "The domain '{name}' is already used. Please choose another domain name"
+#~ msgstr "Domänen \"{name}\" används redan. Välj ett annat domännamn"
+
+#~ msgid "Host name can't contain dots"
+#~ msgstr "Värdnamnet får inte innehålla punkter"
+
+#~ msgid ""
+#~ "The host name '{name}' is already used. Please choose another host name"
+#~ msgstr "Värdnamnet \"{name}\" används redan. Välj ett annat värdnamn"
+
+#~ msgid ""
+#~ "The IP address '{ip}' is already used. Please choose another IP address"
+#~ msgstr "IP-adressen \"{ip}\" används redan. Välj en annan IP-adress"
+
+#~ msgid "An alias can't contain dots"
+#~ msgstr "Ett alias får inte innehålla punkter"
+
+#~ msgid ""
+#~ "The alias '{name}' is already used as a host name. Please choose another "
+#~ "alias"
+#~ msgstr ""
+#~ "Aliaset \"{name}\" används redan som ett värdnamn. Välj ett annat alias"
+
+#~ msgid ""
+#~ "The alias '{name}' is already used as alias in the host '{host}'. Please "
+#~ "choose another alias"
+#~ msgstr ""
+#~ "Aliaset \"{name}\" används redan som ett alias i värden \"{host}\". Välj "
+#~ "ett annat alias"
+
+#~ msgid "DNS service status"
+#~ msgstr "Status för DNS-tjänst"
+
+#~ msgid "Domain name"
+#~ msgstr "Domännamn"
