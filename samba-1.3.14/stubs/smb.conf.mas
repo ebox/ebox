@@ -1,0 +1,239 @@
+<%args>
+    $pdc => 1
+    $netbios
+    $workgroup
+    $desc
+    $ifaces
+    $ldap
+    @dirgroup
+    @printers
+    $active_printer
+    $backup_path
+    $quarantine_path
+    $roaming
+    @shares
+    $antivirus
+    %antivirus_exceptions
+    $recycle
+    %recycle_exceptions
+    $recycle_config
+    $drive
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+[global]
+ workgroup = <% $workgroup %>
+ netbios name = <% $netbios %>
+ server string = <% $desc %>
+ enable privileges = yes
+ interfaces = <% $ifaces %>
+ bind interfaces only = Yes
+ passdb backend = ldapsam:<% $ldap->{'ldapi'} %>
+ ldap ssl = Off
+ log level = 1
+ syslog = 0
+ log file = /var/log/samba/%m
+ max log size = 50
+# FIXME: Removed for samba 3.4.3, add again when a new version fixes it
+# vfs objects = full_audit
+# full_audit:success = connect opendir open disconnect unlink mkdir rmdir rename
+# full_audit:failure = none
+ smb ports = 137 138 139 445
+ name resolve order = wins bcast hosts
+ time server = Yes
+ printcap name = CUPS
+ wins support = Yes
+ dns proxy = Yes
+ ldap suffix = <% $ldap->{'dn'} %>
+ ldap machine suffix = ou=Computers
+ ldap user suffix =  <% $ldap->{'users'} %>
+ ldap group suffix =  <% $ldap->{'groups'} %>
+ ldap idmap suffix = ou=Idmap
+ ldap admin dn = <% $ldap->{'rootdn'} %>
+ map acl inherit = Yes
+ printing = cups
+
+% if ($pdc) {
+ encrypt passwords = Yes
+ obey pam restrictions = No
+ ldap passwd sync = Yes
+ mangling method = hash2
+
+ logon script = logon.bat
+ logon drive = <% $drive %>
+ logon home =
+% if ($roaming) {
+ logon path = \\<% $netbios %>\profiles\%U
+% } else {
+ logon path =
+% }
+
+ domain logons = Yes
+ os level = 65
+ preferred master = Yes
+ domain master = Yes
+ add user script = /usr/sbin/smbldap-useradd -m "%u"
+ ldap delete dn = Yes
+ add machine script = /usr/sbin/smbldap-useradd -w "%u"
+ add group script = /usr/sbin/smbldap-groupadd -p "%g"
+ add user to group script = /usr/sbin/smbldap-groupmod -m "%u" "%g"
+ delete user from group script = /usr/sbin/smbldap-groupmod -x "%u" "%g"
+ set primary group script = /usr/sbin/smbldap-usermod -g "%g" "%u"
+
+[netlogon]
+ path = /home/samba/netlogon/
+ browseable = No
+ read only = yes
+
+[profiles]
+ path = /home/samba/profiles
+ read only = no
+ create mask = 0600
+ directory mask = 0700
+ browseable = No
+ guest ok = Yes
+ profile acls = yes
+ csc policy = disable
+ valid users = %U
+ admin users = @"Domain Admins"
+
+% }
+
+[homes]
+ comment = <% __('Home Directories') %>
+ valid users = %S
+ read only = No
+ browseable = No
+% my $av = ($antivirus xor defined($antivirus_exceptions{'users'}));
+% my $rb = ($recycle xor defined($recycle_exceptions{'users'}));
+# FIXME: Removed for samba 3.4.3, add again when a new version fixes it
+#% my $objects = 'full_audit';
+% my $objects = '';
+% if ($av) {
+%   $objects .= ' vscan-clamav';
+% }
+% if ($rb) {
+%   $objects .= ' recycle';
+% }
+ vfs objects = <% $objects %>
+% if ($av) {
+ vscan-clamav: config-file = /etc/samba/vscan-clamav.conf
+% }
+% if ($rb) {
+%   foreach my $key (keys %{$recycle_config}) {
+%     next unless $key;
+ recycle: <% $key %> = <% $recycle_config->{$key} %>
+%    }
+% }
+
+% foreach my $group (@dirgroup) {
+[<% $group->{'sharename'} %>]
+ comment = "<% __x('{group} share directory', group => $group->{'groupname'}) %>"
+ path = <% $group->{'path'} %>
+ valid users = @"<% $group->{'groupname'} %>"
+ force group = "<% $group->{'groupname'} %>"
+ force create mode = 0660
+ force directory mode = 0660
+ printable = No
+ read only = No
+ browseable = Yes
+% my $av = ($antivirus xor defined($antivirus_exceptions{'group'}->{$group->{'sharename'}}));
+% my $rb = ($recycle xor defined($recycle_exceptions{'group'}->{$group->{'sharename'}}));
+# FIXME: Removed for samba 3.4.3, add again when a new version fixes it
+#% my $objects = 'full_audit';
+% my $objects = '';
+% if ($av) {
+%   $objects .= ' vscan-clamav';
+% }
+% if ($rb) {
+%   $objects .= ' recycle';
+% }
+ vfs objects = <% $objects %>
+% if ($av) {
+ vscan-clamav: config-file = /etc/samba/vscan-clamav.conf
+% }
+% if ($rb) {
+%   foreach my $key (keys %{$recycle_config}) {
+%     next unless $key;
+ recycle: <% $key %> = <% $recycle_config->{$key} %>
+%    }
+% }
+%
+% }
+
+% if ($active_printer) {
+%   foreach my $printer (@printers) {
+%               next unless (length $printer->{'users'} > 0);
+[<% $printer->{'name'} %>]
+ path  = /var/spool/samba
+ read   only   =    yes
+ printable     =    yes
+ valid users   = <% $printer->{'users'} %>
+# guest ok = yes
+%   }
+% }
+
+% foreach my $share (@shares) {
+[<% $share->{share} %>]
+ comment = <% $share->{comment} %>
+ path = <% $share->{path} %>
+ valid users = <% $share->{validUsers} %>
+ read list = <% $share->{readOnly} %>
+ write list = <% $share->{readWrite} %>
+ admin users = <% $share->{administrators} %>
+ read only = No
+ browseable = Yes
+ force create mode = 0660
+ force directory mode = 0660
+% my $av = ($antivirus xor defined($antivirus_exceptions{'share'}->{$share->{'share'}}));
+% my $rb = ($recycle xor defined($recycle_exceptions{'share'}->{$share->{'share'}}));
+# FIXME: Removed for samba 3.4.3, add again when a new version fixes it
+#% my $objects = 'full_audit';
+% my $objects = '';
+% if ($av) {
+%   $objects .= ' vscan-clamav';
+% }
+% if ($rb) {
+%   $objects .= ' recycle';
+% }
+ vfs objects = <% $objects %>
+% if ($av) {
+ vscan-clamav: config-file = /etc/samba/vscan-clamav.conf
+% }
+% if ($rb) {
+%   foreach my $key (keys %{$recycle_config}) {
+%     next unless $key;
+ recycle: <% $key %> = <% $recycle_config->{$key} %>
+%    }
+% }
+%
+% }
+
+
+[ebox-internal-backups]
+ path = <% $backup_path %>
+ read only = No
+ valid users = @"Domain Admins"
+ admin users = @"Domain Admins"
+ force group = ebox
+ force user = ebox
+ browseable = Yes
+
+[ebox-quarantine]
+ path = <% $quarantine_path %>
+ read only = No
+ valid users = @"Domain Admins"
+ admin users = @"Domain Admins"
+ browseable = Yes
+
+[print$]
+ comment = Printer Drivers
+ path = /var/lib/samba/printers
+ browseable = yes
+ read only = yes
+ guest ok = no
+ write list = @"Domain Admins"
+ use client driver = yes
+ valid users = "@Domain Users"
+
