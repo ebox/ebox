@@ -1,0 +1,240 @@
+# French translations for EBox-ebackup package.
+# Copyright (C) 2009 Warp S.L.
+# This file is distributed under the same license as the EBox-ebackup package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-ebackup 1.3.3Report-Msgid-Bugs-To: bugs@warp.es\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2009-12-03 12:57+0000\n"
+"PO-Revision-Date: 2009-12-13 00:15+0100\n"
+"Last-Translator: Jean Migisha <migisha_jean@yahoo.fr>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/EBackup.pm:61 src/EBox/Event/Watcher/EBackup.pm:111
+msgid "Backup"
+msgstr "Sauvegarde"
+
+#: src/EBox/Event/Watcher/EBackup.pm:129
+msgid "Check if eBox backup was not successfull."
+msgstr "Vérifier si la sauvegarde est sans succès"
+
+#: src/EBox/Model/RemoteFileList.pm:143
+msgid "There is no information about backuped files yet"
+msgstr ""
+"Il n'existe pas encore d'information concernant les fichiers sauvegardés"
+
+#: src/EBox/Model/RemoteFileList.pm:162
+msgid "File"
+msgstr "Fichier"
+
+#: src/EBox/Model/RemoteFileList.pm:166
+msgid "Backup Date"
+msgstr "Date de sauvegarde"
+
+#: src/EBox/Model/RemoteFileList.pm:177
+msgid "Restore Files"
+msgstr "Restaurer des fichiers"
+
+#: src/EBox/Model/RemoteFileList.pm:178
+msgid "file restore operation"
+msgstr "opération de restauration de fichier"
+
+#: src/EBox/Model/RemoteFileList.pm:204
+msgid "File already exists if you continue  the currentwill be deleted"
+msgstr "Le fichier existe déjà, si vous continuez, il sera effacé"
+
+#: src/EBox/Model/RemoteFileList.pm:220
+msgid "File restored successfully"
+msgstr "Le fichier à été restauré"
+
+#: src/EBox/Model/RemoteFileList.pm:266
+#, perl-brace-format
+msgid "Remote URL to be used with duplicity for manual restores: {url}"
+msgstr ""
+
+#: src/EBox/Model/RemoteStatus.pm:117
+msgid "There is no information about the backuped files yet"
+msgstr "Il n'existe pas encore d'information concernant le fichier sauvegardé"
+
+#: src/EBox/Model/RemoteStatus.pm:136 src/EBox/Model/RemoteExcludes.pm:74
+msgid "Type"
+msgstr "Type"
+
+#: src/EBox/Model/RemoteStatus.pm:140
+msgid "Date"
+msgstr "Date"
+
+#: src/EBox/Model/RemoteStatus.pm:147
+msgid "Remote Backup Status"
+msgstr "Statut de la sauvegarde distante"
+
+#: src/EBox/Model/RemoteStatus.pm:148
+msgid "backup"
+msgstr "Sauvegarde"
+
+#: src/EBox/Model/RemoteSettings.pm:138
+msgid "Method"
+msgstr "Méthode"
+
+#: src/EBox/Model/RemoteSettings.pm:144
+msgid "Host or destination"
+msgstr "Hôte ou destination"
+
+#: src/EBox/Model/RemoteSettings.pm:150
+msgid "User"
+msgstr "Utilisateur"
+
+#: src/EBox/Model/RemoteSettings.pm:156
+msgid "Password"
+msgstr "Mot de passe"
+
+#: src/EBox/Model/RemoteSettings.pm:162
+msgid "GPG key"
+msgstr "Clé GPG"
+
+#: src/EBox/Model/RemoteSettings.pm:169
+msgid "Full Backup Frequency"
+msgstr "Fréquence des sauvegardes complètes"
+
+#: src/EBox/Model/RemoteSettings.pm:175
+msgid "Number of full copies to keep"
+msgstr "Nombre de copie complètes à garder"
+
+#: src/EBox/Model/RemoteSettings.pm:182
+msgid "Incremental Backup Frequency"
+msgstr "Fréquence des sauvegardes incrémentielles"
+
+#: src/EBox/Model/RemoteSettings.pm:188
+msgid "Backup process starts at"
+msgstr "Le processus de sauvegarde commence à"
+
+#: src/EBox/Model/RemoteSettings.pm:197
+msgid "General Configuration"
+msgstr "Configuration Générale "
+
+#: src/EBox/Model/RemoteSettings.pm:200
+#, fuzzy
+msgid "General remote backup server configuration"
+msgstr "Configuration générale du serveur de sauvegarde distant"
+
+#: src/EBox/Model/RemoteSettings.pm:203
+msgid "General backup server configuration updated"
+msgstr "Mise à jour de la configuration générale du serveur de sauvegarde"
+
+#: src/EBox/Model/RemoteSettings.pm:217
+msgid "Daily"
+msgstr "Quotidien"
+
+#: src/EBox/Model/RemoteSettings.pm:221
+msgid "Weekly"
+msgstr "Hebdomadaire"
+
+#: src/EBox/Model/RemoteSettings.pm:225
+msgid "Monthly"
+msgstr "Mensuel"
+
+#: src/EBox/Model/RemoteSettings.pm:234 src/EBox/Model/RemoteSettings.pm:340
+msgid "Disabled"
+msgstr "inactif"
+
+#: src/EBox/Model/RemoteSettings.pm:356
+#, perl-brace-format
+msgid ""
+"By creating the iBackup account through this {ohref}link{chref} you support "
+"the development of eBox with no extra charge"
+msgstr ""
+"En créant le compte iBackup au tyravers de ce {ohref}lien{chref} , vous "
+"participez au développement d'eBox gratuitement"
+
+#: src/EBox/Model/RemoteExcludes.pm:80
+msgid "Exlcude or Include"
+msgstr "Exclu ou inclu"
+
+#: src/EBox/Model/RemoteExcludes.pm:91
+msgid "Includes and Excludes"
+msgstr "Inclus et exclus"
+
+#: src/EBox/Model/RemoteExcludes.pm:92
+msgid "exclude"
+msgstr "exclu"
+
+#: src/EBox/Model/RemoteExcludes.pm:111
+msgid "Exclude path"
+msgstr "Chemin exclu"
+
+#: src/EBox/Model/RemoteExcludes.pm:115
+msgid "Exclude file regexp"
+msgstr ""
+
+#: src/EBox/Model/RemoteExcludes.pm:119
+msgid "Include Path"
+msgstr "Chemin inclu"
+
+#: src/EBox/Composite/RemoteGeneral.pm:65
+msgid "Configuration and Status"
+msgstr "Configuration et statut"
+
+#: src/EBox/Composite/Remote.pm:64
+msgid "Backup module"
+msgstr "Module de sauvegarde"
+
+#~ msgid "Hostname"
+#~ msgstr "Nom de l'hôte"
+
+#~ msgid "Status"
+#~ msgstr "État "
+
+#~ msgid "Last Update"
+#~ msgstr "Dernière mise à jour"
+
+#~ msgid "Days to Keep"
+#~ msgstr "Nombre de jours à retenir"
+
+#~ msgid "Size"
+#~ msgstr "Taille"
+
+#~ msgid "Hosts"
+#~ msgstr "Hôtes"
+
+#~ msgid "host"
+#~ msgstr "hôte"
+
+#~ msgid "Local backup directory {p} does not exist"
+#~ msgstr "Le répertoire de sauvegarde local {p} n'existe pas"
+
+# Instead of Nombre, we may also use Nbre for short if the phrase is too long.  French users understand it
+#~ msgid "Days to keep"
+#~ msgstr "Nombre de jours à retenir"
+
+#~ msgid "Local Backup Configuration"
+#~ msgstr "Configuration de la sauvegarde locale"
+
+#~ msgid ""
+#~ "Local backup configuration. If the module is enabled the backup will be "
+#~ "scheduled to be done daily"
+#~ msgstr ""
+#~ "Configuration de la sauvegarde locale. Si le module est activé, la "
+#~ "sauvegarde sera planifiée chaque jour"
+
+#~ msgid "Local backup configuration updated."
+#~ msgstr "Configuration de sauvegarde locale mise-à-jour."
+
+#~ msgid "Install /etc/cron.daily/ebox-ebackup-cron."
+#~ msgstr "Installer /etc/cron.daily/ebox-ebackup-cron."
+
+#~ msgid "eBox will run a nightly script to backup your system."
+#~ msgstr ""
+#~ "eBox exécutera un script pour sauvegarder votre système toutes les nuits"
+
+#~ msgid "Local backup configuration."
+#~ msgstr "La configuration du serveur de sauvegarde local"
+
+#~ msgid "Core"
+#~ msgstr "Core"
