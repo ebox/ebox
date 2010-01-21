@@ -1,0 +1,694 @@
+# French translations for EBox package.
+# Copyright (C) 2005 Warp Networks S.L. and DBS Servicios Informaticos
+# This file is distributed under the same license as the EBox package.
+#  <isaac@sindominio.net>, 2004.
+# Ignacio Correas <icorreas@warp.es>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-firewall 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-09 16:09+0100\n"
+"PO-Revision-Date: 2009-09-30 17:04+0200\n"
+"Last-Translator: Nicolas Liaudat <nliaudat@pompiers-chatel.ch>\n"
+"Language-Team: Español <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Iptables.pm:738 src/EBox/Iptables.pm:775
+msgid ""
+"You must set the iptables_log_limit variable in the ebox configuration file"
+msgstr ""
+"Vous devez définir la variable iptables_log_limit dans le fichier de "
+"configuration d'eBox"
+
+#: src/EBox/Iptables.pm:744 src/EBox/Iptables.pm:781
+msgid ""
+"You must set the iptables_log_burst variable in the ebox configuration file"
+msgstr ""
+"Vous devez définir la variable iptables_log_burst dans le fichier de "
+"configuration d'eBox"
+
+#: src/EBox/Firewall.pm:57 src/EBox/Firewall.pm:855
+msgid "Firewall"
+msgstr "Pare-feu "
+
+#: src/EBox/Firewall.pm:125
+msgid "Flush previous firewall rules"
+msgstr "Vider les anciennes règles du pare-feu"
+
+#: src/EBox/Firewall.pm:126
+msgid ""
+"The eBox firewall will flush any previous firewall rules which have been "
+"added manually or by another tool"
+msgstr ""
+"Le pare-feu d'eBox va écraser toutes les anciennes règles, ajoutées "
+"manuellement ou par une utilitaire tiers"
+
+#: src/EBox/Firewall.pm:131
+msgid "Secure by default"
+msgstr "Sécuriser par défaut"
+
+#: src/EBox/Firewall.pm:132
+msgid ""
+"Just a few connections are allowed by default. Make sure you add the proper "
+"incoming and outcoming rules to make your system work as expected. Usually, "
+"all outcoming connections are denied by default, and only SSH and HTTPS "
+"incoming connections are allowed."
+msgstr ""
+"Uniquement quelque connections sont autorisées par défaut. Vérifier que vous "
+"ayez ajouté les règles d'envoi - réceptions pour que votre système "
+"fonctionne comme voulu. Normalement, toute connexion sortant est interdite, "
+"uniquement les connexions SSH et HTTPS entrantes sont autorisées"
+
+#: src/EBox/Firewall.pm:311
+msgid "action"
+msgstr "action"
+
+#: src/EBox/Firewall.pm:432 src/EBox/Firewall.pm:477 src/EBox/Firewall.pm:501
+#, perl-brace-format
+msgid "Name '{name}' is invalid"
+msgstr "Le nom '{name}' est invalide"
+
+#: src/EBox/Firewall.pm:433 src/EBox/Firewall.pm:612 src/EBox/Firewall.pm:637
+msgid "port"
+msgstr "port"
+
+#: src/EBox/Firewall.pm:611 src/EBox/Firewall.pm:636
+msgid "protocol"
+msgstr "protocole"
+
+#: src/EBox/Firewall.pm:825 src/EBox/Firewall/Model/BaseRuleTable.pm:213
+msgid "Packet Filter"
+msgstr "Filtrage de paquets"
+
+#: src/EBox/Firewall.pm:828
+#, fuzzy
+msgid "Port Forwarding"
+msgstr "Règles d'expédition"
+
+#: src/EBox/Firewall.pm:839
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:60
+msgid "Date"
+msgstr "Date"
+
+#: src/EBox/Firewall.pm:840
+msgid "Input interface"
+msgstr "Interface d'entrée"
+
+#: src/EBox/Firewall.pm:841
+msgid "Output interface"
+msgstr "Interface de sortie"
+
+#: src/EBox/Firewall.pm:842 src/EBox/Firewall/Model/RedirectsTable.pm:292
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:121
+msgid "Source"
+msgstr "Source"
+
+#: src/EBox/Firewall.pm:843 src/EBox/Firewall/Model/BaseRuleTable.pm:147
+msgid "Destination"
+msgstr "Destination"
+
+#: src/EBox/Firewall.pm:844 src/EBox/Firewall/Model/RedirectsTable.pm:285
+msgid "Protocol"
+msgstr "Protocole"
+
+#: src/EBox/Firewall.pm:845
+msgid "Source port"
+msgstr "Port source"
+
+#: src/EBox/Firewall.pm:846
+msgid "Destination port"
+msgstr "Port de destination"
+
+#: src/EBox/Firewall.pm:847 src/EBox/Firewall/Model/BaseRuleTable.pm:112
+msgid "Decision"
+msgstr "Décision"
+
+#: src/EBox/Firewall.pm:852
+msgid "DROP"
+msgstr "Supprimer"
+
+#: src/EBox/Firewall.pm:852 src/EBox/Firewall/Model/BaseRuleTable.pm:70
+msgid "LOG"
+msgstr "LOG"
+
+#: src/EBox/CGI/Filter.pm:28
+msgid "Packet filtering"
+msgstr "Filtrage de paquets"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:68
+#, fuzzy
+msgid "Traffic coming out from eBox"
+msgstr "Règles de filtrage pour le trafic sortant d'eBox"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:78
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:81
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:80
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:78
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:78
+msgid "rule"
+msgstr "règle"
+
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:68
+#, fuzzy
+msgid "External networks to internal networks"
+msgstr "Règles de filtrages entre les réseaux externes et internes"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:145
+msgid "Contradictory rule found. Remove it first"
+msgstr "Règle contradictoire trouvée. Supprimer la d'abord"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:249
+msgid "Interface"
+msgstr "Interface"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:256
+msgid "Original destination"
+msgstr "Destination originale"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:261
+msgid "eBox"
+msgstr "eBox"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:264
+msgid "IP Address"
+msgstr "Adresse IP"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:268
+msgid "Object"
+msgstr "Objet"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:279
+msgid "Original destination port"
+msgstr "port de destination original"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:297
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:126
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:152
+msgid "Any"
+msgstr "Tous"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:300
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:129
+msgid "Source IP"
+msgstr "IP Source"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:304
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:133
+msgid "Source object"
+msgstr "Objet source"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:315
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:155
+msgid "Destination IP"
+msgstr "IP de destination"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:321
+msgid "Port"
+msgstr "Port"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:326
+msgid "Same"
+msgstr "Même"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:329
+msgid "Other"
+msgstr "Autre"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:337
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:185
+msgid "Description"
+msgstr "Description"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:354
+msgid "List of forwarded ports"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:355
+#, fuzzy
+msgid "Port Forwading"
+msgstr "Règles d'expédition"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:364
+msgid "redirect"
+msgstr "rediriger"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:66
+msgid "ACCEPT"
+msgstr "ACCEPTER"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:68
+msgid "DENY"
+msgstr "REFUSER"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:160
+msgid "Destination object"
+msgstr "Objet de destination"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:175
+msgid "Service"
+msgstr "Service"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:179
+msgid ""
+"If inverse match is ticked, any service but the selected one will match this "
+"rule"
+msgstr ""
+"Si la coche est activée, aucun service hormis celui sélectionné prendra en "
+"compte la règle"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:227
+#, fuzzy
+msgid "Configure Rules"
+msgstr "Configurer les règles"
+
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:68
+#, fuzzy
+msgid "External networks to eBox"
+msgstr "Règles de filtrages entre les réseaux externes et eBox"
+
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:68
+#, fuzzy
+msgid "Internal networks to eBox"
+msgstr "Règles de filtrages depuis les réseaux internes vers eBox"
+
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:65
+#, fuzzy
+msgid "Internal networks"
+msgstr "Port externe"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:52
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:46
+msgid "packets dropped"
+msgstr "paquets ignorés (dropped)"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:64
+msgid "Firewall packet traffic chart"
+msgstr "Graphique du trafic des paquets dans le Pare-feu "
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:86
+msgid "Packet traffic"
+msgstr "Trafic des paquets"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:66
+msgid "Packets dropped"
+msgstr "Paquets Ignorés (dropped)"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:78
+msgid "Packet traffic details"
+msgstr "Détails du trafic des paquets"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:86
+msgid "traffic"
+msgstr "trafic"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:70
+msgid "Packet traffic report"
+msgstr "Rapport du trafic des paquets"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:71
+msgid "Firewall packet traffic report"
+msgstr "Rapport du trafic des paquets dans le Pare-feu"
+
+#: src/templates/filter.mas:6
+msgid "Filtering rules from internal networks to eBox"
+msgstr "Règles de filtrages depuis les réseaux internes vers eBox"
+
+#: src/templates/filter.mas:8
+msgid ""
+"These rules are meant to control access from internal network interfaces to "
+"services running on your eBox machine"
+msgstr ""
+"Ces règles sont censées contrôler l'accès des interfaces réseaux internes "
+"aux services tournant sur votre eBox"
+
+#: src/templates/filter.mas:10 src/templates/filter.mas:18
+#: src/templates/filter.mas:26 src/templates/filter.mas:37
+#: src/templates/filter.mas:48
+msgid "Configure rules"
+msgstr "Configurer les règles"
+
+#: src/templates/filter.mas:13
+msgid "Filtering rules for internal networks"
+msgstr "Règles de filtrages pour les réseaux internes"
+
+#: src/templates/filter.mas:15
+msgid ""
+"These rules allow you to control access  from your internal networks to the "
+"Internet, and traffic between your internal networks. If you wish to provide "
+"access to your eBox services, you must use the above section"
+msgstr ""
+"Ces règles vous permettent de contrôler l'accès de vos réseaux internes sur "
+"Internet, et le trafic entre vous réseaux internes. Si vous désirez "
+"autoriser l'accès aux services eBox, vous devez utiliser la section "
+"susmentionnée"
+
+#: src/templates/filter.mas:21
+msgid "Filtering rules for traffic coming out from eBox"
+msgstr "Règles de filtrage pour le trafic sortant d'eBox"
+
+#: src/templates/filter.mas:23
+msgid "These rules allow you to control access from eBox to external services"
+msgstr "Ces règles permettent le contrôle d'accès d'eBox aux services externes"
+
+#: src/templates/filter.mas:29
+msgid "Filtering rules from external networks to eBox"
+msgstr "Règles de filtrages entre les réseaux externes et eBox"
+
+#: src/templates/filter.mas:31
+msgid ""
+"These rules allow you to control access from external networks to sevices "
+"running on your eBox machine."
+msgstr ""
+"Ces règles vous permettent le contrôle d'accès des réseaux externes sur les "
+"services de votre eBox"
+
+#: src/templates/filter.mas:34 src/templates/filter.mas:45
+msgid ""
+"Be advised that adding rules in this section may compromise your network "
+"security as you may grant access from untrusted networks. Please do not use "
+"this unless you know what you are doing"
+msgstr ""
+"Soyez attentifs au fait qu'ajouter des règles dans cette section peut "
+"compromettre la sécurité de votre réseau, car vous pouvez autoriser l'accès "
+"de réseaux peu sûrs. Veuillez n'utiliser cette option que si vous savez ce "
+"que vous faîtes"
+
+#: src/templates/filter.mas:40
+msgid "Filtering rules from external networks to internal networks"
+msgstr "Règles de filtrages entre les réseaux externes et internes"
+
+#: src/templates/filter.mas:42
+msgid ""
+"These rules allow you to control access from external networks to internal "
+"networks."
+msgstr ""
+"Ces règles vous permettent le contrôle d'accès des réseaux externes sur "
+"réseaux internes"
+
+#~ msgid "Redirects"
+#~ msgstr "Redirections de port"
+
+#~ msgid "Port redirections"
+#~ msgstr "Redirections de port"
+
+#~ msgid "Filtering rules from  external networks to eBox"
+#~ msgstr "Règles de filtrages depuis les réseaux externes vers eBox"
+
+#~ msgid "firewall"
+#~ msgstr "pare-feu"
+
+#~ msgid "UTM"
+#~ msgstr "UTM"
+
+#~ msgid "Global services' filtering rules"
+#~ msgstr "Règles de filtrage des services globaux"
+
+#~ msgid "Services' filtering rules {desc}"
+#~ msgstr "Règles de filtrage du service {desc}"
+
+#~ msgid "Edit rule"
+#~ msgstr "Editer règle"
+
+#~ msgid "Rules"
+#~ msgstr "Règles"
+
+#~ msgid "Global firewall configuration"
+#~ msgstr "Configuration globale du parefeu"
+
+#~ msgid "Firewall configuration: {desc}"
+#~ msgstr "Configuration du parefeu: {desc}"
+
+#~ msgid "service"
+#~ msgstr "service"
+
+#~ msgid "policy"
+#~ msgstr "politique"
+
+#~ msgid "network interface"
+#~ msgstr "interface réseau"
+
+#~ msgid "external port"
+#~ msgstr "port externe"
+
+#~ msgid "destination address"
+#~ msgstr "adresse de destination"
+
+#~ msgid "Port {port} is being used by a service or port redirection."
+#~ msgstr ""
+#~ "Le port {port} est employé par un service ou une redirection de port."
+
+#~ msgid "Actions"
+#~ msgstr "Actions"
+
+#~ msgid "Add"
+#~ msgstr "Ajouter"
+
+#~ msgid "Change"
+#~ msgstr "Modifier"
+
+#~ msgid "Delete"
+#~ msgstr "Effacer"
+
+#~ msgid ""
+#~ "Protocol, ports and addresses are optional. The rules will be applied in "
+#~ "order, from top to bottom, you can reorder them once they are added. "
+#~ "Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "Le protocol, le port et l'adresse sont optionnels. Les règles seront "
+#~ "appliquées dans l'ordre, du haut vers le bas. Vous pouvez modifier "
+#~ "l'ordre après qu'elles aient été ajoutées. Les règles peuvent également "
+#~ "être désactivées sans être effacées."
+
+#~ msgid "New rule"
+#~ msgstr "Règle nouvelle"
+
+#~ msgid "Action"
+#~ msgstr "Action"
+
+#~ msgid "Allow"
+#~ msgstr "Authoriser"
+
+#~ msgid "Deny"
+#~ msgstr "Interdire"
+
+#~ msgid "Source address"
+#~ msgstr "Adresse source"
+
+#~ msgid "is not"
+#~ msgstr "n'est pas"
+
+#~ msgid "is"
+#~ msgstr "est"
+
+#~ msgid "to"
+#~ msgstr "à"
+
+#~ msgid "Destination address"
+#~ msgstr "Adresse de destination"
+
+#~ msgid "Rule list"
+#~ msgstr "Liste de règles"
+
+#~ msgid "allow"
+#~ msgstr "authoriser"
+
+#~ msgid "allow (disabled)"
+#~ msgstr "authoriser (désactivé)"
+
+#~ msgid "deny"
+#~ msgstr "interdire"
+
+#~ msgid "deny (disabled)"
+#~ msgstr "interdire (désactivé)"
+
+#~ msgid "inverse match"
+#~ msgstr "correspondence inverse"
+
+#~ msgid "Edit"
+#~ msgstr "Éditer"
+
+#~ msgid "Up"
+#~ msgstr "Monter"
+
+#~ msgid "Down"
+#~ msgstr "Descendre"
+
+#~ msgid "delete"
+#~ msgstr "effacer"
+
+#~ msgid "edit"
+#~ msgstr "éditer"
+
+#~ msgid "move up"
+#~ msgstr "remonter"
+
+#~ msgid "move down"
+#~ msgstr "abaisser"
+
+#~ msgid "any"
+#~ msgstr "n'importe quel"
+
+#~ msgid "Services"
+#~ msgstr "Services"
+
+#~ msgid "Policy"
+#~ msgstr "Politique"
+
+#~ msgid "Enabled"
+#~ msgstr "Activé"
+
+#~ msgid ""
+#~ "Protocol, port and destination address are optional. The rules will be "
+#~ "applied in order, from top to bottom, you can reorder them once they are "
+#~ "added. Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "L'adresse de destination, le port et le protocol sont optionnels. Les "
+#~ "règles seront appliquées dans l'ordre, du haut vers le bas. Vous pouvez "
+#~ "modifier l'ordre après qu'elles aient été ajoutées. Les règles peuvent "
+#~ "également être désactivées sans être effacées."
+
+#~ msgid ""
+#~ "Rules without an explicit destination address will be applied to packets "
+#~ "that leave eBox through an external network interface. You may flag "
+#~ "network interfaces as external in the <a href='../Network/Ifaces'>Network "
+#~ "Interfaces</a> configuration page."
+#~ msgstr ""
+#~ "Les règles sans adresse de destination explicite seront appliquées aux "
+#~ "paquets qui quittent eBox par une interface réseau externe. Vous pouvez "
+#~ "marquer les interfaces de réseau comme externes dans la page de "
+#~ "configuration d'<a href='../Network/Ifaces'>Interfaces Réseau</a>."
+
+#~ msgid "Active"
+#~ msgstr "Activée"
+
+#~ msgid ""
+#~ "The policy states what to do on network packets not explicitly matched "
+#~ "below. The policy is applied to connections that leave eBox through an "
+#~ "external network interface. If you want to allow traffic between internal "
+#~ "networks you need to create explicit rules for that."
+#~ msgstr ""
+#~ "La politique précise quoi faire avec des paquets ne correspondants pas "
+#~ "explicitement avec celle ci-dessous. La politique est appliquée aux "
+#~ "raccordements qui laissent acceder à l'eBox par une interface externe. Si "
+#~ "vous voulez permettre le trafic entre les réseaux internes vous devez "
+#~ "créer des règles explicites pour cela."
+
+#~ msgid ""
+#~ "Choosing global will make the firewall fall back to the <a href='Object?"
+#~ "object=_global'>default configuration</a>."
+#~ msgstr ""
+#~ "Choisir global causera le retour du parefeu à sa <a href='Object?"
+#~ "object=_global'>configuration par défaut</a>."
+
+#~ msgid "Global"
+#~ msgstr "Global"
+
+#~ msgid "object"
+#~ msgstr "objet"
+
+#~ msgid "Port cannot be set if no protocol is selected."
+#~ msgstr "Le port ne peut pas être affecté si aucun protocole n'est choisi."
+
+#~ msgid "address"
+#~ msgstr "adresse"
+
+#~ msgid "source port"
+#~ msgstr "Port source"
+
+#~ msgid "source address"
+#~ msgstr "adresse source"
+
+#~ msgid "Rule not found"
+#~ msgstr "Règle non trouvée"
+
+#~ msgid "Deny action"
+#~ msgstr "Déniez l'action"
+
+#~ msgid ""
+#~ "This will tell the firewall what to do when discarding network packets.  "
+#~ "If you choose Reject, a packet will be sent back to the sender, choosing "
+#~ "Drop will make the firewall drop the packet silently."
+#~ msgstr ""
+#~ "Cela informera le parefeu de l'attitude à adopter lorsque des paquets "
+#~ "sont rejetés. Si vous choisissez \"Rejeter\", un paquet sera renvoyé à "
+#~ "l'expéditeur. Avec \"Ignorer\", le paquet sera ignoré silencieusement par "
+#~ "le parefeu."
+
+#~ msgid "Drop packets"
+#~ msgstr "Ignorer les paquets"
+
+#~ msgid "Reject packets"
+#~ msgstr "Rejeter les paquets"
+
+#~ msgid "Apply"
+#~ msgstr "Appliquer"
+
+#~ msgid "Filtering rules for internet access"
+#~ msgstr "Règles de filtrage pour l'accès Internet"
+
+#~ msgid ""
+#~ "The link below will let you set up the default behavior of the packet "
+#~ "filter.  These rules are meant to control access from internal network "
+#~ "interfaces to external ones, they provide a simpler way to control access "
+#~ "to the internet. You may also choose an object and set up its own rules"
+#~ msgstr ""
+#~ "Le lien ci-dessous vous permettra de configurer le comportement par "
+#~ "défaut du filtrage de paquets. Vous pouvez également choisir un objet et "
+#~ "configurer les règles et services auxquels il a accès. Ces règles sont "
+#~ "destinées à contrôler l'accès des interfaces de réseau internes aux "
+#~ "externes, elles fournissent une manière plus simple de contrôler l'accès "
+#~ "à l'Internet."
+
+#~ msgid "Configure default rules"
+#~ msgstr "Configurer les règles par défaut"
+
+#~ msgid "Filtering Rules between internal networks"
+#~ msgstr "Règles de filtrages entre les réseaux internes"
+
+#~ msgid "Configure default rules related to eBox services"
+#~ msgstr "Configurer les règles par défaut des services eBox"
+
+#~ msgid "Configure rules for a particular object"
+#~ msgstr "Configurer les règles pour un objet particulier"
+
+#~ msgid "Go"
+#~ msgstr "Appliquer"
+
+#~ msgid ""
+#~ "The link below will let you set up the default behavior of the packet "
+#~ "filter. You may also choose an object and set up rules and the services "
+#~ "it may access. These rules are meant to control access from internal "
+#~ "network interfaces to external ones, they provide a simpler way to "
+#~ "control access to the internet."
+#~ msgstr ""
+#~ "Le lien ci-dessous vous permettra de configurer le comportement par "
+#~ "défaut du filtre de paquets. Vous pouvez également choisir un objet et "
+#~ "configurer les règles et services auxquels il a accès. Ces règles sont "
+#~ "destinées à controler l'accès des interfaces de réseau internes aux "
+#~ "externes, elles fournissent une manière plus simple de controler l'accès "
+#~ "à l'Internet."
+
+#~ msgid "Filtering Rules"
+#~ msgstr "Règles de filtrage"
+
+#~ msgid ""
+#~ "This link will let you set up filtering rules that will take precedence "
+#~ "over the ones you set up for network objects further below."
+#~ msgstr ""
+#~ "Ce lien vous laissera installer les règles de filtrage qui auront la "
+#~ "priorité au-dessus de celles que vous installez pour des objets de réseau "
+#~ "ci-dessous."
+
+#~ msgid "Rules for internet access"
+#~ msgstr "Règles pour l'accès d'Internet"
+
+#, fuzzy
+#~ msgid "Filtering rules for eBox's services"
+#~ msgstr "Règles de filtrage pour l'accès Internet"
+
+#~ msgid "gateway"
+#~ msgstr "passerelle"
