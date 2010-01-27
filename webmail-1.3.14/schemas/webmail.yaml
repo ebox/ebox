@@ -1,4 +1,0 @@
-class: 'EBox::WebMail'
-depends:
-    - webserver
-    - mail
