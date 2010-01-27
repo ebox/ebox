@@ -1,4 +1,0 @@
-#!/bin/bash -x
-
-# populate LDAP
-/usr/share/ebox-asterisk/ebox-asterisk-ldap update
