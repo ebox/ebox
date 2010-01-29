@@ -1,0 +1,169 @@
+<%args>
+    $params
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+
+% settextdomain('ebox-mail');
+
+<h3><% __('Mail account settings') %></h3>
+
+% if (not $params->{service} ) {
+     <& /mail/moduleDisabled.mas &>
+% }
+
+<form action='/ebox/Mail/DelAccount' method='POST'>
+	<input type="hidden" name="mail" value="<% $params->{'mail'} %>">
+	<input type="hidden" name="username" value="<% $params->{'username'} %>">
+	<% __('Mail address') %>:<span class='stitle'><% $params->{'mail'} %></span>
+	<input class='inputButton' type='submit' name='change'
+			value="<% __('Delete') %>"
+			title="<% __('Delete') %>"
+			alt="<% __('Delete') %>">
+</form>
+
+
+<& .modifyMaildirQuota, params => $params &>
+
+<form action='/ebox/Mail/CreateAlias' method='POST'>
+    <input type="hidden" name="maildrop" value="<% $params->{'mail'} %>">
+    <input type="hidden" name="username" value="<% $params->{'username'} %>">
+
+		<h3><% __('Create mail aliases') %></h3>
+		<table cellspacing='0' class='dataTable'>
+			<thead>
+				<tr>
+					<th width='66%' class='tleft'>
+						<% __('Mail alias') %>
+					</th>
+					<th class='thOptions'>
+						<% __('Action') %>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td>
+					<input type='text' class='inputText' name='lhs'>
+					 @ 
+					<select name="rhs" enabled>
+%					my @kvd = @{ $params->{'vdomains'} };
+%					foreach my $vd (@kvd) {
+						<option value= <% $vd %> > <% __($vd) %> </option>
+%					}
+					</select>
+				</td>
+				<td class='tcenter'>
+					<input class='inputButton' 
+							type='image' 
+							src='/data/images/add.gif'
+							name='change'
+							value="<% __('Create') %>"
+							title="<% __('Create') %>"
+							alt="<% __('Create') %>">
+				</td>
+			</tr>
+%	if(@{$params->{aliases}} != 0) {
+%			my @aux=();
+%			foreach my $alias (@{$params->{aliases}}) {
+				<tr class='border'>
+					<td><% $alias %></td>
+					<td class='tcenter'>
+						<a href='../Mail/DelAlias?alias=<% $alias %>&username=<% $params->{'username'} %>'>
+						<img src='/data/images/delete.gif' 
+							title="<% __('Delete') %>"
+							alt="<% __('Delete') %>"/></a>
+					</td>
+				</tr>
+%				}
+%	}
+			</tbody>
+		</table>
+</form>
+% settextdomain('ebox-usersandgroups');
+
+<& .updateMaildirQuotaJs, params => $params &>
+
+
+
+<%def .updateMaildirQuotaJs>
+<%args>
+$params
+</%args>
+<script type="text/javascript">
+        function updateMaildirQuota() {
+                var size = document.getElementById("maildirQuota")
+                var type = document.getElementById("quotaType")
+                var typeValue = type.value;
+                var val = <% $params->{'maildirQuota'} %>;
+
+                if(typeValue != 'custom') {
+                        size.disabled = true;
+                        size.value = '';
+                } else {
+                        size.disabled = false;
+                        if(val == 0) {
+                                val = 10;
+                        }
+                        size.value = val;
+                }
+        }
+
+        updateMaildirQuota();
+</script>
+</%def>
+
+<%def .modifyMaildirQuota>
+<%args>
+$params
+</%args>
+<%init>
+my $quotaType =  $params->{maildirQuotaType};
+my @quotaTypeOptions = (
+  { value => 'noQuota', printableValue => __('No quota')},
+  { value => 'default' , printableValue => __('Default quota') },
+  { value => 'custom' , printableValue => __('Custom quota') },
+);
+</%init>
+<form action='/ebox/Mail/SetAccountMaildirQuota' method='POST'>
+<table class='formTable'>
+<input type="hidden" name="username" value="<% $params->{'username'} %>">
+        <tr>
+        <td class='tright'><% __('Quota type') %></td>
+        <td>
+        <& /input/select.mas,
+                name => 'quotaType',
+                id => 'quotaType',
+                options => \@quotaTypeOptions,
+                value => $quotaType,
+                 onChange => 'updateMaildirQuota()',
+        &>
+        </td>
+        </tr>
+
+        <tr>
+        <td class='tright'><% __('Maximum mailbox size in MB') %>:</td>
+        <td><input type='text' class='inputText' name='maildirQuota'
+                                id='maildirQuota'
+                                size="15"
+%                               if($params->{'maildirType'} ne 'custom') {
+                        disabled
+                        value=""
+%                               } else {
+                        enabled
+                        value='<% $params->{'maildirQuota'} %>'>
+%                               }
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <input class='inputButton' type='submit' name='change'
+                        value="<% __('Modify') %>"
+                        alt="<% __('Modify') %>">
+        </td>
+        </tr>
+</table>
+</form>
+
+</%def>
