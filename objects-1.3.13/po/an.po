@@ -1,0 +1,189 @@
+# Aragonese translations for ebox-objects package.
+# Copyright (C) 2006 Warp S.L.
+# This file is distributed under the same license as the ebox-objects package.
+# Automatically generated, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-objects 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-28 13:11+0000\n"
+"PO-Revision-Date: 2005-11-11 13:18+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural= (n != 1);\n"
+"X-Generator: Translate Toolkit 0.10.1\n"
+
+#: src/EBox/Objects.pm:39 src/EBox/Model/ObjectTable.pm:82
+#: src/EBox/Model/MemberTable.pm:93
+msgid "Objects"
+msgstr "Ochetos"
+
+#: src/EBox/Objects.pm:44
+#, perl-brace-format
+msgid "Added object {object}"
+msgstr "Adibito ocheto {object}"
+
+#: src/EBox/Objects.pm:46
+#, perl-brace-format
+msgid "Added {nname} ({ip}/{mask} [{mac}]) to object {object}"
+msgstr "Adibito {nname} ({ip}/{mask} [{mac}]) á l'ocheto {object}"
+
+#: src/EBox/Objects.pm:47
+#, perl-brace-format
+msgid "Removed object {object}"
+msgstr "Borrato ocheto {object}"
+
+#: src/EBox/Objects.pm:49
+#, perl-brace-format
+msgid "Forcefully removed object {object}"
+msgstr "Borrato aforzato de l'ocheto {object}"
+
+#: src/EBox/Objects.pm:51
+#, perl-brace-format
+msgid "Removed {nname} from object {object}"
+msgstr "Borrato {nname} de l'ocheto {object}"
+
+#: src/EBox/Objects.pm:270
+msgid "Object"
+msgstr "Ocheto"
+
+#: src/EBox/Model/ObjectTable.pm:63 src/EBox/Model/MemberTable.pm:63
+msgid "Name"
+msgstr "Nombre"
+
+#: src/EBox/Model/ObjectTable.pm:71 src/EBox/Model/MemberTable.pm:87
+msgid "Members"
+msgstr ""
+
+#: src/EBox/Model/ObjectTable.pm:83
+#, fuzzy
+msgid "Objects List"
+msgstr "Lista d'ochetos"
+
+#: src/EBox/Model/ObjectTable.pm:91
+#, fuzzy
+msgid "object"
+msgstr "Ocheto"
+
+#: src/EBox/Model/ObjectTable.pm:113
+msgid "This object is being used by another module"
+msgstr ""
+
+#: src/EBox/Model/ObjectTable.pm:185
+msgid ""
+"Objects are an abstraction of machines and network addresses which can be "
+"used in other modules. Any change on an object is automatically synched in "
+"all the modules using it"
+msgstr ""
+
+#: src/EBox/Model/MemberTable.pm:70
+msgid "IP address"
+msgstr "Adreza IP"
+
+#: src/EBox/Model/MemberTable.pm:76
+#, fuzzy
+msgid "MAC address"
+msgstr "Adreza IP"
+
+#: src/EBox/Model/MemberTable.pm:94
+msgid "member"
+msgstr ""
+
+#: src/EBox/Model/MemberTable.pm:116
+msgid "You can only use MAC addresses with hosts"
+msgstr ""
+
+#: src/EBox/Model/MemberTable.pm:119 src/EBox/Model/MemberTable.pm:120
+msgid "network address"
+msgstr "adreza de rete"
+
+#: src/EBox/Model/MemberTable.pm:126
+#, perl-brace-format
+msgid "{ip} overlaps with the address or another object's member"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Core"
+#~ msgstr "Creyar"
+
+#, fuzzy
+#~ msgid "IP Address"
+#~ msgstr "Adreza IP"
+
+#~ msgid "Object name"
+#~ msgstr "Nombre de l'ocheto"
+
+#~ msgid ""
+#~ "The name '{name}' is already used to identify another object. Please "
+#~ "choose another name"
+#~ msgstr ""
+#~ "O nombre {name} ya ye en uso ta identificar atro ocheto. Por fabor, "
+#~ "eslixa atro nombre"
+
+#~ msgid "Edit Object"
+#~ msgstr "Editar ocheto"
+
+#~ msgid "Netmask"
+#~ msgstr "Mascaruta de rete"
+
+#~ msgid "Deleting object"
+#~ msgstr "Borrando ocheto"
+
+#~ msgid ""
+#~ "The object you tried to delete is being used by some modules, please "
+#~ "confirm that you want to delete it."
+#~ msgstr ""
+#~ "L'ocheto que ha intentato borrar ye estando emplegato por bels modulos, "
+#~ "por fabor, confirme que deseya borrar-lo."
+
+#~ msgid "Delete"
+#~ msgstr "Borrar"
+
+#~ msgid "Cancel"
+#~ msgstr "Canzelar"
+
+#~ msgid "Edit <span class='stitle'>{description}</span> members"
+#~ msgstr "Editar miembros de <span class='stitle'>{description}</span>"
+
+#~ msgid "MAC"
+#~ msgstr "MAC"
+
+#~ msgid "Action"
+#~ msgstr "Aizión"
+
+#~ msgid "Add"
+#~ msgstr "Adibir"
+
+#~ msgid "Delete Object"
+#~ msgstr "Borrar Ocheto"
+
+#~ msgid ""
+#~ "If you delete this object, all the information about its members will be "
+#~ "lost."
+#~ msgstr ""
+#~ "Si borra iste ocheto perderá tota la informazión sobre os suyos miembros."
+
+#~ msgid "Delete object"
+#~ msgstr "Borrar ocheto"
+
+#~ msgid "Create new object"
+#~ msgstr "Creyar nuebo ocheto"
+
+#~ msgid ""
+#~ "The objects that you create here can be used in the rest of the system. "
+#~ "Remember that an IP address cannot belong to more than one object."
+#~ msgstr ""
+#~ "Os ochetos que creye aquí pueden emplegar-sen en a resta d'o sistema. "
+#~ "Recuerde que una adreza IP no puede pertenexer á más d'un ocheto."
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "edit"
+#~ msgstr "editar"
+
+#~ msgid "delete"
+#~ msgstr "borrar"
