@@ -1,0 +1,81 @@
+# Hungarian translations for EBox-modulename package.
+# Copyright (C) 2009 Warp S.L.
+# This file is distributed under the same license as the EBox-modulename package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-antivirus 1.1\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-09 16:06+0100\n"
+"PO-Revision-Date: 2010-01-15 14:26+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n !=1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/AntiVirus.pm:69 src/EBox/AntiVirus.pm:395
+#: src/EBox/AntiVirus.pm:400 src/EBox/AntiVirus/Model/FreshclamStatus.pm:72
+msgid "Antivirus"
+msgstr "Vírusirtó"
+
+#: src/EBox/AntiVirus.pm:212
+msgid " To configure clamd daemon"
+msgstr "Clamd démon beállítása"
+
+#: src/EBox/AntiVirus.pm:217
+msgid "To configure freshclam updater"
+msgstr "Freshclam frissítő beállítása"
+
+#: src/EBox/AntiVirus.pm:222
+msgid "To schedule the launch of the updater"
+msgstr "Frissítő indításának időzítése"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:59
+msgid "Status"
+msgstr "Állapot"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:63
+msgid "Date"
+msgstr "Dátum"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:71
+msgid "Database Update Status"
+msgstr "Adatbázis-frissítés állapota"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:127
+msgid ""
+"The antivirus database has not been updated since the module was enabled."
+msgstr ""
+"A vírusirtó adatbázisának frissítése nem történt meg a modul engedélyezése "
+"óta."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:130
+msgid "The last update failed."
+msgstr "Az utolsó frissítés meghiúsult."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:134
+#, perl-brace-format
+msgid ""
+"Update successful but your freshclam version is outdated.\n"
+"The antivirus will not be able to use all the signatures.Please, install "
+"version {version} or higher."
+msgstr ""
+"A frissítés sikeres, de a freshclam verzió elavult.\n"
+"A vírusirtó nem fogja tudni használni az összes mintát. Telepítse a(z) "
+"{version} verziót vagy újabbat."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:141
+msgid "Last update successful."
+msgstr "Az utolsó frissítés sikerült."
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:144
+#, perl-brace-format
+msgid "Unknown event {event}."
+msgstr "Ismeretlen esemény: {event}."
+
+#~ msgid "UTM"
+#~ msgstr "UTM"
