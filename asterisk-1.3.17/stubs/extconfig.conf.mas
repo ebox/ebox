@@ -1,0 +1,14 @@
+<%args>
+$dn
+</%args>
+;
+; Asterisk Realtime configuration file
+;
+ 
+[settings]
+sipusers => ldap,"<% $dn %>",sip
+sippeers => ldap,"<% $dn %>",sip
+extensions => ldap,"<% $dn %>",extensions
+voicemail => ldap,"<% $dn %>",voicemail
+queues => ldap,"<% $dn %>",queue
+queue_members => ldap,"<% $dn %>",queue_member
