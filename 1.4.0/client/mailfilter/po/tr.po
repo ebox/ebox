@@ -1,0 +1,1283 @@
+# Turkish translations for EBox-mailfilter package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the EBox-mailfilter package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-mailfilter 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-02-02 16:32+0000\n"
+"PO-Revision-Date: 2007-07-24 11:54+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: migration/0004_add_firewall_services.pl:32
+msgid "POP transparent proxy"
+msgstr ""
+
+#: migration/0004_add_firewall_services.pl:50
+msgid "POP3 protocol"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:62
+#, fuzzy
+msgid "Mail Filter"
+msgstr "Posta süzgeci"
+
+#: src/EBox/MailFilter.pm:80
+msgid "Add clamav user to amavis group"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:81
+msgid "Clamav need access to amavis fields to properly scan mail"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:85
+msgid "Add clamav user to p3scan group"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:86
+msgid "Clamav need access to p3scan group to properly scan in the POP Proxy"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:90
+msgid "Add spam and ham system users"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:92
+msgid ""
+"This users are for the email accounts used for training the bayesian filter"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:97
+msgid "Update LDAP"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:98
+msgid "Add amavis specific classes and fields"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:357
+msgid "Cannot proceed because the filter is in use"
+msgstr "İşlem yapılamıyor çünkü süzgeç kullanımda"
+
+#: src/EBox/MailFilter.pm:512
+#, fuzzy
+msgid "Mail filter"
+msgstr "Posta süzgeci"
+
+#: src/EBox/MailFilter.pm:533 src/EBox/MailFilter.pm:579
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:74
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:69
+#, fuzzy
+msgid "Date"
+msgstr "Sil"
+
+#: src/EBox/MailFilter.pm:535
+#, fuzzy
+msgid "Action"
+msgstr "İşlemler"
+
+#: src/EBox/MailFilter.pm:536 src/EBox/MailFilter.pm:583
+msgid "Event"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:538
+#, fuzzy
+msgid "Sender address"
+msgstr "E-posta adresi"
+
+#: src/EBox/MailFilter.pm:539
+#, fuzzy
+msgid "Recipient address"
+msgstr "E-posta adresi"
+
+#: src/EBox/MailFilter.pm:541
+#, fuzzy
+msgid "Spam hits"
+msgstr "Gereksiz posta eşiği"
+
+#: src/EBox/MailFilter.pm:546
+#, fuzzy
+msgid "Bad header found"
+msgstr "Kötü başlık yönetimi"
+
+#: src/EBox/MailFilter.pm:547
+msgid "Spam found"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:548
+msgid "Forbidden attached file  found"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:549
+msgid "Address in blacklist found"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:550
+#, fuzzy
+msgid "Virus found"
+msgstr "Virüs yönetimi"
+
+#: src/EBox/MailFilter.pm:551
+#, fuzzy
+msgid "Clean message"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter.pm:561
+#, fuzzy
+msgid "SMTP filter"
+msgstr "MIME türü süzgeci"
+
+#: src/EBox/MailFilter.pm:581
+#, fuzzy
+msgid "Account"
+msgstr "İşlemler"
+
+#: src/EBox/MailFilter.pm:582
+#, fuzzy
+msgid "Client's address"
+msgstr "E-posta adresi"
+
+#: src/EBox/MailFilter.pm:585
+#, fuzzy
+msgid "Total messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter.pm:586
+#, fuzzy
+msgid "Clean messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter.pm:587
+#, fuzzy
+msgid "Virus messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter.pm:588
+#, fuzzy
+msgid "Spam messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter.pm:595
+msgid "POP3 transmission complete"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:597
+msgid "POP3 transmission aborted"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:605
+msgid "POP3 proxy"
+msgstr ""
+
+#: src/EBox/MailFilter.pm:704 src/EBox/MailFilter/Composite/Amavis.pm:61
+#, fuzzy
+msgid "SMTP Mail Filter"
+msgstr "Posta süzgeci"
+
+#: src/EBox/MailFilter.pm:711
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:93
+#, fuzzy
+msgid "POP Transparent Proxy"
+msgstr "Antispam seçenekleri"
+
+#: src/EBox/MailFilter.pm:719 src/EBox/MailFilter/POPProxy.pm:350
+#: src/EBox/MailFilter/Amavis.pm:468
+#: src/EBox/MailFilter/Composite/Antispam.pm:63
+#: src/EBox/MailFilter/Composite/Antispam.pm:64
+msgid "Antispam"
+msgstr "Antispam"
+
+#: src/EBox/MailFilter.pm:726
+msgid "Files ACL"
+msgstr ""
+
+#: src/EBox/MailFilter/POPProxy.pm:47
+msgid " To configure p3scan"
+msgstr ""
+
+#: src/EBox/MailFilter/POPProxy.pm:52
+msgid "To configure renattach"
+msgstr ""
+
+#: src/EBox/MailFilter/POPProxy.pm:323
+msgid "Transparent POP Proxy"
+msgstr ""
+
+#: src/EBox/MailFilter/POPProxy.pm:329 src/EBox/MailFilter/Amavis.pm:452
+msgid "Status"
+msgstr ""
+
+#: src/EBox/MailFilter/Types/FileExtension.pm:59
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:94
+msgid "file extension"
+msgstr "dosya uzantısı"
+
+#: src/EBox/MailFilter/Types/AmavisSender.pm:79
+msgid "domain name"
+msgstr "Alan adı"
+
+#: src/EBox/MailFilter/Types/AmavisSender.pm:83
+msgid "email address"
+msgstr "E-posta adresi"
+
+#: src/EBox/MailFilter/Types/AmavisSender.pm:87
+#, fuzzy
+msgid ""
+"The sender ought be either an email address or a domain name prefixed with "
+"'@'"
+msgstr ""
+"Gönderen, bir e-posta adresi veya '@' ile başlayan bir alan adı olabilir."
+
+#: src/EBox/MailFilter/Types/Policy.pm:30
+msgid "Pass"
+msgstr "Parola"
+
+#: src/EBox/MailFilter/Types/Policy.pm:31
+msgid "Reject"
+msgstr "Reddedilen"
+
+#: src/EBox/MailFilter/Types/Policy.pm:32
+msgid "Bounce"
+msgstr "Geri dönen"
+
+#: src/EBox/MailFilter/Types/Policy.pm:33
+msgid "Discard"
+msgstr "Çıkart"
+
+#: src/EBox/MailFilter/Types/Policy.pm:53
+#, fuzzy
+msgid "Mailfilter's policy"
+msgstr "Mail-süzgeci portu"
+
+#: src/EBox/MailFilter/Types/MIMEType.pm:61
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:94
+msgid "MIME type"
+msgstr "MIME tipi"
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:136
+msgid "Write down a decimal number"
+msgstr ""
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:141
+msgid "Only non-zero positive numbers are allowed"
+msgstr ""
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:150
+#, perl-brace-format
+msgid "Write down a number lesser than {m}"
+msgstr ""
+
+#: src/EBox/MailFilter/Types/AntispamThreshold.pm:157
+#, perl-brace-format
+msgid "Write down a number greater  than {m}"
+msgstr ""
+
+#: src/EBox/MailFilter/VDomainsLdap.pm:604
+#, perl-brace-format
+msgid "Virtual mail domain {vd} does not exist"
+msgstr "{vd} sanal posta domaini mevcut değil"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:62
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:62
+#, fuzzy
+msgid "Mail sender"
+msgstr "Posta süzgeci"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:68
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:68
+msgid "Policy"
+msgstr "Yönetim"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:77
+#, fuzzy
+msgid "Sender policy"
+msgstr "Kötü başlık yönetimi"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:89
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:89
+#, fuzzy
+msgid "sender policy"
+msgstr "Kötü başlık yönetimi"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:98
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:98
+msgid "whitelist"
+msgstr "Beyaz liste"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:99
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:99
+msgid "blacklist"
+msgstr "Kara liste"
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:100
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:100
+msgid "process"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/AntispamACL.pm:165
+#: src/EBox/MailFilter/Model/VDomains.pm:158
+#, fuzzy
+msgid "Virtual Domains"
+msgstr "Posta alan adı"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:68
+msgid "MIME Type"
+msgstr "MIME türü"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:74
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:74
+msgid "Allow"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:82
+msgid "MIME types"
+msgstr "MIME türü"
+
+#: src/EBox/MailFilter/Model/MIMETypeACL.pm:95
+#, fuzzy
+msgid ""
+"MIME types which are not listed below are allowed. MIME types aren't used by "
+"POP transparent proxy"
+msgstr "Aşağıda listelenmeyen {plural} 'a izin verildi"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:65
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:58
+#, fuzzy
+msgid "Enabled"
+msgstr "Çıkart"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:71
+#, fuzzy
+msgid "Antivirus enabled"
+msgstr "Antivirüs"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:77
+#, fuzzy
+msgid "Antispam enabled"
+msgstr "Antispam"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:84
+#, fuzzy
+msgid "Service's port"
+msgstr "Servis portu"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:91
+msgid "Notify of non-spam problematic messages"
+msgstr "Gereksiz posta olmayan mesajlarda sorun ile karşılaşılırsa uyar"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:95
+#, fuzzy
+msgid "Disabled"
+msgstr "Çıkart"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:100
+#, fuzzy
+msgid "mail address"
+msgstr "E-posta adresi"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:110
+msgid "General"
+msgstr "Genel"
+
+#: src/EBox/MailFilter/Model/AmavisConfiguration.pm:141
+#, perl-brace-format
+msgid "The port {port} is already used by module {mod}"
+msgstr "{port} portu şu anda {mod} modülü tarafından kullanılmakta"
+
+#: src/EBox/MailFilter/Model/AntispamVDomainACL.pm:77
+#, fuzzy
+msgid "Sender policy for virtual domain"
+msgstr "{domain} sanal alan adı için gereksiz posta eşiği"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:68
+#, fuzzy
+msgid "File extension"
+msgstr "dosya uzantısı"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:82
+#, fuzzy
+msgid "File extensions"
+msgstr "dosya uzantısı"
+
+#: src/EBox/MailFilter/Model/FileExtensionACL.pm:95
+#, fuzzy
+msgid "Extensions which are not listed below are allowed"
+msgstr "Aşağıda listelenmeyen {plural} 'a izin verildi"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:68
+msgid "External mail server"
+msgstr "Harici posta sunucusu"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:71
+msgid "IP address of the server"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:75
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:76
+msgid "Allow connection"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:83
+#, fuzzy
+msgid "External mail servers"
+msgstr "Harici posta sunucusu"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:95
+#, fuzzy
+msgid "external mail server"
+msgstr "Harici posta sunucusu"
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:96
+msgid ""
+"Here you can specify which external mail servers can connect to the mail "
+"filter"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/ExternalMTA.pm:143
+#, perl-brace-format
+msgid "Invalid external MTA {mta}. Local network addresses are not allowed"
+msgstr "Geçersiz harici MTA {mta}. Yerel ağ adreslerine izin yok"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:63
+#: src/EBox/MailFilter/Model/VDomains.pm:91
+#: src/EBox/MailFilter/SpamAssassin.pm:336
+msgid "Spam threshold"
+msgstr "Gereksiz posta eşiği"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:67
+msgid "The score threshold to mark a message as spam"
+msgstr "Bir mesajı gereksiz posta olarak işaretlemek için puan değeri "
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:71
+msgid "Spam subject tag"
+msgstr "Gereksiz posta konu etiketi"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:74
+msgid "Tag which will be added to the spam mail subject"
+msgstr "Gereksiz posta konusu olarak eklenecek etiket"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:78
+#, fuzzy
+msgid "Use Bayesian classifier"
+msgstr "Bayesian sınıflandırıcısı kullan"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:84
+msgid "Auto-whitelist"
+msgstr "Otomatik temiz listesi"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:87
+msgid "Change the score of mail according to the sender history"
+msgstr "Gönderen geçmişine göre posta puanını değiştir"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:91
+msgid "Auto-learn"
+msgstr "Otomatik öğrenme"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:94
+msgid "Feedback the learning system with messages that reach the threshold"
+msgstr "Eşiğe ulaşan otomatik öğrenme sistem mesajı geri bildirimi"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:99
+msgid "Autolearn spam threshold"
+msgstr "Otomatik öğrenme gerksiz posta değeri"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:103
+#, fuzzy
+msgid ""
+"Spam messages with a score equal or greater than this threshold will be "
+"added to the learning system "
+msgstr ""
+"Bu puan eşiğine eşit veya daha yüksek olan gereksiz posta mesajları öğrenme "
+"sistemine eklenecek"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:107
+msgid "Autolearn ham threshold"
+msgstr "Otomatik öğrenme 'Ham' değeri"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:110
+#, fuzzy
+msgid ""
+"Ham messages with a score below this threshold will be added to the learning "
+"system"
+msgstr ""
+"Bu puan eşiğinden daha düşük olan 'ham' mesajları öğrenme sistemine eklenecek"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:116
+#, fuzzy
+msgid "Antispam configuration"
+msgstr "Antispam seçenekleri"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:168
+msgid ""
+"You must define autolearn spam threshold when autolearn option is active"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:174
+msgid "You must define autolearn ham threshold when autolearn option is active"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:180
+msgid ""
+"The spam's autolearn threshold cannot be lower than the default spam's "
+"treshold "
+msgstr ""
+"Gereksiz postayı otomatik öğrenme değeri öntanımlı değerden düşük olamaz"
+
+#: src/EBox/MailFilter/Model/AntispamConfiguration.pm:186
+msgid ""
+"The ham's autolearn threshold canot be higher or equal than the default spam "
+"level"
+msgstr "Ham değeri öntanımlı gereksiz posta düzeyine eşit veya yüksek olamaz"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:70
+msgid "External mail domain"
+msgstr "Harici posta alan isimleri"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:84
+msgid "External mail domains"
+msgstr "Harici posta alan isimleri"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:96
+#, fuzzy
+msgid "external mail domain"
+msgstr "Harici posta alan isimleri"
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:97
+msgid ""
+"Here you can specify which external mail domains can connect to the mail "
+"filter"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/ExternalDomain.pm:115
+#, perl-brace-format
+msgid "{d} is a internal eBox's virtual main domain"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:70
+msgid "Filter virus"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:76
+#, fuzzy
+msgid "Filter spam"
+msgstr "MailFilter sistemi"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:82
+#, fuzzy
+msgid "ISP spam subject"
+msgstr "Gereksiz posta konu etiketi"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:86
+msgid ""
+"This option allows you to set the string your ISP uses if\n"
+"it processes your email for SPAM."
+msgstr ""
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:94
+#, fuzzy
+msgid "Configuration"
+msgstr "Antispam seçenekleri"
+
+#: src/EBox/MailFilter/Model/POPProxyConfiguration.pm:114
+msgid ""
+"The POP transparent proxy must scan for something to be useful. If you do "
+"not need either antivirus of spam scan we suggest you turn it off"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:63
+msgid "Virus policy"
+msgstr "Virüs yönetimi"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:69
+msgid "Spam policy"
+msgstr "Gereksiz posta kuralları"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:75
+msgid "Banned files policy"
+msgstr "Yasaklanan dosya yönetimi"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:81
+#, fuzzy
+msgid "Bad header policy"
+msgstr "Kötü başlık yönetimi"
+
+#: src/EBox/MailFilter/Model/AmavisPolicy.pm:91
+#, fuzzy
+msgid "Filter Policies"
+msgstr "Mail-süzgeci portu"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:60
+msgid "Mailbox"
+msgstr "Posta kutusu"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:66
+msgid "Mailbox contains"
+msgstr "Posta kutusu içeriği"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:76
+#, fuzzy
+msgid "Train bayesian spam filter"
+msgstr "Bayesian sınıflandırıcısı kullan"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:81
+#, fuzzy
+msgid "Learned from messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:83
+msgid "Train"
+msgstr "Öğretme"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:98
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:64
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:49
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:90
+msgid "spam"
+msgstr "spam"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:99
+msgid "ham"
+msgstr "ham"
+
+#: src/EBox/MailFilter/Model/AntispamTraining.pm:131
+#, perl-brace-format
+msgid "Invalid mailbox type: {type}"
+msgstr "Geçersiz posta kutusu türü: {type}"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:69
+msgid "Domain"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:79
+msgid "Use virus filtering"
+msgstr "Virus süzgeçlemesi kullan"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:85
+msgid "Use spam filtering"
+msgstr "Gereksiz posta süzgeçlemesi kullan"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:98
+msgid "default"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:102
+#, fuzzy
+msgid "custom threshold"
+msgstr "Gereksiz posta eşiği"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:114
+msgid "Learn from accounts' Spam IMAP folders"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:116
+msgid ""
+"Every time that a email moved into or out of the IMAP spam folder the filter "
+"will be trained with it"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:123
+msgid "Learning ham account"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:124
+msgid ""
+"An address (ham@domain) will be created for this domain, ham messages "
+"incorrectly classified as spam may be forwarded to this addres to train the "
+"filter"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:135
+msgid "Learning spam account"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:136
+msgid ""
+"An address (spam@domain) will be created for this domain, spam messages "
+"incorrectly classified as ham may be forwarded to this addres to train the "
+"filter"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/VDomains.pm:147
+#, fuzzy
+msgid "Antispam sender policy"
+msgstr "Antispam gönderici erişim listeleri"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:169
+#, fuzzy
+msgid "virtual domain"
+msgstr "Posta alan adı"
+
+#: src/EBox/MailFilter/Model/VDomains.pm:187
+#, perl-brace-format
+msgid ""
+"There are no virtual mail domains managed by this server. You can create "
+"some in the {openA}virtual domains mail page{closeA}."
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:51
+#, fuzzy
+msgid "Mail filter graph"
+msgstr "Posta süzgeci"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:60
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:46
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:80
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:49
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:80
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:66
+#, fuzzy
+msgid "clean messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:68
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:52
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:95
+#, fuzzy
+msgid "banned files"
+msgstr "Yasaklanan dosya yönetimi"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:72
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:55
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:85
+msgid "infected"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:76
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:58
+#, fuzzy
+msgid "bad header"
+msgstr "Kötü başlık yönetimi"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:80
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:61
+#, fuzzy
+msgid "blacklisted"
+msgstr "Kara liste"
+
+#: src/EBox/MailFilter/Model/Report/FilterGraph.pm:103
+msgid "Filter traffic"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:101
+#, fuzzy
+msgid "blacklisted senders"
+msgstr "Kara liste"
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:106
+#, fuzzy
+msgid "bad message header"
+msgstr "Yanlış oluşturulmuş başlıklar"
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:117
+msgid "Filter traffic details"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/FilterDetails.pm:125
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:110
+msgid "traffic"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:46
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:75
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:63
+#, fuzzy
+msgid "total messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:52
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:69
+#, fuzzy
+msgid "infected messages "
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:56
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:90
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:73
+#, fuzzy
+msgid "spam messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:85
+#, fuzzy
+msgid "infected messages"
+msgstr "Posta kutusu dosyasından öğren"
+
+#: src/EBox/MailFilter/Model/Report/POPProxyDetails.pm:102
+msgid "Transparent POP proxy traffic details"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:51
+msgid "POP proxy graph"
+msgstr ""
+
+#: src/EBox/MailFilter/Model/Report/POPProxyGraph.pm:95
+msgid "Transparent POP proxy traffic"
+msgstr ""
+
+#: src/EBox/MailFilter/Amavis.pm:48
+msgid "To configure amavis"
+msgstr ""
+
+#: src/EBox/MailFilter/Amavis.pm:432
+msgid "eBox internal mail filter"
+msgstr "eBox dahili posta süzgeci"
+
+#: src/EBox/MailFilter/Amavis.pm:446
+#, fuzzy
+msgid "SMTP filter proxy"
+msgstr "MIME türü süzgeci"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:58
+msgid " To configure spamassassin daemon"
+msgstr ""
+
+#: src/EBox/MailFilter/SpamAssassin.pm:336
+msgid "It must be a number(decimal point allowed)"
+msgstr "Bir sayı olmalı (ondalık sayılar kullanılabilir)"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:346
+msgid "The spam's threshold cannot be higher than its autolearn threshold"
+msgstr "Spam'in eşiği, kendisinin otomatik öğrenme eşiğinden yüksek olamaz."
+
+#: src/EBox/MailFilter/SpamAssassin.pm:350
+msgid ""
+"The spam's threshold cannot be lower or equal than its ham's autolearn "
+"threshold"
+msgstr ""
+"Spam'in eşiği, kendisinin 'ham' otomatik öğrenme eşiğine eşit veya düşük "
+"olamaz"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:390
+msgid ""
+"Cannot learn because bayesian filter is disabled in the current "
+"configuration. In order to be able to learn enable the bayesian filter and "
+"save changes"
+msgstr ""
+"Öğrenilemiyor çünkü kullanılan yapılandırmada bayesian süzgeci kapatılmış "
+"durumda. Öğrenmeyi çalıştırmak için bayesian süzgecini etkinleştirin ve "
+"değişikliği kayıt edin"
+
+#: src/EBox/MailFilter/SpamAssassin.pm:404
+#, perl-brace-format
+msgid "Accounts from the domain {d} cannot train the bayesian filter"
+msgstr ""
+
+#: src/EBox/MailFilter/Composite/ExternalConnections.pm:60
+#, fuzzy
+msgid "External connections"
+msgstr "Harici posta alan isimleri"
+
+#: src/EBox/MailFilter/Composite/FileFilter.pm:59
+#, fuzzy
+msgid "Attached Files Filter"
+msgstr "Posta süzgeci"
+
+#: src/EBox/MailFilter/Composite/FileFilter.pm:61
+msgid ""
+"Filter mail messages according attached files. The transparent POP proxy "
+"only filters by extension"
+msgstr ""
+
+#: src/EBox/MailFilter/Composite/Report/FilterReport.pm:70
+#: src/EBox/MailFilter/Composite/Report/POPProxyReport.pm:70
+#, fuzzy
+msgid "Mail filter report"
+msgstr "Mail-süzgeci portu"
+
+#: src/EBox/MailFilter/Composite/Report/FilterReport.pm:71
+#, fuzzy
+msgid "Mail Filter report"
+msgstr "Mail-süzgeci portu"
+
+#: src/EBox/MailFilter/Composite/Report/POPProxyReport.pm:71
+msgid "Transparent POP proxy report"
+msgstr ""
+
+#: stubs/p3scan.conf.mas:15
+msgid "[Virus] found in a mail to you:"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Unsupported or incorrect input source fonrmat: {format}"
+#~ msgstr "Desteklenmeyen veya hatalı girdi kaynak biçimi: {format}"
+
+#, fuzzy
+#~ msgid "General  settings"
+#~ msgstr "Yasaklama ayarları değiştirildi"
+
+#, fuzzy
+#~ msgid "POP transparent proxy configuration"
+#~ msgstr "Antispam seçenekleri"
+
+#, fuzzy
+#~ msgid "Antivirus database update status"
+#~ msgstr "Virüs veritabanı güncelleme durumu"
+
+#, fuzzy
+#~ msgid "The last update failed"
+#~ msgstr "Son güncelleme {date} tarihinde başarısız oldu"
+
+#, fuzzy
+#~ msgid ""
+#~ "Update failed.\n"
+#~ "Your version of freshclam  is outdated.Please, install version {version} "
+#~ "or higher"
+#~ msgstr ""
+#~ "Güncelleme {date} tarihinde başarısız oldu.\n"
+#~ "Freshclam sürümünüz geçersiz. Lütfen {version} sürümünü veya daha "
+#~ "yükseğini kurun"
+
+#, fuzzy
+#~ msgid "Last update successful"
+#~ msgstr "Son güncelleme {date} tarihinde başarılı oldu"
+
+#~ msgid "Antivirus"
+#~ msgstr "Antivirüs"
+
+#~ msgid "Mail filter system"
+#~ msgstr "Posta süzgeç sistemi"
+
+#~ msgid "Mail filter settings"
+#~ msgstr "Posta süzgeç ayarları"
+
+#, fuzzy
+#~ msgid "Internal mailfilter"
+#~ msgstr "eBox dahili posta süzgeci"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "İşlemler"
+
+#, fuzzy
+#~ msgid "Database update status"
+#~ msgstr "Virüs veritabanı güncelleme durumu"
+
+#~ msgid "Learned from mailbox file"
+#~ msgstr "Posta kutusu dosyasından öğren"
+
+#~ msgid "Denied settings changed"
+#~ msgstr "Yasaklama ayarları değiştirildi"
+
+#~ msgid ""
+#~ "The sender can be either an email address or a domain name prefixed with "
+#~ "'@'"
+#~ msgstr ""
+#~ "Gönderen, bir e-posta adresi veya '@' ile başlayan bir alan adı olabilir."
+
+#~ msgid "Mail domain"
+#~ msgstr "Posta alan adı"
+
+#~ msgid "The last update failed at {date}"
+#~ msgstr "Son güncelleme {date} tarihinde başarısız oldu"
+
+#~ msgid ""
+#~ "Update failed at {date}.\n"
+#~ "Your version of freshclam  is outdated.Please, install version {version} "
+#~ "or higher"
+#~ msgstr ""
+#~ "Güncelleme {date} tarihinde başarısız oldu.\n"
+#~ "Freshclam sürümünüz geçersiz. Lütfen {version} sürümünü veya daha "
+#~ "yükseğini kurun"
+
+#~ msgid "{plural} which are not listed below are allowed"
+#~ msgstr "Aşağıda listelenmeyen {plural} 'a izin verildi"
+
+#~ msgid "Delete"
+#~ msgstr "Sil"
+
+#~ msgid ""
+#~ "Spam messages which a score equal or greater than this threshold will be "
+#~ "added to the learning system "
+#~ msgstr ""
+#~ "Bu puan eşiğine eşit veya daha yüksek olan gereksiz posta mesajları "
+#~ "öğrenme sistemine eklenecek"
+
+#~ msgid ""
+#~ "Ham messages which a score below this threshold will be added to the "
+#~ "learning system"
+#~ msgstr ""
+#~ "Bu puan eşiğinden daha düşük olan 'ham' mesajları öğrenme sistemine "
+#~ "eklenecek"
+
+#~ msgid "Antispam options"
+#~ msgstr "Antispam seçenekleri"
+
+#~ msgid "Service port"
+#~ msgstr "Servis portu"
+
+#~ msgid "Antispam sender access lists"
+#~ msgstr "Antispam gönderici erişim listeleri"
+
+#~ msgid ""
+#~ "External mail server {mta} removed. Remember to remove its mail domains "
+#~ "from the external mail domain's list"
+#~ msgstr ""
+#~ "Harici posta sunucusu {mta} silindi. Bu sunucunu posta alan adlarını "
+#~ "harici alan adları listesinden silmeyi unutmayın"
+
+#~ msgid "{name} is already registered"
+#~ msgstr "{name} önceden kayıt edildi"
+
+#~ msgid "{name} added"
+#~ msgstr "{name} eklendi"
+
+#~ msgid "No changes were specified by the user"
+#~ msgstr "Kullanıcı tarfından değişiklik belirtilemdi"
+
+#~ msgid "{name} is not registered"
+#~ msgstr "{name} kayıtlı değil"
+
+#~ msgid "{name} removed"
+#~ msgstr "{name} silindi"
+
+#~ msgid "The specified sender is not in the ACL"
+#~ msgstr "Belirlenen gönderen ACL içinde değil"
+
+#~ msgid "Mail domain {domain} added to external domain's list."
+#~ msgstr "{domain} posta alan adı harici alan adı listesine eklendi"
+
+#~ msgid "Mail domain {domain} removed from external domain's list."
+#~ msgstr "Posta alan adı {domain} harici alan adları listesinden silindi."
+
+#~ msgid "All entries were removed"
+#~ msgstr "Tüm girdiler silindi"
+
+#~ msgid ""
+#~ "External mail server {mta} allowed. Remember to add its mail domains to "
+#~ "the external mail domain's list"
+#~ msgstr ""
+#~ "Harici posta sunucusu {mta} için izin verildi. Bu sunucunun posta alan "
+#~ "adlarını harici alan adları listesine eklemeyi unutmayın"
+
+#~ msgid "{ext} is not registered in the extensions list"
+#~ msgstr "{ext} uzantılar listesinde kayıtlı değil"
+
+#~ msgid "{ext} is not registered in the mimeTypes list"
+#~ msgstr "{ext} mimeTipleri listesinde kayıtlı değil"
+
+#~ msgid "The spam's autolearn threshold must be higher than 6.0"
+#~ msgstr "Gereksiz postayı otomatik öğrenme değeri 6.0'dan yüksek olmalı"
+
+#~ msgid "The ham's autolearn threshold cannot be higher than spam's threshold"
+#~ msgstr "'Ham'i kendiliğinden öğrenme eşiği spam'inkinden yüksek olamaz"
+
+#~ msgid "MTA's address"
+#~ msgstr "MTA adresi"
+
+#~ msgid "{mta} is already allowed"
+#~ msgstr "{mta} 'ya zaten izin verilmiş"
+
+#~ msgid "{mta} not found"
+#~ msgstr "{mta} bulunamadı"
+
+#~ msgid "{domain} is already acknowledged as external mail domain"
+#~ msgstr "{domain} 'i zaten harici posta alan adı olarak alındı"
+
+#~ msgid "Domain {domain} was not acknowledged as external mail domain"
+#~ msgstr "{domain} domaini harici posta alan adı olarak alınmadı"
+
+#~ msgid "Administrator address"
+#~ msgstr "Yönetici adresi"
+
+#~ msgid "policy type"
+#~ msgstr "Yönetim tipi"
+
+#~ msgid "filter type"
+#~ msgstr "Süzgeç tipi"
+
+#~ msgid "The last successful update was at {date}"
+#~ msgstr "Başarılı son güncelleme {date} tarihinde gerçekleşti"
+
+#~ msgid "Deny"
+#~ msgstr "Yasakla"
+
+#~ msgid "Add {element}"
+#~ msgstr "{element} ekle"
+
+#~ msgid "Name"
+#~ msgstr "İsim"
+
+#~ msgid "All registered {plural}"
+#~ msgstr "Tüm kayıtlı {plural}"
+
+#~ msgid "Delete them all"
+#~ msgstr "Hepsini sil"
+
+#~ msgid "Change"
+#~ msgstr "Değiştir"
+
+#~ msgid "Antispam global sender access lists"
+#~ msgstr "Genel Antispam gönderen erişim listeleri"
+
+#~ msgid "Spam filter training"
+#~ msgstr "Gereksiz posta süzgeci öğretimi"
+
+#~ msgid "Whitelist"
+#~ msgstr "Beyaz liste"
+
+#~ msgid "Blacklist"
+#~ msgstr "Kara liste"
+
+#~ msgid "Sender"
+#~ msgstr "Gönderen"
+
+#~ msgid "Add sender to {type}"
+#~ msgstr "{type} bölümüne gönderen ekle"
+
+#~ msgid "Notification address"
+#~ msgstr "Uyarı adresi"
+
+#~ msgid "Notification"
+#~ msgstr "Uyarılma"
+
+#~ msgid "External Mail server"
+#~ msgstr "Harici posta sunucusu"
+
+#~ msgid "Allowed external mail servers"
+#~ msgstr "İzin verilen harici posta sunucuları"
+
+#~ msgid "Add external mail server"
+#~ msgstr "Harici posta sunucusu ekle"
+
+#~ msgid "External Mail domain"
+#~ msgstr "Harici posta alan isimleri"
+
+#~ msgid "Add external mail domain"
+#~ msgstr "Harici posta alan ismi ekle"
+
+#~ msgid ""
+#~ "The \"{name}\"  setting will not have effect until the\n"
+#~ "   antivirus service will be enabled in the mail filter"
+#~ msgstr ""
+#~ "\"{name}\" ayarları posta süzgeçlemesinde antivirüs\n"
+#~ "servisi açılıncaya kadar geçerli olmayacak"
+
+#~ msgid ""
+#~ "The \"{name}\"  setting will not have effect until the\n"
+#~ "   antispam sergice will be enabled in the mail filter"
+#~ msgstr ""
+#~ "\"{name}\" ayarları posta süzgeçlemesinde antivirüs\n"
+#~ "servisi açılıncaya kadar geçerli olmayacak"
+
+#~ msgid "Use default spam threshold (current value is {v})"
+#~ msgstr "Öntanımlı gereksiz posta eşiğini kullan (şu anki değer {v})"
+
+#~ msgid "Mail filter options"
+#~ msgstr "Posta süzgeçleme seçenekleri"
+
+#~ msgid "Extensions filter"
+#~ msgstr "Uzantı süzgeçleri"
+
+#~ msgid "Unsupported or incorrect input source format: {format}"
+#~ msgstr "Desteklenmeyen veya hatalı girdi kaynak biçimi: {format}"
+
+#~ msgid "module status"
+#~ msgstr "Modül durumu"
+
+#~ msgid ""
+#~ "External mail server {mta} removed. Remember to remove his mail domains "
+#~ "from the external mail domains list"
+#~ msgstr ""
+#~ "Harici posta sunucusu {mta} silindi. Kendisinin posta domainlerini harici "
+#~ "domain listesinden silmeyi unutmayın "
+
+#~ msgid "No changes where specified by the user"
+#~ msgstr "Kullanıcı tarafından yapılan değişiklik yok"
+
+#~ msgid "Mail domain{domain} removed from external domains list."
+#~ msgstr "{domain} posta domaini harici domain listesinden silindi"
+
+#~ msgid ""
+#~ "External mail server {mta} allowed. Remember to add his mail domains to "
+#~ "the external mail domains list"
+#~ msgstr ""
+#~ "{mta} harici posta sunucusuna izin verildi. Kullanıcının posta "
+#~ "domainlerini harici posta domain listesine eklemeyi unutmayın"
+
+#~ msgid "The spam's threshold cannot be higher than his autolearn threshold"
+#~ msgstr "Gereksiz posta değeri, otomatik öğrenme değerinden yüksek olamaz"
+
+#~ msgid ""
+#~ "The spam's threshold cannot be lower or equalthan his ham's autolearn "
+#~ "threshold"
+#~ msgstr "Gerksiz posta değeri ham değerine eşit veya yüksek olamaz"
+
+#~ msgid ""
+#~ "Cannot learn because bayesian filter is disabled in the current "
+#~ "configuration. In order to be able to learn  enable ithe bayesian filter "
+#~ "and save the changes"
+#~ msgstr ""
+#~ "Öğrenilemiyor çünkü şu anki yapılandırmada bayesian süzgeci kapalı. "
+#~ "Öğrenmeyi etkin kılmak için bayesian süzgecini etkinleştirin ve "
+#~ "değişiklikleri kaydedin"
+
+#~ msgid ""
+#~ "The sender can only be a email address or a domain name prefixed with '@'"
+#~ msgstr ""
+#~ "Gönderen bir e-posta adresi veya @ ön eki ile başlayan bir domain ismi "
+#~ "olabilir"
+
+#~ msgid "Invalid externa; MTA {mta}. Local net addresses are not allowed"
+#~ msgstr "Geçersiz harici {mta} MTA. Yerel net adresine izin yok"
+
+#~ msgid "Configure denied file extensions"
+#~ msgstr "Yasaklanan dosya uzantılarını yapılandır"
+
+#~ msgid "extensions"
+#~ msgstr "uzantılar"
+
+#~ msgid "Update failed at {date}.\n"
+#~ msgstr "Güncelleme {date} tarihinde başarısız oldu. \n"
+
+#~ msgid "Add"
+#~ msgstr "Ekle"
+
+#~ msgid "Are you sure you want to delete all {plural}?"
+#~ msgstr "Tüm {plural} girdisini silmekten emin misiniz?"
+
+#~ msgid "Tag which will be added to the subject of spam mail"
+#~ msgstr "Gereksiz posta konusu olarak eklenecek etiket"
+
+#~ msgid "Use bayesian classefier"
+#~ msgstr "Bayesian sınıflandırıcısı kullan"
+
+#~ msgid "Change the score of mail according the history of the sender"
+#~ msgstr "Postanın puanını gönderenin geçmiş kayıtlarına göre değiştir"
+
+#~ msgid ""
+#~ "Spam messages which a score equal or greater than this threshold will be  "
+#~ "introduced  in the learning system "
+#~ msgstr ""
+#~ "Bu değere eşit veya daha yüksek gereksiz postalar öğrenme sistemine "
+#~ "eklenecektir"
+
+#~ msgid ""
+#~ "Ham messages which a score below this treshold will be introduced in the "
+#~ "learning system"
+#~ msgstr ""
+#~ "Bu değerden daha düşük 'ham' postaları öğrenme sistemine eklenecektir"
+
+#~ msgid "There isn't any sender in {type} "
+#~ msgstr "{type} içinde hiçbir gönderen tanımlanmamış"
+
+#~ msgid "Enable Mail filter system"
+#~ msgstr "Posta süzgeçleme sistemini etkinleştir"
+
+#~ msgid "No allowed external mail servers"
+#~ msgstr "İzin verilmiş harici posta sunucusu mevcut değil"
+
+#~ msgid "No external mail domains"
+#~ msgstr "Harici posta alan isimleri mevcut değil"
+
+#~ msgid "Configure denied MIME types"
+#~ msgstr "Reddedilen MIME türlerini düzenle"
+
+#~ msgid "The last update was successful at {date}"
+#~ msgstr "Son güncelleme {date} tarihinde başarılı oldu"

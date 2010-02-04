@@ -1,0 +1,65 @@
+<%args>
+    $nat
+    $type
+    $value
+    @localnets
+    $domain
+    $outgoingcalls
+    $name
+    $username
+    $password
+    $server
+    $incoming
+</%args>
+;
+; Asterisk SIP configuration file
+;
+
+[general]
+context=default
+allowoverlap=no
+realm=ebox
+fromdomain=<% $domain %>
+
+udpbindaddr=0.0.0.0
+tcpenable=no
+tcpbindaddr=0.0.0.0
+% if ($nat) {
+% if ($type eq 'fixedIP') {
+externip=<% $value %>
+% }
+% if ($type eq 'dynamicHost') {
+externhost=<% $value %>
+externrefresh=10
+% }
+% foreach my $net (@localnets) {
+localnet=<% $net %>
+% }
+% }
+
+srvlookup=yes
+disalow=all
+allow=alaw,ulaw,gsm
+language=en
+videosupport=yes
+
+rtcachefriends=yes
+rtautoclear=yes
+
+alwaysauthreject=yes
+
+% if ($outgoingcalls) {
+register => <% $username %>:<% $password %>@<% $server %>/<% $incoming %>
+[<% $name %>]
+username=<% $username %>
+type=friend
+secret=<% $password %>
+host=<% $server %>
+fromuser=<% $username %>
+context=default
+allow=alaw,ulaw,gsm
+trustrpid = yes
+sendrpid = yes
+canreinvite = no
+insecure = port,invite
+% }

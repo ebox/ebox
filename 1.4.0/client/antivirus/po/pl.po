@@ -1,0 +1,88 @@
+# Polish translations for EBox-modulename package.
+# Copyright (C) 2009 Warp S.L.
+# This file is distributed under the same license as the EBox-modulename package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-antivirus 0.1\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-01-29 23:28+0000\n"
+"PO-Revision-Date: 2009-04-02 04:24+0200\n"
+"Last-Translator: Piotr Kirklewski <pkirklewski@gabaedevelopment.com>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/AntiVirus.pm:69 src/EBox/AntiVirus.pm:395
+#: src/EBox/AntiVirus.pm:400 src/EBox/AntiVirus/Model/FreshclamStatus.pm:72
+msgid "Antivirus"
+msgstr "Antywirus"
+
+#: src/EBox/AntiVirus.pm:212
+#, fuzzy
+msgid " To configure clamd daemon"
+msgstr "Konfiguruj clamd "
+
+#: src/EBox/AntiVirus.pm:217
+msgid "To configure freshclam updater"
+msgstr "Konfiguruj freshclam"
+
+#: src/EBox/AntiVirus.pm:222
+msgid "To schedule the launch of the updater"
+msgstr "Zaplanuj start aktualizacji"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:59
+msgid "Status"
+msgstr "Status"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:63
+msgid "Date"
+msgstr "Data"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:71
+#, fuzzy
+msgid "Database Update Status"
+msgstr "Status aktualizacji bazy antywirusa"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:127
+#, fuzzy
+msgid ""
+"The antivirus database has not been updated since the module was enabled."
+msgstr ""
+"Ostatnia aktualizacja bazy antywirusa była  mailfilter eBox's moduł został "
+"zainstalowany"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:130
+#, fuzzy
+msgid "The last update failed."
+msgstr "Ostatnia aktualizacja zakończona błędem"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:133
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:136
+#, fuzzy
+msgid "Last update successful."
+msgstr "Ostatnia aktualizacja zakończona pomyślnie"
+
+#: src/EBox/AntiVirus/Model/FreshclamStatus.pm:139
+#, fuzzy, perl-brace-format
+msgid "Unknown event {event}."
+msgstr "Nieznane zdarzenie {event}"
+
+#, fuzzy
+#~ msgid ""
+#~ "Update successful but your freshclam version is outdated.\n"
+#~ "The antivirus will not be able to use all the signatures.Please, install "
+#~ "version {version} or higher."
+#~ msgstr ""
+#~ "Aktualizacja zakończona sukcesem, ale zainstalowana wersja freshclam jest "
+#~ "przestarzała.\n"
+#~ "Antywirus nie potrafi użyć wszystkich sygnatur.Proszę zainstaluj wersję "
+#~ "{version} albo wyższą"
+
+#~ msgid "Update status"
+#~ msgstr "Status aktualizacji"

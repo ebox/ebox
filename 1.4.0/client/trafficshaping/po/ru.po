@@ -1,0 +1,393 @@
+# Russian translations for ebox-trafficshaping package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-trafficshaping package.
+# Automatically generated, 2007.
+#
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:125
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-trafficshaping 0.12.2\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-02-03 21:01+0000\n"
+"PO-Revision-Date: 2009-07-17 14:57+0200\n"
+"Last-Translator: Vadim Glyshkov <plusv@yandex.ru>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:218
+#, perl-brace-format
+msgid "Guaranteed Rate exceeds the allowed rate: {rate} kbit/s"
+msgstr "Гарантирован скорость превышает допустимую скорость: {rate} кбит/сек"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:225
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:410
+#, perl-brace-format
+msgid ""
+"Guaranteed Rate must be in this interval: ( {minRate}, {maxRate} ) kbit/s"
+msgstr ""
+"Гарантированная скорость должна быть в интервале: ( {minRate}, {maxRate} ) "
+"кбит/сек"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:237
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:422
+#, perl-brace-format
+msgid ""
+"Limited Rate {lR} kbit/s should be higher than Guaranteed Rate {gR}kbit/s"
+msgstr ""
+"Ограничиваемая скорость {lR} кбит/сек должна быть выше гарантированной "
+"скорости {gR} кбит/сек"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:244
+#, perl-brace-format
+msgid ""
+"Limited Rate {lR} kbit/s should be lower than {maxLR}kbit/s or you should "
+"increase maximum upload traffic to the gateways associated to this external "
+"interface"
+msgstr ""
+"Ограничиваемая скорость {lR} кбит/сек должна быть ниже {maxLR}kbit/s или вам "
+"необходимо увеличить максимум входящего трафика на шлюзе связанном с этим "
+"внешним интерфейсом"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:401
+#, perl-brace-format
+msgid "Guaranteed Rate exceeded the allowed rate: {rate}"
+msgstr "Гарантированная скорость превысила разрешенную: {rate}"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:430
+#, perl-brace-format
+msgid ""
+"Limited Rate {lR} kbit/s should be lower than {maxLR} or you should increase "
+"maximum allowed traffic"
+msgstr ""
+"Ограничиваемая скорость {lR} кбит/сек дожна быть ниже {maxLR}kbit/s или вам "
+"необходимо увеличить максимально допустимый трафик"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:618
+msgid "Leaf class identifier"
+msgstr "Список идентификаторов класса"
+
+#: src/EBox/TrafficShaping/TreeBuilder/HTB.pm:622
+msgid "Address"
+msgstr "Адрес"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:185
+#, perl-brace-format
+msgid "{iface} (internal interface)"
+msgstr "{iface} (внутренний интерфейс)"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:188
+#, perl-brace-format
+msgid "{iface} (external interface)"
+msgstr "{iface} (внешний интерфрейс)"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:215
+msgid "Guaranteed rate"
+msgstr "Гарантируемая скорость"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:220
+msgid "Limited rate"
+msgstr "Ограниченная скорось"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:231
+#, perl-brace-format
+msgid ""
+"Object {object} has no members. Please add at least one to add rules using "
+"this object"
+msgstr ""
+"Объект {object} не имеет членов. Пожалуйста добавьте хотя-бы одного, для "
+"добавления правил к объекту."
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:258
+msgid "If service is any, some source or destination should be provided"
+msgstr "Если любая служба должен быть предоставлен источник или назначение"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:393
+msgid "Service"
+msgstr "Служба"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:398
+msgid "Port based service"
+msgstr "Основной порт службы"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:410
+msgid "Source"
+msgstr "Источник"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:415
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:443
+msgid "Any"
+msgstr "Любой"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:418
+msgid "Source IP"
+msgstr "Источник IP"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:423
+msgid "Source MAC"
+msgstr "Источник MAC"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:428
+msgid "Source object"
+msgstr "Источник объект"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:438
+msgid "Destination"
+msgstr "Назначение"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:446
+msgid "Destination IP"
+msgstr "Назначение IP"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:451
+msgid "Destination object"
+msgstr "Назначение объект"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:461
+#: src/EBox/TrafficShaping.pm:1563
+msgid "Priority"
+msgstr "Приоритет"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:465
+msgid "Lowest priotiry: 7 Highest priority: 0"
+msgstr "Низший приоритет: 7 Высший приоритет: 0"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:469
+#: src/EBox/TrafficShaping.pm:1561
+msgid "Guaranteed Rate"
+msgstr "Гарантируемая скорость"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:472
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:486
+msgid "Kbit/s"
+msgstr "Кбит/сек"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:474
+msgid ""
+"Note that The sum of all guaranteed rates cannot exceed your total "
+"bandwidth. 0 means unguaranteed rate."
+msgstr ""
+"Замечание, сумма всех скоростей не должна превышать общую скорость "
+"пропускания. 0 неограниченная скорость."
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:481
+#: src/EBox/TrafficShaping.pm:1562
+msgid "Limited Rate"
+msgstr "Ограниченная скорость"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:488
+msgid "Traffic will not exceed this rate. 0 means unlimited rate."
+msgstr ""
+"Трафик не будет превышать эту скорость. 0 означает неограниченную скорость."
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:495
+#, perl-brace-format
+msgid "Rules list for {printableIndex}"
+msgstr "Список правил для {printableIndex}"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:504
+msgid ""
+"Note that if the interface is internal, the traffic flow comes from Internet "
+"to inside and the external is the other way around"
+msgstr ""
+"Заметьте, если интерфейс внешний, трафик из Интернета во внутреннию сеть и "
+"наоборот, если внутрений то во вне."
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:509
+msgid "rule"
+msgstr "правило"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:570
+#, perl-brace-format
+msgid "Remove {num} rules at {modelName}"
+msgstr "Удалить {num} правила для {modelName}"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:617
+#, perl-brace-format
+msgid ""
+"Normalizing rates: {limitNum} rules have decreased its limit rate to "
+"{limitRate}, {guaranNum} rules have normalized its guaranteed rate to "
+"maintain the same proportion that it has previously and {removeNum} have "
+"been deleted because its guaranteed rate was lower than the minimum allowed"
+msgstr ""
+"Нормализация скорости: {limitNum} правила снизяться до предельной скорости "
+"{limitRate}, {guaranNum} правила нормализовали гарантированную скорость "
+"пропорциаонально предыдущим значениям {removeNum} были удалены поскольку их "
+"гартированная скорость была меньше минимально разрешенной"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:674
+msgid ""
+"Port based protocols use the port number to match a service, while "
+"Application based protocols are slower but more effective as they check the "
+"content of any packet to match a service."
+msgstr ""
+"Протоколы на основе портов используют номера портов для опредления "
+"сответвующей службы, протоколы на базе приложений медленее, но более "
+"эффективы, так как проверяют содержимое пакетов для определения службы."
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:690
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:707
+msgid "Application based service"
+msgstr "Служба на базе приложений"
+
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:698
+#: src/EBox/TrafficShaping/Model/RuleTable.pm:714
+msgid "Application based service group"
+msgstr "Гуппа служб на базе приложений"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:94
+msgid "External Interface"
+msgstr "Внешний интерфейс"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:99
+msgid "Upload"
+msgstr "Отдача"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:103
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:111
+msgid "Upload rate in Kbits/s through this interface"
+msgstr "Скорость отдачи в Кбит/сек через этот интерфейс"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:107
+msgid "Download"
+msgstr "Приём"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:118
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:119
+msgid "External Interface Rates"
+msgstr "Скорости внешнего интерфейса"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:126
+msgid "rate"
+msgstr "скорость"
+
+#: src/EBox/TrafficShaping/Model/InterfaceRate.pm:151
+msgid "You need at least one internal interface and one external interface"
+msgstr "Вам необходим хотя-бы один внешний и один внутренний интерфейс"
+
+#: src/EBox/TrafficShaping/Composite/DynamicGeneral.pm:85
+#, perl-brace-format
+msgid ""
+"Traffic Shaping is applied when eBox is acting as a gateway. To achieve "
+"this, you need at least an internal and an external interface. Check your "
+"interface configuration to match, at {openhref}Network->Interfaces{closehref}"
+msgstr ""
+"Управление трафиком применяется, если eBox используется в качестве шлюза. "
+"Для этого необходимо по крайне мере одному внешнему и  внутреннему "
+"интерфейсу. Проверте настройки интерфейсов {openhref}Network->Interfaces"
+"{closehref}"
+
+#: src/EBox/TrafficShaping/Composite/DynamicGeneral.pm:94
+#, perl-brace-format
+msgid ""
+"Traffic Shaping is applied only if there are gateways with an upload rate "
+"set associated with an external interface. In order to do so, create a "
+"gateway at {openhref}Network->Gateways{closehref} setting as interface an "
+"external one."
+msgstr ""
+"Управление трафиком применяется, если скорость загрузки шлюзов ассоцированы "
+"с внешним интерфесом. Для этого необходимо: создать шлюз {openhref}Network-"
+">Gateways{closehref} и настроить интерфейс как внешний"
+
+#: src/EBox/TrafficShaping/Composite/DynamicGeneral.pm:117
+msgid "Rules list per interface"
+msgstr "Список правил на интерфейсе"
+
+#: src/EBox/TrafficShaping/Composite/DynamicGeneral.pm:128
+msgid ""
+"Select an interface to add traffic shaping rules. Keep in mind that if you "
+"are shaping an internal interface, you are doing ingress shaping."
+msgstr ""
+"Выберите интерфейс для добавлений правил шейпинга трафика. Keep in mind that "
+"if you are shaping an internal interface, you are doing ingress shaping."
+
+#: src/EBox/TrafficShaping/Composite/DynamicGeneral.pm:130
+msgid "Choose an interface to shape"
+msgstr "Выберите интерфейс для управления "
+
+#: src/EBox/TrafficShaping.pm:94
+msgid "Traffic Shaping"
+msgstr "Управление трафиком ( приоретизация трафика)"
+
+#: src/EBox/TrafficShaping.pm:132
+msgid "Add iptables rules to mangle table"
+msgstr "Добавить правило iptables в таблицу mangle"
+
+#: src/EBox/TrafficShaping.pm:133
+msgid "To mark packets with different priorities and rates"
+msgstr "Чтобы отметить пакеты с различным приоритетом и скоростью"
+
+#: src/EBox/TrafficShaping.pm:137
+msgid "Add tc rules"
+msgstr "Добавить правила tc"
+
+#: src/EBox/TrafficShaping.pm:138
+msgid "To implement the traffic shaping rules"
+msgstr "Для включения правил управления трафиком"
+
+#: src/EBox/TrafficShaping.pm:383
+msgid "Rules"
+msgstr "Правила"
+
+#: src/EBox/TrafficShaping.pm:385
+msgid "Interface Rates"
+msgstr "Скорости интерфейса"
+
+#: src/EBox/TrafficShaping.pm:440 src/EBox/TrafficShaping.pm:591
+#: src/EBox/TrafficShaping.pm:985 src/EBox/TC.pm:107
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: src/EBox/TrafficShaping.pm:453
+#, perl-brace-format
+msgid ""
+"The maximum rule account {max} is reached, please delete at least one in "
+"order to to add a new one"
+msgstr ""
+"Достигнут максимум правил аккаунта {max} , пожалуйста удалите хотябы один "
+"для добавления нового"
+
+#: src/EBox/TrafficShaping.pm:1071
+msgid "type"
+msgstr "тип"
+
+#: src/EBox/TrafficShaping.pm:1094
+#, perl-brace-format
+msgid ""
+"Interface {iface} should have a maximum bandwidth rate in order to do "
+"traffic shaping"
+msgstr ""
+"Интерфейс {iface} должен иметь максимальную скорость по пропускной "
+"способности для управления трафиком"
+
+#: src/EBox/TrafficShaping.pm:1559
+msgid "Protocol"
+msgstr "Протокол"
+
+#: src/EBox/TrafficShaping.pm:1560
+msgid "Port"
+msgstr "Порт"
+
+#: src/EBox/TC.pm:69
+msgid "options"
+msgstr "настройки"
+
+#~ msgid "Change or remove some rules on {contextName}"
+#~ msgstr "Изменить или удалить некоторые правила касающиеся {contextName}"
+
+#~ msgid "traffic shaping"
+#~ msgstr "управление трафиком"
+
+#~ msgid "Gateway"
+#~ msgstr "Шлюз"
+
+#~ msgid ""
+#~ "Traffic shaping can be only done in external interfaces which have "
+#~ "gateways associated to"
+#~ msgstr ""
+#~ "Шейпинг трафика можно организовать только на внешних интерфейсах "
+#~ "связанных со шлюзом."
