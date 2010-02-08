@@ -1,0 +1,553 @@
+<%flags>
+  inherit => '/ajax/modelViewer.mas'
+</%flags>
+<%args>
+  $model
+  $action => 'view'
+  $editid => ''
+  $hasChanged => 1
+  $filter => ''
+  $page => 0
+  $tpages => 0
+  %presetParams => ()
+</%args>
+<%init>
+use EBox::Gettext;
+use EBox::Model::DataTable;
+use POSIX;
+</%init>
+<& PARENT:view,
+   model      => $model,
+   hasChanged => $hasChanged,
+   action     => $action,
+&>
+
+<%doc>
+  Method: _body
+
+     Set the model viewer body. Check the overridden method very
+     carefully.
+
+  Overrides:
+
+     /ajax/modelViewer.mas:_body
+
+</%doc>
+<%method _body>
+<%args>
+  $model
+  $action => 'view'
+  $editid => ''
+  $hasChanged => 1
+  $filter => ''
+  $page => 0
+  $tpages => 0
+  %presetParams => ()
+</%args>
+<%init>
+  # Fetch table head from model
+  my @tableHead = @{$model->table()->{'tableDescription'}};
+  # Pointer to different values for convenience 
+  my $actions = $model->table()->{'actions'};
+  my $changeView = $model->action('changeView');
+  my $printableRowName = $model->table()->{'printableRowName'};
+  my $tableName = $model->table()->{'tableName'};
+  my $printableTableName = $model->table()->{'printableTableName'};
+  my @ids;
+  if (not $model->customFilter()) {
+    @ids =  @{$model->ids()};
+  } else {
+    @ids = @{$model->customFilterIds($filter)};
+  }
+  unless ($page) {
+    $page = 0;
+  } 
+  # Fetch the edited row if we are editing one
+  my $rowEdit;
+  if ($editid and ($editid ne 'undefined')) {
+          $rowEdit = $model->row($editid);
+  }
+
+  # Fetch the data to be displayed in setters, if we are editing a row
+  # we should show the contents of the current fields. If we are
+  # adding a new row, the fields are empty except for a preset values
+  # adding where preset contents must be shown
+  my @formData = @tableHead;
+  if ($rowEdit) {
+      @formData = @{$rowEdit->elements()};
+  } elsif ( ((keys %presetParams) > 0)
+            and $action eq 'presetUpdate') {
+      # The preset is not empty
+      @formData = values(%presetParams);
+  }
+  # If the action is a preset update, choose for an edition or an
+  # addition whether the editid is set or not
+  if ( $action eq 'presetUpdate' ) {
+      $action = 'changeAdd' if (not $editid);
+      $action = 'changeEdit' if ( $editid );
+  }
+</%init>
+<& .pageTitle,
+   crumbs => $model->viewCustomizer()->HTMLTitle()
+&>
+
+% if ($model->help()) {
+<div class="help">
+  <% $model->help() %>
+</div>
+% }
+
+%  if ( $action ne 'changeAdd' and $action ne 'changeEdit' )
+%  {
+%    if ( $model->printableModelName() )
+%    {
+<& PARENT:title,
+   title => $model->headTitle()
+&>
+%    }
+%    if ($changeView and exists $actions->{'add'}) 
+%    {
+  <a href='#' class='addNew'
+      name='add' 
+         onClick='<%
+                 $model->changeViewJS( changeType => "changeAdd", 
+                      editId => "undefined", 
+                      page => $page,
+                      isFilter => 0) 
+                %>;return false'><% __d('Add new', 'libebox') %></a>
+   <br/>
+   <br/>
+%    }
+  <span id="<% 'creatingForm_' . $tableName %>"></span>   
+%  }
+
+%  if ( $action eq 'changeAdd' or $action eq 'changeEdit' )
+%  {
+%   if ( $action eq 'changeAdd' )
+%    {
+%     my $addingStr = __dx('Adding a new {row}', 'libebox', row => $printableRowName);
+<& PARENT:title, title => $addingStr &>
+%    }
+%   elsif ( $action eq 'changeEdit' ) 
+%    {
+<h3>
+%     my $editingStr = __dx('Editing {row}', 'libebox', row => $printableRowName);
+<& PARENT:title, title => $editingStr &>
+%   }
+
+<form name="<% $tableName . '_ajaxform' %>">
+  <table class='formTable'>
+    <tbody>
+     <col width="1*" />
+     <col width="auto" /
+      <& PARENT:editRowFields,
+         modelName => $tableName,
+         formData => \@formData
+      &>
+      <& SELF:buttons &>
+    </tbody>
+  </table>
+</form>
+
+%   my $customizer = $formData[0]->model()->viewCustomizer();
+%   if ($customizer) {
+<script>
+<%   $customizer->onChangeActionsJS() %>
+</script>
+%    }
+%  }
+
+
+% if (@ids or length($filter) > 0) 
+%  {
+%    if ( $action eq 'changeAdd' or $action eq 'changeEdit' )
+%    {
+<h3>
+  <% 
+    $printableTableName 
+  %>
+</h3>
+%    }
+
+<table class="bDataTable">
+    <tr>
+        <td>
+<form action="javascript:void(0)">
+%    my $filterId =  $tableName  .  '_filterLoading';
+  <input type='text'
+      name='<%
+              $tableName
+            %>'
+      id='<% 
+            $tableName . "_filter" 
+          %>'
+      value="<% 
+              $filter 
+             %>"  
+  />
+  <input type='submit' 
+      name='filter' 
+      value="<% __d('Search', 'libebox') %>" 
+      title="Apply" 
+      onClick='setLoading("<% 
+                             $filterId 
+                            %>");
+                <%
+                  $model->changeViewJS( changeType => "changeList", 
+                     editId => 'undefined', 
+                     page => 0,
+                     isFilter => 1)
+               %>;
+  
+               return false' 
+  />
+  <span id="<% 
+              $filterId 
+            %>"
+  ></span>   
+</form>
+	</td>
+    </tr>
+</table>
+<table class='<% 
+               $model->table()->{'class'} 
+              %>'>
+
+<& SELF:tableHead, tableHead => \@tableHead &>
+
+    <tbody>
+%    my $displayRows = 0;
+%    my $matches = 0;
+%    for ( my $idx = 0; $idx < scalar(@ids); $idx++)
+%    {
+%      my  $row;
+%      if (not $model->customFilter() and defined($filter) and (length($filter) > 0)) {
+%        $row = $model->row($ids[$idx]);
+%        if (not ($row->matchFilter($filter))) {
+%          next;
+%        }
+%      } else {
+%        $matches++;
+%        unless ($matches > ($model->pageSize() * $page)) { next;}
+%        $displayRows++;
+%      if ($displayRows > $model->pageSize()) { next; };
+%        $row = $model->row($ids[$idx]);
+%      }
+
+      <tr class='border' 
+          id="<% 
+                $row->id()
+              %>">
+        
+%      foreach my $td (@{$row->elements()}) 
+%      {
+%        next unless ($td->HTMLViewer());
+        <td class='tcenter'>
+          <& 
+            $td->HTMLViewer(),
+            'data' => $td
+          &>
+        </td>
+
+%    }
+
+<& SELF:actionCell, model => $model, 
+                    actions => $actions,
+
+                    row => $row, 
+                    firstRow    => ($idx == 0),
+                    lastRow    => ($idx == $#ids),
+
+                    changeView => $changeView,
+                    page => $page 
+                    &>
+      </tr>
+%     if ($displayRows == $model->pageSize() and not (defined($filter) and length($filter) > 0) ) {
+%       $matches = scalar(@ids);
+%       last;
+%     }
+%   }  
+    </tbody>
+</table>
+
+<table class="bDataTable">
+    <tr>
+    <td class="tright">
+ <& /ajax/tablePager.mas,
+   model => $model,
+   page => $page,
+   tpages => POSIX::ceil($matches / $model->pageSize()) - 1,
+   pageSize => $model->pageSize()
+&>
+    </td>
+    </tr>
+</table>
+
+
+% } else {
+<input type="hidden" 
+  id="<% $model->tableName() . '_pageSize' %>"
+  value="<% $model->pageSize() %>"
+>
+% }
+
+% if ( $action eq 'changeEdit' and $editid ) {
+<script>highlightRow('<% $editid %>', 1);</script>
+% }
+
+% # End body method
+</%method>
+
+<%doc>
+   Method: buttons
+
+     Show the button to submit the form
+
+  Overrides:
+
+     /ajax/modelViewer.mas:buttons
+
+</%doc>
+<%method buttons>
+<%init>
+  # Getting the arguments from the first request
+  my $model  = $m->request_args()->{model};
+  my $action = $m->request_args()->{action};
+  my $editid = $m->request_args()->{editid};
+  my $filter = $m->request_args()->{filter};
+  my $page   = $m->request_args()->{page};
+  my $tpages = $m->request_args()->{tpages};
+  my $changeView = $model->action('changeView');
+
+  if ( $action eq 'presetUpdate' ) {
+      $action = 'changeAdd' if ( not $editid );
+      $action = 'changeEdit' if ( $editid );
+  }
+</%init>
+<tr>
+  <td id="applyChanges">
+  </td>
+  <td id="<% 'buttons_' . $model->modelName() %>">
+% if ( $action eq 'changeAdd' )
+% {
+    <input class='inputButton' 
+           type='submit' 
+           name='add'
+           value='<% __d('Add', 'libebox') %>'
+           title="Add"
+           onClick='<% 
+                      $model->addNewRowJS($page) 
+                    %>; return false'
+    />
+% } 
+% elsif ($action eq 'changeEdit') 
+% {
+    <input class='inputButton' 
+           type='submit' 
+           name='change'
+           value="<% __d('Change', 'libebox') %>" 
+           title="Change"
+           onClick='<% 
+                      $model->changeRowJS($editid, $page) 
+                    %>; return false'
+    />
+% }
+% if ($changeView) 
+% {
+    <input class='inputButton' 
+           type='submit' 
+           name='cancel'
+           value="<% __d('Cancel', 'libebox') %>"
+           title="Cancel"
+           onClick='<% 
+                      $model->changeViewJS( changeType => "changeList", 
+                          editId => 'undefined', 
+                          page => $page,
+                          isFilter =>  0) 
+                    %>;return false' 
+    />
+% }
+  </td>
+</tr>
+
+
+
+</%method>
+
+
+
+<%method tableHead>
+<%doc>
+Method: tableHead
+
+  Print the header of the table
+
+Parameteres:
+  @tableHead - list with the types of the fields of the tale's rows
+</%doc>
+<%args>
+@tableHead
+</%args>
+    <thead>
+%    foreach my $th (@tableHead) 
+%    {
+%      next unless ($th->HTMLViewer());
+      <th class='<% 
+                   $th->class() 
+                  %>'>
+        <% 
+          $th->printableName() 
+        %>
+      </th>
+%    }
+
+      <th class='thOptions'>
+        <%
+          __d('Action', 'libebox') 
+        %>
+      </th>
+    </thead>
+</%method>    
+
+<%method actionCell>
+<%doc>
+    Print the action cell for the row
+
+    Parameters:
+        $model - model of the table
+        $idx
+        $actions
+        $row   - the row printed
+        $changeView
+        $page  - table's page
+
+</%doc>
+<%args>
+$model
+$actions
+$firstRow
+$lastRow
+$row
+$changeView
+$page
+</%args>
+        <td class='tcenter' 
+            id='actionsCell_<% 
+                              $row->{id} 
+                            %>'>
+%      my $disabled = '';
+%      my $edit = 'edit';
+%      my $edit_msg = __d('Edit', 'libebox');
+%      my $delete = 'delete';
+%      my $delete_msg = __d('Delete', 'libebox');
+%      if ($row->readOnly()) {
+%          $disabled = 'disabled';
+%          $edit = 'edit-inactive';
+%          $delete = 'delete-inactive';
+%          $edit_msg = __d('Read-only row: edit disabled', 'libebox');
+%          $delete_msg = __d('Read-only row: delete disabled', 'libebox');
+%      }
+
+%      if ($actions->{'del'}) 
+%      {
+          <input class='inputButton' 
+              <% 
+                $disabled 
+              %>
+              type='image' 
+              name='del'
+              value="Del" 
+              title="<% $delete_msg %>"
+              alt="Del" 
+              src='/data/images/<% $delete %>.gif'
+              onClick='<% 
+                          $model->actionClickedJS('del', 
+                             $row->{id}, 
+                            '' , 
+                            $page) 
+                       %>' 
+          />
+      
+%      }
+%      if ($changeView) 
+%      {
+          <input  class='inputButton'
+              <% 
+                $disabled 
+              %>  
+              type='image' 
+              name='edit'
+              value="edit" 
+              title="<% $edit_msg %>"
+              src='/data/images/<% $edit %>.gif'
+              onClick='<% 
+                         $model->changeViewJS( changeType => 'changeEdit', 
+                             editId => $row->{'id'}, 
+                             page => $page,
+                             isFilter => 0) 
+ 
+                       %>' 
+          />
+%      }
+    
+%      if ($model->table()->{'order'} == 1) 
+%      {
+%       if (not $firstRow) {
+          <input class='inputButton'
+              type='image' 
+              name='up'
+              value="Up" 
+              title="Up"
+              alt="Up" 
+              src='/data/images/up.gif' 
+              onClick='<%
+                         $model->actionClickedJS('move', 
+                             $row->{id}, 
+                            'up', 
+                            $page) 
+                       %>'
+          />
+%       }
+
+%       if (not $lastRow) {
+          <input  class='inputButton' 
+              type='image' 
+              name='down'
+              value="Down" 
+              title="Down"
+              alt="Down" 
+              src='/data/images/down.gif' 
+              onClick='<% 
+                         $model->actionClickedJS('move', 
+                             $row->{id}, 
+                            'down', 
+                            $page) 
+                       %>'
+          />
+%       }
+%     }
+        </td>
+</%method>
+
+<%doc>
+  Method: pageTitle
+
+     Set the page title
+
+  Parameters:
+
+     title - String the title
+
+</%doc>
+<%def .pageTitle>
+<%args>
+  $title => undef
+  $crumbs => undef
+</%args>
+<& /title.mas,
+    title => $title,
+    crumbs => $crumbs
+&>
+</%def>
+
+
