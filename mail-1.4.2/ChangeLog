@@ -1,0 +1,210 @@
+1.4.2
+	+ Bugfix, mail to local accounts is delivered correctly, changed
+	some parameters to take in account myorigin
+	+ Fixed typo in regualr expression that checks external accounts names
+	+ Plain usernames without mail domain now are allowed for mail
+	retrieval from external accounts 
+1.4.1
+	+ Bugfix, fix incorrect alias dn breaking aliases in postfix
+	+ Bugfix, when create a maildir if a leftover maildir already
+	  exists now is correctly backuped with the .bak extension
+1.3.18
+	+ Add widget for external retrieval service (fetchmail)
+1.3.17
+	+ Added breadcrumbs to external aliases and virtual domain
+	  settings models
+1.3.16
+	+ Make auto creation of e-mail accounts more robust
+	+ Bad mailname doesnt disable module activation. Warning message
+	added when bad mailname is set. Mailname check in vdomains
+1.3.15
+	+ Change UI for maximum message limits and expiration limits
+	+ Bugfix: The report tables changed its name and they are used by
+	  code correctly
+	+ Added postmaster option and deprecated bounceReturnAddress
+	option
+	+ Fixed migration script and ulimited mail message size
+	multiplication warning. The error in migration dont corrupted
+	configuration but made new installations fail the last migration
+	script.
+	+ Updated localAttributes in MailUserLdap
+	+ Added LOGIN to authorization mechanisms
+	+ Using /etc/mailname in hostname and sasl_domain paramteres
+	+ Better check of mailname, assure that mailname is correct before
+	enabling module
+	+ Changed SIEVE directory location to /var/vmail/sieve
+1.3.14
+	+ Added precondition in ObjectPolicy model
+	+ Account home in dovecot set to its maildir, this is necesary for
+	some SIEVE features like vacation autoreply
+	+ Added autocreation of drafts and sent mail folders
+	+ Fixed bug in UI: now we can set properly the number of
+	expiration days for spam and deleted messages
+	+ Added per domain catch-all accounts
+	+ Logs fixes
+	+ Added aliases to external accounts
+	+ Added multiple aliases per group
+	+ Improved queue management
+	+ Added dovecot-antispam plugin integration
+	+ Added email retrieval for external accounts
+	+ Added more connections check to avoid spammers
+	+ Add DefaultUser model to be used in users and groups default user
+	  template. Admins can select if they wish to create an email account  automatically
+	  by default when creating new users.
+	+ Enable mail services by default
+	+ Fix ids and checkRowExist in ExternalAccount.pm
+	+ Fix method for modification of external accounts
+	+ Reverted UI component name to be compatible with previous versions
+1.3.13
+	+ Fixed bug in UI: now we can set properly the maximum message size
+1.3.12
+	+ Add migration to rename mail table to mail_message
+	+ Add breadcrumbs
+1.3.11
+	+ Fixed bug when retrieving LDAP instance in master/slave architecture
+	+ Added log consolidation and report
+1.3.10
+	+ ESMTP service in port 465 fixed
+	+ Deliver to local user fixed
+	+ Using LDA protocol and LDAP for dovecot's userdb
+	+ Added user mailbox quota
+	+ Added autocreation of trash and spam folders
+	+ Added flush of spam and trash folders
+	+ Added sieve and managesieve support
+1.3.7
+	+ more resilent EBox::MailVdomain::setUserAccount, now we don't
+	abort if it exists already a user maildir, instead we move it to a
+	backup directory
+1.3.6
+	+ now you can specify a port for the smarthost (if not specified
+	the default port continues to be 25)
+	+ bugfix: fixed regresion in logs and added greylist event for
+	connections to remote SMTPs
+	+ bugfix: SMTPS port 465 now works properly
+	+ added quota support
+	+ added autocreation of trash and spam folders
+	+ added flush of spam and trash folders
+	+ add sieve and manage sieve support
+	+ added retrieval of emails from external accounts
+	+ added catch-all account per domain
+	+ added external mail accounts aliases
+	+ added 'remove all' and 'flush all' options to mail queue
+	management 
+	+ bugfix, in mail queue management now the mail recipients and th
+	messages being delivered appears correctly
+	+ added multiples alias for groups
+	+ added more SMTP checks for new mail for avoidin spam
+	+ aded support for spam learn from IMAP folders (see mailfilter
+	module)
+	+ added autocreation of drafts and sent mail folders
+1.3.4
+	+ tableInfo returns an array of hash refs
+1.1.41
+	+ bugfix: Allow unsafe characters in smtp auth password
+1.1.30
+	+ SMTP and POP/iMAP certificates can be changed via  the CA module
+1.1.20
+	+ UI improvement: hide and show mail filter fields depending on the
+	configuration
+1.1.10
+	+ New release
+1.1
+	+ Replaced courier with dovecot
+	+ Added aliases for whole domains
+	+ Use the new row() and ids() API
+	+ Bugfix: alias are deleted when user account is deleted
+	+ Bugfix: when already exists the maildir, create a new account is
+	not allowed
+	+ Bugfix: fixed error in mail queue template: avoid to reference a
+	possible undefined value
+	+ Bugfix: running method in Greylist does not fail if there is not
+	eventd fil
+	+ Bugfix: force removal of previous data in backup
+	+Bugfix: removed bad superfluous call that was the source of
+	, at least, restore errors
+	+ Mail queue parsing error fixed and more robust mail queue template
+0.12.101
+	+ Bugfix: Postgrey daemon is disabled by default
+0.12.100
+	+ EBox::MailUserLdap::userAccount and
+	EBox::MailUserLdap::getUserLdapValue  don't longer assume that the
+	user exists
+	+ Bugfix: MDSize attribute should not be restored in systems with
+	MDSize feature disabled
+	+ Bugfix in logs: mail relayed to external smarthost is now
+	logged, external smarthost relay denied action also logged, relay
+	field now only logs relay data and no unrelated data
+	+ Summary changed to reflect the changes in mailfilter module
+	+ Added greylist support
+	+ Added authentication for external smarthost
+	+ Added TLS support for external smarthost
+	+ Replaced courier with dovecot
+	+ Simpler interface to choose mail retrieval protocols
+0.12.99
+	+ Add support for reporting
+0.12.2
+	+ Bugfix: Start POP3 over SSL (Port: 995)
+0.12.1
+	+ Bugfix: Use EBox::Types::Union::Text for unlimited message size
+0.12
+	+ Bugfix: Checkbox for unlimited size is unchecked, the field
+	mentioned, i.e. Size (MB) is activated.
+	+ Use the new MVC framework
+	+ Add postfix to sasl group instead of dpkg-stateoverriding stuff
+	+ Update INSTALL doc
+	+ Use eBox OID number in LDAP schemas
+0.11.101
+	+ Fixed bug when removing users in non-quota installations
+	+ Do not remove init rc scripts
+	+ Add port 465 (SMTP over SSL) to mail service, old outlook version
+	  will use this port
+	+ Fixed bug in group alias that broke this feature for mail
+	accounts which its name was different to the username
+0.11.100
+	+ Create certificate for smtpd server
+	+ Disabled filter appears in the filter lists as disabled
+	(previously they don't appear at all)
+	+ Module activation dependency with module which provides the
+	active filter
+0.11.99
+	+ Add mail dispatcher to notify eBox events using this SMTP server
+	+ Enhanced strings
+0.11
+	+ Wrap service call with ebox-unblock-exec
+	+ Fix typo in message
+0.10.99
+	+ New release
+0.10
+	+ New release
+0.9.100
+	+ Fix some typos 
+0.9.99
+	+ Fixed bug in configuration backup
+	+ Allow other modules to define mail filters
+
+0.9.3
+	+ New release
+0.9.2
+	+ Create sasl configuration which contains password with 0600 mask 
+0.9.1
+	+ Extended backup
+	+ Use host's FQDN. 
+	+ Helo restrictions 
+0.9
+	+ Added Polish translation
+	+ Added German translation
+0.8.1
+	+  Added dependency on sasl2-bin for secure SMTP authentication
+0.8 
+	+ Small GUI fix
+	+ Added firewall rule to access smtp hosts for all interfaces
+0.7.99
+	+ New release
+0.7.1
+	+ GUI improvements
+	+ Added queue management support
+	+ Use EBox::LDAP singleton
+	+ Added update/clean actions to ebox-mail-ldap
+	+ Use of ebox-sudoers-friendly 
+0.7
+	+ First public release 
