@@ -1,0 +1,17 @@
+<%args>
+    $namespace
+    $item
+    $i
+</%args>
+<tr>
+  <td class='summaryKey'><% $item->{key} %></td>
+  <td id='<% $namespace . '_' . $i %>'
+% if ($item->{value_type} eq 'warning') {
+      class='summaryValue summaryWarning'
+% } else {
+      class='summaryValue'
+% }
+     >
+      <% $item->{value} %>
+  </td> 
+</tr>
