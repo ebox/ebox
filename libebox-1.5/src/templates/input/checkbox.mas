@@ -1,9 +1,0 @@
-<%init>
-my $name    = delete $ARGS{name};
-defined $name or $m->abort('The checkbox input needs a name parameter');
-
-my $value   = delete $ARGS{value};
-my @checked = $value ? (checked => 'checked') : ();
-</%init>
-<input type='checkbox' name='<% $name %>' <& /htmlAttributes.mas, @checked, %ARGS &> />
-<input type='hidden'  name='<% $name %>' value=0  />
