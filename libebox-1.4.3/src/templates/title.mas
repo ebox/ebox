@@ -1,0 +1,29 @@
+<%args>
+    $title => undef
+    $crumbs => undef
+</%args>
+<%init>
+use EBox::Gettext;
+</%init>
+<div>
+% if ($title or ($crumbs and @$crumbs)) {
+% if ($crumbs) {
+%     for  (my $i = 0; $i < scalar(@$crumbs); $i++) {
+%       my $section = $crumbs->[$i];
+%       if ($i != scalar(@$crumbs) - 1) {
+    <span class='title_link'><a href='<% $section->{link} %>'><% $section->{title} %></a></span>
+    <span class='title_link_sep'>&#9656;</span>
+%       } else  {
+    <span class='title'><% $section->{title} %></span>
+%	}
+%     }
+% } elsif ($title) {
+    <span class='title'><% $title %></span>
+% }
+    <span id='helpbutton'>
+        <a id='showhelp' href="#" onclick="switchHelp(); return false; " title="<% __d('Display help notes', 'libebox') %>">(<% __d("show help", 'libebox')%>)</a>
+        <a style='display:none;' id='hidehelp' href="#" onclick="switchHelp(); return false; " title="<% __d('Hide help notes', 'libebox') %>">(<% __d("hide help", 'libebox')%>)</a>
+    </span>
+% }
+</div>
+

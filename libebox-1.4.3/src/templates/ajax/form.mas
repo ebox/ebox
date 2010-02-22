@@ -1,0 +1,94 @@
+<%doc>
+  This template is indicated to view the EBox::Model::DataForm. It
+  will show a form with the model description to be edited all the
+  time.
+
+  The original overridden call at /ajax/modelViewer.mas
+</%doc>
+<%flags>
+  inherit => '/ajax/modelViewer.mas'
+</%flags>
+<%args>
+  $model
+  $hasChanged
+  $action => 'view'
+</%args>
+<%init>
+  use EBox::Gettext;
+  use EBox::Model::DataTable;
+</%init>
+<& PARENT:view,
+   model => $model,
+   hasChanged => $hasChanged,
+   action     => $action,
+&>
+
+<%doc>
+  Method: _body
+
+     Set the model viewer body.
+
+  Overrides:
+
+     /ajax/modelViewer.mas:_body
+
+</%doc>
+<%method _body>
+<%args>
+  $model
+</%args>
+<%init>
+  my $formDataRef;
+  if ( defined ( $model->row() )) {
+      $formDataRef = $model->row()->{'values'};
+  } else {
+      $formDataRef = $model->table()->{'tableDescription'};
+  }
+</%init>
+
+<& /title.mas,
+    crumbs => $model->viewCustomizer()->HTMLTitle()
+&>
+
+% if ($model->help()) {
+<div class="help">
+  <% $model->help() %>
+</div>
+% }
+
+<& PARENT:title,
+   title => $model->headTitle()
+&>
+
+<& SELF:editForm,
+   modelName => $model->name(),
+   formData => $formDataRef
+&>
+
+</%method>
+
+<%doc>
+  Method: buttons
+
+     Show the button to submit the form
+
+  Overrides:
+
+     /ajax/modelViewer.mas:buttons
+
+</%doc>
+<%method buttons>
+<%init>
+  # Getting the arguments from the first request
+  my $model = $m->caller_args(2)->{model};
+</%init>
+<td id="<% 'buttons_' . $model->modelName() %>">
+  <& /input/submit.mas,
+     name => 'change',
+     value => $model->printableActionName(),
+     onclick => $model->changeRowJS(0, 0) . '; return false',
+  &>
+</td>
+</%method>
+
+
