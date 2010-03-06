@@ -1,0 +1,36 @@
+<%args>
+$service
+$login
+$password
+$hostname
+</%args>
+# /etc/ddclient.conf
+
+pid=/var/run/ddclient.pid
+ssl=yes
+
+login=<% $login %>
+password='<% $password %>'
+
+% if ($service eq 'dyndns') {
+protocol=dyndns2
+server=members.dyndns.org
+use=web, web=checkip.dyndns.com, web-skip='Current IP Address:'
+% } elsif ($service eq 'zoneedit') {
+protocol=zoneedit1
+server=dynamic.zoneedit.com
+use=web, web=www.zoneedit.com/checkip.html, web-skip='Current IP Address:'
+% } elsif ($service eq 'easydns') {
+protocol=easydns
+server=members.easydns.com
+use=web, web=checkip.dyndns.com, web-skip='Current IP Address:'
+% } elsif ($service eq 'dnspark') {
+protocol=dnspark
+server=www.dnspark.com
+use=web, web=ipdetect.dnspark.com, web-skip='Current Address:'
+% } elsif ($service eq 'joker') {
+protocol=dyndns2
+server=svc.joker.com
+use=web, web=svc.joker.com/nic/checkip, web-skip='Current IP Address:'
+% }
+<% $hostname %>
