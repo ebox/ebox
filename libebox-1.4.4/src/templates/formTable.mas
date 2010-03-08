@@ -1,0 +1,110 @@
+<%flags>
+inherit => 'table.mas'
+</%flags>
+<%args>
+@rows  => (),
+@additionalComponents => ()
+</%args>
+<%attr>
+ tableClass => 'formTable'
+</%attr>
+<%init>
+use EBox::Gettext;
+</%init>
+<& SELF:table,  rows => \@rows, additionalComponents => \@additionalComponents &>
+
+
+<%method rows>
+<%args>
+@rows
+</%args>
+% foreach my $row_r (@rows) {
+    <& SELF:tr, @{ $row_r } &>
+% }
+</%method>
+
+<%method tr>
+<%init>
+my $input     = delete $ARGS{input};
+defined $input or $input = 'text';
+my $component = delete $ARGS{component};
+
+my $warning = delete $ARGS{warning};
+my $note    = delete $ARGS{note};
+my $help    = delete $ARGS{help};
+
+
+# adjust default printable name if needed
+my $printableName = delete $ARGS{printableName};
+if (!defined $printableName ) {
+   $printableName = exists $ARGS{name} ? $ARGS{name} : '';
+}
+if ($input eq 'submit') {
+  $printableName = '';
+}
+
+# adjust input component
+my $inputComponent;
+if (defined $component) {
+  $inputComponent = $component;
+}
+else {
+  $inputComponent = "/input/$input.mas";
+}
+</%init>
+% if (not $inputComponent =~ m/hidden\.mas$/ ) {
+  <& .div, type => 'warning', content => $warning &>
+  <& .div, type => 'note', content => $note &>
+  <tr>
+       <& .labelTd, printableName => $printableName, optional => $ARGS{optional} &>
+     <td>
+        <& $inputComponent, %ARGS  &>
+        <& .div, type => 'field_help', content => $help &>
+     </td>
+
+  </tr>
+% } 
+% else {
+  <& $inputComponent, %ARGS &>
+% }
+</%method>
+
+<%def .labelTd>
+<%args>
+$printableName
+$optional => 0
+</%args>
+<%init>
+if ($printableName ne '') {
+    $printableName .= ':';
+}
+</%init>
+     <td class='tright' >
+         <% "$printableName" %>
+% if ( $optional ) {
+%    my $optionalText = __d('Optional', 'libebox');
+     <div class="optional_field"><% $optionalText %></div>
+% }
+     </td>
+</%def>
+
+
+
+
+
+<%def .div> 
+<%args>
+$content
+$type
+</%args>
+% if (defined $content) {
+<tr>
+<td/>
+<td>
+   <div class ='<% $type %>'>
+   <% $content %>
+   </div>
+   </td>
+</tr>
+% }
+</%def>
