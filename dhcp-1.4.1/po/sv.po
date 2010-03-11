@@ -1,0 +1,775 @@
+# Swedish translations for ebox-dhcp package.
+# Copyright (C) 2007 Warp S.L.
+# This file is distributed under the same license as the ebox-dhcp package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-dhcp 0.12\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-02-08 06:41+0000\n"
+"PO-Revision-Date: 2009-07-19 11:28+0200\n"
+"Last-Translator: Gabriel Lindeborg <gabriel@lindeborg.org>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: migration/0002_add_services.pl:117
+msgid "Trivial File Transfer Protocol"
+msgstr "Trivial File Transfer Protocol (TFTP)"
+
+#: migration/0002_add_services.pl:126
+msgid "Dynamic Host Configuration Protocol"
+msgstr "Dynamic Host Configuration Protocol (DHCP)"
+
+#: src/EBox/CGI/Status.pm:42
+msgid "Module Status"
+msgstr "Modulstatus"
+
+#: src/EBox/CGI/AddFixed.pm:39 src/EBox/CGI/RemoveRange.pm:39
+#: src/EBox/CGI/AddRange.pm:39 src/EBox/CGI/RemoveFixed.pm:39
+#: src/EBox/CGI/SetIfaceOptions.pm:39 src/EBox/DHCP.pm:426
+#: src/EBox/DHCP.pm:462 src/EBox/DHCP.pm:512 src/EBox/DHCP.pm:558
+#: src/EBox/DHCP.pm:604 src/EBox/DHCP.pm:702 src/EBox/DHCP.pm:756
+#: src/EBox/DHCP.pm:817 src/EBox/DHCP.pm:873 src/EBox/DHCP.pm:1264
+msgid "Interface"
+msgstr "Nätverksgränssnitt"
+
+#: src/EBox/CGI/AddFixed.pm:43 src/EBox/Model/FixedAddressTable.pm:218
+#: src/EBox/DHCP.pm:1265 src/EBox/DHCP.pm:1333 src/templates/fixed.mas:9
+msgid "MAC address"
+msgstr "MAC-adress"
+
+#: src/EBox/CGI/AddFixed.pm:44 src/EBox/Model/ThinClientOptions.pm:242
+#: src/EBox/Model/FixedAddressTable.pm:224 src/EBox/DHCP.pm:1333
+#: src/templates/fixed.mas:10
+msgid "IP address"
+msgstr "IP-adress"
+
+#: src/EBox/CGI/AddFixed.pm:45 src/EBox/CGI/AddRange.pm:43
+#: src/EBox/Model/FixedAddressTable.pm:212 src/EBox/Model/RangeTable.pm:213
+#: src/templates/fixed.mas:8 src/templates/ranges.mas:53
+msgid "Name"
+msgstr "Namn"
+
+#: src/EBox/CGI/AddRange.pm:44 src/EBox/Model/RangeTable.pm:219
+#: src/templates/ranges.mas:54
+msgid "From"
+msgstr "Från"
+
+#: src/EBox/CGI/AddRange.pm:45 src/EBox/Model/RangeTable.pm:225
+#: src/templates/ranges.mas:55
+msgid "To"
+msgstr "Till"
+
+#: src/EBox/CGI/Enable.pm:39
+msgid "module status"
+msgstr "modulstatus"
+
+#: src/EBox/Model/ThinClientOptions.pm:118 src/EBox/Model/LeaseTimes.pm:112
+#: src/EBox/Model/FixedAddressTable.pm:96 src/EBox/Model/DynamicDNS.pm:111
+#: src/EBox/Model/RangeInfo.pm:108 src/EBox/Model/Options.pm:119
+#: src/EBox/Model/RangeTable.pm:95 src/EBox/Composite/OptionsTab.pm:87
+#: src/EBox/Composite/InterfaceConfiguration.pm:87
+#: src/EBox/Composite/AdvancedOptions.pm:88
+#, perl-brace-format
+msgid "interface {iface}"
+msgstr "Nätverksgränssnitt {iface}"
+
+#: src/EBox/Model/ThinClientOptions.pm:139
+msgid "You need to upload a boot image to eBox if you set it as next server"
+msgstr ""
+"Du behöver ladda upp en boot image till eBox om du ska ha den som nästa "
+"server"
+
+#: src/EBox/Model/ThinClientOptions.pm:146
+msgid ""
+"In order to upload a boot image to eBox, you need to set eBox as next server"
+msgstr ""
+"För att ladda upp en boot image till eBox behöver du ställa in eBox som "
+"nästa server"
+
+#: src/EBox/Model/ThinClientOptions.pm:153
+msgid "You need to specify a path to the boot image in the remote server"
+msgstr "Du behöver ställa in en sökväg till en boot image på fjärrservern"
+
+#: src/EBox/Model/ThinClientOptions.pm:158
+#, fuzzy
+msgid ""
+"You can only specify a file name if you have a next server and it is not eBox"
+msgstr ""
+"Du kan bara specificera ett filnamn om du har en nästa server och det inte "
+"är en eBox"
+
+#: src/EBox/Model/ThinClientOptions.pm:209
+#, perl-brace-format
+msgid ""
+"Removing previously uploaded boot image since next server option has been "
+"changed from eBox to {option}"
+msgstr ""
+"Raderar föregående uppladdade boot image sedan \"nästa server\"-"
+"inställningen blivit ändrad från eBox till {option}"
+
+#: src/EBox/Model/ThinClientOptions.pm:232
+msgid "Next server"
+msgstr "Nästa server"
+
+#: src/EBox/Model/ThinClientOptions.pm:236 src/EBox/Model/Options.pm:394
+#: src/EBox/Model/Options.pm:405 src/EBox/Model/Options.pm:409
+#: src/EBox/Model/Options.pm:423 src/EBox/Model/Options.pm:456
+msgid "None"
+msgstr "Ingen"
+
+#: src/EBox/Model/ThinClientOptions.pm:239 src/EBox/Model/Options.pm:446
+msgid "eBox"
+msgstr "eBox"
+
+#: src/EBox/Model/ThinClientOptions.pm:246
+msgid "name"
+msgstr "namn"
+
+#: src/EBox/Model/ThinClientOptions.pm:252
+msgid "File name"
+msgstr "Filnamn"
+
+#: src/EBox/Model/ThinClientOptions.pm:261
+msgid "File path in next server"
+msgstr "Filens sökväg på nästa server"
+
+#: src/EBox/Model/ThinClientOptions.pm:269
+msgid "Thin client"
+msgstr "Tunn klient"
+
+#: src/EBox/Model/ThinClientOptions.pm:274
+#, perl-brace-format
+msgid ""
+"You may want to customise your thin client options.To do so, you may include "
+"all the files you require under {path} directory"
+msgstr ""
+"Du kan vilja anpassa dina inställningar för din tunna klient. För att göra "
+"det kan du inkludera alla filer du behöver under {path} mappen"
+
+#: src/EBox/Model/LeaseTimes.pm:132
+msgid "Default leased time must be higher than 0 seconds"
+msgstr "Standardlånetiden måste vara högre än 0 sekunder"
+
+#: src/EBox/Model/LeaseTimes.pm:138
+#, perl-brace-format
+msgid "Default leased time {default} must be lower than maximum one {max}"
+msgstr "Standardlånetiden {default} måste vara lägre än maximala {max}"
+
+#: src/EBox/Model/LeaseTimes.pm:150
+msgid "Maximum leased time must be higher than 0 seconds"
+msgstr "Maximal lånetid måste vara högre än 0 sekunder"
+
+#: src/EBox/Model/LeaseTimes.pm:156
+#, perl-brace-format
+msgid "Maximum leased time {max} must be higher than default one {default}"
+msgstr "Maximal lånetid {max} måste vara högre än standardlånetiden {default}"
+
+#: src/EBox/Model/LeaseTimes.pm:200
+msgid "Default leased time"
+msgstr "Standardlånetid"
+
+#: src/EBox/Model/LeaseTimes.pm:203 src/EBox/Model/LeaseTimes.pm:210
+msgid "seconds"
+msgstr "sekunder"
+
+#: src/EBox/Model/LeaseTimes.pm:207
+msgid "Maximum leased time"
+msgstr "Maximal lånetid"
+
+#: src/EBox/Model/LeaseTimes.pm:216
+msgid "Lease times"
+msgstr "Lånetider"
+
+#: src/EBox/Model/LeaseTimes.pm:221
+msgid ""
+"Leased time is the time which a given IP address is valid by the DHCP server"
+msgstr "Lånetid är tiden en ipadress från DHCP-servern är reserverad"
+
+#: src/EBox/Model/FixedAddressTable.pm:122
+#, perl-brace-format
+msgid "IP address {ip} is not in network {net}"
+msgstr "IP-adressen {ip} finns inte i nätverket {net}"
+
+#: src/EBox/Model/FixedAddressTable.pm:133
+#, perl-brace-format
+msgid "The selected IP is the interface IP address: {ifaceIP}"
+msgstr ""
+"Den valda IP-adressen är IP-adressen för nätverksgränssnittet: {ifaceIP}"
+
+#: src/EBox/Model/FixedAddressTable.pm:150
+#, perl-brace-format
+msgid "IP address {ip} is in range '{range}': {from}-{to}"
+msgstr "IP-adressen {ip} finns i intervallet \"{range}\": {from}-{to}"
+
+#: src/EBox/Model/FixedAddressTable.pm:162
+#, perl-brace-format
+msgid "{name} cannot contain spaces"
+msgstr "{name} får inte innehålla blanksteg"
+
+#: src/EBox/Model/FixedAddressTable.pm:180
+msgid "update"
+msgstr "uppdatera"
+
+#: src/EBox/Model/FixedAddressTable.pm:182
+msgid "add"
+msgstr "Lägg till"
+
+#: src/EBox/Model/FixedAddressTable.pm:184
+#, perl-brace-format
+msgid ""
+"You cannot {action} a fixed address with a name which is already used in "
+"other fixed address table"
+msgstr ""
+"Du kan inte {action} en fast adress med ett namn som redan används i en "
+"annan tabell för fasta adresser"
+
+#: src/EBox/Model/FixedAddressTable.pm:227
+msgid "You cannot use an IP address contained in the above ranges."
+msgstr "Du kan inte använda en ip-adress i ovanstående intervall."
+
+#: src/EBox/Model/FixedAddressTable.pm:232
+msgid "Description"
+msgstr ""
+
+#: src/EBox/Model/FixedAddressTable.pm:240 src/templates/fixed.mas:5
+msgid "Fixed addresses"
+msgstr "Fasta adresser"
+
+#: src/EBox/Model/FixedAddressTable.pm:247
+msgid "fixed address"
+msgstr "fasta adresser"
+
+#: src/EBox/Model/DynamicDNS.pm:132 src/EBox/Model/DynamicDNS.pm:140
+#: src/EBox/Model/DynamicDNS.pm:387
+#, perl-brace-format
+msgid "Domain {domain} has already been defined manually in DNS section"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:241
+msgid "DNS module must be configured to work with this feature"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:244
+#, perl-brace-format
+msgid "{pkg} must be installed to use this feature"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:266
+msgid ""
+"Domains will be added/set automatically in DNS section in read-only mode."
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:268
+msgid "DNS module must be enabled to make this feature work. "
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:332
+#, fuzzy
+msgid "Dynamic domain"
+msgstr "Sökdomän"
+
+#: src/EBox/Model/DynamicDNS.pm:334
+msgid ""
+"Domain name appended to the hostname from those clients whose leased IP "
+"address comes from a range"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:339
+#, fuzzy
+msgid "Static domain"
+msgstr "Sökdomän"
+
+#: src/EBox/Model/DynamicDNS.pm:341
+msgid ""
+"Domain name appended to the hostname from those clients with a fixed address "
+"mapping"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:346
+msgid "Same as Dynamic Domain"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:350 src/EBox/Model/Options.pm:371
+#: src/EBox/Model/Options.pm:399 src/EBox/Model/Options.pm:418
+#: src/EBox/Model/Options.pm:432
+msgid "Custom"
+msgstr "Anpassad"
+
+#: src/EBox/Model/DynamicDNS.pm:358
+msgid "Dynamic DNS Options"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:363
+msgid "The domains will be added automatically to DNS module in read-only mode"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:395
+#, perl-brace-format
+msgid "Domain \"{domain}\" added to DNS section"
+msgstr ""
+
+#: src/EBox/Model/DynamicDNS.pm:406
+#, perl-brace-format
+msgid "Domain \"{domain}\" removed from DNS section"
+msgstr ""
+
+#: src/EBox/Model/RangeInfo.pm:143
+msgid "Interface IP address"
+msgstr "IP-adress för gränssnittet"
+
+#: src/EBox/Model/RangeInfo.pm:147 src/templates/ranges.mas:20
+msgid "Subnet"
+msgstr "Sub-nät"
+
+#: src/EBox/Model/RangeInfo.pm:151 src/templates/ranges.mas:40
+msgid "Available range"
+msgstr "Tillgängligt intervall"
+
+#: src/EBox/Model/RangeInfo.pm:157 src/templates/ranges.mas:15
+msgid "DHCP ranges"
+msgstr "DHCP-intervall"
+
+#: src/EBox/Model/Options.pm:157
+#, perl-brace-format
+msgid "{gateway} is not in the current network"
+msgstr "{gateway} finns inte på det aktuella nätverket"
+
+#: src/EBox/Model/Options.pm:169
+#, fuzzy
+msgid ""
+"DNS module must be enabled to be able to select eBox as primary DNS server"
+msgstr ""
+"DNS servicen måste vara aktiverad som primär namnserver på den lokala eBox-"
+"servern"
+
+#: src/EBox/Model/Options.pm:179
+#, fuzzy
+msgid "NTP module must be enabled to be able to select eBox as NTP server"
+msgstr ""
+"DNS servicen måste vara aktiverad som primär namnserver på den lokala eBox-"
+"servern"
+
+#: src/EBox/Model/Options.pm:190
+#, fuzzy
+msgid "Samba module must be enabled to be able to select eBox as WINS server"
+msgstr ""
+"DNS servicen måste vara aktiverad som primär namnserver på den lokala eBox-"
+"servern"
+
+#: src/EBox/Model/Options.pm:379
+msgid "eBox's domain"
+msgstr "Domänen som eBox-servern tillhör"
+
+#: src/EBox/Model/Options.pm:387
+msgid "local eBox DNS"
+msgstr "lokal eBox DNS"
+
+#: src/EBox/Model/Options.pm:414
+#, fuzzy
+msgid "local eBox NTP"
+msgstr "lokal eBox DNS"
+
+#: src/EBox/Model/Options.pm:428
+#, fuzzy
+msgid "local eBox"
+msgstr "lokal eBox DNS"
+
+#: src/EBox/Model/Options.pm:440 src/templates/options.mas:18
+msgid "Default gateway"
+msgstr "Standardgateway"
+
+#: src/EBox/Model/Options.pm:450
+msgid "Custom IP address"
+msgstr "Anpassad ip-adress"
+
+#: src/EBox/Model/Options.pm:460
+msgid "Configured ones"
+msgstr "Konfigurerade"
+
+#: src/EBox/Model/Options.pm:466
+msgid ""
+"Setting \"eBox\" as default gateway will set the interface IP address as "
+"gateway"
+msgstr ""
+"Inställningen \"eBox\" som standardgateway sätter gränssnittets ip-adress "
+"som gateway."
+
+#: src/EBox/Model/Options.pm:472 src/templates/options.mas:29
+msgid "Search domain"
+msgstr "Sökdomän"
+
+#: src/EBox/Model/Options.pm:475
+msgid ""
+"The selected domain will complete on your clients those DNS queries which "
+"are not fully qualified"
+msgstr ""
+"Den valda domänen kommer att användas för att komplettera DNS-sökningar på "
+"DHCP-klienter"
+
+#: src/EBox/Model/Options.pm:480 src/templates/options.mas:41
+msgid "Primary nameserver"
+msgstr "Primär namnserver"
+
+#: src/EBox/Model/Options.pm:483
+msgid ""
+"If \"eBox DNS\" is present and selected, the eBox server will act as cache "
+"DNS server"
+msgstr ""
+"Om \"eBox DNS\" är tillgänglig och aktiverad kommer eBox-servern agera som "
+"cache för DNS-sökningar"
+
+#: src/EBox/Model/Options.pm:488 src/templates/options.mas:52
+msgid "Secondary nameserver"
+msgstr "Sekundär namnserver"
+
+#: src/EBox/Model/Options.pm:494
+#, fuzzy
+msgid "NTP server"
+msgstr "Nästa server"
+
+#: src/EBox/Model/Options.pm:497
+#, fuzzy
+msgid ""
+"If \"eBox NTP\" is present and selected, eBox will be the NTP server for "
+"DHCP clients"
+msgstr ""
+"Om \"eBox DNS\" är tillgänglig och aktiverad kommer eBox-servern agera som "
+"cache för DNS-sökningar"
+
+#: src/EBox/Model/Options.pm:502
+#, fuzzy
+msgid "WINS server"
+msgstr "Nästa server"
+
+#: src/EBox/Model/Options.pm:505
+#, fuzzy
+msgid ""
+"If \"eBox Samba\" is present and selected, eBox will be the WINS server for "
+"DHCP clients"
+msgstr ""
+"Om \"eBox DNS\" är tillgänglig och aktiverad kommer eBox-servern agera som "
+"cache för DNS-sökningar"
+
+#: src/EBox/Model/Options.pm:512
+msgid "Common options"
+msgstr "Gemensamma alternativ"
+
+#: src/EBox/Model/Options.pm:517
+#, fuzzy
+msgid ""
+"If you set a \"configured ones\" as default gateway, you may choose one the "
+"configured gateways. As \"search domain\" value, one of the configured DNS "
+"domains on eBox might be chosen. All fields are optionals setting its value "
+"as \"None\" or leaving blank."
+msgstr ""
+"Ställa in \"eBox\" som default gateway kommer att sätta gränssnittets adress "
+"som default gateway. Om du ställer in \"namn\" kan du välja en av de "
+"konfigurerade gateway. Som sökdomän kan du välja en av de konfigurerade DNS "
+"domänerna på eBox. Om du ställer in \"eBox DNS\" som primär namnserver om "
+"installerad kan eBox servern agera cachande DNS server. Alla värden är "
+"valfria."
+
+#: src/EBox/Model/RangeTable.pm:117
+#, perl-brace-format
+msgid "{from} - {to} is an invalid range"
+msgstr "{from}-{to} är ett ogiltigt intervall"
+
+#: src/EBox/Model/RangeTable.pm:128
+#, perl-brace-format
+msgid "Range {from}-{to} is not in network {net}"
+msgstr "Intervallet {from}-{to} är inte i nätverket {net}"
+
+#: src/EBox/Model/RangeTable.pm:141
+#, perl-brace-format
+msgid "Range {from}-{to} includes interface with IP address: {ifaceIP}"
+msgstr ""
+"Intervallet {from}-{to} inkluderar IP-adressen för nätverksgränsnittet: "
+"{ifaceIP}"
+
+#: src/EBox/Model/RangeTable.pm:164
+#, perl-brace-format
+msgid ""
+"Range {newFrom}-{newTo} overlaps with range '{range}': {oldFrom}-{oldTo}"
+msgstr ""
+"Intervallet {newFrom}-{newTo} överlappar med intervallet \"{range}\": "
+"{oldFrom}-{oldTo}"
+
+#: src/EBox/Model/RangeTable.pm:182
+#, perl-brace-format
+msgid "Range {from}-{to} includes fixed address '{name}': {fixedIP}"
+msgstr ""
+"Intervallet {from}-{to} inkluderar fasta adressen \"{name}\": {fixedIP}"
+
+#: src/EBox/Model/RangeTable.pm:233 src/templates/ranges.mas:49
+msgid "Ranges"
+msgstr "Intervall"
+
+#: src/EBox/Model/RangeTable.pm:240
+msgid "range"
+msgstr "intervall"
+
+#: src/EBox/DHCP.pm:432 src/EBox/DHCP.pm:468 src/EBox/DHCP.pm:518
+#: src/EBox/DHCP.pm:564 src/EBox/DHCP.pm:610 src/EBox/DHCP.pm:708
+#: src/EBox/DHCP.pm:823 src/EBox/DHCP.pm:879
+#, perl-brace-format
+msgid "{iface} is not static"
+msgstr "{iface} är inte statiskt"
+
+#: src/EBox/DHCP.pm:694
+msgid "Not a valid action: add, set and del are available"
+msgstr ""
+"Inte en giltig åtgärd: lägg till, ställ in och radera är giltiga åtgärder"
+
+#: src/EBox/DHCP.pm:809
+msgid "No valid action. Available ones are: add, set and del"
+msgstr "Ingen giltig åtgärd. Giltiga är: lägg till, ställ in och radera"
+
+#: src/EBox/DHCP.pm:1048
+#, perl-brace-format
+msgid ""
+"The IP address of the virtual interface you are trying to add is already "
+"used by the DHCP range '{range}' in the interface '{iface}'. Please, remove "
+"it before trying to add a virtual interface using it."
+msgstr ""
+"IP-adressen för det virtuella nätverksgränssnittet som du försöker lägga "
+"till används redan av DHCP-intervallet \"{range}\" i nätverksgränssnittet "
+"\"{iface}\". Ta bort det innan du försöker att lägga till ett virtuellt "
+"nätverksgränssnitt som använder det."
+
+#: src/EBox/DHCP.pm:1067
+#, perl-brace-format
+msgid ""
+"The IP address of the virtual interface you are trying to add is already "
+"used by the DHCP fixed address '{fixed}' in the interface '{iface}'. Please, "
+"remove it before trying to add a virtual interface using it."
+msgstr ""
+"IP-adressen för det virtuella nätverksgränssnittet som du försöker lägga "
+"till används redan av den fasta DHCP-adressen \"{fixed}\" i "
+"nätverksgränssnittet \"{iface}\". Ta bort det innan du försöker att lägga "
+"till ett virtuellt nätverksgränssnitt som använder det."
+
+#: src/EBox/DHCP.pm:1263
+msgid "Date"
+msgstr "Datum"
+
+#: src/EBox/DHCP.pm:1266
+msgid "IP"
+msgstr "IP"
+
+#: src/EBox/DHCP.pm:1267
+msgid "Event"
+msgstr "Händelse"
+
+#: src/EBox/DHCP.pm:1270
+msgid "Leased"
+msgstr "Lånade"
+
+#: src/EBox/DHCP.pm:1270
+msgid "Released"
+msgstr "Lediga"
+
+#: src/EBox/DHCP.pm:1273
+msgid "DHCP"
+msgstr "DHCP"
+
+#: src/EBox/DHCP.pm:1333
+msgid "Host name"
+msgstr "Värdnamn"
+
+#: src/EBox/DHCP.pm:1360
+msgid "DHCP leases"
+msgstr "DHCP-lån"
+
+#: src/EBox/Composite/General.pm:79
+#, perl-brace-format
+msgid ""
+"An interface must set as static to configure the DHCP service on it. To do "
+"so, change {openhref}interfaces configuration{closehref} in network module"
+msgstr ""
+"Ett gränssnitt måste vara statiskt för att kunna konfigurera DHCP service på "
+"det. För att göra det ändra {openhref}interfaces configuration{closehref} i "
+"nätverksmodulen"
+
+#: src/EBox/Composite/Interfaces.pm:108
+msgid "Choose a static interface to configure:"
+msgstr "Välj ett statiskt gränssnitt att konfigurera det:"
+
+#: src/EBox/Composite/Interfaces.pm:109
+msgid "Service configuration"
+msgstr "Inställningar för tjänsten"
+
+#: src/EBox/Composite/Interfaces.pm:110
+msgid ""
+"In order to serve IP addresses on an interface, it is required to set at "
+"least a range or a fixed address."
+msgstr ""
+"För att låna ut ip-adresser på ett gränssnitt måste man ha satt minst ett "
+"adressintervall eller en fast adress."
+
+#: src/EBox/Composite/InterfaceConfiguration.pm:112
+#, perl-brace-format
+msgid ""
+"In order to serve IP addresses on a external interface, you must open the "
+"service on {openhref}firewall module{closehref}"
+msgstr ""
+"För att serva ip-adresser på det externa gränssnittet måste du öppna "
+"servicen på {openhref}firewall module{closehref}"
+
+#: src/EBox/Composite/AdvancedOptions.pm:133
+msgid "Advanced options"
+msgstr "Avancerade alternativ"
+
+#: src/templates/fixed.mas:11 src/templates/ranges.mas:56
+msgid "Action"
+msgstr "Åtgärd"
+
+#: src/templates/fixed.mas:34 src/templates/fixed.mas:37
+#: src/templates/fixed.mas:38 src/templates/ranges.mas:74
+#: src/templates/ranges.mas:75 src/templates/ranges.mas:76
+msgid "Add"
+msgstr "Lägg till"
+
+#: src/templates/fixed.mas:51 src/templates/fixed.mas:53
+#: src/templates/fixed.mas:54
+msgid "Remove"
+msgstr "Ta bort"
+
+#: src/templates/ranges.mas:30
+msgid "Subnet netmask"
+msgstr "Nätmask för sub-nät"
+
+#: src/templates/ranges.mas:91 src/templates/ranges.mas:92
+#: src/templates/ranges.mas:93
+msgid "Delete"
+msgstr "Ta bort"
+
+#: src/templates/options.mas:8
+msgid "Options"
+msgstr "Alternativ"
+
+#: src/templates/options.mas:10
+msgid ""
+"You can leave empty the Default Gateway field to use eBox as default gateway "
+"for this subnet"
+msgstr ""
+"Du kan lämna fältet Standardgateway blankt för att använda eBox-servern som "
+"standardgateway för det här sub-nätet"
+
+#: src/templates/options.mas:64
+msgid "Apply"
+msgstr "Verkställ"
+
+#~ msgid "Infrastructure"
+#~ msgstr "Infrastruktur"
+
+#, fuzzy
+#~ msgid "DHCP service status"
+#~ msgstr "Status för DHCP-server"
+
+#, fuzzy
+#~ msgid ""
+#~ "DHCP server cannot activated because there are not any network interface "
+#~ "with a static address. {openhref}Configure one{closehref} first"
+#~ msgstr ""
+#~ "DHCP-servern kan inte aktiveras därför att det inte finns något "
+#~ "nätverksgränssnitt med en statisk adress. <a href='Network/"
+#~ "Ifaces'>Konfigurera ett</a> först"
+
+#~ msgid "Nameserver IP address"
+#~ msgstr "IP-adress för namnserver"
+
+#~ msgid "\"To\" IP address"
+#~ msgstr "\"Till\"-IP-adress"
+
+#~ msgid "IP address {ip} is already added as fixed address '{name}'"
+#~ msgstr "IP-adressen {ip} finns redan inlagd som en fast adress \"{name}\""
+
+#~ msgid ""
+#~ "MAC address {mac} is already added as fixed address '{name}' for "
+#~ "interface '{iface}'"
+#~ msgstr ""
+#~ "MAC-adressen {mac} finns redan inlagd som en fast adress \"{name}\" för "
+#~ "nätverksgränssnittet \"{iface}\""
+
+#~ msgid ""
+#~ "DHCP server requires a static interface, {openhref}configure one"
+#~ "{closehref} first"
+#~ msgstr ""
+#~ "DHCP-servern kräver ett statiskt nätverksgränssnitt, {openhref}"
+#~ "konfigurera ett{closehref} först"
+
+#~ msgid ""
+#~ "DHCP server can not activated because there are not any network interface "
+#~ "with a static address. <a href='Network/Ifaces'>Configure one</a> first"
+#~ msgstr ""
+#~ "DHCP-servern kan inte aktiveras därför att det inte finns något "
+#~ "nätverksgränssnitt med en statisk adress. <a href='Network/"
+#~ "Ifaces'>Konfigurera ett</a> först"
+
+#~ msgid "Gateway IP address"
+#~ msgstr "IP-adress för gateway"
+
+#~ msgid "\"From\" IP address"
+#~ msgstr "\"Från\"-IP-adress"
+
+#~ msgid "{from}-{to} is an invalid range"
+#~ msgstr "{from}-{to} är ett ogiltigt intervall"
+
+#~ msgid "Range {new_from}-{new_to} includes interface IP address: {iface_ip}"
+#~ msgstr ""
+#~ "Intervallet {new_from}-{new_to} inkluderar IP-adressen för "
+#~ "nätverksgränsnittet: {iface_ip}"
+
+#~ msgid ""
+#~ "Range {new_from}-{new_to} overlaps with range '{range}': {old_from}-"
+#~ "{old_to}"
+#~ msgstr ""
+#~ "Intervallet {new_from}-{new_to} överlappar med intervallet \"{range}\": "
+#~ "{old_from}-{old_to}"
+
+#~ msgid ""
+#~ "Range {new_from}-{new_to} includes fixed address '{name}': {fixed_ip}"
+#~ msgstr ""
+#~ "Intervallet {new_from}-{new_to} inkluderar fasta adressen \"{name}\": "
+#~ "{fixed_ip}"
+
+#~ msgid "The selected IP is the interface IP address: {iface_ip}"
+#~ msgstr ""
+#~ "Den valda IP-adressen är IP-adressen för nätverksgränssnittet: {iface_ip}"
+
+#~ msgid "IP address {ip} is in range '{range}': {old_from}-{old_to}"
+#~ msgstr ""
+#~ "IP-adressen {ip} finns i intervallet \"{range}\": {old_from}-{old_to}"
+
+#~ msgid ""
+#~ "The IP address of the virtual interface you're trying to add is already "
+#~ "used by the DHCP range '{range}' in the interface '{iface}'. Please, "
+#~ "remove it before trying to add a virtual interface using it."
+#~ msgstr ""
+#~ "IP-adressen för det virtuella nätverksgränssnittet som du försöker lägga "
+#~ "till används redan av DHCP-intervallet \"{range}\" i nätverksgränssnittet "
+#~ "\"{iface}\". Ta bort det innan du försöker att lägga till ett virtuella "
+#~ "nätverksgränssnitt som använder det."
+
+#~ msgid ""
+#~ "The IP address of the virtual interface you're trying to add is already "
+#~ "used by the DHCP fixed address '{fixed}' in the interface '{iface}'. "
+#~ "Please, remove it before trying to add a virtual interface using it."
+#~ msgstr ""
+#~ "IP-adressen för det virtuella nätverksgränssnittet som du försöker lägga "
+#~ "till används redan av den fasta DHCP-adressen \"{fixed}\" i "
+#~ "nätverksgränssnittet \"{iface}\". Ta bort det innan du försöker att lägga "
+#~ "till ett virtuellt nätverksgränssnitt som använder det."
+
+#~ msgid "DHCP server status"
+#~ msgstr "Status för DHCP-server"
+
+#, fuzzy
+#~ msgid "Advanced Options"
+#~ msgstr "Alternativ"
