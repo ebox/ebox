@@ -1,0 +1,133 @@
+#!/usr/bin/perl
+# Copyright (C) 2009 eBox Technologies S.L.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+# Script: ebox-remote-ebackup
+#
+# This script is called from crontab to carry out a full or incremental
+# backup depending on the user configuration
+#
+# It takes one argument that can be:
+#
+#   --full (default)
+#   --incremental
+#
+
+
+use strict;
+use warnings;
+
+use EBox;
+use EBox::Config;
+use EBox::Global;
+use EBox::Sudo;
+use EBox::Event;
+
+use Error qw(:try);
+
+sub _sendEvent
+{
+    my ($success, $msgError) = @_;
+
+    # Generate event
+    my $global = EBox::Global->getInstance(1);
+    if ($global->modExists('events')) {
+        my $events = $global->modInstance('events');
+        if ((defined $events)  and ($events->isRunning())) {
+            my $enabled = $events
+                ->isEnabledWatcher('EBox::Event::Watcher::EBackup')->value();
+            if ($enabled) {
+                my $msg;
+                my $level;
+                if ($success) {
+                    $msg = 'eBox backup succeeded';
+                    $level = 'info';
+                } else {
+                    $msg = "eBox backup failed $msgError";
+                    $level = 'error';
+                }
+                $events->sendEvent(message => $msg,
+                        source  => 'EBackup',
+                        level   => $level);
+            }
+        }
+    }
+}
+
+
+EBox::init();
+
+my $ebackup = EBox::Global->getInstance(1)->modInstance('ebackup');
+unless ($ebackup->isEnabled() ) {
+    print "Backup module is disabled\n";
+    exit 0;
+}
+unless ($ebackup->lock()) {
+     print "There's other backup process taking place";
+     _sendEvent(0, " couldn't get lock");
+     exit 1;
+}
+
+my $type = 'full';
+
+if ($ARGV[0] and $ARGV[0] eq '--incremental') {
+    $type = 'incremental';
+}
+if ($type eq 'incremental') {
+    my $existsFull = 0;
+    my $status = $ebackup->remoteStatus();
+    foreach my $st (@{ $status }) {
+        if ($st->{type} eq 'Full') {
+            $existsFull = 1;
+            last;
+        }
+    }
+
+    if (not $existsFull) {
+        EBox::warn('Incremental backup requested but there are not full backups. Switching to full backup mode');
+        $type = 'full';
+
+    }
+}
+
+
+
+if ($type eq 'full') {
+    my $removeArguments = $ebackup->remoteDelOldArguments();
+    EBox::Sudo::root($removeArguments);
+}
+
+
+$ebackup->dumpExtraData();
+
+my $arguments = $ebackup->remoteArguments($type);
+my $success = 1;
+try {
+    EBox::Sudo::root($arguments);
+} otherwise {
+    $success = 0;
+};
+
+_sendEvent($success, '');
+
+# Create status
+$ebackup->remoteGenerateStatusCache();
+
+# Create file list
+$ebackup->remoteGenerateListFile();
+
+$ebackup->unlock();
+
+exit 0;
