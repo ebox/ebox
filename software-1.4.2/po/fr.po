@@ -1,0 +1,492 @@
+# French translations for ebox-software package.
+# Copyright (C) 2005 Warp S.L.
+# This file is distributed under the same license as the ebox-software package.
+# Automatically generated, 2005.
+# Ignacio Correas <icorreas@warp.es>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-software 0.12.1\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-02-08 06:44+0000\n"
+"PO-Revision-Date: 2009-09-30 15:26+0200\n"
+"Last-Translator: Nicolas Liaudat <nliaudat@pompiers-chatel.ch>\n"
+"Language-Team: Español <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: migration/0001_add_http_software_rule.pl:24
+msgid "HTTP software"
+msgstr "Logiciel HTTP"
+
+#: migration/0001_add_http_software_rule.pl:26
+msgid "software service to update packages via apt"
+msgstr "service logiciel pour la mise à jour des paquets avec apt"
+
+#: migration/0001_add_http_software_rule.pl:45
+msgid "rule to allow apt updates"
+msgstr "Règles pour permettre les mises-à-jour (apt)"
+
+#: src/EBox/Software.pm:53
+msgid "Software Management"
+msgstr "Gestion des logiciels"
+
+#: src/EBox/Software.pm:78 src/EBox/Software.pm:84
+msgid ""
+"eBox software will download the available updates from your configured apt "
+"sources. "
+msgstr ""
+"le logiciel eBox va télécharger les mises à jour disponibles depuis la liste "
+"des dépôts configurés dans apt."
+
+#: src/EBox/Software.pm:83
+msgid "Enable cron script to download updates"
+msgstr "Permettre aux taches planifiées le téléchargement des mises à jour"
+
+#: src/EBox/Software.pm:168 src/EBox/Software.pm:401
+msgid ""
+"The software management module must be enabled to be able to install packages"
+msgstr ""
+"Le logiciel de gestion de modules doit être activé pour pouvoir installé des "
+"paquets"
+
+#: src/EBox/Software.pm:212 src/EBox/Software.pm:435
+msgid ""
+"The software management module must be enabled to be able to remove packages"
+msgstr ""
+"Le logiciel de gestion de modules doit être activé pour pouvoir désinstallé "
+"des paquets"
+
+#: src/EBox/Software.pm:545
+msgid "eBox Components"
+msgstr "Composants d'eBox"
+
+#: src/EBox/Software.pm:547
+msgid "System Updates"
+msgstr "Mises-à-jour du système"
+
+#: src/EBox/Software.pm:549
+msgid "Automatic Updates"
+msgstr "Mises-à-jour automatiques"
+
+#: src/EBox/Software.pm:640
+#, perl-brace-format
+msgid ""
+"Software management is currently  locked by {locker}. Please, try again later"
+msgstr ""
+"La gestion des logiciels est actuellement _ _ bloqué par {locker}. Réessayer "
+"plus tard."
+
+#: src/EBox/CGI/Config.pm:31 src/EBox/CGI/Config.pm:41
+msgid "Automatic software updates"
+msgstr "Mise-à-jour logicielle automatique"
+
+#: src/EBox/CGI/Enable.pm:41
+msgid "automatic updates configuration"
+msgstr "configuration des mises-à-jour automatiques"
+
+#: src/EBox/CGI/EBox.pm:30 src/EBox/CGI/EBox.pm:40
+msgid "eBox components"
+msgstr "Composantes d'eBox"
+
+#: src/EBox/CGI/Updates.pm:30 src/EBox/CGI/Updates.pm:40
+msgid "System updates"
+msgstr "Mise-à-jour du système"
+
+#: src/EBox/CGI/Updates.pm:45
+msgid "Software updates are being handled automatically"
+msgstr "Les mises-à-jour logiciel sont gérées automatiquement"
+
+#: src/EBox/CGI/Updates.pm:52
+#, fuzzy
+msgid "The system components are up to date."
+msgstr "Le système est à jour"
+
+#: src/EBox/CGI/CurrentPackage.pm:31 src/EBox/CGI/InstallPkgs.pm:148
+msgid "Upgrading"
+msgstr "Mise-à-jour"
+
+#: src/EBox/CGI/InstallPkgs.pm:84
+msgid "There were no packages to update"
+msgstr "Il n'y avait aucun paquet à mettre à jour"
+
+#: src/EBox/CGI/InstallPkgs.pm:149
+msgid "Upgrading packages"
+msgstr "Mise-à-jour des paquets"
+
+#: src/EBox/CGI/InstallPkgs.pm:150 src/EBox/CGI/InstallPkgs.pm:170
+msgid "Current package"
+msgstr "Paquet actuel"
+
+#: src/EBox/CGI/InstallPkgs.pm:151
+msgid "packages left to install"
+msgstr "paquets restant à installer"
+
+#: src/EBox/CGI/InstallPkgs.pm:152
+msgid ""
+"The packages installation has finished successfully. The administration "
+"interface may become unresponsive for a few seconds. Please wait patiently "
+"until the system has been fully restarted"
+msgstr ""
+"L'installation de paquets c'est terminé avec succès. L'interface "
+"d'administration peut se figer durant quelques secondes. Merci de patienter "
+"jusqu'à ce que le système ai redémarré complètement"
+
+#: src/EBox/CGI/InstallPkgs.pm:156
+msgid ""
+"The packages installation has not finished correctly . More information on "
+"the logs"
+msgstr ""
+"L'installation des paquets ne s'est pas terminée correctement. Plus "
+"d'informations dans le journal d'événements"
+
+#: src/EBox/CGI/InstallPkgs.pm:168
+msgid "Removing package"
+msgstr "Suppression du paquet"
+
+#: src/EBox/CGI/InstallPkgs.pm:169
+msgid "Removing the selected package and its dependent packages"
+msgstr "Suppression du paquet sélectionné et de ces dépendances"
+
+#: src/EBox/CGI/InstallPkgs.pm:171
+msgid "packages left to remove"
+msgstr "Paquets restant à supprimer"
+
+#: src/EBox/CGI/InstallPkgs.pm:172
+msgid ""
+"The packages removal has finished successfully. The administration interface "
+"may become unresponsive for a few seconds. Please wait patiently until the "
+"system has been fully restarted"
+msgstr ""
+"La suppression des paquets s'est terminé correctement. L'interface "
+"d'administration ne devrait plus répondre pendant quelques secondes. Merci "
+"de patienter pendant que le système redémarre complètement."
+
+#: src/EBox/CGI/InstallPkgs.pm:176
+msgid ""
+"The packages removal has not finished correctly . More information on the "
+"logs"
+msgstr ""
+"La suppression des paquets a rencontré des problèmes. Plus d'information "
+"disponible dans les logs."
+
+#: src/templates/ebox.mas:16 src/templates/updates.mas:20
+msgid "Component"
+msgstr "Composant"
+
+#: src/templates/ebox.mas:17
+msgid "Installed version "
+msgstr "Version installée"
+
+#: src/templates/ebox.mas:18
+msgid "Latest version"
+msgstr "Dernière version"
+
+#: src/templates/ebox.mas:19
+msgid "Actions"
+msgstr "Actions"
+
+#: src/templates/ebox.mas:30 src/templates/updates.mas:23
+msgid "Update"
+msgstr "Actualiser"
+
+#: src/templates/ebox.mas:36
+msgid "Install"
+msgstr "Installer"
+
+#: src/templates/ebox.mas:38
+msgid "none"
+msgstr "aucun"
+
+#: src/templates/ebox.mas:60
+msgid "Remove"
+msgstr "Effacer"
+
+#: src/templates/ebox.mas:77 src/templates/updates.mas:57
+msgid "Update all packages"
+msgstr "Actualiser tous les paquets"
+
+#: src/templates/del.mas:14
+msgid "The following packages will be installed"
+msgstr "Les paquets suivants seront installés"
+
+#: src/templates/del.mas:16
+msgid "The following packages will be removed"
+msgstr "Les paquets suivants seront enlevés"
+
+#: src/templates/del.mas:32
+msgid "Ok"
+msgstr "Ok"
+
+#: src/templates/del.mas:33
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/templates/updates.mas:15
+msgid "Updates are available for the following system components"
+msgstr ""
+"Des mises-à-jour sont disponibles pour les composants suivants du système"
+
+#: src/templates/updates.mas:21
+msgid "Description"
+msgstr "Description"
+
+#: src/templates/updates.mas:22
+msgid "Version"
+msgstr "Version"
+
+#: src/templates/updates.mas:68
+msgid ""
+"This operation can take some time, don't worry if eBox looks unresponsive "
+"after pressing the Upgrade button."
+msgstr ""
+"Cette opération peut prendre un certain temps, ne vous inquiétez pas si eBox "
+"semble ne plus répondre après avoir appuyé sur le bouton de mise-à-jour."
+
+#: src/templates/updates.mas:71
+msgid "Upgrade"
+msgstr "Mise-à-jour"
+
+#: src/templates/updateNote.mas:7
+msgid ""
+"Please wait, the update of the software available list is in process right "
+"now"
+msgstr ""
+
+#: src/templates/updateNote.mas:10
+msgid ""
+"The component list was never succefully downloaded so the information shown "
+"is probably outdated. The list is updated each night or you can force the "
+"update with the console command 'ebox-software'"
+msgstr ""
+
+#: src/templates/updateNote.mas:20
+#, perl-brace-format
+msgid ""
+"The component list was updated on {mon}/{mday}/{year} {hour}:{min}. It will "
+"be updated again at night or you can force the update with the console "
+"command 'ebox-software'"
+msgstr ""
+
+#~ msgid "eBox - Backup"
+#~ msgstr "eBox - Sauvegarde"
+
+#~ msgid "eBox - Antivirus module"
+#~ msgstr "eBox - Module Antivirus"
+
+#~ msgid "eBox - Asterisk"
+#~ msgstr "eBox - Asterisk"
+
+#~ msgid "eBox - Certificate Authority Manager for eBox"
+#~ msgstr "eBox - Gestionnaire des certificats d'autorité pour eBox"
+
+#~ msgid "eBox - captive portal module"
+#~ msgstr "eBox - Module de portail captif"
+
+#~ msgid "eBox - DHCP server module"
+#~ msgstr "eBox - Module serveur DHCP"
+
+#~ msgid "eBox - DNS server"
+#~ msgstr "eBox - Serveur DNS"
+
+#~ msgid "the eBox platform - Base framework"
+#~ msgstr "La plateforme eBox - Structure de base"
+
+#~ msgid "eBox - eGroupware"
+#~ msgstr "eBox - eGroupware"
+
+#~ msgid "eBox - Firewall"
+#~ msgstr "eBox - Parefeu"
+
+#~ msgid "eBox - Intrusion Detection System"
+#~ msgstr "eBox - Système de Détection d'Intrusions"
+
+#~ msgid "eBox - Instant messaging proxy"
+#~ msgstr "eBox - Proxy de Messagerie instantanée"
+
+#~ msgid "eBox - Instant messaging (Jabber)"
+#~ msgstr "eBox - Messagerie instantanée (Jabber)"
+
+#~ msgid "eBox - layer 7 protocols"
+#~ msgstr "eBox - Protocoles de niveau 7"
+
+#~ msgid "eBox - Mail server"
+#~ msgstr "eBox - Serveur de courrier"
+
+#~ msgid "eBox - Mail filter module"
+#~ msgstr "eBox - Module de filtrage des courriers"
+
+#~ msgid "eBox - Monitoring module  "
+#~ msgstr "eBox - Module de surveillance _ _"
+
+#~ msgid "eBox - Network configuration module"
+#~ msgstr "eBox - Module de configuration du réseau"
+
+#~ msgid "eBox - NTP server"
+#~ msgstr "eBox - Serveur NTP (temps)"
+
+#~ msgid "eBox - Object management"
+#~ msgstr "eBox - Gestion des objets"
+
+#~ msgid "eBox - OpenVPN server module"
+#~ msgstr "eBox - Module serveur OpenVPN"
+
+#~ msgid "eBox - Printer sharing"
+#~ msgstr "eBox - Partage d'imprimantes"
+
+#~ msgid "eBox - client for remote services   "
+#~ msgstr "eBox - client pour les services distants"
+
+#~ msgid "eBox - File sharing"
+#~ msgstr "eBox - Partage de fichiers"
+
+#~ msgid "eBox - Services management"
+#~ msgstr "eBox - Gestion des services"
+
+#~ msgid "eBox - Software management"
+#~ msgstr "eBox - Gestion des logiciels"
+
+#~ msgid "eBox - Proxy cache and content filter"
+#~ msgstr "eBox - Cache du proxy et filtrage de contenu"
+
+#~ msgid "eBox - Traffic shaper for eBox"
+#~ msgstr "eBox - Gestion du trafic pour eBox"
+
+#~ msgid "eBox - User and Group management"
+#~ msgstr "eBox - Gestion des utilisateurs et groupes"
+
+#~ msgid "eBox - Web Server"
+#~ msgstr "eBox - Serveur Web"
+
+#~ msgid "IPsec VPNs"
+#~ msgstr "VPNs IPsec"
+
+#~ msgid "SOAP server to communicate with eBox control center"
+#~ msgstr "Serveur SOAP pour communiquer avec le centre de contrôle eBox"
+
+#, fuzzy
+#~ msgid "eBox- Web Server"
+#~ msgstr "Serveur Web"
+
+#~ msgid "Web Server"
+#~ msgstr "Serveur Web"
+
+#, fuzzy
+#~ msgid "ebox NTP server"
+#~ msgstr "Serveur DNS"
+
+#~ msgid "The packages were removed successfully"
+#~ msgstr "Les paquets ont été enlevés avec succès"
+
+#~ msgid "The packages installation has finished successfully"
+#~ msgstr "L'installation des paquets s'est terminée avec succès"
+
+#~ msgid ""
+#~ "An error ocurred while removing components. If the error persists or eBox "
+#~ "stops working properly, seek technical support."
+#~ msgstr ""
+#~ "Une erreur s'est produite durant l'effacement de composants. Si l'erreur "
+#~ "persiste ou si eBox ne fonctionne plus correctement, veuillez contacter "
+#~ "le support technique."
+
+#~ msgid "DHCP server"
+#~ msgstr "Serveur DHCP"
+
+#~ msgid "Base framework"
+#~ msgstr "Services de base"
+
+#~ msgid "NTP server"
+#~ msgstr "Serveur de temps (NTP)"
+
+#~ msgid "The installation of the packages has finished successfully"
+#~ msgstr "Les paquets ont été installés avec succès"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuration"
+
+#~ msgid ""
+#~ "The packages are being installed, please refrain from using the "
+#~ "application until the update is done"
+#~ msgstr ""
+#~ "Les paquets sont installés, veuillez éviter d'utiliser l'application "
+#~ "jusqu'à la fin de la mises-à-jour"
+
+#~ msgid "Starting..."
+#~ msgstr "Démarrage ..."
+
+#~ msgid "Perform automatic security updates"
+#~ msgstr "Exécutez les mises-à-jour de sécurité automatiques"
+
+#~ msgid "Software updates configuration"
+#~ msgstr "Configuration des actualisations"
+
+#~ msgid ""
+#~ "An error ocurred while installing components. If the error persists or "
+#~ "eBox stops working properly, seek technical support."
+#~ msgstr ""
+#~ "S'est produit une erreur pendant l'installation des composants. Si "
+#~ "l'erreur persiste ou eBox cesse de fonctionner correctement, cherchez le "
+#~ "soutien technique."
+
+#~ msgid "Certificate Authority Manager for eBox"
+#~ msgstr "Gestionnaire des certificats d'autorité pour eBox"
+
+#~ msgid "eBox DNS server"
+#~ msgstr "Serveur DNS"
+
+#~ msgid "Firewall"
+#~ msgstr "Parefeu"
+
+#~ msgid "Instant messaging (Jabber)"
+#~ msgstr "Messagerie instantanée (Jabber)"
+
+#~ msgid "Mail server"
+#~ msgstr "Serveur de courrier"
+
+#~ msgid "Mail filter module"
+#~ msgstr "Module de filtrage mail"
+
+#~ msgid "Object management"
+#~ msgstr "Gestion des objets"
+
+#~ msgid "OpenVPN server"
+#~ msgstr "Serveur OpenVPN"
+
+#~ msgid "Printer sharing"
+#~ msgstr "Partage d'imprimantes"
+
+#~ msgid "File sharing"
+#~ msgstr "Partage de fichiers"
+
+#~ msgid "Services  management"
+#~ msgstr "Gestion des services"
+
+#~ msgid "Traffic shaper for eBox"
+#~ msgstr "Gestion du traffic (shaping) pour eBox"
+
+#~ msgid "User and Group management"
+#~ msgstr "Gestion des utilisateurs et groupes"
+
+#, fuzzy
+#~ msgid "ebox - Certificate Authority Manager for eBox"
+#~ msgstr "Gestionnaire des certificats d'autorité pour eBox"
+
+#, fuzzy
+#~ msgid "ebox - Instant messaging (Jabber)"
+#~ msgstr "Messagerie instantanée (Jabber)"
+
+#, fuzzy
+#~ msgid "ebox - Mail filter module"
+#~ msgstr "Module de filtrage mail"
+
+#~ msgid "Network configuration"
+#~ msgstr "Configuration du réseau"
+
+#, fuzzy
+#~ msgid "ebox - File sharing"
+#~ msgstr "Partage de fichiers"
+
+#~ msgid "Proxy cache and content filter"
+#~ msgstr "Cache du proxy et fitrage de contenu"

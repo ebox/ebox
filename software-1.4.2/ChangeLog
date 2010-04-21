@@ -1,0 +1,93 @@
+1.4.2
+	+ Bug fix: system updates work properly now
+1.4.1
+	+ Fixed error when installed some packages (missing --force-yes option)
+	+ Fixed template error in system updates when automatic updates are enabled
+1.3.14
+	+ Added note with the last update time
+	+ eBox packages are not longer shown in system updates view
+1.3.13
+	+ Bug fix: add -o DPkg::Options::='--force-confold'"
+1.3.10
+	+ Add public key for eBox PPA repository
+1.3.5
+	+ Better looking for descriptions in eBox components
+1.3.3
+	+ Bugfix: added dpkg-dev dependency and package removal/install is
+	disabled when the module is disabled
+1.1.20
+	+ New release
+0.12.101
+	+ Add missing backslash to display update form correctly
+0.12.100
+	+ Restart apache once and not for every package when upgrading or
+	installing
+0.12.99
+	+ New release
+0.12.2
+	+ Bugfix: Added `--force-yes` option to accept unsigned packages from
+	our PPA repository
+0.12.1
+	+ Bugfix: Packages which are not installable for some reason are
+	handled correctly stopping the update process and showing the error
+0.12
+	+ New release
+0.11.101
+	+ Bugfix. Fix typo in ebox-update-packages which prevented software 
+	  management from working
+	+ Add ebox-software.cron.daily to debian package
+	+ Add action to explain ebox-software cron script
+0.11.100
+	+ Regenerate cache before finishing package installation/removal
+	+ Do not truncate sources.list
+	+ Delete packages using the progress screen
+0.11.99
+	+ System and software updates work correctly again with progress
+	indicator showing process already finished
+	+ ebox-software cron script locks software module to work in order
+	to hide corner cases
+	+ Bugfix. libebox is treated as an eBox package and not as a
+	system package
+0.11
+	+ New release
+0.10.99
+	+ New release
+0.9.100
+	+ New release
+0.9.99
+	+ New release
+0.9.3
+	+ New release
+0.8.99
+	+ New release
+0.8.1
+	+ fix bug to avoid calling endlessly ebox-software 
+	  after installing a package when automatic update was enable.
+0.8
+	+ ebox-software truncates /etc/apt/sources.list and
+	  add  all apt sources from ebox-platform.com
+0.7.99
+	+ fix bug to wait until the upgrading or installing process is done.
+	  Use Ajax to check if the upgrading taking place has finished
+	+ restart apache when a package is installed
+0.7.1
+	+ GUI improvements
+	+ Use of ebox-sudoers-friendly
+	+ Fix an error which uninstalls upgradable packages
+0.7
+	+ First public release
+0.6
+	+ move to client
+	+ API documented using naturaldocs
+	+ Update install
+	+ Update debian scripts
+	+ Implements usesPort
+
+0.5.2
+	+ Fix some packaging issues
+
+0.5.1
+	+ Convert module to new menu system
+
+0.5
+	+ Initial release
