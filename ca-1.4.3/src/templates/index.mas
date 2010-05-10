@@ -1,0 +1,204 @@
+<%doc>
+  Template to show the current certificate list and issue a new
+  certificate.
+</%doc>
+<%args>
+  $certs # A reference to the list with all available certificates
+  $caNeeded => 0 # set whether the CA certificate is needed to issue
+  $passRequired => '' # set if the CA is password-aware
+</%args>
+<%init>
+use EBox::Gettext;
+use EBox::CA::DN;
+</%init>
+<!-- Issue a new certificate -->
+<%perl>
+  # Common args to issueCertificate and issueCACertificate
+  my @issueTable = (
+		    [ name => 'caNeeded', input => 'hidden',
+		      value => $caNeeded ],
+		   );
+
+  my $printableName = __('Organization Name');
+  $printableName = __('Common Name') unless ($caNeeded);
+  push ( @issueTable, [ name => 'name',
+			printableName => $printableName,
+			input => 'text' ],
+       );
+
+#  if ( $passRequired or $caNeeded ) {
+#    push ( @issueTable, [ name => 'caPassphrase', input => 'password',
+#                          printableName => __('CA Passphrase') ]);
+#    
+#  }
+
+  if ( $caNeeded ) {
+#    push ( @issueTable, [ name => 'reCAPassphrase',
+#                          input => 'password',
+#                          printableName => __('Re CA Passphrase')]
+#         );
+      push( @issueTable, [ name => 'countryName', input => 'text',
+                           printableName => __('Country code'),
+                           size => 2, optional => 1 ]);
+      push( @issueTable, [ name => 'localityName', input => 'text',
+                           printableName => __('City'),
+                           optional => 1 ]);
+      push( @issueTable, [ name => 'stateName', input => 'text',
+                           printableName => __('State'),
+                           optional => 1 ]);
+
+  }
+  push( @issueTable,[ name => 'expiryDays',
+	              printableName => __('Days to expire'),
+		      size => 5, input => 'text' ]);
+
+  unless ( $caNeeded ) {
+      push( @issueTable, [ name => 'subjectAltName', input => 'text',
+                           printableName => __('Subject Alternative Names'),
+                           help => __x('Multi-value separated by '
+                                      . 'commas, only valid types are: '
+                                      . '{dns}, {ip} and {email}. For '
+                                      . 'instance, {example}',
+                                      dns     => 'DNS',
+                                      ip      => 'IP',
+                                      email   => 'email',
+                                      example => 'DNS:host.domain.com,IP:10.2.2.2'
+                                      ),
+                           optional => 1 ]);
+  }
+
+
+  push ( @issueTable, [ name => 'certificate',
+			value => __('Issue'),
+			input => 'submit' ]
+       );
+</%perl>
+<div class="help">
+  <% __("Certificate changes will take effect immediately") %>
+% if ( $caNeeded ) {
+  <% '.' . __('The CA passphrase is optional') %>
+% }
+</div>
+% if ($caNeeded) {
+  <h3><% __('Issue the Certification Authority Certificate') %></h3>
+% } else {
+  <h3><% __('Issue a New Certificate')  %></h3>
+% }
+<form action="IssueCertificate" method="post" >
+  <& formTable.mas, rows => \@issueTable &>
+</form>
+
+<!-- List current certificates in a table -->
+<h3><% __("Current Certificate List")  %></h3>
+<div class="help">
+  <% __("Date refers to Expiration Date in Valid/Expired and to Revokation Date in Revoked certificates respectively") %>.
+</div>  
+<table class="dataTable">
+  <thead>
+    <th><% __("Name")  %></th>
+    <th><% __("State") %></th>
+    <th><% __("Date")  %></th>
+    <th class="thOptions"><% __("Actions") %></th>
+  </thead>
+  <tbody>
+%   foreach my $cert (@{$certs}) {
+%   # It is needed to check if it is the CA certificate
+%     if ( $cert->{'isCACert'} and $cert->{'state'} eq 'V' ) {
+       <tr class="highlight">
+%     }
+	 <td class="tleft"
+%     if ( defined($cert->{'subjAltNames'}) and @{$cert->{'subjAltNames'}} > 0 ) {
+%            my $subjAltNamesStr = join(', ', map { qq{$_->{type}: $_->{value}} } @{$cert->{'subjAltNames'}});
+             title="<% $subjAltNamesStr %>"
+% }
+         >
+%     if ( $cert->{'isCACert'} ) {
+	    <% $cert->{'dn'}->attribute('commonName') %>
+	    <% __('from') %>
+            <% $cert->{'dn'}->attribute('organizationName') %>
+%     }
+%     else {
+            <% $cert->{'dn'}->attribute('commonName') %>
+%     }
+         </td>
+    <!-- Print the state string -->
+<%perl>
+   my $stateStr = "";
+   if ( $cert->{"state"} eq "V" ) {
+     $stateStr = __("Valid");
+   } elsif ( $cert->{"state"} eq "E" ) {
+     $stateStr = __("Expired");
+   } elsif ( $cert->{"state"} eq "R" ) {
+     $stateStr = __("Revoked");
+   }
+</%perl>
+      <td class="tcenter"
+%     if ( $cert->{"state"} eq 'R' ) {
+          title="<% __x('Reason: {reason}', reason => $cert->{'reason'}) %>"
+%     } 
+        >
+        <% $stateStr %>
+      </td>
+      <td>
+  <!-- Print the expiration or revocation date -->
+<%perl>
+    my $date = undef;
+    if ( $cert->{"state"} =~ m/[VE]/ ) {
+      $date = $cert->{"expiryDate"};
+    } else {
+      $date = $cert->{"revokeDate"};
+    }
+</%perl>
+        <%
+	  sprintf("%04d-%02d-%02d %02d:%02d:%02d", $date->year(),
+		  $date->month(), $date->day(), $date->hours(),
+		  $date->minutes(), $date->seconds()) 
+        %>		
+      </td>
+      <td class="tcenter">
+%	if ( $cert->{"state"} eq "V" ) {
+        <a
+	href="ShowForm?action=revoke&cn=<%$cert->{'dn'}->attribute('commonName')
+| u%>"
+	>
+	  <img src="/data/images/deny-active.gif"
+	       alt="<% __('Revoke') %>" />
+	</a>   
+        <img src="/data/images/sep.gif" alt="-" />
+%	} 
+%	if ( $cert->{"state"} eq "V" ) {
+        <a
+	href="DownloadFiles?cn=<%$cert->{'dn'}->attribute('commonName') | u%>"
+	>
+	  <img src="/data/images/install.gif"
+	       alt="<% __('Download Key(s) and Certificate') %>" />
+	</a>   
+        <img src="/data/images/sep.gif" alt="-" />
+%	} 
+%	if ( $cert->{"state"} eq "V" ) {
+        <a
+	href="ShowForm?action=renew&cn=<%$cert->{'dn'}->attribute('commonName')
+	| u%>"
+	>
+	  <img src="/data/images/reload.gif"
+	       alt="<% __('Renew') %>" />
+	</a>   
+        <img src="/data/images/sep.gif" alt="-" />
+%	} 
+      </td>
+    </tr>  
+%   }
+  </tbody>
+</table>
+<!-- Put the legend underneath the list -->
+<%perl>
+  my @legendElements = (
+			{ imgFile => "/data/images/deny-active.gif",
+			  imgName => __("Revoke") },
+			{ imgFile => "/data/images/install.gif",
+			  imgName => __("Download Key(s) and Certificate") },
+			{ imgFile => "/data/images/reload.gif",
+			  imgName => __("Renew") }
+		       );
+</%perl>
+<& legendTable.mas, elements => \@legendElements, nColumns => 3 &>
