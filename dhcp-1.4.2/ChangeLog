@@ -1,0 +1,111 @@
+1.4.2
+	+ Bugfix: DHCP log works now if the dhcp client sends a host name as
+	  suggested
+1.4.1
+	+ Bugfix: Fixed address names must be valid domain names to enable
+	  dynamic DNS feature.
+1.4
+	+ Bug fix: i18n
+1.3.13
+	+ Added WINS server configuration setting to DHCP common options,
+	  you may use eBox as PDC or any other WINS server
+	+ Added description optional field to fixed address table
+	+ Added NTP server configuration setting to DHCP common options,
+	  you may use eBox or any other NTP server
+	+ Added Dynamic DNS update feature to set a domain for ranges and
+ 	  a domain for fixed addresses when an IP address is leased. The
+	  hostname for ranges is set following a expression
+	  (dynamic-<IP_address>) and fixed addresses will use the declared
+ 	  name from eBox interface.
+1.3.9
+	+ Bugfix: Do not set configuration for those interfaces which do
+	  not have ranges nor fixed address mapping configured
+1.1.20
+	+ New release
+1.1.10
+	+ New release
+1.1
+	+ Use the new ids() and row() API
+	+ Bugfix: Set "authoritative" statement to DHCP configuration
+0.12.101
+	+ Bugfix: Use the new API for services
+0.12.100
+	+ Bugfix: two wrong calls to EBox::Model::Row API fixed
+0.12.99
+	+ New release
+0.12.1
+	+ Bug fix: use the new EBox::Model::Row API for DHCP options
+0.12
+	+ Make default and max leasing time mandatory fields
+	+ Add field help to model
+	+ Make custom_ns field required
+	+ Bugfix: Mark managers as changed every time they ask to change
+	from/to static method because some models may appear/disappear
+	because of modifying configuration method in interfaces
+0.11.102
+	+ Bugfix. Logging were not working with hostnames with characters
+	different from alphanumeric plus '_'
+0.11.101
+	+ Bugfix. Secondary nameserver in options does not fill a default
+	value when setting as undef by user
+	+ Added 'setLeases' method to set lease times from module API
+	+ Bugfix: Virtual interface options do not override real interface
+	options anymore
+0.11.100
+	+ onInstall() functionality moved to migration script
+	+ Do not remove dhcpd3 rc links 
+	+ Stop dhcpd3 in pre-start in upstart script
+0.11.99
+	+ Added thin client general options: filename and next-server
+	+ Added include files to use by user in
+	  ${EBOX_HOME}/conf/dhcp/${iface}/plugins subdir
+	+ Bugfix. Check fixed mapping names not to collide with other
+	mappings in other models and make dhcpd crash
+	+ Bugfix. Fixed mapping names cannot contain spaces
+0.10.99
+	+ Use the new model/view framework. UI uses Ajax.
+	+ Show eBox domain server if DNS is installed
+	+ Show eBox IPs on default gateway selection
+0.9.100
+	+ Use new services API 
+0.9.99
+	+ New release
+
+0.9.3
+	+ New release
+0.9.2
+	+ Check fixed ip's name against domain name syntax
+0.9.1
+	+ New release
+0.9
+	+ Added Polish translation
+	+ Added Aragonese translation
+	+ Added German translation
+
+0.8.99
+	+ New release
+0.8.1
+	+ New release
+0.8
+	+ New release
+0.7.99
+        + Add Portuguese translation
+
+0.7.1
+	+ Add search domain to options
+	+ Use of ebox-sudoers-friendly
+0.7
+	+ First public release
+	+ Log leases/releases
+0.6	
+	+ API documented using naturaldocs
+	+ move to client
+	+ Use NetworkObserver
+	   
+0.5.2
+	+ Fix some packaging issues
+0.5.1
+	+ Convert module to new menu system
+
+0.5
+	+ Initial release
