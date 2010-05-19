@@ -1,0 +1,641 @@
+# Czech translations for ebox-firewall package.
+# Copyright (C) 2010 Warp S.L.
+# This file is distributed under the same license as the ebox-firewall package.
+# Automatically generated, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-firewall 1.5Report-Msgid-Bugs-To: bugs@warp.es\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-04-30 12:55+0200\n"
+"PO-Revision-Date: 2010-04-10 19:12+0200\n"
+"Last-Translator: tomas volse <tomas.volse@gmail.com>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Iptables.pm:808 src/EBox/Iptables.pm:845
+msgid ""
+"You must set the iptables_log_limit variable in the ebox configuration file"
+msgstr ""
+"Musíte nastavit iptables_log_limit proměnnou v ebox konfiguračním souboru"
+
+#: src/EBox/Iptables.pm:814 src/EBox/Iptables.pm:851
+msgid ""
+"You must set the iptables_log_burst variable in the ebox configuration file"
+msgstr ""
+"Musíte nastavit iptables_log_burst proměnnou v ebox konfiguračním souboru"
+
+#: src/EBox/Firewall.pm:58 src/EBox/Firewall.pm:856
+msgid "Firewall"
+msgstr "Firewall"
+
+#: src/EBox/Firewall.pm:127
+msgid "Flush previous firewall rules"
+msgstr "Zahodit předchozí pravidla firewallu"
+
+#: src/EBox/Firewall.pm:128
+msgid ""
+"The eBox firewall will flush any previous firewall rules which have been "
+"added manually or by another tool"
+msgstr ""
+"EBox firewall zahodí všechna předchozích pravidla firewallu, které byly "
+"přidány ručně nebo jiným nástrojem"
+
+#: src/EBox/Firewall.pm:133
+msgid "Secure by default"
+msgstr "Výchozí bezpečně"
+
+#: src/EBox/Firewall.pm:134
+msgid ""
+"Just a few connections are allowed by default. Make sure you add the proper "
+"incoming and outcoming rules to make your system work as expected. Usually, "
+"all outcoming connections are denied by default, and only SSH and HTTPS "
+"incoming connections are allowed."
+msgstr ""
+"Jen pár spojení je povoleno ve výchozím nastavení. Ujistěte se, že přidáte "
+"správná příchozí a odchozí pravidla tak, aby váš systém fungoval podle "
+"očekávání. Obvykle jsou všechny odchozí připojení odepřeny na výchozím "
+"nastavení a pouze SSH a HTTPS příchozí spojení jsou povoleny."
+
+#: src/EBox/Firewall.pm:312
+msgid "action"
+msgstr "akce"
+
+#: src/EBox/Firewall.pm:433 src/EBox/Firewall.pm:478 src/EBox/Firewall.pm:502
+#, perl-brace-format
+msgid "Name '{name}' is invalid"
+msgstr "Jméno '{name}' je neplatné"
+
+#: src/EBox/Firewall.pm:434 src/EBox/Firewall.pm:613 src/EBox/Firewall.pm:638
+msgid "port"
+msgstr "port"
+
+#: src/EBox/Firewall.pm:612 src/EBox/Firewall.pm:637
+msgid "protocol"
+msgstr "protokol"
+
+#: src/EBox/Firewall.pm:826 src/EBox/CGI/Filter.pm:28
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:213
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:180
+msgid "Packet Filter"
+msgstr "Paketový filtr"
+
+#: src/EBox/Firewall.pm:829 src/EBox/Firewall/Model/RedirectsTable.pm:355
+msgid "Port Forwarding"
+msgstr ""
+
+#: src/EBox/Firewall.pm:840
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:60
+msgid "Date"
+msgstr "Datum"
+
+#: src/EBox/Firewall.pm:841
+msgid "Input interface"
+msgstr "Vstupní rozhraní"
+
+#: src/EBox/Firewall.pm:842
+msgid "Output interface"
+msgstr "Výstupní rozhraní"
+
+#: src/EBox/Firewall.pm:843 src/EBox/Firewall/Model/RedirectsTable.pm:292
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:121
+msgid "Source"
+msgstr "Zdroj"
+
+#: src/EBox/Firewall.pm:844 src/EBox/Firewall/Model/BaseRuleTable.pm:147
+msgid "Destination"
+msgstr "Cíl"
+
+#: src/EBox/Firewall.pm:845 src/EBox/Firewall/Model/RedirectsTable.pm:285
+msgid "Protocol"
+msgstr "Protokol"
+
+#: src/EBox/Firewall.pm:846
+msgid "Source port"
+msgstr "Zdrojový port"
+
+#: src/EBox/Firewall.pm:847
+msgid "Destination port"
+msgstr "Cílový port"
+
+#: src/EBox/Firewall.pm:848 src/EBox/Firewall/Model/BaseRuleTable.pm:112
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:144
+msgid "Decision"
+msgstr "Rozhodnutí"
+
+#: src/EBox/Firewall.pm:853
+msgid "DROP"
+msgstr "ZAHODIT"
+
+#: src/EBox/Firewall.pm:853 src/EBox/Firewall/Model/BaseRuleTable.pm:70
+msgid "LOG"
+msgstr "LOG"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:68
+#, fuzzy
+msgid "Traffic coming out from eBox"
+msgstr "Filtrovací pravidla pro provoz, který jde z eBoxu"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:77
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:80
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:79
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:77
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:161
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:77
+msgid "rule"
+msgstr "pravidlo"
+
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:68
+#, fuzzy
+msgid "External networks to internal networks"
+msgstr "Filtrovací pravidla z vnějších sítí do vnitřních sítí"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:145
+msgid "Contradictory rule found. Remove it first"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:249
+msgid "Interface"
+msgstr "Rozhraní"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:256
+#, fuzzy
+msgid "Original destination"
+msgstr "Cíl"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:261
+msgid "eBox"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:264
+#, fuzzy
+msgid "IP Address"
+msgstr "IP adresa"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:268
+msgid "Object"
+msgstr "Objekt"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:279
+#, fuzzy
+msgid "Original destination port"
+msgstr "cílový port"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:297
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:126
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:152
+msgid "Any"
+msgstr "Jakýkoli"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:300
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:129
+msgid "Source IP"
+msgstr "Zdrojová IP"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:304
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:133
+msgid "Source object"
+msgstr "Zdrojový objekt"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:315
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:155
+msgid "Destination IP"
+msgstr "Cílová IP"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:321
+msgid "Port"
+msgstr "Port"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:326
+msgid "Same"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:329
+msgid "Other"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:337
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:185
+msgid "Description"
+msgstr "Popis"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:354
+msgid "List of forwarded ports"
+msgstr ""
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:363
+msgid "forwarding"
+msgstr ""
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:66
+msgid "ACCEPT"
+msgstr "přijmout"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:68
+msgid "DENY"
+msgstr "odmítnout"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:160
+msgid "Destination object"
+msgstr "Cílový objekt"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:175
+msgid "Service"
+msgstr "Služba"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:179
+msgid ""
+"If inverse match is ticked, any service but the selected one will match this "
+"rule"
+msgstr ""
+"Je-li inverzní srovnání zaškrtnuto, každá služba si vybere jedno, které "
+"vyhoví tomuto pravidlu"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:227
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:194
+#, fuzzy
+msgid "Configure Rules"
+msgstr "Nastavit pravidla"
+
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:68
+#, fuzzy
+msgid "External networks to eBox"
+msgstr "Filtrovací pravidla z vnějších sítí k eBoxu"
+
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:68
+#, fuzzy
+msgid "Internal networks to eBox"
+msgstr "Filtrovací pravidla z vnitřní sítě do eBoxu"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:37
+msgid "Input"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:38
+#, fuzzy
+msgid "External Input"
+msgstr "Externí port"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:39
+msgid "Output"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:40
+msgid "Forward"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:41
+msgid "NAT prerouting"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:42
+msgid "NAT postrouting"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:118
+#, fuzzy
+msgid "Rule"
+msgstr "Pravidla"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:123
+msgid "Enabled"
+msgstr "Povoleno"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:129
+msgid "Type"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:134
+#, fuzzy
+msgid "Module"
+msgstr "pravidlo"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:139
+msgid "Condition"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:153
+#: src/templates/filter.mas:51
+msgid "Rules added by eBox services (Advanced)"
+msgstr ""
+
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:65
+#, fuzzy
+msgid "Internal networks"
+msgstr "externí port"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:52
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:46
+msgid "packets dropped"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:64
+msgid "Firewall packet traffic chart"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:86
+#, fuzzy
+msgid "Packet traffic"
+msgstr "Filtrování paketů"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:66
+msgid "Packets dropped"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:78
+msgid "Packet traffic details"
+msgstr ""
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:86
+msgid "traffic"
+msgstr ""
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:70
+msgid "Packet traffic report"
+msgstr ""
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:71
+msgid "Firewall packet traffic report"
+msgstr ""
+
+#: src/templates/filter.mas:6
+msgid "Filtering rules from internal networks to eBox"
+msgstr "Filtrovací pravidla z vnitřní sítě do eBoxu"
+
+#: src/templates/filter.mas:8
+#, fuzzy
+msgid ""
+"These rules allow you to control access from internal networks to services "
+"running on your eBox machine."
+msgstr ""
+"Tato pravidla vám umožní kontrolovat přístup z externích sítí ke službám "
+"běžícím na vašem počítači eBox."
+
+#: src/templates/filter.mas:10 src/templates/filter.mas:18
+#: src/templates/filter.mas:26 src/templates/filter.mas:37
+#: src/templates/filter.mas:48 src/templates/filter.mas:59
+msgid "Configure rules"
+msgstr "Nastavit pravidla"
+
+#: src/templates/filter.mas:13
+msgid "Filtering rules for internal networks"
+msgstr "Filtrovací pravidla pro vnitřní sítě"
+
+#: src/templates/filter.mas:15
+#, fuzzy
+msgid ""
+"These rules allow you to control access from internal networks to the "
+"Internet and traffic between internal networks. If you wish to provide "
+"access to your eBox services, you must use the above section."
+msgstr ""
+"Tato pravidla vám umožňují řídit přístup z vnitřní sítě k Internetu, a "
+"provoz mezi vnitřní sítí. Pokud chcete poskytnout přístup k vašim eBox "
+"službám, je nutné použít výše uvedené části"
+
+#: src/templates/filter.mas:21
+msgid "Filtering rules for traffic coming out from eBox"
+msgstr "Filtrovací pravidla pro provoz, který jde z eBoxu"
+
+#: src/templates/filter.mas:23
+#, fuzzy
+msgid ""
+"These rules allow you to control access from your eBox to external services."
+msgstr "Tato pravidla vám umožní kontrolovat přístup z eBoxu na externí služby"
+
+#: src/templates/filter.mas:29
+msgid "Filtering rules from external networks to eBox"
+msgstr "Filtrovací pravidla z vnějších sítí k eBoxu"
+
+#: src/templates/filter.mas:31
+msgid ""
+"These rules allow you to control access from external networks to sevices "
+"running on your eBox machine."
+msgstr ""
+"Tato pravidla vám umožní kontrolovat přístup z externích sítí ke službám "
+"běžícím na vašem počítači eBox."
+
+#: src/templates/filter.mas:34 src/templates/filter.mas:45
+#, fuzzy
+msgid ""
+"Be advised that adding rules in this section may compromise your network "
+"security as you may grant access from untrusted networks. Please do not use "
+"this unless you know what you are doing."
+msgstr ""
+"Třeba upozornit, že přidání pravidla v této části, může ohrozit zabezpečení "
+"vaší sítě, můžete povolit přístup z nedůvěryhodných sítí. Prosím, "
+"nepoužívejte ji, pokud nevíte, co děláte"
+
+#: src/templates/filter.mas:40
+msgid "Filtering rules from external networks to internal networks"
+msgstr "Filtrovací pravidla z vnějších sítí do vnitřních sítí"
+
+#: src/templates/filter.mas:42
+msgid ""
+"These rules allow you to control access from external networks to internal "
+"networks."
+msgstr ""
+"Tato pravidla vám umožní kontrolovat přístup z externích sítí do vnitřních "
+"sítí."
+
+#: src/templates/filter.mas:53
+msgid "These rules are automatically added by the eBox services."
+msgstr ""
+
+#: src/templates/filter.mas:56
+msgid ""
+"You can disable these rules, but make sure you know what you are doing or "
+"otherwise some services could stop working."
+msgstr ""
+
+#~ msgid "Filtering rules from  external networks to eBox"
+#~ msgstr "Filtrovací pravidla z vnějších sítí do eBoxu"
+
+#~ msgid "Port redirections"
+#~ msgstr "Přesměrování portů"
+
+#~ msgid "Global firewall configuration"
+#~ msgstr "Globální konfigurace firewallu"
+
+#~ msgid "Firewall configuration: {desc}"
+#~ msgstr "Firewall konfigurace: {desc}"
+
+#~ msgid "policy"
+#~ msgstr "politika"
+
+#~ msgid "Global services' filtering rules"
+#~ msgstr "Globální filtrovací pravidla služeb"
+
+#~ msgid "Services' filtering rules {desc}"
+#~ msgstr "Filtrovací pravidla služeb {desc}"
+
+#~ msgid "network interface"
+#~ msgstr "síťové rozhraní"
+
+#~ msgid "destination address"
+#~ msgstr "cílová adresa"
+
+#~ msgid "service"
+#~ msgstr "služba"
+
+#~ msgid "Edit rule"
+#~ msgstr "Upravit pravidlo"
+
+#~ msgid "firewall"
+#~ msgstr "firewall"
+
+#~ msgid "Port {port} is being used by a service or port redirection."
+#~ msgstr "Port {port} je použit službou či přesměrováním portů."
+
+#~ msgid "Redirects"
+#~ msgstr "Přesměrování"
+
+#~ msgid "Actions"
+#~ msgstr "Akce"
+
+#~ msgid "Add"
+#~ msgstr "Přidat"
+
+#~ msgid "Change"
+#~ msgstr "Změna"
+
+#~ msgid "Delete"
+#~ msgstr "Vymazat"
+
+#~ msgid ""
+#~ "These rules are meant to control access from internal network interfaces "
+#~ "to services running on your eBox machine"
+#~ msgstr ""
+#~ "Tato pravidla jsou určeny pro kontrolu přístupu z rozhraní vnitřní sítě "
+#~ "pro služby běžící na vašem počítači eBox"
+
+#~ msgid ""
+#~ "Protocol, port and destination address are optional. The rules will be "
+#~ "applied in order, from top to bottom, you can reorder them once they are "
+#~ "added. Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "Protokol, port a cílová adresa jsou volitelné. Tato pravidla budou "
+#~ "použita v pořadí od shora dolů, můžete změnit pořadí po jejich přidání. "
+#~ "Pravidla mohou být také vypnutá, aniž by došlo k jejich smazání."
+
+#~ msgid ""
+#~ "Rules without an explicit destination address will be applied to packets "
+#~ "that leave eBox through an external network interface. You may flag "
+#~ "network interfaces as external in the <a href='../Network/Ifaces'>Network "
+#~ "Interfaces</a> configuration page."
+#~ msgstr ""
+#~ "Pravidla bez výslovné cílové adresy budou použity na pakety, které "
+#~ "opuštějí eBox přes externí síťové rozhraní. Můžete označit síťová "
+#~ "rozhraních jako externí v <a href='../Network/Ifaces'> síťová rozhraní </ "
+#~ "a> konfigurační stránky."
+
+#~ msgid "Destination address"
+#~ msgstr "Cílovou adresu"
+
+#~ msgid "Action"
+#~ msgstr "Akce"
+
+#~ msgid "Active"
+#~ msgstr "Aktivní"
+
+#~ msgid "Allow"
+#~ msgstr "Povolit"
+
+#~ msgid "Deny"
+#~ msgstr "Odmítnout"
+
+#~ msgid "Up"
+#~ msgstr "Nahoru"
+
+#~ msgid "Down"
+#~ msgstr "Dolů"
+
+#~ msgid "Policy"
+#~ msgstr "Politika"
+
+#~ msgid ""
+#~ "The policy states what to do on network packets not explicitly matched "
+#~ "below. The policy is applied to connections that leave eBox through an "
+#~ "external network interface. If you want to allow traffic between internal "
+#~ "networks you need to create explicit rules for that."
+#~ msgstr ""
+#~ "Policy states, říká co mají dělat síťové pakety, které nejsou výslovně "
+#~ "přizpůsobené níže. Tato politika je aplikována na připojení, které "
+#~ "opouštějí eBox přes externí síťové rozhraní. Pokud chcete povolit provoz "
+#~ "mezi vnitřní sítí, musíte si vytvořit jasná pravidla pro to."
+
+#~ msgid ""
+#~ "Choosing global will make the firewall fall back to the <a href='Object?"
+#~ "object=_global'>default configuration</a>."
+#~ msgstr ""
+#~ "Globální výběr provede firewall zpět na <a href='Object?object=_global'> "
+#~ "Výchozí konfigurace</a>."
+
+#~ msgid "Global"
+#~ msgstr "Globální"
+
+#~ msgid "Services"
+#~ msgstr "Služby"
+
+#~ msgid ""
+#~ "Protocol, ports and addresses are optional. The rules will be applied in "
+#~ "order, from top to bottom, you can reorder them once they are added. "
+#~ "Rules can also be disabled without deleting them."
+#~ msgstr ""
+#~ "Protokol, porty a adresy jsou nepovinné. Tato pravidla budou použita v "
+#~ "pořadí od shora dolů, můžete změnit pořadí je po jejich přidání. Pravidla "
+#~ "mohou také být vypnutá, aniž by došlo k jejich smazání."
+
+#~ msgid "New rule"
+#~ msgstr "Nové pravidlo"
+
+#~ msgid "Source address"
+#~ msgstr "Zdrojová adresa"
+
+#~ msgid "is not"
+#~ msgstr "není"
+
+#~ msgid "is"
+#~ msgstr "je"
+
+#~ msgid "to"
+#~ msgstr "na"
+
+#~ msgid "Rule list"
+#~ msgstr "Seznam pravidel"
+
+#~ msgid "allow"
+#~ msgstr "povolit"
+
+#~ msgid "allow (disabled)"
+#~ msgstr "povolit (vypnuto)"
+
+#~ msgid "deny"
+#~ msgstr "odmítnout"
+
+#~ msgid "deny (disabled)"
+#~ msgstr "odmítnout (vypnuto)"
+
+#~ msgid "inverse match"
+#~ msgstr "inverzní srovnání"
+
+#~ msgid "Edit"
+#~ msgstr "Upravit"
+
+#~ msgid "delete"
+#~ msgstr "vymazat"
+
+#~ msgid "edit"
+#~ msgstr "Upravit"
+
+#~ msgid "move up"
+#~ msgstr "nahoru"
+
+#~ msgid "move down"
+#~ msgstr "Dolů"
+
+#~ msgid "any"
+#~ msgstr "jakýkoli"

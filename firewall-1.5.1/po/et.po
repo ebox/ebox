@@ -1,0 +1,464 @@
+# Estonian translations for ebox-firewall package.
+# Copyright (C) 2010 Warp S.L.
+# This file is distributed under the same license as the ebox-firewall package.
+# Automatically generated, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ebox-firewall 1.4Report-Msgid-Bugs-To: bugs@warp.es\n"
+"Report-Msgid-Bugs-To: bugs@warp.es\n"
+"POT-Creation-Date: 2010-04-30 12:55+0200\n"
+"PO-Revision-Date: 2010-04-19 14:31+0200\n"
+"Last-Translator: Priit-A. Heinsalu <priit.heinsalu@gmail.com>\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
+
+#: src/EBox/Iptables.pm:808 src/EBox/Iptables.pm:845
+msgid ""
+"You must set the iptables_log_limit variable in the ebox configuration file"
+msgstr "Sa pead määrama iptables_log_limit muutuja eBoxi seadistustefailis"
+
+#: src/EBox/Iptables.pm:814 src/EBox/Iptables.pm:851
+msgid ""
+"You must set the iptables_log_burst variable in the ebox configuration file"
+msgstr "Sa pead määrama iptables_log_burst muutuja eBoxi seadistustefailis"
+
+#: src/EBox/Firewall.pm:58 src/EBox/Firewall.pm:856
+msgid "Firewall"
+msgstr "Tulemüür"
+
+#  
+#: src/EBox/Firewall.pm:127
+msgid "Flush previous firewall rules"
+msgstr "Eelmiste tulemüüri reeglite kustutamine"
+
+#: src/EBox/Firewall.pm:128
+msgid ""
+"The eBox firewall will flush any previous firewall rules which have been "
+"added manually or by another tool"
+msgstr ""
+"eBoxi tulemüür kustutab kõik eelmised tulemüüri reeglid, mis on lisatud "
+"käsitsi või mõne tööriista poolt"
+
+#: src/EBox/Firewall.pm:133
+msgid "Secure by default"
+msgstr "Vaikimisi turvalisus"
+
+#  
+#: src/EBox/Firewall.pm:134
+msgid ""
+"Just a few connections are allowed by default. Make sure you add the proper "
+"incoming and outcoming rules to make your system work as expected. Usually, "
+"all outcoming connections are denied by default, and only SSH and HTTPS "
+"incoming connections are allowed."
+msgstr ""
+"Vaikimisi on lubatud ainult mõned ühendused. Veendu, et lisad sobivad "
+"sisenemis- ja väljumisreeglid selleks, et süsteem töötaks vastavalt "
+"ootustele. Tavaliselt on kõik väljuvad ühendused vaikimisi keelatud. Lubatud "
+"on ainult sisenevad SSH ja HTTP ühendused."
+
+#: src/EBox/Firewall.pm:312
+msgid "action"
+msgstr "toiming"
+
+#: src/EBox/Firewall.pm:433 src/EBox/Firewall.pm:478 src/EBox/Firewall.pm:502
+#, perl-brace-format
+msgid "Name '{name}' is invalid"
+msgstr "Nimi '{name}' on vigane"
+
+#: src/EBox/Firewall.pm:434 src/EBox/Firewall.pm:613 src/EBox/Firewall.pm:638
+msgid "port"
+msgstr "port"
+
+#: src/EBox/Firewall.pm:612 src/EBox/Firewall.pm:637
+msgid "protocol"
+msgstr "protokoll"
+
+#: src/EBox/Firewall.pm:826 src/EBox/CGI/Filter.pm:28
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:213
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:180
+msgid "Packet Filter"
+msgstr "Paketifilter"
+
+#: src/EBox/Firewall.pm:829 src/EBox/Firewall/Model/RedirectsTable.pm:355
+msgid "Port Forwarding"
+msgstr "Portide suunamine"
+
+#: src/EBox/Firewall.pm:840
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:60
+msgid "Date"
+msgstr "Kuupäev"
+
+# Sisendi liides
+#: src/EBox/Firewall.pm:841
+msgid "Input interface"
+msgstr "Sisendliides"
+
+# Väljundi liides
+#: src/EBox/Firewall.pm:842
+msgid "Output interface"
+msgstr "Väljundliides"
+
+#: src/EBox/Firewall.pm:843 src/EBox/Firewall/Model/RedirectsTable.pm:292
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:121
+msgid "Source"
+msgstr "Saatja"
+
+#: src/EBox/Firewall.pm:844 src/EBox/Firewall/Model/BaseRuleTable.pm:147
+msgid "Destination"
+msgstr "Saaja"
+
+#: src/EBox/Firewall.pm:845 src/EBox/Firewall/Model/RedirectsTable.pm:285
+msgid "Protocol"
+msgstr "Protokoll"
+
+#: src/EBox/Firewall.pm:846
+msgid "Source port"
+msgstr "Saatja port"
+
+#: src/EBox/Firewall.pm:847
+msgid "Destination port"
+msgstr "Saaja port"
+
+#: src/EBox/Firewall.pm:848 src/EBox/Firewall/Model/BaseRuleTable.pm:112
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:144
+msgid "Decision"
+msgstr "Otsus"
+
+# KAOTA, PILLA, KUKUTA, VISKA
+#: src/EBox/Firewall.pm:853
+#, fuzzy
+msgid "DROP"
+msgstr "PILLA"
+
+#: src/EBox/Firewall.pm:853 src/EBox/Firewall/Model/BaseRuleTable.pm:70
+msgid "LOG"
+msgstr "LOGI"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:68
+msgid "Traffic coming out from eBox"
+msgstr "eBoxist väljuv liiklus"
+
+#: src/EBox/Firewall/Model/EBoxOutputRuleTable.pm:77
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:80
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:79
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:77
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:161
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:77
+msgid "rule"
+msgstr "reegel"
+
+# Liiklus välistest võrkudest sisemistesse võrkudesse
+#: src/EBox/Firewall/Model/ExternalToInternalRuleTable.pm:68
+msgid "External networks to internal networks"
+msgstr "Liiklus välisvõrkudest sisevõrkudesse"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:145
+msgid "Contradictory rule found. Remove it first"
+msgstr "Leiti vastuoluline reegel, palun eemalda see"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:249
+msgid "Interface"
+msgstr "Liides"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:256
+msgid "Original destination"
+msgstr "Algne saaja"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:261
+msgid "eBox"
+msgstr "eBox"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:264
+msgid "IP Address"
+msgstr "IP aadress"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:268
+msgid "Object"
+msgstr "Objekt"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:279
+msgid "Original destination port"
+msgstr "Algne saaja port"
+
+# funktsionaalsust silmas pidades sobiks: Kõik. Tegelikult on see any siin kontekstis 'ükskõik milline'
+#: src/EBox/Firewall/Model/RedirectsTable.pm:297
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:126
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:152
+#, fuzzy
+msgid "Any"
+msgstr "Suvaline"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:300
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:129
+msgid "Source IP"
+msgstr "Saatja IP"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:304
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:133
+msgid "Source object"
+msgstr "Saatja objekt"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:315
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:155
+msgid "Destination IP"
+msgstr "Saaja IP"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:321
+msgid "Port"
+msgstr "Port"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:326
+msgid "Same"
+msgstr "Sama"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:329
+msgid "Other"
+msgstr "Muu"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:337
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:185
+msgid "Description"
+msgstr "Kirjeldus"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:354
+msgid "List of forwarded ports"
+msgstr "Suunatud portide loend"
+
+#: src/EBox/Firewall/Model/RedirectsTable.pm:363
+msgid "forwarding"
+msgstr "suunamine"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:66
+msgid "ACCEPT"
+msgstr "NÕUSTU"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:68
+msgid "DENY"
+msgstr "KEELDU"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:160
+msgid "Destination object"
+msgstr "Saaja objekt"
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:175
+msgid "Service"
+msgstr "Teenus"
+
+# see on segane lause
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:179
+#, fuzzy
+msgid ""
+"If inverse match is ticked, any service but the selected one will match this "
+"rule"
+msgstr ""
+"Kui vastupidine sobivus on määratud, siis kõik teenused peale valitu, on "
+"reegliga vastavuses."
+
+#: src/EBox/Firewall/Model/BaseRuleTable.pm:227
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:194
+msgid "Configure Rules"
+msgstr "Reeglite seadistamine"
+
+# Liiklus välistest võrkudest eBoxi
+#: src/EBox/Firewall/Model/ExternalToEBoxRuleTable.pm:68
+msgid "External networks to eBox"
+msgstr "Liiklus välisvõrkudest eBoxi"
+
+# Liiklus sisemistest võrkudest eBoxi
+#: src/EBox/Firewall/Model/InternalToEBoxRuleTable.pm:68
+msgid "Internal networks to eBox"
+msgstr "Liiklus sisevõrkudest eBoxi"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:37
+msgid "Input"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:38
+msgid "External Input"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:39
+msgid "Output"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:40
+#, fuzzy
+msgid "Forward"
+msgstr "suunamine"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:41
+msgid "NAT prerouting"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:42
+msgid "NAT postrouting"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:118
+#, fuzzy
+msgid "Rule"
+msgstr "reegel"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:123
+msgid "Enabled"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:129
+msgid "Type"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:134
+#, fuzzy
+msgid "Module"
+msgstr "reegel"
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:139
+msgid "Condition"
+msgstr ""
+
+#: src/EBox/Firewall/Model/EBoxServicesRuleTable.pm:153
+#: src/templates/filter.mas:51
+msgid "Rules added by eBox services (Advanced)"
+msgstr ""
+
+# Sisemised võrgud
+#: src/EBox/Firewall/Model/ToInternetRuleTable.pm:65
+msgid "Internal networks"
+msgstr "Liiklus sisevõrkudes"
+
+# VT DROP
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:52
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:46
+#, fuzzy
+msgid "packets dropped"
+msgstr "pillatud paketid"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:64
+msgid "Firewall packet traffic chart"
+msgstr "Tulemüüri paketiliikluse diagramm"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficGraph.pm:86
+msgid "Packet traffic"
+msgstr "Paketiliiklus"
+
+# VT DROP
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:66
+#, fuzzy
+msgid "Packets dropped"
+msgstr "Pillatud pakette"
+
+#  
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:78
+msgid "Packet traffic details"
+msgstr "Paketiliikluse üksikasjad"
+
+#: src/EBox/Firewall/Model/Report/PacketTrafficDetails.pm:86
+msgid "traffic"
+msgstr "liiklus"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:70
+msgid "Packet traffic report"
+msgstr "Paketiliikluse aruanne"
+
+#: src/EBox/Firewall/Composite/Report/PacketTrafficReport.pm:71
+msgid "Firewall packet traffic report"
+msgstr "Tulemüüri paketiliikluse aruanne"
+
+# Sisemistest võrkudest eBoxi suunduva liikluse filtreerimisreeglid
+#: src/templates/filter.mas:6
+msgid "Filtering rules from internal networks to eBox"
+msgstr "Sisevõrkudest eBoxi suunduva liikluse filtreerimisreeglid"
+
+# Need reeglid lubavad sul kontrollida ligipääsu sisemistest võrkudest eBoxi masinas töötavatele  teenustele.
+#: src/templates/filter.mas:8
+msgid ""
+"These rules allow you to control access from internal networks to services "
+"running on your eBox machine."
+msgstr ""
+"Need reeglid lubavad sul kontrollida sisevõrkude ligipääsu eBoxi masinas "
+"töötavatele teenustele."
+
+#: src/templates/filter.mas:10 src/templates/filter.mas:18
+#: src/templates/filter.mas:26 src/templates/filter.mas:37
+#: src/templates/filter.mas:48 src/templates/filter.mas:59
+msgid "Configure rules"
+msgstr "Reeglite seadistamine"
+
+# Sisemiste võrkude filtreerimisreeglid
+#: src/templates/filter.mas:13
+msgid "Filtering rules for internal networks"
+msgstr "Sisevõrkude filtreerimisreeglid"
+
+# Need reeglid lubavad sul kontrollida ligipääsu  sisemistest võrkudest internetti ja liiklust sisemiste võrkude vahel. Kui sa soovid ligipääsetavaks muuta eBoxi teenuseid siis peaksid kasutama sektsiooni ülalpool.
+#: src/templates/filter.mas:15
+msgid ""
+"These rules allow you to control access from internal networks to the "
+"Internet and traffic between internal networks. If you wish to provide "
+"access to your eBox services, you must use the above section."
+msgstr ""
+"Need reeglid lubavad sul kontrollida sisevõrkude ligipääsu internetti ja "
+"liiklust sisevõrkudes. Kui sa soovid ligipääsetavaks muuta eBoxi teenuseid, "
+"siis peaksid kasutama sektsiooni ülalpool."
+
+#: src/templates/filter.mas:21
+msgid "Filtering rules for traffic coming out from eBox"
+msgstr "eBoxist väljuva liikluse filtreerimisreeglid"
+
+#: src/templates/filter.mas:23
+msgid ""
+"These rules allow you to control access from your eBox to external services."
+msgstr ""
+"Need reeglid lubavad sul kontrollida eBoxist väljuva liikluse ligipääsu "
+"välistele teenustele."
+
+# Välistest võrkudest eBoxi suunduva liikluse filtreerimisreeglid
+#: src/templates/filter.mas:29
+msgid "Filtering rules from external networks to eBox"
+msgstr "Välisvõrkudest eBoxi suunduva liikluse filtreerimisreeglid"
+
+# Need reeglid lubavad sul kontrollida ligipääsu välistest võrkudest eBoxi masinas töötavatele teenustele.
+#: src/templates/filter.mas:31
+msgid ""
+"These rules allow you to control access from external networks to sevices "
+"running on your eBox machine."
+msgstr ""
+"Need reeglid lubavad sul kontrollida välisvõrkude ligipääsu eBoxi masinas "
+"töötavatele teenustele."
+
+#: src/templates/filter.mas:34 src/templates/filter.mas:45
+msgid ""
+"Be advised that adding rules in this section may compromise your network "
+"security as you may grant access from untrusted networks. Please do not use "
+"this unless you know what you are doing."
+msgstr ""
+"Soovitus: reeglite lisamine selles sektsioonis võib ohustada sinu võrgu "
+"turvalisust, kuna saad lubada ligipääsu ebausaldusväärsetest võrkudest. Ära "
+"palun kasuta seda kui sa ei tea täpselt mida teed."
+
+# Välistest võrkudest sisemistesse võrkudesse suunduva liikluse filtreerimisreeglid
+#: src/templates/filter.mas:40
+msgid "Filtering rules from external networks to internal networks"
+msgstr "Välisvõrkudest sisevõrkudesse suunduva liikluse filtreerimisreeglid"
+
+# Need reeglid lubavad sul kontrollida ligipääsu välistest võrkudest eBoxi masinas töötavatele teenustele.
+#: src/templates/filter.mas:42
+msgid ""
+"These rules allow you to control access from external networks to internal "
+"networks."
+msgstr ""
+"Need reeglid lubavad sul kontrollida välisvõrkude ligipääsu sisevõrkudele."
+
+#: src/templates/filter.mas:53
+msgid "These rules are automatically added by the eBox services."
+msgstr ""
+
+#: src/templates/filter.mas:56
+msgid ""
+"You can disable these rules, but make sure you know what you are doing or "
+"otherwise some services could stop working."
+msgstr ""
